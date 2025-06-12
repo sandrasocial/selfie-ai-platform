@@ -8,7 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSessionReady } from "@/hooks/useSessionReady";
-import coverImage from "@assets/1.png";
+// import coverImage from "@assets/1.png";
 
 export default function ViralSelfieBlueprint() {
   const { user: supabaseUser, sessionReady } = useSupabaseAuth();
@@ -27,8 +27,7 @@ export default function ViralSelfieBlueprint() {
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${coverImage})` }}
+          className="absolute inset-0 bg-gradient-to-br from-luxury-accent via-luxury-secondary to-luxury-dark"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/40" />
         <div className="relative z-10 text-center text-white max-w-5xl px-6 animate-fade-in">

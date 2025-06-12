@@ -18,11 +18,19 @@ export default defineConfig({
   root: './client',
   build: {
     outDir: '../dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
   server: {
     port: 3000,
     host: '0.0.0.0'
   },
-  logLevel: 'info'
+  logLevel: 'info',
+  define: {
+    'process.env': {}
+  }
 })

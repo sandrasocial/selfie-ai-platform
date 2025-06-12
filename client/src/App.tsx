@@ -74,6 +74,7 @@ import { AIIntegrationDashboard } from "@/components/AIIntegrationDashboard";
 import MyBrandProfile from "@/components/MyBrandProfile";
 import { ProfileProvider } from "@/contexts/ProfileContext";
 import BrandHubOnboarding from "@/components/BrandHubOnboarding";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 function Router() {
   const SelfieGuide = lazy(() => import('@/pages/freebie/SelfieGuide'));
@@ -220,15 +221,17 @@ function Router() {
 function App() {
   return (
     <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ProfileProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Router />
-            <DevRouteAudit />
-          </TooltipProvider>
-        </ProfileProvider>
-      </QueryClientProvider>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <ProfileProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Router />
+              <DevRouteAudit />
+            </TooltipProvider>
+          </ProfileProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 }

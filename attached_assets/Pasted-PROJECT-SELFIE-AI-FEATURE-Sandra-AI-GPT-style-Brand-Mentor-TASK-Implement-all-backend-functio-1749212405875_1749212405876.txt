@@ -1,0 +1,111 @@
+PROJECT: SELFIE AI™
+FEATURE: Sandra AI — GPT-style Brand Mentor
+
+TASK: Implement all backend functionality for Sandra AI.
+
+⚠️ DO NOT modify any UI code, layout, or CSS. The frontend design is fully implemented. Only build logic, APIs, storage, and response behaviors.
+
+✅ FUNCTIONALITY TO IMPLEMENT:
+1. Chat Storage System
+Endpoint: /api/sandra/chats
+
+Store and retrieve chat threads by user:
+
+ts
+Kopier
+Rediger
+{
+  chatId: string,
+  userId: string,
+  title: string,
+  messages: [
+    {
+      role: "user" | "assistant",
+      content: string,
+      timestamp: ISODate
+    }
+  ]
+}
+Allow:
+
+Create new chat
+
+Save new message thread
+
+Edit chat title
+
+Fetch full list of user’s chat history
+
+2. Dynamic Prompt Feed
+Endpoint: /api/sandra/prompts
+
+Return scrollable suggestion blocks, from static JSON or Supabase:
+
+ts
+Kopier
+Rediger
+[
+  "Generate a reel script for your story.",
+  "What’s your vibe today? Let's turn it into visual content.",
+  "Need a boost? Here’s a powerful quote to post with a mirror selfie."
+]
+Add filter support (e.g., ?filter=confidenceBoost)
+
+3. Offer Ladder Awareness
+Fetch user tier from /api/ladder-progress
+
+Inject offer context into assistant replies, e.g.:
+
+“You’re in the Branded phase — here’s a bold idea to push into VIP.”
+
+“Kit complete? Let’s clarify your voice and scale impact.”
+
+4. Planner Integration
+Add ability for Sandra to:
+
+Trigger planner entries via /api/planner
+
+Suggest content themes based on user journey
+
+Store entries with source: "sandraAI" tag
+
+5. Floating Widget State (Optional Future Feature)
+Endpoint: /api/sandra/widget-status
+
+Returns { show: true } or { show: false }
+
+Controlled via Supabase flag or admin dashboard
+
+6. Daily Quote System
+Endpoint: /api/sandra/daily-quote
+
+Return rotating quote based on system date:
+
+ts
+Kopier
+Rediger
+{
+  quote: "Your brand is your mirror. Make it magnetic.",
+  author: "Sandra AI"
+}
+Optional: preload quote on login, cache for the day
+
+7. Typing Feedback Logic
+Add simulated AI response delay (~1.2 seconds)
+
+Return "typing": true for frontend animation handling before sending reply
+
+8. User Profile Awareness
+Auto-fetch user’s first name and current ladder stage when loading /sandra-ai
+
+Allow personal references in responses:
+“Queen, here’s your confidence mantra today.”
+
+✅ REMEMBER:
+
+Use existing endpoints (/api/me, /api/purchases, /api/ladder-progress) where available
+
+Do not hardcode ladder stages — pull live data
+
+Focus on modular logic; keep APIs independent for future upgrades
+

@@ -1,0 +1,163 @@
+🖥️ COURSE UX BLUEPRINT: SELFIE STARTER KIT™
+🌟 Core Experience Goals:
+Feel like flipping through a digital fashion magazine
+
+
+Empower women through layout clarity, elegance, and flow
+
+
+Make learning and interacting luxurious, not overwhelming
+
+
+Be mobile-first while retaining editorial design on desktop
+
+
+
+1. 🎯 User Journey Flow
+text
+KopierRediger
+Dashboard → Starter Kit Overview → Module Overview → Lesson Page → PDF Generator/Practice Area
+
+
+2. 🗂️ Course Structure
+Overview Page
+Hero section with welcome quote and progress bar
+
+
+Modules 1–6 listed in vertical accordion layout
+
+
+“Start Here” CTA auto-scrolls to first incomplete lesson
+
+
+Section divider: horizontal luxury line with label (e.g., MODULE 2 — Editing Magic)
+
+
+
+3. 📚 Lesson Page Structure (Reusable Component)
+Module & lesson label (e.g., MODULE 2: Confidence in a Click)
+
+
+Large serif headline: Cormorant Garamond, 48–64px
+
+
+Italic subheader in Warm Gray
+
+
+Embedded video player (auto-muted on load, full width)
+
+
+Text blocks with plenty of white space (body: Neue Einstellung)
+
+
+Sidebar block or inline button group:
+
+
+✅ Mark Complete
+
+
+💾 Save Notes
+
+
+📥 Generate Workbook
+
+
+🔁 Replay
+
+
+Optional:
+
+
+Practice Prompt input box (styled as minimal, full-width input)
+
+
+Challenge CTA banner ("Post on IG & tag @ssasocial")
+
+
+Mobile swipe nav between lessons
+
+
+
+4. 🧩 Feature List & UI Components Needed
+Feature
+UI Style
+Video player
+Full-width, embedded, sleek black skin
+Workbook PDF generator
+Button: All caps, black border
+Save notes (localStorage)
+Clean input box + “Save” toggle
+Mark complete
+Checkbox + soft animation on click
+AI prompt inputs
+Styled input fields w/ underline border
+Challenge CTA block
+Serif pull-quote style + soft divider line
+Progress tracker
+Thin progress bar with label % (top right)
+
+
+5. 🧑‍🎨 Brand-Locked Design Notes
+Fonts:
+
+
+Cormorant Garamond (serif): Headlines, quotes
+
+
+Neue Einstellung (sans): Body, buttons, input fields
+
+
+Color Palette:
+
+
+Background: #F1F1F1 (Soft White)
+
+
+Text: #171719 (Luxury Black), #4C4B4B (Deep Graphite)
+
+
+Accent: #B5B5B3 (Warm Gray)
+
+
+Components:
+
+
+Buttons: Transparent or black border, all-caps, no shadows
+
+
+Dividers: 1px Warm Gray line, 60% width, center-aligned
+
+
+Notes section: Light gray text area with serif label above
+
+
+
+6. 📱 Mobile-First Requirements
+Vertical stack layout for modules
+
+
+Auto-expand current module/lesson
+
+
+Sticky footer CTA: “Next Lesson” / “Mark Complete”
+
+
+Video player adaptive height
+
+
+One-column content blocks (no sidebars)
+
+
+
+7. ✨ Suggested UX Animations (Optional)
+Soft fade-in when switching lessons
+
+
+Progress bar animates on scroll
+
+
+Save Note → checkmark + “Saved” appears briefly
+
+
+Hover effects on module tiles: soft zoom
+

@@ -1,0 +1,120 @@
+## 📋 DEV AI INSTRUCTIONS – SELFIE AI™ ADMIN DASHBOARD UPGRADE
+
+### ✅ PHASE 1: ADMIN ACCESS & HEADER NAVIGATION
+
+**Goal:** Sandra should have full access across the platform from her admin dashboard.
+
+#### Tasks:
+1. **Enable Full Navigation for Admins**
+   - If `user.isAdmin === true`, display full app header inside `/admin`
+   - Include links to:
+     - Dashboard
+     - Sandra AI™
+     - AI Studio
+     - Templates
+     - Blueprint Course
+     - Presets
+     - Stripe/Shopify integrations
+
+2. **Ensure session stays active**
+   - Auto-refresh session token when needed
+   - Maintain clean logout flow
+
+---
+
+### ✅ PHASE 2: SHOPIFY → FIKEN SYNC (MVA Ready)
+
+**Goal:** Automatically sync Shopify income into Fiken to track VAT obligations (MVA oppgave due in 11 days).
+
+#### Tasks:
+1. Use **Shopify Admin API** to pull orders from last 60 days
+2. Map relevant fields:
+   - Order ID
+   - Customer
+   - Product(s) purchased
+   - Amount incl. VAT
+   - VAT amount
+   - Payment date
+
+3. Push this data into **Fiken** as sales entries (via API):
+   - Use `FIKEN_API_KEY` + `FIKEN_COMPANY_ID`
+   - Make sure each entry has correct VAT % (standard 25%)
+
+4. Confirm that:
+   - Sandra can see sales in Fiken
+   - MVA amount updates in the dashboard
+   - Export-ready for March–April report
+
+---
+
+### ✅ PHASE 3: DASHBOARD DATA ENHANCEMENT
+
+**Goal:** Show real, visual income data from Shopify + Stripe + Fiken in one view
+
+#### Revenue Overview
+- Total Revenue (Shopify + Stripe)
+- Breakdown:
+  - Course Sales
+  - Kit Sales
+  - Subscription Income
+- Pull actual Shopify product names & sales count
+
+#### Financial Snapshot
+- VAT to Pay (live from Fiken)
+- Tax Reserve (30%)
+- Monthly Net Profit
+- Download MVA Report (PDF)
+
+#### Recent Activity
+- New signups
+- Purchases
+- Workbooks generated (PDF Monkey)
+
+#### Top Performing Content
+- Connect Facebook/Instagram Graph API
+- Show:
+  - Most saved
+  - Most shared
+  - Most clicked posts
+
+---
+
+### ✅ PHASE 4: UPCOMING PAYMENTS (AUTOMATED CASH FLOW FORECAST)
+
+**Goal:** Track upcoming due dates and payouts to help Sandra stay ahead
+
+#### Add section inside Dashboard:
+- Pull data from:
+  - Fiken (due tax, MVA)
+  - Shopify (next payout)
+  - Stripe (next payout)
+- Show:
+  - Date
+  - Amount
+  - Category (VAT, Tax, Platform Fee, etc)
+  - Status (Due / Paid)
+
+---
+
+### ✅ PHASE 5: SMART LINKS + AUTOMATIONS
+
+**Add clickable quick access modules** at bottom of dashboard:
+- ✅ Stripe (live link)
+- ✅ Shopify (live link)
+- ✅ Google Workspace
+- ✅ Zapier
+- ✅ Supabase
+- ✅ Uploadcare
+
+---
+
+### Bonus Optional Upgrade (Phase 6):
+**Fiken > Finalized MVA Filing**
+- Add a toggle: "Mark Period as Filed"
+- Show status: ✅ Filed | ❌ Pending
+- Add export/download PDF MVA report button
+
+---
+
+Once complete, notify Sandra via dashboard alert and unlock real admin tools.
+This will make SELFIE AI™ a powerful HQ for income tracking, MVA prep, content strategy, and daily ops.

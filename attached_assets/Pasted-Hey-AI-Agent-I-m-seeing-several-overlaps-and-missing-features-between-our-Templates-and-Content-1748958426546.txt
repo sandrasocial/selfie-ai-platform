@@ -1,0 +1,104 @@
+Hey AI Agent,
+
+I’m seeing several overlaps and missing features between our “Templates” and “Content Vault” pages. Let’s consolidate and fix:
+
+---
+
+## 1. One Single Templates/Content Vault Page
+
+- **Remove** the separate `ContentVault.tsx` page entirely. We only need the original `Templates.tsx` (now our unified “Templates & Vault” page).
+- **Move** any unique Content Vault logic (e.g., the “Save to Calendar” button and listing of saved items) into `Templates.tsx`.
+- **Delete** any routes or links that point to `ContentVault.tsx`. Ensure navigation only references `Templates.tsx`.
+
+---
+
+## 2. Merge Features into Templates.tsx
+
+1. **AI Content Generation**  
+   - On `Templates.tsx`, keep the “Generate Content” section that uses our templates.  
+   - After generation, display the result in a preview pane with “Save to Calendar” and “Save to Vault” buttons.
+
+2. **Save to Calendar**  
+   - Ensure the “Save to Calendar” button appears under each generated item on `Templates.tsx`.  
+   - On click, POST to `/api/calendar/add` with `{ dayNumber, contentText, templateName, isStrategy: false }`.  
+   - Show a toast “Saved to Calendar!” and update the calendar view.
+
+3. **Save to Vault**  
+   - Add a “Save to Vault” button next to each generated item.  
+   - On click, POST to `/api/vault/add` with `{ dayNumber, templateName, contentText }`.  
+   - Update a “My Vault” sidebar or a collapsible section on `Templates.tsx` so saved items list appears there.
+
+4. **Generate Strategy**  
+   - On `Templates.tsx`, add a “Generate Posting Strategy” button (or reveal the StrategyWidget here).  
+   - Call `/api/strategize` and display the returned plan (frequency, mix, times).  
+   - Under each recommended item, show “Add to Calendar” so users can save strategy posts directly.
+
+---
+
+## 3. Fix “Generate Strategy” Not Working
+
+- In `Templates.tsx` (or StrategyWidget if you keep it separate), ensure the click handler for “Generate Strategy” calls the correct endpoint:
+  ```js
+  const res = await axios.get('/api/strategize');
+  setStrategyPlan(res.data);
+Verify /api/strategize in server/routes.ts invokes strategyService.generateStrategy(userId) and returns JSON { strategy: […] }.
+
+Add error handling so if the API throws, we show “Failed to generate strategy. Please try again.” instead of nothing.
+
+4. Remove Duplicate Components & Routes
+Delete ContentVault.tsx from client/src/pages/.
+
+Update App.tsx:
+
+Remove any <Route path="/vault" component={ContentVault} />.
+
+Ensure <Route path="/templates" component={Templates} /> is the only route to content.
+
+Clean up imports:
+
+Search for ContentVault references and remove them.
+
+In shared/schema.ts, remove any vault-specific schema if now redundant.
+
+5. Adjust UI & Layout in Templates.tsx
+Header & Tabs: Rename the page title from “Templates” to “Templates & Vault”.
+
+Section 1: Generate Content
+• Show template selection dropdown.
+• “Generate Content” button → after clicking, show generated preview(s).
+
+Section 2: Saved Items (Vault)
+• Under “My Vault” header, list saved content items (template name, snippet, day if assigned).
+• For each item, show “Save to Calendar” icon and “Delete from Vault” icon.
+
+Section 3: Posting Strategy
+• Below the vault list (or in a collapsible panel), show “Your Posting Strategy” with plan bullets and “Add to Calendar” buttons.
+
+Styling: Use Prata for headings, Helvetica Neue for body, Soft Beige accents.
+
+6. Test End-to-End Flow
+Navigate to /templates (no /vault route).
+
+Generate Content: Select a template day, click “Generate.”
+
+Confirm content appears with “Save to Calendar” and “Save to Vault” buttons.
+
+Save to Vault: Click “Save to Vault.”
+
+Confirm item shows up in “My Vault” list.
+
+Save to Calendar: For a vault item, click “Save to Calendar.”
+
+Confirm it POSTs to /api/calendar/add and updates calendar UI.
+
+Generate Strategy: Click “Generate Posting Strategy.”
+
+Confirm strategy plan appears with “Add to Calendar.”
+
+Click “Add to Calendar” under a strategy item; confirm calendar entry is created.
+
+PDF Exports:
+
+From the calendar view, click “Download Vogue Calendar PDF” → confirm PDFCalendar exports with correct data.
+
+From “My Vault,” click “Export Vault as Vogue PDF” → confirm VogueCollection PDF exports only saved items.

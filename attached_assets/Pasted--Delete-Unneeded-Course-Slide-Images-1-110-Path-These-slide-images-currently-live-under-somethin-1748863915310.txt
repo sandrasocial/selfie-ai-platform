@@ -1,0 +1,335 @@
+. Delete Unneeded Course Slide Images (1–110)
+Path: These slide images currently live under something like:
+
+swift
+Kopier
+Rediger
+/client/src/assets/images/viral-selfie-slides/slide1.png
+...
+/client/src/assets/images/viral-selfie-slides/slide110.png
+(Or wherever your AI agent put them.)
+
+Instruction:
+
+sql
+Kopier
+Rediger
+• Delete every file named “1.png” through “110.png” that belong to the Viral Selfie Blueprint course slides. 
+After this, the entire viral-selfie-slides folder (or wherever they were) should be empty—delete the folder itself if it’s now blank.
+
+2. Move or Delete Instagram Analytics Screenshots
+Files:
+
+Kopier
+Rediger
+audience.png  
+follows.png  
+views.png  
+visits.png  
+reach.png  
+interactions.png  
+These are Instagram analytics screenshots. We no longer need them in “images/” but they might be useful later if you want to reference data.
+
+Decide: If you want to archive them, move them to a new folder called /client/src/assets/docs/analytics-screenshots/. If you’re certain they’ll never be used, delete them.
+
+Instruction to Archive (preferred):
+
+swift
+Kopier
+Rediger
+1. Create folder: /client/src/assets/docs/analytics-screenshots
+2. Move audience.png, follows.png, views.png, visits.png, reach.png, interactions.png into /client/src/assets/docs/analytics-screenshots
+If you’d rather just delete them:
+
+sql
+Kopier
+Rediger
+• Delete audience.png, follows.png, views.png, visits.png, reach.png, and interactions.png from wherever they currently live.
+3. Archive or Remove “Previous Prompts”
+You mentioned “all previous pasted prompts” (likely .txt or .md files). You can either delete them or keep them for future reference.
+
+To Archive:
+
+sql
+Kopier
+Rediger
+1. Create folder: /client/src/assets/docs/old-prompts
+2. Move every prompt file (e.g., .txt, .md, or .docx that contains past prompts) into /client/src/assets/docs/old-prompts
+To Delete (only if you’re sure):
+
+pgsql
+Kopier
+Rediger
+• Delete all “previous prompts” files from their current location.
+4. Organize Logo, Hero Images, and Portraits
+Logo: All logo files should go to /client/src/assets/images (or if you have many versions, you can create /client/src/assets/images/logo).
+
+Hero Images: If you have heroimage1.jpeg through heroimage5.jpeg, move them into /client/src/assets/images/hero/.
+
+Portrait Images: If you have two files named like portraitimage1.jpg and portraitimage2.jpg, move them into /client/src/assets/images/portraits/.
+
+Instruction:
+
+swift
+Kopier
+Rediger
+1. Create (if not already there):
+   - /client/src/assets/images/logo
+   - /client/src/assets/images/hero
+   - /client/src/assets/images/portraits
+
+2. Move:
+   • All “logo” files (e.g. logo.svg or logo.png) into /client/src/assets/images/logo
+   • heroimage1.jpeg, heroimage2.jpeg, … heroimage5.jpeg → /client/src/assets/images/hero
+   • portraitimage1.jpg, portraitimage2.jpg → /client/src/assets/images/portraits
+5. Move All “skjermbilde.png” and “testimonials.png” into Testimonials Folder
+You said:
+
+“all skjermbilde.png are testimonials (DMs and comments from my followers)”
+“All testimonials.png will be moved inside the same file/folder as skjermbilde.png”
+
+Create (if not already):
+
+swift
+Kopier
+Rediger
+/client/src/assets/testimonials
+Move:
+
+swift
+Kopier
+Rediger
+• Move every file named “skjermbilde*.png” (all your testimonial screenshots) → /client/src/assets/testimonials
+• Move any file named “testimonials.png” → /client/src/assets/testimonials
+That way, ALL testimonial images live in one folder.
+
+6. Move Custom Filter Presets (.xmp) and Raw Presets (.dng)
+You listed:
+
+nginx
+Kopier
+Rediger
+Scandinavian Light & Dreamy.xmp  
+Nordic Deep Urban.xmp  
+Scandinavian dark and moody.xmp  
+glowup.xmp  
+
+Scandinavian Light & Dreamy.dng  
+Nordic Deep Urban.dng  
+Scandinavian dark and moody.dng
+These should be downloadable assets under /client/src/assets/docs/presets (since users will download them, not the app’s code).
+
+Instruction:
+
+swift
+Kopier
+Rediger
+1. Create folder: /client/src/assets/docs/presets
+2. Move:
+   • Scandinavian Light & Dreamy.xmp  
+   • Nordic Deep Urban.xmp  
+   • Scandinavian dark and moody.xmp  
+   • glowup.xmp  
+   → /client/src/assets/docs/presets
+
+3. Move:
+   • Scandinavian Light & Dreamy.dng  
+   • Nordic Deep Urban.dng  
+   • Scandinavian dark and moody.dng  
+   → /client/src/assets/docs/presets
+If any of the .xmp or .dng files are not yet uploaded, the agent will flag that. You can then upload them manually or ask the AI to handle your next upload.
+
+7. Move “storybank” PDFs (Real & Raw Stories)
+If you have files like storybank.pdf (and maybe others), those are raw story resources that could be used later. Let’s store them under /client/src/assets/docs/storybank.
+
+Instruction:
+
+swift
+Kopier
+Rediger
+1. Create folder: /client/src/assets/docs/storybank
+2. Move all storybank PDF files (e.g., storybank.pdf, storybank-part2.pdf, etc.) → /client/src/assets/docs/storybank
+8. Move “shared.zip” (30-Day Templates Content) and Other Course PDFs
+shared.zip: This contains your 30-day templates. Move it to /client/src/assets/docs/shared-templates/.
+
+Other PDFs: All remaining course-related PDFs (e.g., module transcripts, worksheets, etc.) should go to /client/src/assets/docs/course-content/.
+
+Instruction:
+
+swift
+Kopier
+Rediger
+1. Create folders:
+   - /client/src/assets/docs/shared-templates
+   - /client/src/assets/docs/course-content
+
+2. Move:
+   • shared.zip → /client/src/assets/docs/shared-templates
+
+3. Move:
+   • All other course‐related PDFs (the ones that aren’t storybank) → /client/src/assets/docs/course-content
+9. Remove Any Remaining Empty or Redundant Folders
+After all the above moves, you may have empty or unnecessary folders (for example, “uploads” or “public/tmp” or “attached_assets”). Let’s delete them.
+
+Instruction:
+
+sql
+Kopier
+Rediger
+• Identify any empty folders under /client/src/assets or at the project root (e.g., “viral-selfie-slides”, “uploads”, “attached_assets” if they are now empty).
+• Delete those folders so that only our organized structure remains:
+
+/client/src/assets/
+  ├─ images/
+  │   ├─ logo/
+  │   ├─ hero/
+  │   └─ portraits/
+  ├─ docs/
+  │   ├─ analytics-screenshots/
+  │   ├─ presets/
+  │   ├─ shared-templates/
+  │   ├─ storybank/
+  │   └─ course-content/
+  ├─ testimonials/
+  ├─ transcripts/
+  └─ placeholders/
+10. Final Folder Structure Check
+After the AI runs those steps, you should see exactly:
+
+css
+Kopier
+Rediger
+/client/src/assets
+├─ images
+│   ├─ logo
+│   │   └─ [logo files]
+│   ├─ hero
+│   │   └─ [heroimage1.jpeg … heroimage5.jpeg]
+│   └─ portraits
+│       └─ [portraitimage1.jpg, portraitimage2.jpg]
+├─ docs
+│   ├─ analytics-screenshots
+│   │   └─ [audience.png, follows.png, etc.]
+│   ├─ presets
+│   │   └─ [all .xmp and .dng files]
+│   ├─ shared-templates
+│   │   └─ [shared.zip]
+│   ├─ storybank
+│   │   └─ [storybank PDF(s)]
+│   └─ course-content
+│       └─ [other course PDFs]
+├─ testimonials
+│   └─ [skjermbilde1.png, skjermbilde2.png, testimonials.png, etc.]
+├─ transcripts
+│   └─ [module transcript files, .txt/.md]
+└─ placeholders
+    ├─ placeholder.jpg
+    └─ video-placeholder.png
+Once you confirm this is in place, you’ll have a truly clean slate. Your AI agent and your code will know exactly where to find (or delete) any asset, with zero confusion.
+
+Paste-Ready Instruction for Your Replit AI Agent
+Copy everything between the triple backticks below into your Replit AI chat. It will run through each step in order:
+
+swift
+Kopier
+Rediger
+Hey AI Agent, please reorganize and clean up all assets under /client/src/assets according to these exact instructions:
+
+1. **Delete Viral Selfie Blueprint slide images**  
+   • Delete any files named “1.png” through “110.png” that were uploaded for the Viral Selfie course.  
+   • After deleting the 110 PNGs, remove the “viral-selfie-slides” folder if it’s empty.
+
+2. **Archive or Delete Instagram Analytics screenshots**  
+   • Create /client/src/assets/docs/analytics-screenshots if it doesn’t exist.  
+   • Move these files into /client/src/assets/docs/analytics-screenshots:  
+     – audience.png  
+     – follows.png  
+     – views.png  
+     – visits.png  
+     – reach.png  
+     – interactions.png  
+   • If any of these files don’t exist, skip them. (Alternatively, if I said to delete, remove them entirely.)
+
+3. **Archive or Delete “Previous Prompt” files**  
+   • Create /client/src/assets/docs/old-prompts.  
+   • Move all past prompt files (.txt, .md, .docx) into /client/src/assets/docs/old-prompts.  
+   • If I explicitly told you to delete them, delete instead of moving.
+
+4. **Organize Logo, Hero, Portrait images**  
+   • Create folders if needed:  
+     – /client/src/assets/images/logo  
+     – /client/src/assets/images/hero  
+     – /client/src/assets/images/portraits  
+   • Move all logo files (e.g., logo.svg, logo.png) into /client/src/assets/images/logo.  
+   • Move heroimage1.jpeg … heroimage5.jpeg into /client/src/assets/images/hero.  
+   • Move portraitimage1.jpg and portraitimage2.jpg into /client/src/assets/images/portraits.
+
+5. **Collect All Testimonial Screenshots**  
+   • Create /client/src/assets/testimonials if needed.  
+   • Move every file named “skjermbilde*.png” into /client/src/assets/testimonials.  
+   • Move any file named “testimonials.png” into /client/src/assets/testimonials.
+
+6. **Move Custom Filter Presets (.xmp) and Raw Presets (.dng)**  
+   • Create /client/src/assets/docs/presets if needed.  
+   • Move these .xmp files into /client/src/assets/docs/presets:  
+     – Scandinavian Light & Dreamy.xmp  
+     – Nordic Deep Urban.xmp  
+     – Scandinavian dark and moody.xmp  
+     – glowup.xmp  
+   • Move these .dng files into /client/src/assets/docs/presets:  
+     – Scandinavian Light & Dreamy.dng  
+     – Nordic Deep Urban.dng  
+     – Scandinavian dark and moody.dng  
+   • If any are missing, let me know.
+
+7. **Move “storybank” PDF files**  
+   • Create /client/src/assets/docs/storybank if needed.  
+   • Move every storybank PDF (e.g., storybank.pdf, storybank-part2.pdf) into /client/src/assets/docs/storybank.
+
+8. **Move shared.zip and all other course PDFs**  
+   • Create /client/src/assets/docs/shared-templates if needed.  
+   • Move shared.zip (30-day templates) into /client/src/assets/docs/shared-templates.  
+   • Create /client/src/assets/docs/course-content if needed.  
+   • Move all remaining course-related PDF files into /client/src/assets/docs/course-content.  
+
+9. **Ensure Placeholders Exist**  
+   • Create /client/src/assets/placeholders if needed.  
+   • Ensure placeholder.jpg (1×1 white) and video-placeholder.png (play-icon) live there.  
+   • If duplicates exist elsewhere, delete those.
+
+10. **Delete Any Now-Empty / Redundant Folders**  
+   • Identify any empty folders under /client/src/assets or at project root (like “viral-selfie-slides”, “uploads”, “attached_assets”).  
+   • Delete them so that only the folders in the final structure remain.
+
+After you finish all of the above, confirm: “✅ Asset folders reorganized. Ready for next steps.” Let me know if any file paths didn’t exist or any items couldn’t be moved.
+Paste that entire block into your Replit AI Assistant. Once it replies “✅ Asset folders reorganized,” check the file tree and confirm it matches this final structure:
+
+css
+Kopier
+Rediger
+/client/src/assets
+├─ images
+│   ├─ logo
+│   │   └─ [logo files]
+│   ├─ hero
+│   │   └─ [heroimage1.jpeg … heroimage5.jpeg]
+│   └─ portraits
+│       └─ [portraitimage1.jpg, portraitimage2.jpg]
+├─ docs
+│   ├─ analytics-screenshots
+│   │   └─ [audience.png, follows.png, …]
+│   ├─ presets
+│   │   └─ [all .xmp and .dng files]
+│   ├─ shared-templates
+│   │   └─ shared.zip
+│   ├─ storybank
+│   │   └─ [storybank PDF(s)]
+│   └─ course-content
+│       └─ [other course PDFs]
+├─ testimonials
+│   └─ [skjermbilde*.png and testimonials.png]
+├─ transcripts
+│   └─ [module transcript .txt/.md files]
+└─ placeholders
+    ├─ placeholder.jpg
+    └─ video-placeholder.png

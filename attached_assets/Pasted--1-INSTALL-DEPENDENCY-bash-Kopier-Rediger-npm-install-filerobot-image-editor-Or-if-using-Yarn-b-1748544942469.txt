@@ -1,0 +1,89 @@
+📦 1. INSTALL DEPENDENCY
+bash
+Kopier
+Rediger
+npm install filerobot-image-editor
+Or if using Yarn:
+
+bash
+Kopier
+Rediger
+yarn add filerobot-image-editor
+🧠 2. IMPORT + SETUP
+In your SelfieGlowUp.tsx (or inside the new tab block in VisualsCreator.tsx):
+
+tsx
+Kopier
+Rediger
+import React, { useRef, useEffect } from 'react';
+import FilerobotImageEditor from 'filerobot-image-editor';
+
+export default function SelfieEditor() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const { TABS, TOOLS } = FilerobotImageEditor;
+
+    const config = {
+      source: '', // set dynamically when user uploads image
+      onSave: (editedImageObject) => {
+        console.log('Saved image:', editedImageObject.imageBase64);
+        // Optional: auto-save to gallery or Feed Planner here
+      },
+      tabsIds: [TABS.ADJUST, TABS.ANNOTATE],
+      defaultTabId: TABS.ADJUST,
+      defaultToolId: TOOLS.CROP,
+    };
+
+    const editor = new FilerobotImageEditor(containerRef.current, config);
+
+    editor.render({
+      onClose: () => {
+        editor.terminate();
+      },
+    });
+
+    return () => editor.terminate();
+  }, []);
+
+  return <div id="editor_container" ref={containerRef} style={{ height: '80vh' }} />;
+}
+📤 3. UPLOAD IMAGE FIRST
+You’ll need a basic upload input that sets config.source dynamically.
+
+Example:
+
+tsx
+Kopier
+Rediger
+<input type="file" accept="image/*" onChange={handleUpload} />
+
+const handleUpload = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    config.source = reader.result;
+    // Re-render editor here if needed
+  };
+  reader.readAsDataURL(file);
+};
+🎯 4. ON SAVE — Add to Feed Planner
+Once saved, the base64 image can be:
+
+Stored to user’s visual gallery
+
+Added to Feed Planner grid layout
+
+Optionally saved to server using your existing endpoint
+
+💄 UI INTEGRATION
+Inside your Visuals tab, add this as the 4th tab:
+
+tsx
+Kopier
+Rediger
+<Tab label="Selfie Glow-Up">
+  <SelfieEditor />
+</Tab>

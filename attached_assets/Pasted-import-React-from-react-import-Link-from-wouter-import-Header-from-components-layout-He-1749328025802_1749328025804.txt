@@ -1,0 +1,64 @@
+import React from 'react';
+import { Link } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useQuery } from "@tanstack/react-query";
+
+export default function PoseStudio() {
+  const { data: user } = useQuery({
+    queryKey: ["/api/me"],
+    retry: false,
+  });
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Header user={user} />
+
+      {/* Studio Navigation */}
+      <section className="w-full py-4 px-4 border-b border-[#E5E5E5] sticky top-0 bg-white z-40">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <Link 
+            href="/studio" 
+            className="text-[#171719] text-sm uppercase tracking-wide hover:underline" 
+            style={{ fontFamily: 'Neue Einstellung' }}
+          >
+            ← Back to AI Studio
+          </Link>
+
+          <nav 
+            className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-wide" 
+            style={{ fontFamily: 'Neue Einstellung' }}
+          >
+            <Link href="/studio/visuals" className="text-gray-600 hover:text-black hover:underline">Visuals</Link>
+            <Link href="/studio/captions" className="text-gray-600 hover:text-black hover:underline">Captions</Link>
+            <Link href="/studio/pose" className="text-black border-b-2 border-black pb-1">Pose Coach</Link>
+            <Link href="/studio/strategy" className="text-gray-600 hover:text-black hover:underline">Strategy</Link>
+            <Link href="/studio/chat" className="text-gray-600 hover:text-black hover:underline">Chat with Sandra</Link>
+          </nav>
+        </div>
+      </section>
+
+      {/* Pose Coach Tool */}
+      <section className="w-full py-24 px-4 bg-[#F1F1F1]">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border border-black p-16 text-center">
+            <h3 
+              className="text-3xl uppercase tracking-wide mb-4" 
+              style={{ fontFamily: 'Cormorant Garamond' }}
+            >
+              Pose Coach Studio
+            </h3>
+            <p 
+              className="text-base leading-relaxed text-[#4C4B4B]" 
+              style={{ fontFamily: 'Neue Einstellung' }}
+            >
+              This feature is currently being developed. You'll be able to learn professional posing techniques here.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

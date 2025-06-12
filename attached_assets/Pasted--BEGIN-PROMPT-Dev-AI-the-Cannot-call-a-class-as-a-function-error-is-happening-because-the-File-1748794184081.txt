@@ -1,0 +1,68 @@
+// BEGIN PROMPT
+
+Dev AI, the “Cannot call a class as a function” error is happening because the FilerobotImageEditor component is being invoked incorrectly. We need to ensure it’s imported and rendered as a React component, not called like a function. Please follow these steps to fix the crop modal:
+
+1. **Remove any direct calls to FilerobotImageEditor as a function**  
+   - Search for any code that does something like `FilerobotImageEditor(props)` or `const editor = new FilerobotImageEditor(...)`.  
+   - Delete or comment out those lines. We only want to use `<FilerobotImageEditor …/>` in JSX.
+
+2. **Install and import the correct package**  
+   - In your terminal (within Replit), run:
+     ```
+     npm install filerobot-image-editor
+     ```
+   - In `client/src/components/VisualStudioEditor.tsx`, replace any existing import with exactly:
+     ```js
+     import { FilerobotImageEditor } from 'filerobot-image-editor';
+     ```
+   - Remove any other imports like `import FilerobotEditor from 'filerobot-image-editor/lib/…'` or similar. We must use the named export from the main package.
+
+3. **Use `<FilerobotImageEditor>` inside JSX, not as a function**  
+   - Find the crop-modal JSX and replace it with something like:
+     ```jsx
+     {cropModalOpen && cropImageSrc && (
+       <div
+         className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+       >
+         <div className="relative w-4/5 h-4/5 bg-white">
+           <button
+             onClick={() => setCropModalOpen(false)}
+             className="absolute top-4 right-4 bg-black text-white p-2 rounded-none"
+           >
+             Cancel
+           </button>
+
+           <FilerobotImageEditor
+             src={cropImageSrc}
+             config={{
+               tools: ['crop'],
+               Crop: { presetRatio: null, },
+               Rotate: true
+             }}
+             onComplete={(editedInfo) => {
+               setEditedImage(editedInfo.imageBase64); 
+               setCropModalOpen(false);
+             }}
+             onClose={() => setCropModalOpen(false)}
+             language="en"
+           />
+         </div>
+       </div>
+     )}
+     ```
+   - Notice how we simply place `<FilerobotImageEditor .../>` into the JSX tree. There should be no “new FilerobotImageEditor(...)” or function invocation outside JSX.
+
+4. **Ensure the parent container is visible**  
+   - Confirm the outer `<div>` wrappers have explicit width/height (e.g., `w-4/5 h-4/5 bg-white`) so the editor is not rendering into a zero-sized or hidden element.
+
+5. **Verify editedImage is a valid data URL or file URL**  
+   - Before opening the modal, we must set `cropImageSrc` to a string like `editedImage` (which comes from a valid `<img src="…">` in the preview).  
+   - If `cropImageSrc` is empty or undefined, the editor will be blank.
+
+6. **Redeploy and test**  
+   - After making these changes, click “Redeploy” in Replit.  
+   - Upload an image, click “Crop,” and confirm the Filerobot modal loads your image properly.  
+   - Drag the crop box, click “Apply,” and check that `editedImage` updates in the preview.
+
+Once the blank modal issue is resolved and the image appears inside the editor, stop.  
+// END PROMPT

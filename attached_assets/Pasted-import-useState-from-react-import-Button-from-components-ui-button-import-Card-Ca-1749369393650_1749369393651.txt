@@ -1,0 +1,248 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, FileText, CheckCircle } from "lucide-react";
+import { Link } from "wouter";
+import ModuleWorkbook from "@/components/ModuleWorkbook";
+
+export default function ModuleOne() {
+  const [showWorkbook, setShowWorkbook] = useState(false);
+  const [completedSections, setCompletedSections] = useState<number[]>([]);
+  const [storyAnswers, setStoryAnswers] = useState({
+    rockBottom: "",
+    changeDecision: "",
+    pastSelfAdvice: "",
+    desiredFeeling: ""
+  });
+
+  const sections = [
+    { id: 1, title: "Welcome to Module 1" },
+    { id: 2, title: "What Positioning Really Means" },
+    { id: 3, title: "Your Personal Brand Starts with Emotion" },
+    { id: 4, title: "Let's Map Your Transformation" },
+    { id: 5, title: "Stop Trying to Be 'Niche'" },
+    { id: 6, title: "Story Exercise" }
+  ];
+
+  const progressPercentage = (completedSections.length / sections.length) * 100;
+
+  const toggleSection = (sectionId: number) => {
+    setCompletedSections(prev =>
+      prev.includes(sectionId)
+        ? prev.filter(id => id !== sectionId)
+        : [...prev, sectionId]
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-100 z-40">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between mb-3">
+            <Link href="/blueprint">
+              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-black">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Course
+              </Button>
+            </Link>
+            <Badge className="bg-black text-white">Module 1</Badge>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="font-medium">Progress</span>
+              <span>{completedSections.length}/{sections.length} sections</span>
+            </div>
+            <Progress value={progressPercentage} className="h-2" />
+          </div>
+        </div>
+      </div>
+
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="w-full h-96 mb-12 relative overflow-hidden rounded-none">
+            <img 
+              src="https://i.postimg.cc/0QVy2L7N/Heroimagehomaepage-1.png" 
+              alt="Module 1 Hero"
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+          </div>
+          
+          <div className="text-center">
+            <h1 className="font-['Prata'] text-6xl md:text-7xl font-normal text-black mb-8">
+              Your Story Is Your Superpower
+            </h1>
+            <div className="h-[1px] w-24 bg-gray-400/50 mx-auto mb-8" />
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Let's turn your journey into your brand's foundation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-6 pb-20">
+        {sections.map(section => (
+          <section key={section.id} className="mb-20">
+            <div className="flex items-start justify-between mb-8">
+              <div>
+                <h2 className="font-['Prata'] text-4xl text-black mb-4">{section.title}</h2>
+                <div className="h-[1px] w-16 bg-gray-400/50 mb-6" />
+              </div>
+              <button onClick={() => toggleSection(section.id)} className="mt-2">
+                {completedSections.includes(section.id) ? (
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                ) : (
+                  <div className="w-6 h-6 border-2 border-gray-300 rounded-full" />
+                )}
+              </button>
+            </div>
+
+            {section.id === 1 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  Let's get one thing straight: you don't need to "find" your brand voice—you already are it.
+                </p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  In this module, I'm showing you how to take your story and make it the most magnetic thing about your brand. No overthinking. No trying to be like someone else. This is about owning your truth and using it as fuel.
+                </p>
+              </div>
+            )}
+
+            {section.id === 2 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  <strong>Positioning = how people see you.</strong>
+                </p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  Your story, your energy, your transformation—that's what sets you apart. We're not building a copy-paste influencer brand here. You're building a brand based on you—the real you.
+                </p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">Here's what we'll work on:</p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>The before you</strong> (messy, raw, real)</span></li>
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>The after you</strong> (glowing, growing, leading)</span></li>
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>The how you got here</strong> (your steps become your strategy)</span></li>
+                </ul>
+              </div>
+            )}
+
+            {section.id === 3 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">People don't connect to "niches," they connect to stories.</p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">Let your followers feel what you've been through. The confusion, the heartbreak, the glow-up. That's the brand. That's what makes people stop scrolling and say, "Damn, she gets me."</p>
+              </div>
+            )}
+
+            {section.id === 4 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">Your content isn't just posts—it's proof.</p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">Think of this as your emotional timeline:</p>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>Where you were</strong> (lost, stuck, surviving)</span></li>
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>What shifted</strong> (your moment of clarity)</span></li>
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>Where you are now</strong> (building, branding, thriving)</span></li>
+                  <li className="flex items-start gap-3"><div className="w-2 h-2 bg-black rounded-full mt-3" /><span className="text-gray-700 text-lg"><strong>Who you help</strong> (women like you, who need someone real)</span></li>
+                </ul>
+                <p className="text-gray-700 text-lg leading-relaxed font-semibold">That's the blueprint. That's your position.</p>
+              </div>
+            )}
+
+            {section.id === 5 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">Here's the truth: <strong>you are the niche.</strong></p>
+                <p className="text-gray-700 text-lg leading-relaxed">You don't need to niche down—you need to show up fully. When you do that, the right people will know you're their person.</p>
+              </div>
+            )}
+
+            {section.id === 6 && (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">Answer these:</p>
+                <Card className="bg-gray-50 border-none my-8">
+                  <CardContent className="p-8 space-y-8">
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">1. What was your "rock bottom" moment?</h3>
+                      <Textarea
+                        value={storyAnswers.rockBottom}
+                        onChange={(e) => setStoryAnswers(prev => ({ ...prev, rockBottom: e.target.value }))}
+                        placeholder="Share your story about that moment when everything felt like it was falling apart..."
+                        className="min-h-24 resize-none bg-white"
+                        rows={4}
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">2. What made you decide to change?</h3>
+                      <Textarea
+                        value={storyAnswers.changeDecision}
+                        onChange={(e) => setStoryAnswers(prev => ({ ...prev, changeDecision: e.target.value }))}
+                        placeholder="What was the catalyst that made you say 'enough is enough'?"
+                        className="min-h-24 resize-none bg-white"
+                        rows={4}
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">3. What would your past self need to hear from you today?</h3>
+                      <Textarea
+                        value={storyAnswers.pastSelfAdvice}
+                        onChange={(e) => setStoryAnswers(prev => ({ ...prev, pastSelfAdvice: e.target.value }))}
+                        placeholder="If you could go back and talk to yourself at your lowest point, what would you say?"
+                        className="min-h-24 resize-none bg-white"
+                        rows={4}
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-3">4. How do you want women to feel after seeing your content?</h3>
+                      <Textarea
+                        value={storyAnswers.desiredFeeling}
+                        onChange={(e) => setStoryAnswers(prev => ({ ...prev, desiredFeeling: e.target.value }))}
+                        placeholder="What emotional shift do you want to create for your audience?"
+                        className="min-h-24 resize-none bg-white"
+                        rows={4}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+                <p className="text-gray-700 text-lg leading-relaxed font-semibold text-center">
+                  👉 Boom. You've got your positioning.
+                </p>
+              </div>
+            )}
+          </section>
+        ))}
+
+        <Card className="bg-gradient-to-r from-gray-900 to-black text-white animate-fadeInUp">
+          <CardContent className="p-12 text-center">
+            <h3 className="font-['Prata'] text-3xl mb-6">Ready to Apply What You've Learned?</h3>
+            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+              Generate your personalized Module 1 workbook with AI-powered exercises 
+              tailored to your specific business and positioning goals.
+            </p>
+            <Button 
+              size="lg"
+              onClick={() => setShowWorkbook(true)}
+              className="bg-black text-white hover:bg-gray-200 hover:text-black font-['Prata'] px-8 py-4 rounded-xl transition-colors duration-200"
+            >
+              <FileText className="w-5 h-5 mr-2" />
+              Generate My AI Workbook
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {showWorkbook && (
+        <ModuleWorkbook
+          moduleId={1}
+          moduleTitle="Module 1: Positioning"
+          onClose={() => setShowWorkbook(false)}
+          prefilledAnswers={{
+            "What was your \"rock bottom\" moment?": storyAnswers.rockBottom,
+            "What made you decide to change?": storyAnswers.changeDecision,
+            "What would your past self need to hear from you today?": storyAnswers.pastSelfAdvice,
+            "How do you want women to feel after seeing your content?": storyAnswers.desiredFeeling
+          }}
+        />
+      )}
+    </div>
+  );
+}

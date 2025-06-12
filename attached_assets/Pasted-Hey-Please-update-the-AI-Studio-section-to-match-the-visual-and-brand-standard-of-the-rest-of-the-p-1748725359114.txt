@@ -1,0 +1,101 @@
+Hey! Please update the AI Studio section to match the visual and brand standard of the rest of the platform. The current page design feels disconnected and low-end. I need the AI Studio experience to reflect the high-end, Vogue-style branding used throughout the homepage.
+
+---
+
+## ✅ SECTION 1: AI STUDIO LANDING PAGE DESIGN
+
+🔧 Replace the current design entirely with a luxury-styled full-page layout.
+
+Use the homepage as the design reference:  
+- Editorial layout (like Vogue or Pinterest)  
+- Black and white color scheme  
+- Prata font + high-end serif typography  
+- Soft shadowing on cards  
+- Full-width image hero section  
+- Clean spacing and strong visual hierarchy
+
+---
+
+### 🔲 Hero Section (Top)
+
+**Background Image:**  
+Use this exact image as background (with soft black overlay):  
+https://i.postimg.cc/KY664Mz6/8.png
+
+**Text overlay:**  
+- **Headline:** AI Studio  
+- **Subheading:** Your visual content, captions, and personal brand strategy—powered by AI, styled by you.
+
+All fonts and layout should match the homepage hero section style.
+
+---
+
+### 🧩 Feature Card Layout (Below Hero)
+
+Each feature gets a branded card with short, punchy descriptions. Style should match the homepage “ecosystem” section (outlined cards, light shadow, clean icons, Vogue aesthetic).
+
+**Cards (all clickable):**
+1. **Visual Content**  
+   → Description: Create branded visuals, carousels, and templates from your selfies.  
+   → Link to: `/studio/visuals`
+
+2. **Caption Creator**  
+   → Description: Generate authentic captions, hooks, and hashtags based on your voice.  
+   → Link to: `/studio/captions`
+
+3. **Pose Coach**  
+   → Description: Learn flattering poses and content angles for confident selfies.  
+   → Link to: `/studio/pose`
+
+4. **Strategy**  
+   → Description: Map your personal brand content plan with clarity and AI guidance.  
+   → Link to: `/studio/strategy`
+
+5. **Chat with Sandra**  
+   → Description: Ask questions, get coaching, and build your brand with Sandra AI.  
+   → Link to: `/studio/chat`
+
+Add button hover states and soft transitions. All cards must be **clickable** and linked to the correct routes above.
+
+---
+
+## ✅ SECTION 2: PAGE STRUCTURE AND NAVIGATION
+
+Each feature (listed above) must be on its own **dedicated subpage**.  
+Do not combine all features into one page.
+
+- `/studio/visuals`  
+- `/studio/captions`  
+- `/studio/pose`  
+- `/studio/strategy`  
+- `/studio/chat`
+
+Add a **clean Vogue-style horizontal nav bar or tabs** across the top of every subpage, so users can easily navigate between features inside the studio.
+
+→ Use same fonts, spacing, and header design as main site navigation  
+→ Avoid bulky tabs or dropdowns
+
+---
+
+## ⚠️ SECTION 3: CORE BUGS TO FIX NOW
+
+These are critical—please fix before we proceed to next phase:
+
+### 🖼️ Photo Editor
+- AI Enhance features still return errors:
+  - Enhance Face
+  - Remove Background
+  - Editorial Filter
+- Sliders still broken:
+  - Filter intensity washes out image
+  - Sharpness & Vignette not working
+  - Temperature throws incorrect colors (blue/purple)
+
+### 🎨 AI Lifestyle Generator
+- Generation still fails—error screen shown
+- Needs to be debugged so I can test output
+
+---
+
+Let me know once these updates are implemented so I can retest and approve the flow before we move on to refining the feature subpages. Keep styling clean, on-brand, and premium throughout.
+

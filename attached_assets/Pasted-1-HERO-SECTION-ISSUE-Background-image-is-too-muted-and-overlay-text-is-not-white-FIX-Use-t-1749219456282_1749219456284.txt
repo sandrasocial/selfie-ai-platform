@@ -1,0 +1,123 @@
+1. ✅ HERO SECTION
+ISSUE: Background image is too muted and overlay text is not white.
+
+FIX:
+
+✅ Use this exact image: https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png
+
+✅ Text alignment: CENTER
+
+✅ Headline font: Cormorant Garamond, 64px
+
+✅ Subtext: Neue Einstellung or Inter Light, 18px, white
+
+✅ Text Color: #F1F1F1 (white) only
+
+❌ No shadow, gradient, or dark overlay allowed
+
+2. ✅ TOOLS GRID
+ISSUE: Background colors are inconsistent. Icons present. Font not fully aligned.
+
+FIX PER CARD:
+
+Tool Name	Image to Use	Background	Text Color	Fixes Needed
+Selfie Editor	https://i.postimg.cc/C1hK0FBt/heroimage_homepage_(1).png	#F1F1F1	#171719	Replace image, remove icon, correct font sizes
+Feed Designer	https://i.postimg.cc/d05zmx5K/2.png	#F1F1F1	#171719	Replace image
+Photo Vault	✅ Already Correct	#F1F1F1	#171719	Keep as is
+Daily Upload Boost	https://i.postimg.cc/SK4F0n0L/85.png	#F1F1F1	#171719	Replace image
+Brand Notes	✅ Already Correct	#F1F1F1	#171719	Keep as is
+Auto Tagger	https://i.postimg.cc/6QVKTdV1/36.png	#F1F1F1	#171719	Replace image
+
+Global Tool Card Fixes:
+
+Font: Cormorant Garamond for titles, Inter Light 16px for descriptions
+
+Remove all icons or emojis
+
+Card borders: 1px solid #B5B5B3, white background
+
+Hover: Soft scale 1.03, underline animation on title
+
+3. ✅ PHOTO VAULT
+ISSUE: Overlay text colors are inconsistent.
+
+FIX:
+
+Headline: PHOTO VAULT → Cormorant Garamond, 64px, black
+
+Subhead: Inter Light 18px, #4C4B4B
+
+Dropdowns: Thin outlined borders, 0px radius, Neue Einstellung 14px
+
+Thumbnail hover: subtle shadow + light zoom
+
+Filters: Add spacing (16–24px) between each dropdown
+
+4. ✅ GRID PLANNER / FEED MOCKUP
+ISSUE: Upload buttons + card layout don’t match luxury system.
+
+FIX:
+
+Upload placeholders: Soft dashed border, 1px #B5B5B3
+
+Icons: Outline upload icon only (black stroke, no fill)
+
+Grid: Add 24px between cards, 3x3 layout, no overflow
+
+View Toggle Buttons:
+
+Font: Inter UPPERCASE 14px
+
+Selected Button: Black fill, white text
+
+Inactive: Outline black border
+
+Add hover overlay: “Schedule this” on hover
+
+5. ✅ DAILY UPLOAD WIDGET
+ISSUE: Button styling and quote font are slightly off
+
+FIX:
+
+Quote text: Italic Cormorant Garamond, 24px
+
+Button:
+
+Black fill, white text
+
+Uppercase Neue Einstellung, 14px, 0.5px spacing
+
+Icon: remove or replace with minimalist upload glyph only if approved
+
+✨ SUGGESTED ADDITIONS FOR LUX EXPERIENCE
+✅ ADD: Instagram Feed Planner
+3x3 grid mockup with drag-to-sort
+
+Option to preview desktop vs. mobile
+
+CTA on each: “Add caption”, “Schedule”, “Save draft”
+
+✅ ADD: Mood Filter Bar (Top of Vault)
+Add tags like: Lux, Moody, Soft, Clean, Vintage
+
+Clicking tag filters vault view
+
+✅ ADD: “Send to Sandra” shortcut
+Each image card has hover overlay: “Get Feedback from Sandra AI”
+
+✅ ADD: Visual Themes Toggle (Sidebar or top right)
+Cream / Vogue Gray / Editorial Black (client-controlled branding mode)
+
+🖤 BRAND CONSISTENCY REMINDERS FROM YOUR GUIDE
+Never use beige or gradients
+
+Text on images must be pure white #F1F1F1
+
+No emojis or illustrated icons
+
+Always Cormorant for titles, Inter or Neue Einstellung for UI
+
+Padding: Maintain 16–32px between sections
+
+No round buttons or inputs (0px radius)
+

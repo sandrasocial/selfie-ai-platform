@@ -1,0 +1,144 @@
+✅ SELFIE AI™ PHASE 2 – BUILD CHECKLIST
+(Post-Testing Fixes + Feature Expansion)
+🧠 1. SANDRA AI – MEMORY + PERSONALIZED COACHING
+ Fix: Prevent chat scroll from jumping to bottom after each message
+
+ Fix: Remove repeated “Hi love” greeting in ongoing chats
+
+ Feature: Persistent memory – Sandra should remember user responses and context
+
+ Feature: Branching chat logic – if user types a struggle (e.g. “I don’t know my niche”), Sandra replies with:
+
+Motivating response
+
+Follow-up: “Want a personalized action plan or just want to chat?”
+
+If yes → generates custom AI Workbook, Checklist, or Plan (and saves it in dashboard)
+
+ Sandra’s Framework Rule:
+“If this was easy, how would it look?” → guides all coaching replies and AI generation (simple, fast wins, clear directions)
+
+📖 2. CONTENT SYSTEM REBUILD
+ Fix: Bring back /templates page design (styled layout, images for each day)
+
+ Update URL to /contentvault while preserving visual layout
+
+ Connect each Day Template to correct Trello-based structure:
+
+Reel Prompt
+
+Caption
+
+Signature
+
+Hashtags
+
+SEO Tags
+
+ Align generated content with Trello templates structure (correct formatting, spacing, hooks, CTAs, emojis)
+
+ Include white space + mobile-friendly formatting
+
+ Add option to export full 3-post arcs, stories, and captions to PDF
+
+ Fix: Vault section should allow PDF exports, not just raw text
+
+🧰 3. STRATEGY + PERSONAL STORY TOOLS
+ Fix: Strategy Generator currently vague → improve logic, tone, step-by-step clarity
+
+ Align with Sandra’s tone (motivational, emojis, branded)
+
+ Add “Save Strategy to Vault” button with:
+
+Confirmation toast
+
+DB write
+
+ Personal Story Generator:
+
+Missing UI – Add form with 3 guided prompts:
+
+Biggest Struggle
+
+Turning Point
+
+Today’s Win
+
+Output: 3 post sequence using Trello template format
+
+Allow save/export
+
+Connect with user’s brand info (stored at signup or profile setup)
+
+ Add “Brand Info Setup” on signup (see below)
+
+💼 4. BRAND PROFILE SYSTEM
+ New: Brand Profile Form
+→ Ask at signup or on Dashboard setup
+
+Personal Brand Name
+
+Story Summary
+
+Transformation Point
+
+Tone/Voice choice
+
+Mission Statement
+
+ All AI tools pull from this info to personalize content
+
+ Allow editing/updating inside dashboard later
+
+🖼️ 5. AI STUDIO FIXES
+ Desktop bug: Buttons cropped or out of frame → fix layout (see screenshot)
+
+ Fix: “Save Photo” button should export edited version, not original
+
+ Add placeholder or loader for coming Pro AI features
+
+ Later Phase: Add “Glow” Enhancer using external API (like Cloudinary or Banuba)
+
+🧭 6. DASHBOARD REDESIGN (Phase 2 UX Plan)
+ Fix: No navigation link to Dashboard → clicking “Home” should lead there after login
+
+ Keep existing landing homepage for visitors → only redirect to Dashboard for logged-in users
+
+ Add “Next Step” card on dashboard:
+
+“Your prompt for today”
+
+“Open this month’s workbook”
+
+“Finish your next 3-post story”
+
+ Prepare future design updates:
+
+Notion + Pinterest-style layout
+
+Drag & drop modules
+
+Custom widgets
+
+Sandra AI as sidebar agent
+
+📤 7. PDF EXPORT + VAULT UX
+ Fix broken or missing “Export to PDF” buttons in Content Vault
+
+ Add confirmation when saving to Vault
+
+ Improve content display inside vault (title, tags, filters)
+
+ Allow content deletion or reordering
+
+✅ FINAL DEV NOTES
+Wait to deploy until:
+
+PDF export working
+
+Sandra memory logic stubbed or scoped
+
+Vault save actions tested
+
+When these are ready, redeploy and retest with mobile UX in mind
+

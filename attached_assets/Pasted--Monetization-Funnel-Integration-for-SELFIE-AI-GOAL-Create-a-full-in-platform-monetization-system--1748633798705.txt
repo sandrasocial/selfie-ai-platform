@@ -1,0 +1,126 @@
+ Monetization Funnel Integration for SELFIE AI™
+GOAL:
+Create a full in-platform monetization system for SELFIE AI™. This includes sales pages, checkout pages, thank-you pages, and upsell/downsell logic for Sandra’s digital products. Everything must be connected to existing Stripe + Resend setup and follow her luxury, Vogue-style aesthetic.
+
+🔗 PRODUCTS & FLOW STRUCTURE
+1. 🖤 The Selfie Starter Kit
+Price: $47 (one-time)
+
+Page 1: Landing Page
+
+Use uploaded content + visuals (PDFs + screenshots) to build layout
+
+Hero headline: “The content system that started it all”
+
+Add image, benefit bullets, testimonials slider (from provided testimonial pool), CTA to checkout
+
+Page 2: Checkout Page
+
+Stripe integration (existing)
+
+Summary: Product image + short text + price
+
+Page 3: Thank You Page
+
+“Welcome to the Starter Kit” confirmation
+
+Show embedded video placeholder (upload later)
+
+Below video, display 2–3 testimonials dynamically
+
+Add upsell button → Branded By Selfie™
+
+2. 👑 Branded By Selfie™
+Price: $397 (fixed – NO discounting)
+
+Page 1: Editorial Sales Page
+
+Use course transcript content provided (PDF)
+
+Highlight transformation, content system, and emotional triggers
+
+Add “This is for you if…” section and visual mockups
+
+Display testimonials (from course PDF + screenshots)
+
+CTA → Checkout
+
+Page 2: Checkout Page
+
+Stripe checkout, one-time purchase
+
+Optional Downsell Logic:
+
+If user exits, optionally show teaser module ($97 preview) – build as placeholder but keep hidden unless activated
+
+3. ✨ Lightroom Preset Bundles
+Products:
+
+Bare Bundle – $5
+
+Glow Bundle – $5
+
+Skin Bundle – $5
+
+NEW: Selfie Glow-Up Bundle – $5
+
+Bundle All (4 packs): $15
+
+Landing Page:
+
+Vogue-inspired grid layout
+
+Display thumbnails of each preset (use placeholder images now)
+
+CTA under each: “Buy Now” (connect to Stripe one-click checkout)
+
+Bundle CTA: “Get All for $15” with discount logic
+
+Thank You Page:
+
+“Download your presets”
+
+Add quick tutorial video placeholder
+
+Include a soft CTA to “Start your AI journey” → link to Free Plan signup
+
+💌 EMAIL AUTOMATION (RESEND)
+Triggers + Flows (Tag-Based Logic):
+Starter Kit Purchase:
+
+Tag: purchased:starterkit
+
+Send 3-email sequence (copy will be uploaded next)
+
+Branded By Selfie Purchase:
+
+Tag: purchased:brandedbyselfie
+
+Send onboarding email + bonus reminder
+
+Preset Bundle Purchase:
+
+Tag: purchased:presets
+
+Deliver download link via email
+
+CTA in email: “Want content to match your glow-up? → Starter Kit”
+
+Ultimate Selfie Guide Freebie:
+
+Tag: optin:selfieguide
+
+4-email nurture sequence with story + CTA to Starter Kit
+
+Ensure Resend integration is live and use existing email structure with from:sandra@dibssocial.com.
+
+📲 TECH NOTES
+All product logic should be conditionally visible based on purchase status (prevent duplicate purchases)
+
+Connect testimonials dynamically using uploaded testimonial PDFs or comment screenshots
+
+Responsive layout: must look sharp on mobile and editorial-clean on desktop
+
+Use Sandra’s signature fonts (Prata for headers) + black/white color palette
+
+Ensure all pages show correctly in mobile nav under "Get Started" or "Templates"

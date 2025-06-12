@@ -1,0 +1,130 @@
+Final Editorial Copy + Design Flow
+🖤 Hero Section
+Background:
+Full-bleed black & white image of Sandra
+📸 https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png
+
+Overlay Text:
+
+plaintext
+Kopier
+Rediger
+Turn Your Selfies Into  
+*Strategic Brand Assets*
+Subtext:
+The most powerful branding tool is already in your hand—your phone.
+
+CTAs (2 Transparent Buttons):
+
+Start Your Brand Journey
+
+View Plans
+
+💎 Proof Block: Transformation Results
+Section Title:
+Transformation
+See the power of strategic personal branding
+
+Stats (Styled in 3 Columns, Centered):
+
+90 Days
+
+120K Followers
+
+1.7M Reach
+
+Image Layout:
+
+Left: Before Grid (muted colors)
+[Image → https://i.postimg.cc/XNt6zt4j/1.png]
+
+Right: After Grid (already styled)
+[Image → https://i.postimg.cc/d05zmx5K/2.png]
+
+Overlay: Use soft shadow, subtle transition hover zoom on “After” grid only.
+
+👑 About Sandra Section
+Layout: 3 Column Block
+Left: Headline + Text
+Center: Placeholder image
+Right: Quote + Signature Detail
+
+Left:
+
+plaintext
+Kopier
+Rediger
+Hi, I'm Sandra.  
+Personal branding mentor. Single mom of 3.  
+Building my dream life from rock bottom—  
+and teaching women to do the same.
+Center:
+Use placeholder image:
+📸 https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png
+Overlay Text: ADD IMAGE (white)
+
+Right:
+
+plaintext
+Kopier
+Rediger
+"Every selfie tells a story.  
+Let’s make yours unforgettable."
+Signature below: Photographer, Educator, Canada
+Living, Entrepreneur & Mamma
+
+🚀 Platform Benefits
+Title:
+The Tools That Built My Empire
+
+4 Feature Cards, animated on hover with shadow fade + zoom:
+
+Tool	Description	Visual Overlay
+AI Studio	Create, enhance, and perfect your content	3.png
+Template Library	Consistency meets creativity—30-day prompt flow	story-Image1.png
+Sandra AI Chat	Personal support, strategy & content creation	8.png
+Strategy Workbooks	Turn insights into income	flatlay-overlay-Url.png
+
+Use luxury card styling: grayscale overlay, white text, no emoji/icons.
+
+💼 Offer Ladder Preview
+Use a 4-card row to highlight:
+
+Free Selfie Guide
+“Start showing up with confidence—even if you've been hiding.”
+
+Selfie Starter Kit
+“Lighting, posing, editing—your content system starts here.”
+
+Branded by Selfie™
+“Turn your image into a brand that sells.”
+
+VIP Empire Builder
+“You’re not just building a brand—you’re building an empire.”
+
+CTA on hover only → Transparent uppercase: VIEW / START / APPLY
+
+💬 Testimonials Section (Refined Style)
+Use white background. Replace boxed testimonials with:
+
+Title:
+Women Finding Their Voice
+Real stories from women reclaiming their power
+
+Use 3 wide full-width quote sliders (show 1 at a time, horizontal scroll or auto-fade):
+
+plaintext
+Kopier
+Rediger
+“Sandra I’m not going to lie, I just took the BEST photo of myself that I’ve taken in YEARS.”
+– Confidence Queen
+plaintext
+Kopier
+Rediger
+“You literally changed my photo-taking from boring to professional. Thank you.”
+– Content Creator
+plaintext
+Kopier
+Rediger
+“I heard the words I’d been waiting my whole life to hear. And finally posted my story.”
+– Olha, Dream Pursuer

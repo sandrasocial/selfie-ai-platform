@@ -1,0 +1,80 @@
+🔥 We’re rebuilding the course layout for The Viral Selfie Blueprint.
+
+Please remove the old slide-based gallery for Module 1 and replace it with this scroll-based, editorial format:
+
+Use clean, spacious sections
+
+Keep it responsive and on-brand (Vogue aesthetic: black/white, bold type)
+
+Add a Hero section at the top with a placeholder image and the title/subtitle provided
+
+Each lesson should have a large subheading (H2) and clean body text
+
+Add bullet points where listed
+
+Format the final section (the story exercise) as a worksheet-style Q&A
+
+💡 I’ll design the hero image and spacing later—just insert placeholder divs where needed.
+
+Here’s the Module 1 content to implement:
+
+Hero Section Title:
+“Your Story Is Your Superpower”
+Subtitle: Let's turn your journey into your brand’s foundation.
+
+1. Welcome to Module 1
+Let’s get one thing straight: you don’t need to “find” your brand voice—you already are it.
+
+In this module, I’m showing you how to take your story and make it the most magnetic thing about your brand. No overthinking. No trying to be like someone else. This is about owning your truth and using it as fuel.
+
+2. What Positioning Really Means
+Positioning = how people see you.
+
+Your story, your energy, your transformation—that’s what sets you apart. We’re not building a copy-paste influencer brand here. You’re building a brand based on you—the real you.
+
+Here’s what we’ll work on:
+
+The before you (messy, raw, real)
+
+The after you (glowing, growing, leading)
+
+The how you got here (your steps become your strategy)
+
+3. Your Personal Brand Starts with Emotion
+People don’t connect to “niches,” they connect to stories.
+
+Let your followers feel what you’ve been through. The confusion, the heartbreak, the glow-up. That’s the brand. That’s what makes people stop scrolling and say, “Damn, she gets me.”
+
+4. Let’s Map Your Transformation
+Your content isn’t just posts—it’s proof.
+
+Think of this as your emotional timeline:
+
+Where you were (lost, stuck, surviving)
+
+What shifted (your moment of clarity)
+
+Where you are now (building, branding, thriving)
+
+Who you help (women like you, who need someone real)
+
+That’s the blueprint. That’s your position.
+
+5. Stop Trying to Be “Niche”
+Here’s the truth: you are the niche.
+
+You don’t need to niche down—you need to show up fully. When you do that, the right people will know you’re their person.
+
+6. Story Exercise (Workbook Style)
+Answer these:
+
+What was your “rock bottom” moment?
+
+What made you decide to change?
+
+What would your past self need to hear from you today?
+
+How do you want women to feel after seeing your content?
+
+👉 Boom. You’ve got your positioning.
+

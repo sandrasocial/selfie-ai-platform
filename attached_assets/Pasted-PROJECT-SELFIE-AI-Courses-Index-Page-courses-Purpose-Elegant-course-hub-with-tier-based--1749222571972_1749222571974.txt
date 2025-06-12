@@ -1,0 +1,89 @@
+PROJECT: SELFIE AI™ — Courses Index Page (/courses)
+
+🎯 Purpose:
+Elegant course hub with tier-based access logic (Starter Kit → Branded by Selfie™ → VIP Empire Builder).
+Design should feel editorial, minimal, and empowering — like entering a digital masterclass inside Vogue.
+
+✨ PAGE STRUCTURE & CONTENT
+🖼 Hero / Header Section
+Background: Soft cream #F1F1F1
+
+Headline (H1):
+Your Brand Training
+Font: Cormorant Garamond, 60px, normal weight
+
+Subhead (H2):
+"Learn how to turn your face, voice, and vibe into a digital empire."
+Font: Neue Einstellung, 18px, medium, #4C4B4B
+
+🎓 Course Cards Grid
+Layout:
+1 row of 3 cards
+Responsive: Stack vertically on mobile
+
+Each card shows image, title, subtitle, CTA, and state logic
+
+🧱 Card Components (per course):
+Element	Styling
+Background Image	Full-cover, editorial photo
+Overlay	B&W for locked, normal for unlocked
+Course Title	Cormorant Garamond, 24px
+Subheadline	Neue Einstellung, 14px, light gray
+CTA Button	Transparent, border-only, uppercase — different label based on state
+Lock Icon (if locked)	Top-right, minimal line icon
+Progress Bar (if unlocked)	Thin black bar at bottom with %
+
+🪄 STATE-BASED VISUAL LOGIC
+✅ If User Has Access:
+Image: Full color
+CTA Button: "Start Course" → links to specific course page
+Progress: Show bar or “X% complete”
+Cursor: Pointer on hover
+
+🔒 If User Does Not Have Access:
+Image: Grayscale or low-opacity overlay (opacity: 0.5)
+CTA Button: "Unlock with Plan" → links to sales page
+Lock Icon: Top-right corner
+Hover: Slight lift/shadow effect still applies
+
+🖼 IMAGES TO USE
+Course	Image
+Starter Kit	https://i.postimg.cc/bwYKyKCW/122.png
+Branded by Selfie™	https://i.postimg.cc/nhDpf8Xx/35.png
+VIP Empire Builder	https://i.postimg.cc/4dBPJ9Cj/95.png
+
+🖌 DESIGN NOTES
+Fonts:
+Headline: Cormorant Garamond
+UI/Subhead: Neue Einstellung
+
+Color System:
+Background: #F1F1F1
+Text: #171719, #4C4B4B
+CTA Border: #171719
+
+Button Style:
+Transparent with sharp black border, 0px radius
+
+Example CSS:
+background: transparent;
+border: 2px solid #171719;
+border-radius: 0px;
+font-family: 'Neue Einstellung', sans-serif;
+text-transform: uppercase;
+
+📲 MOBILE RESPONSIVE
+Stack course cards in vertical layout
+Remove hover behavior — use tap effects instead
+Ensure lock icon and CTA are still clear
+
+✅ DEV INSTRUCTIONS
+Pull user access status from /api/purchases
+Use conditional logic to apply:
+locked vs unlocked styles
+Progress bar data from /api/course-progress
+
+Route:
+Starter: /courses/starter-kit
+Branded: /courses/branded
+VIP: /courses/vip (or application if not auto-unlocked)

@@ -1,0 +1,58 @@
+﻿<!-- MODULE 4: Build Your Brand Look -->
+<section class="module-wrapper bg-[#F1F1F1] py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+
+
+    <!-- Header Block -->
+    <div class="text-center mb-20">
+      <h2 class="text-[48px] italic font-serif text-[#171719] leading-tight">Design Your Brand Look</h2>
+      <p class="text-[18px] font-sans text-[#4C4B4B] mt-4 max-w-2xl mx-auto">Your brand deserves a signature style. Let’s define your aesthetic, your mood, and your visual voice—so every piece of content feels aligned and elevated.</p>
+      <div class="luxury-divider mt-8 mb-12 h-[2px] w-[120px] bg-[#4C4B4B] mx-auto"></div>
+    </div>
+
+
+    <!-- Lesson Overview -->
+    <div class="mb-16">
+      <h3 class="text-[32px] font-serif text-[#171719] mb-6">🖥️ What You’ll Create</h3>
+      <p class="text-[16px] text-[#4C4B4B] font-sans leading-relaxed">
+        In this lesson, you'll generate a personalized branding workbook using AI. It’s called your <strong>Design Like a CEO™ Blueprint</strong>—your visual playbook for future content.
+      </p>
+      <ul class="list-disc pl-6 mt-4 text-[#4C4B4B]">
+        <li>Your color palette</li>
+        <li>Your font pairings</li>
+        <li>Your brand’s mood + tone</li>
+        <li>Aesthetic style (clean, glam, minimal...)</li>
+      </ul>
+    </div>
+
+
+    <!-- CTA Block -->
+    <div class="text-center py-10 bg-white border border-[#B5B5B3] rounded-xl shadow-md">
+      <h4 class="text-[28px] font-serif italic text-[#171719] mb-2">📘 Build Your Brand Blueprint</h4>
+      <p class="text-[16px] font-sans text-[#4C4B4B] mb-6">Answer a few creative prompts—AI will design your brand identity guide instantly.</p>
+      <button class="uppercase text-sm font-sans tracking-wider border border-black px-8 py-3 hover:underline">Launch AI Builder</button>
+    </div>
+
+
+    <!-- Journal Prompt -->
+    <div class="mt-16">
+      <h4 class="text-[24px] font-serif text-[#171719] mb-4">✍️ Journal Prompt</h4>
+      <blockquote class="italic text-[#4C4B4B] text-[16px] border-l-[4px] border-[#171719] pl-4">
+        "If your brand was a woman walking into a room… what would she be wearing? What kind of energy would she bring?"
+      </blockquote>
+    </div>
+
+
+    <!-- Practice Challenge -->
+    <div class="mt-20 bg-[#171719] text-white p-10 rounded-xl">
+      <h4 class="text-[24px] font-serif italic mb-4">📌 Creative Challenge</h4>
+      <p class="text-[16px] font-sans leading-relaxed">
+        Screenshot your mood board or brand palette. Post it in your story with:
+        <br/><br/><em>“Building a brand that feels like me. The CEO era is here.”</em>
+        <br/><br/>Tag @ssasocial so I can celebrate your vibe 🖤
+      </p>
+    </div>
+
+
+  </div>
+</section>

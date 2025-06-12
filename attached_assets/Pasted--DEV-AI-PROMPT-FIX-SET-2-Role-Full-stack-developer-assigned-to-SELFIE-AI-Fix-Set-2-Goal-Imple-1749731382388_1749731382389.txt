@@ -1,0 +1,79 @@
+✅ DEV AI PROMPT — FIX SET 2
+Role: Full-stack developer assigned to SELFIE AI™ Fix Set 2.
+Goal: Implement functional fixes across visual strategy tools inside the Studio.
+IMPORTANT:
+
+Do NOT touch layouts or designs unless explicitly instructed.
+
+If a new element is required, keep it minimalistic, luxury editorial, and in line with the design system (black/white, no emojis, no icons unless minimalist, sharp corners only). Fonts: Cormorant Garamond for headings, Neue Einstellung for body.
+
+🔧 FIX SET 2 TASKS
+1. Selfie Editor Tool
+
+✅ Route works correctly
+
+❌ FIX: Pop-up error “Load failed. Unable to load your photo gallery” — ensure user gallery fetches correctly from Supabase.
+
+❌ FIX: Save photo button not working — ensure image is saved with correct format to gallery and file path in database.
+
+✅ Download button works
+
+✅ Filter + adjustment tools work
+
+⚠️ NOTE: Do not change UI. Just make backend save/gallery logic work.
+
+2. AI Strategy Button (inside Selfie Editor)
+
+✅ Route to Visual Strategy works
+
+❌ FIX: User is forced to fill out form every time. This is unnecessary.
+
+Implement: auto-populate form using their brand profile.
+
+Only show manual form if the user is not logged in.
+
+❌ FIX: No indication where the generated strategy is saved.
+
+Implement: successful strategy should be saved to user’s “Content Vault” and/or “Strategy History” (create if needed).
+
+Display a success modal: “Your strategy has been saved to your Studio Vault.”
+
+3. AI Visual Strategy Tool (Standalone Page)
+
+❌ FIX: Same issue — user brand profile should auto-fill form.
+
+❌ FIX: Generated content is not saved or viewable
+
+Save each strategy to user’s strategy history with timestamp
+
+Implement redirect or modal after generation to view saved strategy
+
+Strategy should be previewable (render strategy block, not just JSON)
+
+✨ REQUIRED STYLING
+Use existing global SELFIE AI™ brand system rules:
+
+Primary color: #171719 (Luxury Black), Soft White: #F1F1F1
+
+Fonts: Cormorant Garamond (titles), Neue Einstellung (body/UI)
+
+Buttons: Transparent with black border, sharp corners only, UPPERCASE text
+
+No emoji, no rounded borders, no default MUI/Bootstrap styling
+
+Hover effects: scale up soft fade + underline on links/buttons
+
+🗂 SAVE ALL STRATEGY OUTPUTS TO
+supabase.content.aiVisualStrategies
+Fields:
+
+user_id
+
+type (e.g. "Story Template", "Photoshoot")
+
+brand_profile_snapshot
+
+content_generated (JSON)
+
+created_at
+

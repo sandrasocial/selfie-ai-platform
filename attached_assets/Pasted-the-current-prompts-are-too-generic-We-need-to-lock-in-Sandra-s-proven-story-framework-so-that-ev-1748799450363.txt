@@ -1,0 +1,61 @@
+the current prompts are too generic. We need to lock in Sandra’s proven “story-framework” so that every caption and hook follows her signature structure (problem → transformation → call-to-action) and reads like her own voice. Please make the following exact changes in CaptionCreator.tsx (or wherever you build the AI prompt):
+
+Replace the “simple list” instruction with a full story framework template.
+Instead of “Write three captions…,” use exactly:
+
+txt
+Kopier
+Rediger
+You are Sandra’s personal social copywriter. The user has provided this context:
+“${selfieContext}”  
+
+Follow this story-framework for every caption and hook:
+1. **Problem/Hook** (why the user’s audience cares—use emotion or curiosity).  
+2. **Transformation** (how this user overcame that problem and the change they experienced).  
+3. **Call-to-Action** (encourage a comment, like, share, or next step).  
+
+→ Write **three complete Instagram captions**, each 120–180 characters (including 1–2 emojis).  
+→ For each caption, also generate a corresponding **“Viral Hook”** (6–10 words max, emotionally driven).  
+
+Return JSON with this structure:  
+```json
+{
+  "captions": [
+    { "caption": "…", "hook": "…" },
+    { "caption": "…", "hook": "…" },
+    { "caption": "…", "hook": "…" }
+  ]
+}
+Maintain a warm, conversational tone (everyday language), sprinkle in 1–2 of Sandra’s signature emojis per caption (no more), and keep it authentic to the user’s own context.
+
+Kopier
+Rediger
+Remove any leftover “Sandra’s story” references. All inputs must come from ${selfieContext}, not from Sandra’s past.
+
+If the user hasn’t provided enough context, return an error message like:
+
+txt
+Kopier
+Rediger
+“Please share one or two sentences about your current challenge or goal so I can craft a tailored caption and hook for you.”
+Test steps after updating prompt:
+
+Enter a detailed user scenario (e.g. “I just left my corporate job to start my own jewelry line and I feel terrified but excited.”).
+
+Click “Generate.”
+
+Verify that each “hook” is a short, attention-grabbing lead (e.g. “Leaving corporate to chase my dream? Read on…”).
+
+Verify that each “caption” follows Problem → Transformation → Call-to-Action (e.g. “When I left the 9-to-5, fear nearly stopped me. But I chose my creativity over comfort—and now my handcrafted necklaces are selling out! ✨ What dream are you chasing?”).
+
+Ensure captions are 120–180 characters, include 1–2 emojis, and match a simple, everyday style.
+
+Leave everything else (UI, swipe layout, copy buttons) unchanged. Only update the prompt logic and any related token-validation.
+
+Deploy and run a quick test. The output hooks must feel “viral-worthy” (emotional, curious) and captions must follow Sandra’s transformation narrative, not be generic sentences.
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+🛠️ 1. Fix Gallery Image Rendering (Full Preview)
+markdown
+Kopier
+Rediger
+In `VisualsCreator.tsx`, update the image display layout inside the gallery grid. Right now the CSS is clipping or using `object-fit: cover` in a way that hides parts of the image.
+
+✅ Replace the current image rendering with this:
+
+```jsx
+<img
+  src={image.url}
+  alt="Generated visual"
+  style={{
+    width: '100%',
+    height: 'auto',
+    borderRadius: '12px',
+    objectFit: 'contain',
+  }}
+/>
+This ensures the full image is visible and maintains its original proportions.
+
+yaml
+Kopier
+Rediger
+
+---
+
+#### 📸 2. **Fix Calendar Save Function (Image Missing)**
+
+```markdown
+When saving a generated image to the calendar, ensure the `image_url` field is passed to the `calendar_content` table.
+
+✅ In the route `/api/calendar/save`, verify that you're inserting the image_url into the database. Update the schema and logic if needed:
+
+```sql
+ALTER TABLE calendar_content ADD COLUMN IF NOT EXISTS image_url TEXT;
+Then update the save logic to include:
+
+ts
+Kopier
+Rediger
+await db.insert('calendar_content', {
+  user_id,
+  day_of_week,
+  caption,
+  hook,
+  image_url, // <-- Ensure this gets passed
+});
+yaml
+Kopier
+Rediger
+
+---
+
+#### 💡 3. **Fix UI Bug: “No images generated” Alert**
+
+```markdown
+Currently, even after successful 200 response and image generation, the app shows a failure message.
+
+✅ In `VisualsCreator.tsx`, add a success condition:
+
+```ts
+if (response.status === 200 && response.data.images?.length) {
+  // ✅ Success – update gallery
+} else {
+  // ❌ Failure – show error
+}
+Make sure you're not defaulting to error if data.images is briefly undefined during async load.
+
+yaml
+Kopier
+Rediger
+
+---
+
+#### 🖼️ 4. **Instagram-Style Visual Feed Planner (Phase 2 Upgrade)**
+
+```markdown
+Start planning the IG-style drag-and-drop feed designer:
+
+✅ Add a new tab called `Feed Planner`
+✅ Display uploaded + AI-generated images in a grid like Instagram (3-columns)
+✅ Allow user to drag/reorder or replace images
+✅ Allow upload of custom photos with button: “+ Add Your Own Visual”
+✅ Add Save Layout → saves the mockup design to their account
+📝 For visuals: use display: grid with grid-template-columns: repeat(3, 1fr); gap: 

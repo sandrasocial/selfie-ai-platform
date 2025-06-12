@@ -1,0 +1,62 @@
+Hey! Amazing work on the AI Studio landing page—it's getting close to the luxury vibe we want. Now we need to refine the design styling and set up the rest of the Studio section using that same elevated Vogue-style layout.
+
+⚠️ Important: Please do not change or remove any current visual styling that is already working. This phase is purely about:
+
+→ Elevating the look  
+→ Reusing consistent structure  
+→ Setting up subpages without affecting the working layout
+
+---
+
+## ✅ SECTION 1: VISUAL REFINEMENTS TO MAIN AI STUDIO PAGE
+
+1. 🧱 Typography Hierarchy:
+   - Increase headline font size of each feature title slightly (or consider ALL CAPS with subtle letter spacing)
+   - Reduce or lighten description font size slightly to create contrast
+   - Optional: apply a serif or italic style to feature descriptions for an editorial vibe
+
+2. 🎨 Icon Design:
+   - Replace current icons with thinner, custom-styled luxury icons (can be line-based or outlined—closer to Apple or Vogue aesthetic)
+   - Maintain consistent icon sizing and placement
+   - Icons must remain functional and aligned with the feature description
+
+3. 🕊️ Card Spacing & Layout:
+   - Add ~40px more vertical space between top and bottom rows of cards
+   - Add soft hover effect on cards (light gradient, soft shadow glow, or text underline on hover)
+   - Maintain the black/white color palette, and DO NOT add background colors
+
+4. 🧭 CTA Below Cards:
+   - Add a minimal, centered callout section after the feature grid:
+     → Text: “Not sure where to begin? Start with Visuals and create your first branded post.”
+     → Button: “Start Creating →” → Link to: `/studio/visuals`
+   - Match button style to existing homepage CTA
+
+---
+
+## ✅ SECTION 2: BUILD INDIVIDUAL FEATURE ROUTES
+
+Each feature in the AI Studio should have its **own dedicated subpage**. Please create empty, styled starter pages for now using the same layout, nav, and typography as the main Studio landing page:
+
+Create and route the following pages:
+
+1. `/studio/visuals`
+2. `/studio/captions`
+3. `/studio/pose`
+4. `/studio/strategy`
+5. `/studio/chat`
+
+Each page should include:
+
+✅ Hero section at the top (same font, layout, no image background needed yet)  
+✅ Mini header title (e.g. “Visual Content Studio”)  
+✅ Placeholder subtext (I’ll write these later)  
+✅ Keep full Studio nav visible at the top of every page for clean UX  
+✅ DO NOT implement features yet—just prep layout, routing, and styling to match Studio main page
+
+⚠️ Please do NOT remove or change the existing AI Studio page content—just add new routes and clone the design for consistency.
+
+---
+
+Once this is done, I’ll test navigation and supply final copy and content for each feature page.
+
+Let me know when it's live and stable so we can move into testing and content 🎯💻

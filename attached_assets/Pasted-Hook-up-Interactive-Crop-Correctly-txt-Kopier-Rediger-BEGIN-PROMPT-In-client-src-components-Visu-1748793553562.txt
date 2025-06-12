@@ -1,0 +1,98 @@
+Hook up Interactive Crop Correctly
+txt
+Kopier
+Rediger
+// BEGIN PROMPT
+
+In client/src/components/VisualStudioEditor.tsx, update the TUI Image Editor integration so that our “Crop” and “Undo Crop” buttons invoke the actual editor instance. Make these changes:
+
+1. **Import and assign a ref to the ImageEditor component**  
+   At the top of the file, ensure you have:
+   ```js
+   import ImageEditor from '@toast-ui/react-image-editor';
+   import 'tui-image-editor/dist/tui-image-editor.css';
+   import React, { useRef } from 'react';
+Then, where the editor JSX lives, replace any <canvas> or custom canvas nodes with TUI’s ImageEditor component:
+
+jsx
+Kopier
+Rediger
+const editorRef = useRef(null);
+…
+<ImageEditor
+  ref={editorRef}
+  includeUI={{
+    loadImage: {
+      path: imageSrc,  // whatever state holds the uploaded image
+      name: 'SELFIE',
+    },
+    theme: {},         // keep your Vuᴏɢᴜe-style theming elsewhere
+    menu: ['shape', 'filter', 'crop'], // include only needed modules (we’ll use crop manually)
+    initMenu: '',
+    uiSize: {
+      width: canvasContainerWidth,
+      height: canvasContainerHeight,
+    },
+    menuBarPosition: 'bottom',
+  }}
+  cssMaxWidth={canvasContainerWidth}
+  cssMaxHeight={canvasContainerHeight}
+  selectionStyle={{
+    cornerSize: 20,
+    rotatingPointOffset: 70,
+  }}
+  usageStatistics={false}
+/>
+Wire “Crop” button to invoke TUI’s crop tool
+Find your “Crop” button:
+
+jsx
+Kopier
+Rediger
+<button
+  className="bg-black text-white font-semibold p-2 rounded-none opacity-100"
+  onClick={() => editorRef.current.getInstance().invoke('crop')}
+>
+  Crop
+</button>
+Wire “Undo Crop” to call undo()
+Similarly, your “Undo Crop” button should be:
+
+jsx
+Kopier
+Rediger
+<button
+  className="bg-black text-white font-semibold p-2 rounded-none opacity-100"
+  onClick={() => editorRef.current.getInstance().undo()}
+>
+  Undo Crop
+</button>
+Remove any custom crop/canvas code
+
+Delete or comment out any <canvas id="tui-image-editor-canvas" … /> or manual crop logic.
+
+Rely entirely on TUI ImageEditor for cropping.
+
+Keep the pils for other adjustments above or below this component.
+
+Ensure the parent container wraps exactly around ImageEditor
+For example:
+
+jsx
+Kopier
+Rediger
+<div className="w-2/3 relative">
+  <ImageEditor …ref={editorRef}… />
+  {/* No extra canvas or overlay here—everything lives inside TUI */}
+</div>
+After making these changes, rebuild and test:
+
+Upload a selfie, click Crop → you should see the TUI crop box appear (corner handles, dragable).
+
+Drag/resize the crop area, then click the “Apply” button TUI displays.
+
+Click Undo Crop → photo reverts to the previous state, preserving any filters/adjustments.
+
+Run tests until interactive cropping works exactly. Then stop.
+
+// END PROMPT

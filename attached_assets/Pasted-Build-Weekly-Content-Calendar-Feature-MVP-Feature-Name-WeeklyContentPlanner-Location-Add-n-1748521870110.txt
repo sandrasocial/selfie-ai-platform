@@ -1,0 +1,106 @@
+Build Weekly Content Calendar Feature (MVP)
+📁 Feature Name: WeeklyContentPlanner
+📍Location:
+
+Add new route /calendar
+
+Accessible via Dashboard Quick Access ("📅 Weekly Planner")
+
+🔧 1. FUNCTIONAL OVERVIEW
+Enable PRO users to save generated captions, hooks, and hashtags from AI Studio into a 7-day visual calendar view. Each day can include:
+
+Caption
+
+Hook
+
+Hashtags
+
+Image (optional reel cover or photo)
+
+Editable labels
+
+🧠 2. USER FLOW
+From AI Studio (captions, hooks, hashtags):
+
+Add “📅 Save to Calendar” button next to each output
+
+On click, open modal:
+
+Select day of the week
+
+Optional: Upload image (accept .png, .jpg, .webp)
+
+Optional: Add notes or title
+
+Save to /calendar
+
+Calendar Page /calendar:
+
+7-column weekly view (Mon–Sun)
+
+Each day shows:
+
+Saved hook
+
+Saved caption
+
+Saved hashtags
+
+Uploaded image preview
+
+Copy button for each section (to paste into IG manually)
+
+“Clear Day” or “Edit” for content updates
+
+Optional: “Download Full Week Plan” (JSON or formatted text)
+
+🗃️ 3. DATABASE SCHEMA UPDATE
+In shared/schema.ts under user or create a new calendar table:
+
+ts
+Kopier
+Rediger
+calendarContent: pgTable("calendar_content", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  dayOfWeek: varchar("day").notNull(), // e.g., "Monday"
+  caption: text("caption"),
+  hook: text("hook"),
+  hashtags: text("hashtags"),
+  imageUrl: text("image_url"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow()
+});
+🎨 4. FRONTEND DESIGN REQUIREMENTS
+Calendar Page /calendar:
+
+Clean Vogue-style grid layout
+
+White background, black text, soft shadows
+
+Use black square icons for:
+
+Edit
+
+Copy
+
+Trash
+
+Inside AI Studio:
+
+“📅 Save to Calendar” buttons added below each AI output (Captions, Hooks, Hashtags)
+
+Modal to save to specific day with image upload (drag + drop or click-to-upload)
+
+✅ 5. ACCESS CONTROL
+Only available to PRO members
+
+Free plan should not display calendar access (or show upgrade CTA)
+
+🔄 6. FUTURE ADD-ONS (Save as TODOs)
+PDF export of weekly calendar
+
+Add “mark as posted” toggle
+
+Add notification/reminder system
+

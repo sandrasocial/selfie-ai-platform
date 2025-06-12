@@ -1,0 +1,260 @@
+1. Create/Update /studio/captions Route & File
+File Location:
+
+Confirm that client/src/pages/studio/CaptionsStudio.tsx (or similar) exists. If not, create it by copying the structure of VisualsStudio.tsx and renaming appropriately.
+
+Ensure the route in your router (e.g. App.tsx or wherever you define <Route path="/studio/captions">) points to CaptionsStudio.
+
+Imports & Boilerplate:
+
+At the top of CaptionsStudio.tsx, import React, any needed original caption-creator components (e.g. CaptionGenerator, HookGenerator, etc.), plus your site‐wide layout components (header, footer, etc.).
+
+Also import the same Prata serif font CSS (if not globally applied) and any shared UI utilities (spacing, colors).
+
+2. Page Structure & Container
+Mirroring the Visuals page, wrap everything in a single <div className="studio-page"> container with:
+
+tsx
+Kopier
+Rediger
+<div className="studio-page">
+  <header className="studio-header">
+    <Link to="/studio">← Back to AI Studio</Link>
+    <h1 className="studio-title">Caption Creator</h1>
+    <p className="studio-subtitle">Generate on-brand, authentic captions that convert followers into clients.</p>
+  </header>
+
+  <main className="studio-content">
+    {/* Below, two layout variants: Desktop vs. Mobile carousel – see sections 3 & 4 */}
+  </main>
+</div>
+studio-page styling: white background, full‐width, padding 20px top/bottom, 16px sides.
+
+studio-header:
+
+“Back to AI Studio” is a simple gray link (Prata, 16px), underlined on hover.
+
+Title: Prata serif, 36px, uppercase, letter-spacing: 0.1em, black.
+
+Subtitle: Prata italic, 18px, charcoal gray (#4A4A4A), margin-top: 8px.
+
+3. Desktop Layout (≥ 768px)
+Under the header, create a two-column layout (using CSS Grid or flex):
+
+tsx
+Kopier
+Rediger
+<div className="desktop-layout">
+  <section className="caption-controls">
+    {/* Left column: Controls (inputs, buttons, options) */}
+  </section>
+  <section className="caption-preview">
+    {/* Right column: Live preview of generated captions */}
+  </section>
+</div>
+Grid Setup:
+
+css
+Kopier
+Rediger
+.desktop-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  align-items: start;
+}
+Caption Controls (Left column):
+
+“Select Template” Dropdown (Prata, 20px, bold)
+
+A minimal dropdown with black border, white background, 16px padding, Prata italic option text. On hover, option background becomes light gray.
+
+Label above: “Choose Caption Template:” (Prata, 16px, charcoal).
+
+“Enter Your Selfie Context” Textarea (Prata, 16px, black text)
+
+A tall, white textarea with 1px charcoal border, rounded corners (4px), padding 12px. Placeholder text: “Briefly describe your selfie’s story/intent…”.
+
+Label above: “Your Selfie Context” (Prata, 16px, charcoal).
+
+“Tone & Style” Selector (horizontal toggle with 3 choices: “Empowering,” “Conversational,” “Inspirational”)
+
+Each toggle pill: black background, white Prata text, 16px. Selected pill has a thin white outline and slight drop-shadow (rgba(0,0,0,0.1)). Unselected are charcoal border, white background, charcoal text.
+
+“Generate Caption” Button
+
+Black background, white uppercase Prata text, 18px, padding 14px×32px, slight 2px shadow (#000, 0 2px 4px). On hover: lighten to #333.
+
+Below it, a small line: “Estimated time: ~2 seconds” (Prata, 14px, gray).
+
+After Submission: Show 3 generated caption variations in separate “card” panels:
+
+Each panel: white background, 1px charcoal border, Prata 18px text, spacing 16px each, slight 1px shadow.
+
+“Select” button under each panel (minimal black border, white background, Prata 16px). On hover, background→black, text→white.
+
+The currently selected caption card gets a thicker white border (2px) and subtle gold (#C19A6B) accent on hover.
+
+Caption Preview (Right column):
+
+Show a static “Preview” heading (Prata, 24px, uppercase), aligned left.
+
+Beneath: two tabs (“Original” vs. “With Hashtags”) as black button group (similar to “Enhanced/Original” toggle in Visuals).
+
+Initially, show a placeholder text area:
+
+css
+Kopier
+Rediger
+“Your caption will appear here once generated…”
+Prata, 18px, italic, gray.
+
+Once a caption is generated or selected, display it in a minimalist card (white background, charcoal text, Prata 18px).
+
+Below the caption text, show a “Copy to Clipboard” icon/button (black icon on white, 24px) that copies the text when clicked. On hover: icon background → #222.
+
+If the user toggles to “With Hashtags,” display the caption + hashtag list in the same card, hashtags in gray Prata italic (16px, preceded by “#”).
+
+4. Mobile Layout (< 768px)
+On phones/tablets, collapse the two-column view into a vertical, swipe-enabled carousel with two slides: “Controls” and “Preview.” Each slide should fill the viewport’s width minus a small padding (12px).
+
+Top Always-Visible Preview Header
+
+At the very top of the page (beneath the header), show the live preview tab group (“Original” / “With Hashtags”) in a thin black pill (Prata 16px). Its styling matches the desktop toggle.
+
+Below that, show a small carousel “dot” indicator (two dots) with the active slide highlighted in black, the other in gray (#D1D1D1).
+
+Slide 1: Caption Controls
+
+jsx
+Kopier
+Rediger
+<div className="mobile-slide controls-slide">
+  {/* Dropdown, Textarea, Tone toggle, Generate Button, Generated Cards (if any) */}
+</div>
+Dropdown: same styling, but full-width (100% width), margin-bottom: 16px.
+
+Textarea: full-width, height: 120px, margin-bottom: 16px.
+
+Tone Toggle: horizontally scrollable pills if needed (max-width: 100%, overflow-x: auto). Each pill 60×40 px, margin-right: 8px.
+
+Generate Button: full-width black button, margin-bottom: 16px.
+
+Generated Caption Cards: stacked one after the other, each full-width, margin-bottom: 12px, showing “Select” under each.
+
+Use react-swipeable to detect swipes.
+
+Swiping left anywhere on this slide moves to “Preview” slide (index +1).
+
+Swiping right does nothing if already at first slide.
+
+Slide 2: Caption Preview
+
+jsx
+Kopier
+Rediger
+<div className="mobile-slide preview-slide">
+  {/* Display selected or generated caption */}
+</div>
+Show the heading “Your Generated Caption” (Prata 20px, uppercase, margin-bottom: 12px).
+
+Display the caption text in a single full-width card (white background, charcoal text, 18px).
+
+If “With Hashtags” is toggled, show hashtags in a second smaller tag cloud beneath (each hashtag bubble: black border, white background, Prata 14px).
+
+Include a large “Copy” icon/button beneath the text. (Black icon, 32px, centered).
+
+Tapping anywhere here does not trigger filters/adjustments; it’s purely preview.
+
+Swiping right moves back to “Controls.” Swiping left does nothing (last slide).
+
+Persistent “Back to AI Studio” & Navigation
+
+At all times, the topmost header (Back arrow + “Caption Creator”) remains pinned. Scrolling/swiping should not hide it.
+
+Under the header (between header and slide), place the tab group to toggle “Original” / “With Hashtags.” It stays visible when swiping between slides.
+
+5. Styling & Theming
+Throughout both desktop and mobile:
+
+Use Prata Serif for all headings, labels, and body text.
+
+Black (#000) backgrounds for primary buttons, toggles, and highlighted states.
+
+White (#FFF) text on black; Charcoal (#4A4A4A) for secondary text.
+
+Light Gray (#F5F5F5) backgrounds inside cards and inputs.
+
+Gold Accent (#C19A6B) for any hover outlines or active borders on selected cards (subtle!).
+
+Maintain 4px border-radius on all inputs, buttons, and cards for a refined look.
+
+Use consistent spacing: 16px vertical gaps between form fields; 24px between main sections.
+
+Ensure responsive breakpoints: 0–375px (small phones), 376–767px (tablets), ≥ 768px (desktop).
+
+Add smooth transitions (transition: all 0.2s ease-in-out) for hover states on buttons and toggles.
+
+6. Accessibility & Keyboard Support
+Dropdown & Textarea: Ensure they have aria-label attributes (e.g., aria-label="Choose Caption Template").
+
+Tone Toggle Pills: Add role="radio" and aria-checked="true/false" per pill. Enable arrow-key navigation:
+
+Left/right arrows move focus between pills.
+
+Generate Button: aria-live="polite" after generation so screen readers announce “Caption generated.”
+
+Caption Cards & Copy Button:
+
+Each card: role="button" tabindex="0" so users can “Select” via Enter/Space.
+
+“Copy” icon: aria-label="Copy caption to clipboard" and ensure it is keyboard-focusable.
+
+7. Testing & Verification
+Desktop (≥ 1024px):
+
+“Back to AI Studio” header pinned. Title/subtitle appear.
+
+Left column: drop-down, textarea, tone toggle, generate button.
+
+After generation, three caption cards appear; selecting one highlights it.
+
+Right column: “Original / With Hashtags” toggle visible; preview updates.
+
+“Copy” button copies text to clipboard.
+
+Keyboard navigation works for all interactive elements.
+
+Tablet (min-width: 768px, max-width: 1023px):
+
+Behaves similarly to desktop with two-column layout. Slightly narrower spacing (16px gutters).
+
+Mobile (< 768px):
+
+Header + title pinned. “Original / With Hashtags” toggle pinned beneath.
+
+Slide 1: “Controls” appears with dropdown, textarea, tone toggle in one swipeable slide.
+
+Swipe left ↔ Slide 2: “Preview” appears with generated caption (and hashtags).
+
+Tapping “Generate” scrolls the page to show Slide 2 automatically.
+
+Pop-up “Copy” button under caption.
+
+Swipe functionality is smooth—use react-swipeable with delta: 10 for responsiveness.
+
+Edge Cases:
+
+No templates selected → “Generate” button is disabled (grayed out) until a dropdown/textarea value exists.
+
+If API call fails, show “Sorry, please try again” in a small red banner under the button.
+
+If user loses focus while editing “Your Selfie Context,” retain the current text on returning.
+
+Once you finish implementing, send me a preview link to test on actual devices. Make tiny tweaks (button padding, slide sensitivity) until it feels as polished as the Visuals page. Thank you!
+
+
+
+
+
+

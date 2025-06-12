@@ -1,0 +1,127 @@
+Hey! Here’s the next round of updates to implement across the platform based on my audit and testing.
+
+---
+
+## ✅ SECTION 1: HOMEPAGE FIXES (https://sselfie.ai)
+
+1. 🔄 Post-Hero Image Section:
+   - Replace the current imagery with:
+     → Before & after Instagram grid (carousel)
+     → One strong, branded selfie of me
+
+2. 🔗 “Your Complete Business Ecosystem” Section:
+   - Make each card clickable:
+     → AI Studio → /studio
+     → Template Library → /templates
+     → Sandra AI Chat → /chat
+     → Strategy Workbooks → /workbooks
+
+3. 📸 “10 Months Ago” Story Section:
+   - Replace current photo with a real photo of me (I'll upload if needed)
+
+4. 📊 Stats Section (Under Testimonials):
+   - Update copy to:
+     → 120K+ Instagram Followers
+     → 1M+ Monthly Reach
+     → Hundreds of Women Impacted
+
+5. 🏰 “Ready to Build Your Empire?” CTA Section:
+   - Keep the headline: “Ready to Build Your Empire?”
+   - Update the subheading to something more authentic:
+     → “Start building your brand, your way. It begins with a single selfie.”
+
+6. 📥 Footer Fixes:
+   - Update email: `hello@sselfie.ai`
+   - Fix broken links:
+     → Workbooks → /workbooks
+     → Chat with Sandra → /chat
+     → Support → mailto:hello@sselfie.ai
+     → Contact → mailto:hello@sselfie.ai
+   - Build missing pages and link in footer:
+     → Privacy Policy → /privacy
+     → Terms of Service → /terms
+
+---
+
+## ✅ SECTION 2: AI STUDIO FIXES
+
+### A. General Layout + Entry
+1. Create a **dedicated AI Studio landing page** (/studio)
+   - Use homepage layout/design
+   - Add benefit-driven intro copy + CTA to enter editor
+   - Intro text: “Welcome to your Visual Content Studio. This is where your brand gets built.”
+
+2. Add navigation so users can access:
+   - Photo Editor
+   - Caption Generator
+   - Pose Coach
+   - Strategy
+   - Chat with Sandra
+
+---
+
+### B. Photo Editor
+1. ✅ Upload works
+2. ❌ Fix enhancement tools (currently erroring):
+   - Enhance Face
+   - Remove Background
+   - Editorial Filter
+
+3. ❌ Fix Filter Intensity Slider:
+   - Currently washes out entire image
+   - Make it control actual filter opacity/intensity
+
+4. ❌ Fix Fine Adjustment Tools:
+   - Sharpness → not working
+   - Vignette → not applying
+   - Temperature → applying extreme color shifts (blue/purple/red)
+
+5. ✅ Download photo function is working
+
+---
+
+### C. AI Lifestyle Generator
+- Currently fails with error message
+- Needs debug or endpoint fix
+
+---
+
+### D. Caption Generator
+1. Switch from **Claude API → OpenAI API**
+2. Fix personalization:
+   - Currently generates content from Sandra’s story
+   - Must pull from **user input or profile**
+3. Apply fix across:
+   - Captions
+   - Hooks
+   - Hashtags
+   - Frameworks
+   - Visuals
+
+---
+
+### E. Selfie Coach
+- Content tone is good ✅
+- Update visual design:
+   - Replace current colored cards (blue/yellow/red)
+   - Match Vogue-style black & white branding
+
+---
+
+### F. Strategy Generator
+- Switch from Claude → OpenAI
+- Rewrite tone to match Sandra’s real voice:
+   - Simple, empowering, everyday language
+
+---
+
+### G. Chat with Sandra
+1. Collapse prompt options into a dropdown menu
+   - Currently takes up too much vertical space
+2. Fix scroll behavior:
+   - Page scrolls to bottom on every new message
+   - Needs smoother UX for reading longer convos
+
+---
+
+Please confirm each section once implemented so I can begin retesting inside the live platform. Let’s go! 💻🔥

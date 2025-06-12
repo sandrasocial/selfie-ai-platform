@@ -1,0 +1,90 @@
+🚨 URGENT: AI RESPONSE NOT INSERTING phase30/60/90 or NAME FIELDS INTO WORKBOOK OBJECT
+
+Sandra is still seeing this broken output:
+
+❌ 30-60-90 section shows: "Your personalized 30-60-90 day implementation plan will be detailed here"
+❌ Her name is still not used (it says "Hey girl" or nothing at all)
+✅ But the AI is generating great full-length text in the personalizedStrategy field
+
+🧠 Here’s the root issue:
+
+1. The AI is not generating `phase30`, `phase60`, `phase90` fields at all.
+2. Even fallback content is NOT being inserted into the `workbook` object
+3. Final API response is missing these fields, so preview and PDF display nothing
+4. Her name is NOT being inserted into the AI prompt — or if it is, it’s not being reflected
+
+---
+
+✅ DO THIS IMMEDIATELY:
+
+**STEP 1: Fix AI Prompt Input**
+- Update the AI prompt to explicitly instruct generation of 3 implementation paragraphs for phase30/60/90
+- Use her name (“Sandra”) in the instructions and sample text
+
+✅ Example Prompt Fix:
+```ts
+const prompt = `
+Generate a workbook object for Sandra, a personal branding coach for women. 
+She is helping women rebuild confidence and visibility after heartbreak.
+
+Return JSON in the following structure:
+
+{
+  "title": "...",
+  "personalizedStrategy": "...",
+  "phase30": "During your first month, you'll focus on ...",
+  "phase60": "In your second month, you'll ...",
+  "phase90": "By your third month, you'll be ready to ..."
+}
+
+Do not skip or summarize. Each phase must be 3-5 sentences. Use Sandra’s name and speak directly to the user.
+`
+STEP 2: Ensure AI RESPONSE includes those fields
+
+After AI response, log: console.log("AI RAW:", response)
+
+Log again before parsing: console.log("PARSED:", parsed.phase30, phase60, phase90)
+
+STEP 3: Fallback Activation
+
+If AI does NOT return phase30, phase60, phase90, inject fallback text directly in workbookAI.ts
+
+Inject it BEFORE returning workbook object
+
+Final response to frontend must look like:
+
+ts
+Kopier
+Rediger
+return res.json({
+  title: workbook.title,
+  personalizedStrategy: workbook.personalizedStrategy,
+  phase30: workbook.phase30 || fallbackPhase30,
+  phase60: workbook.phase60 || fallbackPhase60,
+  phase90: workbook.phase90 || fallbackPhase90,
+});
+📌 BONUS DEBUGGING:
+
+In frontend preview (ModuleWorkbook.tsx), log:
+
+ts
+Kopier
+Rediger
+console.log("Preview Phase30:", props.phase30);
+If still null, trace why props is not receiving it — it may be an API payload mismatch
+
+✅ FINAL TEST:
+
+Fill in Module One (5 questions)
+
+Click Generate
+
+Check preview:
+
+Does 30-day section start with “During your first month…”?
+
+Is “Sandra” used in any paragraph?
+
+Download PDF — confirm same content is rendered
+
+🚀 This needs to be bulletproof and LIVE-tested before end of day. No more placeholders. No more missing fields. This is the final fix to make Sandra’s platform client-ready.

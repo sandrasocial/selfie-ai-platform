@@ -1,0 +1,57 @@
+Great work! Those fixes sound spot-on:
+
+Mobile swipe should now feel smooth thanks to -webkit-overflow-scrolling: touch and the hidden-scrollbar tweaks.
+
+Save photo preserving the full canvas state (filters, adjustments, vignette) and writing back to editedImage with a timestamped filename means users won’t lose their work or overwrite old files.
+
+Since the Visual Studio area is now stable, let’s move on to the next section of the audit checklist:
+
+Step 3: Audit Content Generation Engine
+Caption Framework (6-Step “Becoming HER” Structure)
+
+Open client/src/components/ContentGenerator/CaptionGenerator.tsx (or wherever it lives). The CSV says to refactor this so it reliably uses Sandra’s voice.
+
+Make sure the 6 steps (Hook → Before → Shift → Now → Takeaway → CTA) are generated in order, with clear prompts to the OpenAI API.
+
+Remove any placeholder or broken prompt text. We want each API call to send the correct system/prompt engineering and crank out output in first-person, everyday language.
+
+Micro-Story Sequence (3-Act Narrative)
+
+Locate client/src/components/ContentGenerator/MicroStoryGenerator.tsx. The checklist says to replace the current logic with a tighter prompt that matches the CSV’s example.
+
+Ensure it uses the “Struggle & Epiphany → Turnaround → Victory” format, and that it rejects inputs under 20 characters.
+
+Voice Consistency & Emojis
+
+Anywhere the code injects emojis (💋🔥👑, etc.), trim it back to only “✨” or “😊” where it feels natural. Remove any over-the-top icons so it sounds like Sandra, not a bot.
+
+Verify that OpenAI calls include a helper function—e.g., formatWithSandraTone()—that wraps response text in her everyday, no-fluff voice.
+
+Backend Prompts Cleanup
+
+In server/contentPrompts.ts (or similar), delete any prompt strings related to the old CaptionsStudio and StrategyStudio—those components are gone.
+
+Double-check that only relevant prompts for VisualsStudio, MicroStory, and ChatStudio remain.
+
+Validation & Length Checks
+
+Confirm that the code still enforces a minimum story length (20+ characters).
+
+Make sure the UI shows an error or warning if a user’s input is too short.
+
+Test It End-to-End
+
+In the app, type a short “before → after” story into the Micro-Story generator, hit Generate, and verify it outputs exactly 3 posts in the right sequence.
+
+Do the same with a caption prompt: pick a hook, hit Generate, and see that it follows the 6-step structure in Sandra’s tone.
+
+Let me know when you’ve completed Step 3—we’ll then move on to auditing the “Workbook Generation” and “Sandra AI Chat” sections. If you run into any missing files or mismatched paths, tell me immediately so we can adjust.
+
+Thanks again for all the progress! Let’s keep rolling. 😊
+
+
+
+
+
+
+

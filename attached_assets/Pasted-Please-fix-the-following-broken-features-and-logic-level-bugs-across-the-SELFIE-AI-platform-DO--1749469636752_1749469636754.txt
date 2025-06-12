@@ -1,0 +1,84 @@
+Please fix the following broken features and logic-level bugs across the SELFIE AI platform.
+
+⚠️ DO NOT change or modify any existing UI components or page layout. The UX is final and was custom designed. Your task is to make the features functional exactly as designed.
+
+---
+
+✅ 1. AI Visual Strategist (Studio)
+- The form accepts input but returns no AI output
+- Fix prompt handling and ensure generation triggers properly
+- Inject mock user data for userId = "1" to simulate real strategy generation
+- Route results back into the correct output box in the modal
+
+---
+
+✅ 2. Sandra AI — Routes All Tabs to Same Chat
+- Fix tab segmentation logic
+- Each category (e.g., Mindset, Career, Style) should load distinct AI prompt logic or persona
+- Use separate backend routing (or tag-based context) if needed
+- Keep chat UI exactly as is — just fix logic per tab
+
+---
+
+✅ 3. Weekly Planner
+- Currently non-functional: nothing is generated or interactive
+- Fix API route and data fetch calls
+- Ensure:
+  - Buttons trigger content
+  - Custom strategy suggestions are injected
+  - User can save/edit plans
+- Do not alter layout
+
+---
+
+✅ 4. Content Vault (Not Generating or Saving)
+- Fix AI content generation trigger for user prompts
+- Ensure saved content is stored in DB and retrievable per user
+- Fix "strategy view" logic when content type = strategy
+- Do not modify component structure or interface
+
+---
+
+✅ 5. Workbook Preview (Dashboard > Workbooks)
+- PDFs are stuck in "processing"
+- Fix logic so latest generated PDF is:
+  - Viewable inline (preview mode)
+  - Or downloadable directly with a working link
+- Open in new tab on click (optional fallback)
+
+---
+
+✅ 6. Feed Planner
+- Cannot upload photos
+- Upload system is broken — fix image handling endpoint
+- Add support for branded "inspiration blocks" using mock image placeholders or a stub dataset (Sandra inspiration)
+- Do not change the layout
+
+---
+
+✅ 7. Photo Vault (UI Functional, Logic Broken)
+- Images not loading or saving consistently
+- Fix image fetch + upload
+- Preserve existing layout, order, tags, styling
+
+---
+
+✅ 8. Studio Tools (Pose Coach, Strategy Coach, Caption Generator, Visual Studio)
+- Still returning auth or timeout errors for userId = "1"
+- Fix backend routing and session usage
+- Ensure each tool endpoint returns at least a placeholder mock response
+- Tools must be clickable and show generated content
+- DO NOT alter any layout inside the Studio page
+
+---
+
+🛡 Auth & Permissions Reminder
+- All fixes apply to `userId = 1` in dev mode
+- All feature responses should use mock personalization:
+  - Voice: "Empowering, elegant, bold"
+  - Mood: "Luxury black & white"
+  - Niche: "Personal branding for female entrepreneurs"
+
+---
+
+Please verify each fix works properly using the DevLogin flow and provide a summary per tool.

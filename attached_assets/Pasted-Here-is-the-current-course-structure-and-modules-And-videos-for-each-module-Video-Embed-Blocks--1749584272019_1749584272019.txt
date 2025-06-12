@@ -1,0 +1,68 @@
+Here is the current course structure and modules: And videos for each module: ✅ Video Embed Blocks:
+Intro (Course Welcome):
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091785973?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Welcome To Selfie Starter Kit"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 1 – Welcome:
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091863622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Welcome"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 2 – Applying Your Presets:
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091863084?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Applying your presets"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 2 – iPhone Camera Editing:
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091863103?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Editing inside the iPhone app"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 3 – Hypic Editing:
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091863129?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Editing with Hypic"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 3 – CapCut Video Editing:
+
+html
+KopierRediger
+<div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091863154?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Video editing with CapCut"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script>
+Module 4 – Custom Gesture Shortcut:
+
+html
+KopierRediger
+<div style="padding:216.7% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/1091865311?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Custom Command Tutorial"></iframe> </div> <script src="https://player.vimeo.com/api/player.js"></script> No emojis ✅
+* No rounded corners ✅
+* Editorial spacing + elegant fonts (Cormorant Garamond where it matters) ✅
+* Brand colors are consistent throughout ✅ 🔓 Intro / Course Dashboard (Before Module 1)
+Video: “Welcome to the Kit”
+   * Brief overview of what’s inside
+   * Inspirational tone: clarity, confidence, visibility
+   * CTA: "Let’s get started" → scroll to Module 1
+✅ Placed at the top of the course or in /dashboard
+Module 1: Step Into the Glow Era
+   * Video: “Welcome to Your Glow Era”
+   * Reflection prompt
+   * Checklist: watched the intro, ready to install presets
+Module 2: Signature Selfie Style
+   * Video 1: “Applying Your Presets”
+   * Video 2: “Editing in iPhone Camera App”
+   * Step-by-step: import → light edits → glow-up
+Module 3: Smart Edits With Apps
+   * Video 1: “Editing with Hypic”
+   * Video 2: “CapCut for Luxe Video”
+   * Download workbook: “Editing Flow Strategy”
+Module 4: Hands-Free Like a CEO
+   * Video: “Custom Gesture Shortcut for iPhone”
+   * Guide: pose + shoot solo
+   * Add voice control CTA & AI pose workbook
+Module 5: Brand Aesthetic Builder
+   * No video needed
+   * Launch “Design Like a CEO™” workbook
+   * Upload moodboards / Canva challenge
+Module 6: Copy That Connects
+   * Caption strategy, AI writing
+   * Practice prompt: “This is for the girl I used to be...”
+   * Challenge: post + tag Sandra

@@ -1,0 +1,86 @@
+# PROJECT: Luxury Course Platform Redesign - "Branded by Selfie™"
+
+## CONTEXT
+I'm redesigning an existing online course platform to match luxury brand standards (think Vogue, Chanel, Tom Ford). The course is called "Branded by Selfie™" and teaches personal branding through selfie confidence.
+
+## BRAND GUIDELINES
+- Primary Background: #F1F1F1
+- Accent Gray: #B5B5B3  
+- Secondary Text: #4C4B4B
+- Black/Primary Text: #171719
+- Headline Font: Cormorant Garamond (serif)
+- Body Font: Inter Light (sans-serif)
+- NO gradients, NO beige colors
+- Minimalist, editorial, iconic design
+- Generous white space
+- Matte finishes only
+
+## CURRENT STATE
+I have an existing course structure in Replit that needs to be elevated to luxury standards. The course has 3 modules (Confidence, Clarity, Content) with multiple lessons each.
+
+## WHAT I NEED YOU TO BUILD
+
+### 1. NAVIGATION SYSTEM
+- Redesign the left sidebar with:
+  - Collapsible modules with smooth animations
+  - Progress indicators (circular progress rings)
+  - Hover effects (0.3s ease transitions)
+  - Visual hierarchy with minimal icons
+  - Module completion percentages
+
+### 2. LESSON PAGE TEMPLATE
+Create a reusable lesson template with:
+- Full-width video player section (16:9 aspect ratio)
+- Editorial-style lesson content layout
+- AI tool integration sections
+- Interactive workbook areas
+- Action checkboxes with animations
+- Bottom navigation with progress dots
+
+### 3. RESPONSIVE DESIGN
+- Mobile-first approach
+- Smooth transitions between breakpoints
+- Touch-optimized for mobile (44px minimum touch targets)
+- Collapsible sections on mobile
+
+### 4. AI TOOL PLACEHOLDERS
+Create modal/inline components for:
+- Confidence Coach AI
+- Selfie Analyzer
+- Brand Voice Generator
+- Content Planner AI
+- Workbook Generator
+
+### 5. INTERACTIONS
+- Smooth scroll behavior
+- Page transitions
+- Loading states
+- Hover animations
+- Progress tracking
+
+## TECHNICAL REQUIREMENTS
+- Use modern CSS (CSS Grid, Flexbox)
+- Vanilla JavaScript or minimal framework
+- Semantic HTML5
+- WCAG accessible
+- Performance optimized
+- Save progress to localStorage
+
+## DESIGN INSPIRATION
+Think high-end fashion editorial:
+- Large, bold typography
+- Dramatic white space
+- Subtle animations
+- Premium feel
+- Magazine-quality layouts
+
+## FIRST TASK
+Please start by:
+1. Analyzing the current code structure
+2. Creating the new navigation system
+3. Building one complete lesson page template
+4. Adding placeholder content for videos and AI tools
+
+Use the exact color values and fonts specified. Make it feel expensive, exclusive, and transformative.
+
+Are you ready to begin? Please confirm you understand the requirements and let me know if you need any clarification before we start building.

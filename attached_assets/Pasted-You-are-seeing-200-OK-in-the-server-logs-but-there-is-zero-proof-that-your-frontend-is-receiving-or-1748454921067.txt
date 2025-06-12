@@ -1,0 +1,81 @@
+You are seeing 200 OK in the server logs, but there is zero proof that your frontend is receiving or parsing that JSON properly.
+
+If the frontend was logging this line:
+
+js
+Kopier
+Rediger
+console.log("✅ Fetched saved answers:", data);
+You’d see it in the browser console. But you don't.
+
+So either:
+
+That console.log() is still not in the code 😤
+
+The API response is failing silently or returning HTML again
+
+Or the response is malformed and being swallowed in a .catch block
+
+✅ FINAL DEBUG TEST (Tell Dev AI to do this now):
+🔧 Replace your current fetchAnswers() function with this exact debug-safe version:
+
+tsx
+Kopier
+Rediger
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await fetch('/api/module2-answers');
+      const text = await res.text();
+
+      try {
+        const data = JSON.parse(text);
+        console.log("✅ Fetched saved answers:", data);
+        setFormData(data);
+      } catch (err) {
+        console.error("❌ Failed to parse response as JSON");
+        console.log("🔎 Raw response body:", text);
+      }
+
+    } catch (err) {
+      console.error("❌ Full fetch error:", err);
+    }
+  };
+  fetchAnswers();
+}, []);
+🔥 What This Does:
+Forces text() instead of .json() so we see what’s really coming back
+
+Logs the raw response even if it's not JSON
+
+Proves whether it’s working or being redirected again
+
+✅ DO THE SAME FOR THE GENERATE FUNCTION:
+tsx
+Kopier
+Rediger
+const handleGenerate = async () => {
+  try {
+    const res = await fetch('/api/module2-workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    const text = await res.text();
+
+    try {
+      const data = JSON.parse(text);
+      console.log("✅ Generated Preview:", data);
+      setPreviewData(data);
+    } catch (err) {
+      console.error("❌ Failed to parse preview JSON");
+      console.log("🔎 Raw response body:", text);
+    }
+
+  } catch (err) {
+    console.error("❌ Workbook fetch failed:", err);
+  }
+};
+🚀 Tell Dev AI:
+I want to see “✅ Fetched saved answers:” in the browser console after refresh, and “✅ Generated Preview:” after clicking generate. If not, paste me the raw text logs.

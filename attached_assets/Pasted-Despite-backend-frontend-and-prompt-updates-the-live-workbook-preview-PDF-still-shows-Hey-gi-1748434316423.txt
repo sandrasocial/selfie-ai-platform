@@ -1,0 +1,88 @@
+Despite backend, frontend, and prompt updates, the live workbook preview + PDF still shows:
+
+"Hey girl" (not the authenticated user’s name)
+
+Placeholder text in 30-60-90 plan:
+“Your personalized 30-60-90 day implementation plan will be detailed here.”
+
+This confirms the live app is still using cached or outdated logic.
+
+🛠 STEP-BY-STEP FIX
+1. 💾 Confirm Correct Files Are Updated
+Ensure the following files contain the updated logic:
+
+server/workbookAI.ts:
+
+Uses AI-generated phase_30, phase_60, phase_90
+
+Maps them to phase30, phase60, phase90
+
+Returns parsed values with fallback removed
+
+client/src/components/ModuleWorkbook.tsx:
+
+Displays workbook.phase30, workbook.phase60, workbook.phase90
+
+Uses authenticated user’s name (e.g., user?.firstName)
+
+server/pdfMonkeyGenerator.ts:
+
+Passes workbook.phase30/60/90 into PDF template
+
+Uses user.firstName in place of "Hey girl"
+
+2. 🚀 FORCE DEPLOYMENT TO LIVE
+🔧 Run these terminal commands (if using Vercel, Netlify, or custom server):
+
+bash
+Kopier
+Rediger
+git add .
+git commit -m "Deploy: Fix workbook preview and PDF field mapping"
+git push origin main
+OR trigger your platform’s manual redeploy from dashboard.
+
+3. 🔁 CLEAR SESSION / CACHED STATE
+Before testing again:
+
+Log out / clear cookies / refresh localStorage
+
+Open app in Incognito tab
+
+Start from scratch:
+
+Fill 5 story questions
+
+Click “Generate Workbook”
+
+Wait for real AI content to generate
+
+4. ✅ FINAL TEST MUST SHOW:
+Preview:
+
+Hey Sandra (not “girl”)
+
+30-60-90 paragraphs starting with:
+
+“During your first month, you'll focus on…”
+
+“In your second month, you'll build on…”
+
+“By your third month, you'll be ready to…”
+
+PDF:
+
+Same content as preview
+
+Styled in luxury layout
+
+🧪 BONUS: Add console.log(workbook.phase30) in ModuleWorkbook.tsx
+This confirms what’s actually being passed to the frontend.
+
+If undefined, the backend is still broken.
+
+If it logs correct content, the preview logic is failing.
+
+💥 This is the final deployment pass.
+
+After this fix, the workbook will be fully functional, branded, and launch-ready.

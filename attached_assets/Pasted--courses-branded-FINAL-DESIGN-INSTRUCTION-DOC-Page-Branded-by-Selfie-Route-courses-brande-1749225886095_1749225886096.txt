@@ -1,0 +1,85 @@
+🖤 /courses/branded — FINAL DESIGN + INSTRUCTION DOC
+Page: Branded by Selfie™
+Route: /courses/branded
+Purpose: Deliver the premium transformation experience with emotional storytelling, editorial visuals, and user progress tracking.
+
+1️⃣ HERO SECTION
+Element	Specs
+Title	Branded by Selfie™ (Cormorant Garamond, 64px, #171719)
+Subhead	Turn your face, story, and voice into a magnetic personal brand. (Inter Light, 18px, #4C4B4B)
+Progress UI	Display as text: Module 2 of 3 OR visual bar (black 100% filled if complete)
+Hero Image	https://i.postimg.cc/Nfh9K0gn/30.png (Full-bleed, center-align, no gray overlay)
+Mobile	Reposition text to top or bottom; avoid covering the face
+
+2️⃣ MODULE DISPLAY
+Each module (Confidence / Clarity / Content) is expandable.
+
+Feature	Instruction
+Module Headline	Cormorant Garamond, 36px italic
+Lessons Dropdown Title	Inter Light, 18px
+Lesson State Icon	✔ if complete (black border icon), 🔒 if locked (grayed)
+Active State	Bolded lesson name, open accordion
+Locked State	Gray text + overlay, disabled interactions
+
+Inside Open Lesson:
+Element	Instructions
+Video Embed	Top, large player (full-width max 700px)
+Transcript	Scrollable box underneath (Inter Light, 16px)
+Workbook CTA	“Download Workbook” button — outline style (black border, 0px radius, no icon)
+Save Notes	Rich text field, Notion-style, minimal lines, autosave
+Mark Complete	Small button, top-right or under video
+Floating CTA	"Resume Where You Left Off" (bottom sticky, white bg, black border)
+
+3️⃣ DESIGN SYSTEM ALIGNMENT
+Element	Brand Rule Match
+Font Pairing	Cormorant Garamond (headlines), Inter Light (UI + body)
+Colors	#F1F1F1 background, #171719 text, no beige, no gradients
+Buttons	Transparent bg, 1px solid border, all caps, Inter font, hover = invert
+Icons	None. Use outline check marks only as per SYSTEM MANUAL
+Padding	32px between modules, 16px inside lesson blocks
+Mobile View	Accordion collapse per module, tap-to-expand, sticky resume button, no padding cutoffs
+
+4️⃣ LESSON + MODULE CONTENT (Structure from PDF)
+MODULE 1: CONFIDENCE
+Your CEO Era Starts Now
+
+Building Unshakable Selfie Confidence
+
+The Power Selfies Challenge
+
+The Confidence Camera Hack
+
+MODULE 2: CLARITY
+Brand Energy 101 — Who You Are Online
+
+Your Story, Your Message, Your Mission
+
+Glow Up Your Bio + First Impressions
+
+Creating Your Brand Pillars
+
+MODULE 3: CONTENT
+Post Before You Feel Ready
+
+Confidence Posting Formula
+
+The Selfie CEO Shooting System
+
+Real Reels Walkthrough
+
+Edit Like a CEO — COMING SOON
+
+Use all transcribed lesson scripts from the PDF as the body of each lesson. Place download links beside each module or beneath video, with white border-only buttons.
+
+5️⃣ OPTIONAL ENHANCEMENTS
+Feature	Instruction
+“Ask Sandra” Floating Icon	Bottom right, opens AI chat overlay
+Course % Tracker (Header)	Textual “57% Complete” next to sticky nav
+Resume CTA Sticky Bar	Shows when user scrolls past first lesson
+
+6️⃣ DEVELOPER INTEGRATIONS
+Feature	Backend Endpoint / Notes
+Progress Tracking	/api/course-progress (module + lesson IDs, % complete)
+Resume Memory	Save last opened lesson in DB (display on return)
+Notes Saving	Sync text field to /api/notes with user + lesson ID
+Locked Lessons	Display but disable if unlockedAt > current date

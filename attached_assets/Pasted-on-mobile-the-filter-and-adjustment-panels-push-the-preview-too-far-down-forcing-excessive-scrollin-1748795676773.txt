@@ -1,0 +1,59 @@
+on mobile the filter and adjustment panels push the preview too far down, forcing excessive scrolling. Let’s reorganize it into a horizontal swipe‐carousel (similar to CapCut/Hypic) so users can swipe between “Vogue Filters” and “Adjust” without hiding the preview. Specifically:
+
+Wrap the Filter/Adjust Sections in a Carousel Container
+
+Install and import a lightweight React carousel library (e.g., react-swipeable or react-slick).
+
+Replace the existing static filter‐buttons block and intensity slider, and the “Adjust” sliders/vignette, with two slides:
+
+Slide 1: All Vogue filter buttons + intensity slider.
+
+Slide 2: All adjustment sliders (Brightness, Contrast, Temperature, Vignette, etc.) + Undo/Reset All + Download.
+
+Keep the Preview Always Visible at Top
+
+Move the <Preview> section (with the enhanced/original toggle and image) to the top of the page, outside the carousel.
+
+The carousel should appear directly beneath the Preview, on mobile taking up only the height it needs—users swipe left/right to switch between “F
+
+ilters” and “Adjust”.
+
+On desktop, the two sections can remain side-by-side, but on any screen narrower than 768px, the carousel must activate.
+
+Implement Responsive Breakpoints
+
+In your CSS (or Tailwind classes), add a @media (max-width: 767px) rule that hides the side‐by‐side desktop layout and renders the carousel instead.
+
+Ensure the slide indicators (“● ●”) or arrows appear at the bottom of the carousel so users know they can swipe.
+
+Carousel Styling & UX
+
+Each slide’s content (filter buttons or adjustment sliders) should be centered and sized to fit comfortably in one swipeable view.
+
+Use the same black‐background/white‐text button styling exactly as before—just place them inside slide frames.
+
+Add subtle left/right arrow icons on the edges of the carousel (semi‐transparent) so users intuitively know to swipe/tap.
+
+Maintain a “Filters”/“Adjust” label above the carousel that updates to show which slide is active.
+
+Touch Events & Accessibility
+
+Ensure swipe gestures work smoothly on iOS and Android (test Safari on iPhone and Chrome on Android).
+
+Add aria-label="Filters slide" and aria-label="Adjust slide" to each carousel panel for screen readers.
+
+Maintain keyboard navigation (left/right arrow keys) for desktop.
+
+Testing & Verification
+
+Deploy and open /studio/visuals on an iPhone.
+
+Confirm that the Preview image is visible at the top without scrolling.
+
+Swipe left to reveal the “Adjust” sliders, swipe right to reveal “Filters”.
+
+Verify filter intensity updates and adjustment sliders still work as before.
+
+On desktop, confirm filters and adjustments appear side-by-side (no carousel) and functionality is unchanged.
+
+Once complete, I’ll test on both mobile and desktop to confirm the carousel UX is smooth and the preview remains fully visible. Let me know when this is implemented so I can verify.

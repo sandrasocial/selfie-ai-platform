@@ -1,0 +1,293 @@
+// ========================================
+// SANDRA AI CHAT INTEGRATION
+// ========================================
+
+// /components/SandraAIChat.js
+import { useProfile } from '../contexts/ProfileContext';
+import { getPersonalizedPrompt } from '../lib/profileIntegration';
+
+export function SandraAIChat() {
+  const { profile, hasProfile } = useProfile();
+  
+  const sendMessage = async (userMessage) => {
+    // Base Sandra AI prompt
+    const basePrompt = `You are Sandra, a luxury brand strategist helping women build their personal brand empire. 
+    Respond in a confident, empowering tone with practical advice. User message: "${userMessage}"`;
+    
+    // Add profile context if available
+    const personalizedPrompt = hasProfile 
+      ? getPersonalizedPrompt(basePrompt, profile)
+      : basePrompt;
+    
+    const response = await fetch('/api/sandra-ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        prompt: personalizedPrompt,
+        hasProfile: hasProfile
+      }),
+    });
+    
+    return response.json();
+  };
+  
+  // Show profile completion prompt if no profile
+  if (!hasProfile) {
+    return (
+      <div className="p-6 bg-gray-50 border-l-4 border-black">
+        <h3 className="font-semibold mb-2">Get More Personalized Advice</h3>
+        <p className="text-gray-600 mb-4">
+          Complete your brand profile so I can give you advice that's actually tailored to your goals and audience.
+        </p>
+        <button className="px-4 py-2 border border-black bg-transparent hover:bg-black hover:text-white transition-colors">
+          COMPLETE PROFILE
+        </button>
+      </div>
+    );
+  }
+  
+  // Regular chat interface with personalized responses
+  return <ChatInterface onSendMessage={sendMessage} />;
+}
+
+// ========================================
+// WORKBOOK GENERATION WITH PROFILE
+// ========================================
+
+// /lib/workbookGenerator.js
+import { formatProfileForAI } from './profileIntegration';
+
+export async function generatePersonalizedWorkbook(courseContent, userProfile, userId) {
+  const profileContext = userProfile ? formatProfileForAI(userProfile) : '';
+  
+  const workbookPrompt = `
+${profileContext}
+
+COURSE CONTENT:
+${courseContent}
+
+Generate a comprehensive, personalized workbook that combines the course material with the user's specific brand profile. 
+
+Include:
+1. Customized action steps based on their goals and experience level
+2. Examples relevant to their industry and aesthetic
+3. Prompts written in language that matches their tone/voice
+4. Specific strategies for their target audience
+5. Hashtag suggestions based on their existing tags
+6. Content ideas aligned with their content focus areas
+
+Format as a structured PDF-ready document with clear sections, actionable worksheets, and space for notes.
+  `;
+
+  const aiResponse = await fetch('/api/openai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      prompt: workbookPrompt,
+      maxTokens: 3000,
+      temperature: 0.7
+    }),
+  });
+
+  const { content } = await aiResponse.json();
+
+  // Generate PDF using PDFMonkey with personalized content
+  const pdfPayload = {
+    document: 'sandra_workbook_template', // Your PDFMonkey template ID
+    data: {
+      user_name: userProfile?.user_name || 'There',
+      brand_mission: userProfile?.brand_mission || '',
+      target_audience: userProfile?.ideal_audience || '',
+      content_focus: userProfile?.content_focus?.join(', ') || '',
+      workbook_content: content,
+      generated_date: new Date().toLocaleDateString(),
+      // Add more personalized fields as needed
+    }
+  };
+
+  const pdfResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.PDFMONKEY_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(pdfPayload),
+  });
+
+  return await pdfResponse.json();
+}
+
+// ========================================
+// CONTENT GENERATOR WITH PROFILE
+// ========================================
+
+// /components/ContentGenerator.js
+import { useProfile } from '../contexts/ProfileContext';
+
+export function ContentGenerator({ contentType = 'caption' }) {
+  const { profile, hasProfile } = useProfile();
+  
+  const generateContent = async (userInput) => {
+    let basePrompt = '';
+    
+    switch (contentType) {
+      case 'caption':
+        basePrompt = `Create an engaging Instagram caption based on: "${userInput}"`;
+        break;
+      case 'strategy':
+        basePrompt = `Create a content strategy recommendation for: "${userInput}"`;
+        break;
+      case 'hashtags':
+        basePrompt = `Generate relevant hashtags for: "${userInput}"`;
+        break;
+    }
+    
+    // Enhance with profile data
+    if (hasProfile && profile) {
+      basePrompt += `
+      
+Make sure the content:
+- Aligns with their ${profile.tone_voice || 'authentic'} tone
+- Speaks to ${profile.ideal_audience || 'their audience'}
+- Incorporates their values: ${profile.brand_values || 'authenticity and empowerment'}
+- Matches their ${profile.visual_aesthetic || 'clean'} aesthetic
+- Relates to ${profile.industry || 'their industry'}
+- Supports their goals: ${profile.main_goals || 'building their brand'}
+      `;
+      
+      if (profile.hashtags && contentType === 'hashtags') {
+        basePrompt += `\nInclude some of their existing hashtags: ${profile.hashtags}`;
+      }
+    }
+    
+    const response = await fetch('/api/content-generation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        prompt: basePrompt,
+        contentType,
+        hasProfile
+      }),
+    });
+    
+    return response.json();
+  };
+  
+  return (
+    <div>
+      {!hasProfile && (
+        <ProfilePrompt />
+      )}
+      <ContentForm onGenerate={generateContent} />
+    </div>
+  );
+}
+
+// ========================================
+// POSE COACH INTEGRATION
+// ========================================
+
+// /components/PoseCoach.js
+export function PoseCoach() {
+  const { profile } = useProfile();
+  
+  const getSuggestedPoses = async (imageType) => {
+    const basePrompt = `Suggest poses for ${imageType} photos that look natural and confident.`;
+    
+    let enhancedPrompt = basePrompt;
+    
+    if (profile) {
+      enhancedPrompt += `
+      
+Consider their brand aesthetic: ${profile.visual_aesthetic || 'clean and modern'}
+Their content focus includes: ${profile.content_focus?.join(', ') || 'lifestyle content'}
+They want to appear: ${profile.tone_voice || 'confident and approachable'}
+Their audience is: ${profile.ideal_audience || 'professional women'}
+      `;
+    }
+    
+    const response = await fetch('/api/pose-suggestions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: enhancedPrompt }),
+    });
+    
+    return response.json();
+  };
+  
+  // Rest of component...
+}
+
+// ========================================
+// DASHBOARD INTEGRATION
+// ========================================
+
+// /pages/dashboard.js
+import { useProfile } from '../contexts/ProfileContext';
+
+export default function Dashboard() {
+  const { profile, hasProfile, loading } = useProfile();
+  
+  if (loading) return <LoadingSpinner />;
+  
+  if (!hasProfile) {
+    return <OnboardingRedirect />;
+  }
+  
+  return (
+    <div className="dashboard">
+      <WelcomeSection profile={profile} />
+      <PersonalizedRecommendations profile={profile} />
+      <QuickActions profile={profile} />
+    </div>
+  );
+}
+
+function WelcomeSection({ profile }) {
+  return (
+    <div className="mb-8">
+      <h1 className="text-3xl font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+        Welcome back, {profile.user_name || 'beautiful'}
+      </h1>
+      <p className="text-gray-600">
+        Ready to build your {profile.visual_aesthetic?.toLowerCase() || 'luxury'} brand empire?
+      </p>
+    </div>
+  );
+}
+
+function PersonalizedRecommendations({ profile }) {
+  const recommendations = getRecommendationsForProfile(profile);
+  
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {recommendations.map((rec, index) => (
+        <RecommendationCard key={index} {...rec} />
+      ))}
+    </div>
+  );
+}
+
+function getRecommendationsForProfile(profile) {
+  const recs = [];
+  
+  if (profile.content_focus?.includes('Video Content')) {
+    recs.push({
+      title: 'Video Content Strategy',
+      description: 'Perfect for your video-focused brand',
+      action: 'Get Video Templates'
+    });
+  }
+  
+  if (profile.experience_level === 'Just Starting Out') {
+    recs.push({
+      title: 'Brand Foundation Workbook',
+      description: 'Build your foundation step by step',
+      action: 'Start Building'
+    });
+  }
+  
+  // Add more personalized recommendations based on profile data
+  
+  return recs;
+}

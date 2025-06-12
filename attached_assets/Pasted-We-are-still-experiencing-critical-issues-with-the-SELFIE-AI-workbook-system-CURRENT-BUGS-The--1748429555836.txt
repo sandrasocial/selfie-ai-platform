@@ -1,0 +1,103 @@
+We are still experiencing critical issues with the SELFIE AI™ workbook system:
+
+❌ CURRENT BUGS:
+The 30-60-90 DAY IMPLEMENTATION PLAN section in the downloaded PDF still shows [object Object] or is completely missing.
+
+The preview page is using outdated styling, headings like “Beautiful” and AI Framework content.
+
+The PDF layout lacks spacing and structure — action items and insights are jumbled and hard to read (no padding, no section breaks, no numbering).
+
+The PDF is not using Sandra’s luxury PDFMonkey template structure (ID: 033D8C37-41F0-473B-917A-0C78E25471A2).
+
+✅ REQUIRED FIXES:
+1. FIX TEMPLATE MAPPING IN PDFMonkey INTEGRATION
+
+Map every variable in the generateWorkbookPDF() function to clean string values:
+
+user_name, headline, subheadline
+
+story_intro
+
+action_item_1 through action_item_7 (string only)
+
+insight_1 through insight_5 (string only)
+
+phase_30, phase_60, phase_90 (must be plain strings, not objects)
+
+2. FLATTEN AND FORMAT 30-60-90 PLAN
+
+Convert any objects or arrays in planData into plain multiline strings like this:
+
+vbnet
+Kopier
+Rediger
+30 Days:
+- Document your story timeline with emotional turning points
+- Update bio to include your ‘from-to’ brand statement
+3. FIX THE PDF STRUCTURE & SPACING
+
+Inside the luxury PDFMonkey template, each section (IMMEDIATE ACTION ITEMS, KEY INSIGHTS TO REMEMBER, 30-60-90 PLAN) must have:
+
+Clean spacing between lines
+
+Bold section titles
+
+Numbered or bulleted lists (where relevant)
+
+Padding between paragraphs
+
+4. FIX THE PREVIEW PAGE (/client/src/components/ModuleWorkbook.tsx)
+
+Remove all fallback or legacy "Beautiful, let's get real" content.
+
+Ensure it previews:
+
+The clean headline: FROM BROKEN TO BOLD
+
+Correct values from the current user’s form inputs (including 30-60-90 plan)
+
+No raw JSON or [object Object] output
+
+Proper layout spacing and card section design
+
+5. FORCE PDFMonkey TO USE CORRECT TEMPLATE
+
+Confirm generateWorkbookPDF() POSTs to PDFMonkey with:
+
+Template ID: 033D8C37-41F0-473B-917A-0C78E25471A2
+
+Correct variable mapping (no unused or legacy values like Beautiful)
+
+No hidden fallbacks to HTML rendering — force template rendering only
+
+6. VALIDATION LOGGING
+
+Add logs showing the actual payload being sent to PDFMonkey so we can confirm:
+
+All variables are clean strings
+
+No JSON objects or arrays
+
+Template ID is correct
+
+🔁 AFTER FIXES ARE APPLIED:
+Ask Dev AI to generate a new test workbook using Sandra’s profile and confirm the PDF contains:
+
+Header: FROM BROKEN TO BOLD
+
+All action items numbered 1–7 with proper spacing
+
+All insights as bulleted points
+
+30-60-90 plan as 3 separate sections with plain text, no [object Object]
+
+Prata font, clean white background, black accent, clear hierarchy (like a luxury Canva template)
+
+Let me know once Dev AI runs this full fix so we can test again. 🖤
+
+
+
+
+
+
+

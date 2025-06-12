@@ -1,0 +1,97 @@
+Role: Full-stack developer for SELFIE AI™ platform
+Goal: Fix all major UX/functional issues inside the Feed Designer, Photo Vault, Brand Notes, and Auto Tagger tools.
+Strict Design Rules:
+
+Do not alter visual layout or UI design unless functionality requires it
+
+If building new UI elements, follow the SELFIE AI™ design system: editorial layout, black/white, minimalist, no rounded corners, no emojis, fonts as specified
+
+🔧 FIX SET 3 TASKS
+1. Feed Designer Tool
+✅ Route is correct
+
+❌ FIX: None of the features are working
+
+Upload image: Enable image uploads using Supabase Storage
+
+Drag and drop reorder: Implement drag sorting inside the grid layout using react-beautiful-dnd or equivalent
+
+Grid View Toggle: Ensure "GRID VIEW" shows uploaded images in a 3x3 layout
+
+Calendar View Toggle: Route to /calendar-view (or inline switch) and display feed in date-based layout (optional: reuse calendar module)
+
+Filter/Feature Toggle: No filters are active — ensure dropdowns show correct options based on uploaded image metadata (use Supabase tags or image_meta)
+
+2. Photo Vault (Studio)
+✅ Route works
+
+❌ FIX: Filters not working
+
+Filter by Date: Show images sorted by upload timestamp
+
+Filter by Tag: Tags not saving or querying — fix tag saving on image upload and querying
+
+Color Tone: Auto-detect tone on upload or allow user to assign (pastel, black/white, moody, etc.)
+
+❌ FIX: Dropdown text is transparent — update to color: #000; and ensure legibility
+
+3. Daily Upload Boost Feature
+❌ FIX: Upload not generating daily quote overlay
+
+Connect this feature to the user’s brand profile
+
+On image upload, generate daily quote from existing quotePool[]
+
+Overlay quote in user's brand font and accent color using a canvas/image processing library (e.g. HTML5 Canvas or Placid API)
+
+Let user “Save” or “Download” quote image
+
+4. Brand Notes Tool
+✅ Route works
+
+❌ FIX: Brand Notes not auto-populating
+
+On first login, auto-generate brand notes from user profile and transformation answers
+
+“New Note” card must allow user to:
+
+Manually type a note (save to Supabase)
+
+Click “Get Help from Sandra AI” → triggers GPT call with context (inject brand profile + current note title)
+
+Notes should be sortable by date and editable inline
+
+5. Auto Tagger Tool
+✅ Page route loads
+
+❌ FIX: None of the buttons inside the card work
+
+Ensure images uploaded are visible in the tagger
+
+“Auto Tag” should trigger a backend GPT or image classifier call that returns a list of tags
+
+Tags should be saved to supabase.image_tags and reflected in the Photo Vault filters
+
+Implement loading state + success/fail toast
+
+🖤 STYLE REMINDERS
+All buttons: Transparent with 1.5px black border, uppercase, no hover icons
+
+Fonts: Cormorant Garamond for headings, Neue Einstellung for UI
+
+No emojis, no rounded borders
+
+Use grayscale shadows only (if needed)
+
+All inputs and dropdowns must match the SELFIE AI™ form style (thin black border, clean)
+
+📂 SUPABASE STORAGE + TABLES
+Ensure proper write/read logic for:
+
+supabase.images.user_gallery
+
+supabase.tags
+
+supabase.brand_notes
+
+supabase.daily_quotes

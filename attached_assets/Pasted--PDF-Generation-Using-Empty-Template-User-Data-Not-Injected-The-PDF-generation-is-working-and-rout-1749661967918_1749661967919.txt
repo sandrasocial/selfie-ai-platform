@@ -1,0 +1,77 @@
+ PDF Generation Using Empty Template – User Data Not Injected
+The PDF generation is working and routing to PDFMonkey, but the final output is just a blank template — it’s not personalized with the user's input (notes, selected aesthetic, etc.).
+
+🔍 Problem:
+The PDFMonkey API call is generating the correct template, but it's missing the merged user data.
+
+User fields like voiceStyle, captionText, presetNotes, or aestheticChoice are not being sent (or not matched to template placeholders).
+
+The result is a static shell PDF — not a personalized workbook.
+
+✅ Fix Instructions:
+Check Payload Structure:
+
+When calling the PDFMonkey API, ensure the JSON passed to the document creation includes all required variables expected by the template.
+
+Example:
+
+json
+Kopier
+{
+  "data": {
+    "voice_style": "Soft, confident tone",
+    "hook": "You don't need more apps...",
+    "cta": "Try this and tag @ssasocial",
+    "hashtags": "#brandedselfie"
+  },
+  "document_template_id": "25FB2EEB-6366-49D5-82A0-98553DCF4C60"
+}
+Match Template Keys:
+
+Ensure your variable keys exactly match the keys expected inside PDFMonkey (e.g., voice_style, caption_formula, etc.)
+
+Confirm Note Injection Logic:
+
+For each module, confirm that:
+
+Module notes are retrieved
+
+Correct values are parsed into JSON
+
+Final payload is assembled dynamically per user input
+
+Example Integration Line:
+
+ts
+Kopier
+const pdfResponse = await fetch("https://api.pdfmonkey.io/api/v1/documents", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${PDF_MONKEY_API_KEY}`
+  },
+  body: JSON.stringify({
+    document: {
+      document_template_id: "25FB2EEB-6366-49D5-82A0-98553DCF4C60",
+      payload: {
+        voice_style: notes['module-6'],
+        aesthetic: selectedAesthetic,
+        email: user.email
+      }
+    }
+  })
+});
+🎯 Final Outcome:
+Each generated PDF must merge the actual user notes + aesthetic selection into the correct template fields.
+
+The /my-workbooks page must link to the proper PDF download with merged content.
+
+Confirm on PDF preview that dynamic fields are no longer blank.
+
+Please confirm once this has been implemented and the PDF renders with real user content.
+
+
+
+
+
+

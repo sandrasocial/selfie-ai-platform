@@ -1,0 +1,135 @@
+Route Cleanup + UX Prep
+
+Please perform a complete routing and UX cleanup pass based on this audit. Do not change any design or styling unless explicitly stated. Follow this 3-part structure:
+
+1. ✅ STABLE ROUTES (Keep As-Is or Light Fix)
+Ensure these routes are working and accessible:
+
+bash
+Kopier
+Rediger
+/dashboard  
+/studio  
+/studio/editor  
+/studio/feed-designer  
+/studio/photo-vault  
+/studio/boost  
+/studio/notes  
+/sandra-ai  
+/planner  
+/drops  
+/courses  
+/account  
+/checkout  
+/privacy  
+/terms  
+/courses/starter-kit  
+/courses/branded  
+/courses/vip  
+/auth/callback  
+/supabase-auth  
+/supabase-auth/callback  
+/dev-login  
+/products/selfie-starter-kit  
+/products/branded-by-selfie  
+/checkout/:productId  
+/thank-you/:productId  
+/products/vip  
+/thank-you/vip
+Apply minor fixes as noted, such as:
+
+/studio/editor, /photo-vault, /boost, /notes: UX enhancements
+
+/checkout: Clarify whether we need both base + :productId
+
+/privacy, /terms: Update fonts only
+
+/courses/*: Load content properly, especially video/content in Starter Kit
+
+2. ❌ DELETE ROUTES
+Please completely remove or redirect the following:
+
+bash
+Kopier
+Rediger
+/prelaunch  
+/thank-you  
+/supabase-test  
+/photo-upload  
+/logout-test  
+/vip/apply  
+Redirect any broken or public traffic to /dashboard or /not-found.
+
+3. 🟡 REVIEW + FIX ROUTES
+These need UX fixes, backend cleanup, or confirmation before go-live:
+
+bash
+Kopier
+Rediger
+/calendar  
+/templates  
+/content-vault  
+/my-workbooks  
+/pricing  
+/offer-upsell  
+/offer-downsell  
+/apply  
+/course/viral-selfie-blueprint  
+/module/1  
+/module/2  
+/module3  
+/module4  
+/module5  
+/admin-dashboard  
+/products/presets  
+/freebie/selfie-guide  
+Please:
+
+Mark clearly which are functional
+
+Fix broken imports or redirect errors
+
+Identify which will be handled by backend vs UX update
+
+4. 🟣 DUPLICATES — Consolidate or Remove
+Please remove or redirect the following duplicates:
+
+bash
+Kopier
+Rediger
+/weekly-planner  
+/workbook  
+/courses/branded-by-selfie  
+/module2  
+/blueprint/module-two  
+/course/starter-kit  
+/course/branded-by-selfie  
+/guide/selfie-ultimate  
+They should point to:
+
+/planner
+
+/courses/branded
+
+/courses/starter-kit
+
+/courses/vip
+
+Any workbook routes should point to the proper /studio/notes or /studio/editor
+
+5. ❓UNKNOWN
+Confirm whether these are needed:
+
+pgsql
+Kopier
+Rediger
+/admin-login — Do we still need this if Supabase is handling auth?
+/my-workbooks — What is its current purpose? Archive or repurpose?
+Respond back with:
+
+Confirmation of what was removed
+
+What’s broken and fixed
+
+And whether a redirect table was applied
+

@@ -1,0 +1,125 @@
+Phase 1 — Monetize While Building (SELFIE AI Prelaunch Funnel)
+I need you to lock down the unfinished parts of the SELFIE AI™ platform and focus on building a simple but high-converting prelaunch funnel that allows me to start collecting emails and selling my digital products immediately.
+
+✅ 1. Lock All Incomplete Features
+Temporarily disable access to these sections:
+
+AI Studio (except landing page visuals)
+
+Photo Editor
+
+Templates system
+
+Sandra AI chat
+
+Workbooks
+
+Dashboard features (analytics, feed planner, etc.)
+
+On all of the above, show a “Coming Soon” page that fits the editorial brand and includes a soft CTA:
+
+“You’re early! The full SELFIE AI™ experience is launching soon. Join the waitlist to be first in line.”
+
+✅ 2. Build This Page: sselfie.ai/
+This is the official SELFIE AI™ landing page and should be Vogue-style, clean, emotional, and high-converting.
+
+Include these sections (use placeholders where needed):
+
+Hero Section
+
+Headline: “The AI Branding System for Women”
+
+Sub: “Build your personal brand with the content system that helped me go from heartbreak to 120K followers”
+
+CTA: “Get the Free Selfie Guide”
+
+Sandra’s Story
+
+Pull from the platform homepage (From heartbreak to 120K)
+
+Add photo and short video block if possible
+
+What’s Inside
+
+List the features: AI Studio, Templates, Workbooks, Sandra AI chat, etc.
+
+Social Proof
+
+Use uploaded testimonials from:
+
+Testimonials.pdf
+
+Testimonials: April.pdf
+
+Testimonials DMs/comments (zip)
+
+Freebie Opt-In
+
+Opt-in form connected to Flodesk for now
+
+Free download: “The Ultimate Selfie Guide” (already uploaded)
+
+Thank You Page (Post Opt-in)
+
+Message: “Check your inbox for your free guide”
+
+Immediate upsell:
+
+“Want to go deeper? Grab the full Selfie Starter Kit for $47”
+
+Include list of what’s inside (from course PDF)
+
+Add emotional testimonial and hook
+
+Stripe checkout → instant access
+
+Starter Kit Thank-You Page
+
+Include download link, onboarding message, optional CTA to upgrade to Branded by Selfie
+
+✅ 3. Product Access Flow (Live Now)
+Make sure this works 100% end-to-end:
+
+ Selfie Starter Kit ($47)
+
+ Branded by Selfie™ ($397)
+
+ Lightroom Preset Bundles ($5–15)
+
+ Use Stripe payments (Shopify is separate)
+
+Each product should:
+
+Have its own checkout
+
+Deliver instant access/download
+
+Track customer purchase
+
+Offer upsell/downsell where relevant
+
+✅ 4. Design + Experience
+Use Prata font for headings
+
+White and black editorial layout
+
+Luxe, clean, mobile-optimized
+
+All buttons styled to match platform aesthetic
+
+Image placeholders should be added — I’ll replace with final visuals later
+
+✅ 5. Additional Notes
+The full platform is NOT ready to launch yet — keep it minimal, polished, and monetizable.
+
+This prelaunch funnel allows us to:
+
+Monetize NOW
+
+Build our email list
+
+Tease what’s coming
+
+Focus development on priority features
+
+Once this is live and tested, we’ll move to Phase 2 (native course build, full platform unlock, Sandra AI).

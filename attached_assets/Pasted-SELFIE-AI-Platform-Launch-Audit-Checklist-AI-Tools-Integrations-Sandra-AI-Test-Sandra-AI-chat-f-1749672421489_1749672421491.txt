@@ -1,0 +1,282 @@
+SELFIE AI™ Platform Launch Audit Checklist
+AI Tools & Integrations
+Sandra AI
+
+ Test Sandra AI chat functionality with user profile integration
+ Verify personalized responses based on brand mission, audience, and tone
+ Check AI response quality and brand voice consistency
+ Test conversation memory and context retention
+ Verify access control (Starter Kit+ requirement)
+ Test profile completion prompt for users without brand profile
+ Check AI response formatting and readability
+
+Content Generation Tools
+
+ Test caption generator with profile personalization
+ Verify hashtag suggestions incorporate user's existing tags
+ Test content suggestions match user's visual aesthetic
+ Check industry-specific content recommendations
+ Verify tone/voice consistency across generated content
+ Test content focus area integration (video, stories, education, etc.)
+
+Workbook Generation
+
+ Test AI workbook generation with course content + user profile
+ Verify personalized action steps based on experience level
+ Check industry-specific examples and strategies
+ Test PDFMonkey template integration with user data
+ Verify workbook download and storage functionality
+ Check workbook personalization fields (name, brand mission, audience)
+ Test workbook generation for different course modules
+
+Visual Strategy Tools
+
+ Test pose coach suggestions based on visual aesthetic
+ Verify content type recommendations match user preferences
+ Check aesthetic consistency across visual tools
+ Test image upload and AI analysis functionality
+
+User Profiles & Onboarding
+Brand Hub Onboarding
+
+ Test 3-step onboarding flow completion
+ Verify all form fields save correctly to database
+ Check onboarding progress tracking and step navigation
+ Test form validation and required field enforcement
+ Verify onboarding completion triggers profile activation
+ Check redirect to dashboard after completion
+ Test onboarding dismissal and re-access functionality
+
+Profile Management
+
+ Test profile editing and updates via /my-brand-profile
+ Verify profile data persistence across sessions
+ Check profile completeness calculation
+ Test profile data synchronization across AI tools
+ Verify profile deletion and data handling
+ Check profile export functionality if available
+
+Profile Integration
+
+ Test AI tools loading user profile automatically
+ Verify profile context injection in AI prompts
+ Check profile-based content personalization
+ Test "complete profile for better results" prompts
+ Verify profile update triggers across platform
+
+Course Delivery & Access Control
+Access Control Logic
+
+ Test freebie access (available to all users)
+ Verify Starter Kit buyer access (course + 30 days platform)
+ Check Branded buyer access (course + 90 days platform)
+ Test VIP access levels and restrictions
+ Verify trial countdown display and accuracy
+ Check access expiration and graceful degradation
+
+Course Content Delivery
+
+ Test course module progression and tracking
+ Verify video playback and course materials access
+ Check course completion tracking
+ Test workbook generation within course modules
+ Verify course-specific AI tool integration
+ Check course navigation and user progress
+
+Membership Transitions
+
+ Test trial-to-paid conversion flow
+ Verify access level changes after trial expiration
+ Check upgrade prompts and timing
+ Test downgrade scenarios and content retention
+ Verify purchase history and access grants
+
+Platform Features & Functionality
+Dashboard Functionality
+
+ Test dashboard as default landing page after login
+ Verify personalized welcome messages with user name
+ Check Brand Hub onboarding card display logic
+ Test tool access cards and tier-based locking
+ Verify subscription status widget accuracy
+ Check offer ladder card display and linking
+ Test responsive design across devices
+
+AI Tools Access
+
+ Test AI tool access guards and tier requirements
+ Verify locked feature displays for non-subscribers
+ Check tool navigation and deep linking
+ Test AI tool integration with user profiles
+ Verify personalized recommendations display
+
+Content Management
+
+ Test content saving and retrieval
+ Verify user-generated content storage
+ Check content history and versioning
+ Test content sharing and export functionality
+ Verify content categorization and tagging
+
+Platform Navigation
+
+ Test all internal links and routing
+ Verify breadcrumb navigation
+ Check responsive navigation menu
+ Test search functionality if available
+ Verify 404 error handling
+
+Email & Automations
+Welcome Sequences
+
+ Test new user welcome email series
+ Verify onboarding reminder emails
+ Check brand profile completion prompts
+ Test email personalization with user data
+
+Purchase-Based Automations
+
+ Test Starter Kit purchase confirmation and access emails
+ Verify Branded course purchase emails and content delivery
+ Check trial activation notifications
+ Test upgrade reminder emails before trial expiration
+
+AI-Generated Content Emails
+
+ Test workbook delivery emails with download links
+ Verify personalized content suggestion emails
+ Check AI-generated weekly content plans
+ Test email template brand consistency
+
+Segmentation & Targeting
+
+ Verify email list segmentation by purchase type
+ Test behavioral trigger emails
+ Check email frequency and opt-out handling
+ Verify GDPR compliance in email handling
+
+Payment & Subscription Logic
+Stripe Integration
+
+ Test one-time purchase flows (Starter Kit, Branded)
+ Verify subscription creation and management
+ Check payment method handling and updates
+ Test failed payment scenarios and retry logic
+
+Trial Management
+
+ Test 30-day trial activation for Kit buyers
+ Verify 90-day trial for Branded buyers
+ Check trial countdown accuracy
+ Test trial-to-paid conversion flows
+
+Subscription Management
+
+ Test subscription upgrades and downgrades
+ Verify subscription cancellation handling
+ Check refund processing if applicable
+ Test subscription renewal and billing cycles
+
+Access Synchronization
+
+ Verify Stripe webhook handling for access changes
+ Test real-time access updates after payment
+ Check access revocation after cancellation
+ Verify purchase history tracking
+
+User Interface & Experience (UX/UI)
+Design Consistency
+
+ Verify brand colors (#F1F1F1, #B5B5B3, #4C4B4B, #171719)
+ Check typography (Cormorant Garamond, Neue Einstellung)
+ Test button styles and hover states
+ Verify consistent spacing and layout
+
+Responsive Design
+
+ Test desktop layout and functionality
+ Verify tablet responsiveness
+ Check mobile phone optimization
+ Test touch interactions and mobile navigation
+
+User Experience Flow
+
+ Test new user onboarding journey
+ Verify returning user experience
+ Check error message clarity and helpfulness
+ Test loading states and performance feedback
+
+Accessibility
+
+ Verify color contrast ratios
+ Test keyboard navigation
+ Check screen reader compatibility
+ Verify alt text for images
+
+Data Management & Security
+Data Storage & Privacy
+
+ Verify secure user data storage (profiles, purchases)
+ Test data encryption in transit and at rest
+ Check user data deletion capabilities
+ Verify GDPR compliance and data export
+
+API Security
+
+ Test authentication and authorization
+ Verify API rate limiting
+ Check input validation and sanitization
+ Test SQL injection and XSS protection
+
+User Privacy
+
+ Verify privacy policy implementation
+ Test cookie consent and management
+ Check data sharing with third parties (AI, email)
+ Verify user consent tracking
+
+Backup & Recovery
+
+ Test database backup procedures
+ Verify data recovery processes
+ Check system monitoring and alerts
+ Test disaster recovery plan
+
+Testing & QA
+End-to-End Testing
+
+ Test complete user journey: signup → onboarding → purchase → access
+ Verify cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+ Test different user scenarios and edge cases
+ Check integration between all platform components
+
+Performance Testing
+
+ Test page load speeds across the platform
+ Verify AI tool response times
+ Check database query performance
+ Test concurrent user handling
+
+Bug Testing & Resolution
+
+ Review and test all reported bugs
+ Verify bug fixes don't break other functionality
+ Test error handling and graceful failures
+ Check console errors and warnings
+
+Pre-Launch Final Checks
+
+ Verify all production environment configurations
+ Test DNS and domain setup
+ Check SSL certificate installation
+ Verify CDN and asset delivery
+ Test monitoring and analytics tracking
+ Confirm backup systems are operational
+ Verify support documentation is ready
+
+Launch Day Monitoring
+
+ Set up real-time monitoring dashboards
+ Prepare incident response procedures
+ Test rollback procedures if needed
+ Verify customer support readiness

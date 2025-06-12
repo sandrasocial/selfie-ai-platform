@@ -1,0 +1,92 @@
+🖤 SELFIE AI PLATFORM — NEXT PHASE INSTRUCTIONS
+👑 VISION:
+We’re not building just another content calendar.
+We’re building a premium, AI-powered visibility system that helps women be seen, build confidence, and grow online — all inside one clean, beautiful platform.
+
+✅ WHAT'S ALREADY DONE:
+✅ AI Content Generator system is live
+
+✅ User brand profile setup is working
+
+✅ Day 1 modular structure (with Reel, Caption, Slides, Signature, Hashtags, SEO) is implemented
+
+✅ Freemium toggle is active
+
+🚧 WHAT WE'RE WORKING ON RIGHT NOW:
+🔲 1. Brand Design + Layout Update
+We are updating the visual system first before uploading the remaining content. This is high priority to lock in the user experience and emotional vibe.
+
+Please implement the following:
+Headline font: Prata
+
+Body font: Inter or DM Sans (match Sandra’s Shopify)
+
+Background: Pure white #FFFFFF or soft ivory #FAF9F6
+
+Text: Deep black #1C1C1C
+
+Primary button:
+
+Background: black #000000, text white #FFFFFF
+
+Hover: transparent bg, black text + border
+
+Buttons: Square with minimal padding, no excess radius
+
+Section spacing: Wide margins and clear dividers — Vogue-style, not cramped
+
+Content card placeholders: Add cover image blocks for each Day (Sandra will upload designs later)
+
+🔒 2. PRO-ONLY Access Update
+Switch to PRO-only access for the entire 30-day system.
+
+Setup like this:
+✅ Day 1: Unlocked
+
+🔒 Days 2–30: Locked with PRO access
+
+✅ Show a CTA under locked days:
+
+"You’ve started showing up. Now unlock the full 30-day AI system and build your brand with power, consistency, and style."
+
+✍🏼 COMING NEXT: (once above is done)
+Upload Day 2–30 content templates using our new modular format
+
+Build a “Generate My Content” AI button inside each day block
+
+AI pulls from user’s brand profile to generate all 6 fields
+
+json
+Kopier
+Rediger
+{
+  "day": 2,
+  "title": "...",
+  "reel_prompt": "...",
+  "caption_template": "...",
+  "signature": "...",
+  "hashtags": ["..."],
+  "seo_keywords": ["..."],
+  "story_slides": [
+    "Slide 1: ...",
+    "Slide 2: ...",
+    "Slide 3: ...",
+    "Slide 4: ...",
+    "Slide 5: ...",
+    "Slide 6: ..."
+  ],
+  "cta": "DM me 'Selfie' to get started"
+}
+🎯 FOCUS REMINDER:
+Right now, we are NOT uploading all 30 days yet.
+We are focused on:
+
+Branding (fonts, layout, UI components)
+
+Locking PRO access
+
+Finalizing Day 1 as the gold standard
+
+Once done, Sandra will begin delivering Days 2–30 content in the new format.
+
+Let me know once this is implemented so we can move forward.

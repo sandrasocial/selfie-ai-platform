@@ -1,0 +1,239 @@
+I tested everything and found several issues that need fixing. Please address each one below in order:
+
+---
+
+## 1. Fix “Save to Calendar” Endpoint (/api/calendar/add)
+
+**Symptoms:**
+- POST to `/api/calendar/add` returns 500 “Failed to save calendar entry.”
+
+**What to Do:**
+1. Check `server/routes.ts` for the `/api/calendar/add` handler:
+   - Ensure it reads `req.body.dayNumber`, `req.body.contentText`, `req.body.templateName`, and `req.body.isStrategy` correctly.
+   - Verify it’s inserting into the `calendar_entries` table (shared/schema.ts) with proper SQL or ORM calls.
+   - Add a try/catch around the database insert; log the error message so we can see why it’s failing.
+   - Return a clear JSON error if the DB insert fails (e.g., `{ error: 'Database error: ' + err.message }`).
+
+2. Check the `shared/schema.ts` calendar_entries definition:
+   - Ensure fields match exactly what the route is sending (e.g., `day_number` vs `dayNumber`). Rename or map keys if needed.
+   - Confirm your migration ran and the table exists.
+
+3. Test again by sending POST with sample body:
+   ```json
+   {
+     "dayNumber": 5,
+     "contentText": "Sample content to save",
+     "templateName": "Day 5 Template",
+     "isStrategy": false
+   }
+Confirm the DB insert works and returns { success: true } or similar.
+
+2. Fix “Save to Vault” Endpoint (/api/vault/add)
+Symptoms:
+
+POST to /api/vault/add returns 500 “Failed to add to vault.”
+
+What to Do:
+
+In server/routes.ts, locate the /api/vault/add handler:
+
+It should read req.body.dayNumber, req.body.templateName, and req.body.contentText.
+
+Verify it’s inserting into the vault_items table (or whatever table you use for saved vault content).
+
+Wrap the insert in try/catch and log the error for debugging.
+
+Check the shared/schema.ts vault table definition:
+
+Confirm column names (e.g., day_number, template_name, content_text) match exactly what the handler uses.
+
+Run any pending migrations if the table was renamed or updated.
+
+Test again with sample POST:
+
+json
+Kopier
+Rediger
+{
+  "dayNumber": 5,
+  "templateName": "Day 5 Template",
+  "contentText": "Generated caption here"
+}
+Confirm it saves to the DB and returns a success response.
+
+3. Restore Layout of Cover Photos on Templates Page
+Symptoms:
+
+All cover images for each day are gone after merging Templates & Vault.
+
+What to Do:
+
+Check Templates.tsx (formerly TemplatesPage):
+
+Confirm we’re mapping over the array of coverImageUrls (e.g., an array of objects containing dayNumber and coverUrl).
+
+Ensure each <img src={coverUrl} /> is still present inside the card for that day.
+
+If you moved the cover images into a different data file, verify:
+
+The import path is correct (e.g., import coverImages from '../data/coverImages.ts').
+
+The coverImages object/array contains the correct URLs for Days 1–90.
+
+Check CSS classes:
+
+Make sure no CSS change hid the images (e.g., display: none or opacity: 0).
+
+Confirm the parent container still has enough width/height to show images.
+
+Once restored, verify each day’s card shows its cover photo above or behind the template name as intended.
+
+4. Fix Caption Spacing & Formatting
+Symptoms:
+
+Generated captions appear without any line breaks or spacing; they all run together.
+
+What to Do:
+
+In CaptionCreator.tsx (or the generation component), examine how you display the returned caption string:
+
+If the API returns something like "Line1\nLine2\nLine3", ensure you’re rendering it with proper newlines. For React, use:
+
+jsx
+Kopier
+Rediger
+<div style={{ whiteSpace: 'pre-wrap' }}>
+  {generatedCaption}
+</div>
+Alternatively, split by '\n' and map to <p> tags:
+
+jsx
+Kopier
+Rediger
+{generatedCaption.split('\n').map((line, idx) => (
+  <p key={idx} className="mb-2">{line}</p>
+))}
+Check the prompt sent to AI:
+
+Ensure your prompt includes explicit line breaks and instructions like “Use two line breaks between bullet points.”
+
+If using templates from Trello, confirm the original template text contains the correct spacing (no accidental trimming).
+
+Retest generation:
+
+Generate a caption and confirm it displays with the same spacing and line breaks as in Trello.
+
+5. Fix PDFMonkey API Key & PDF Download Errors
+Symptoms:
+
+PDF generation returns 401 Unauthorized (“We were unable to authenticate you…”).
+
+Calendar export endpoint /api/export-calendar-week is missing the :weekNumber parameter in the request.
+
+What to Do:
+
+PDFMonkey API Key:
+
+In Replit Secrets, confirm that PDFMONKEY_API_KEY is set exactly to your valid key (no extra spaces or truncated value).
+
+In server/pdfService.ts, log the value of process.env.PDFMONKEY_API_KEY (only during local dev) to confirm it’s not undefined. Remove logging in production.
+
+If the key shows undefined or starts with “und…” in logs, update the secret to the full correct key.
+
+Calendar Export Route:
+
+In server/routes.ts, ensure the route signature is:
+
+ts
+Kopier
+Rediger
+router.get('/api/export-calendar-week/:weekNumber', async (req, res) => {
+  const weekNumber = parseInt(req.params.weekNumber, 10);
+  // ...
+});
+On the client side (Calendar.tsx), confirm the Axios call includes the weekNumber:
+
+js
+Kopier
+Rediger
+const res = await axios.get(`/api/export-calendar-week/${weekNumber}`);
+not '/api/export-calendar-week'.
+
+Add error handling: if req.params.weekNumber is missing, return a 400 with { error: 'weekNumber required' }.
+
+Test PDF Generation:
+
+Call /api/export-calendar-week/1 in a browser or Postman.
+
+Confirm the server fetches the correct PDFMonkey template ID and returns { url: '<pdfURL>' }.
+
+In Calendar.tsx, on successful response, window.open(pdfUrl, '_blank') should open the PDF.
+
+6. Fix Navigation & Rename “Templates” Page to “Content Vault”
+Symptoms:
+
+Navigation links for “Content Vault” in header and dashboard return 404.
+
+We want the page title to read “Content Vault” instead of “Templates.”
+
+What to Do:
+
+Routes Update (App.tsx):
+
+Remove any <Route path="/vault" component={ContentVault} />.
+
+Ensure <Route path="/templates" component={Templates} /> remains, but the page’s internal title should be “Content Vault”.
+
+Navigation Links:
+
+In your main nav (e.g., NavBar.tsx) and dashboard sidebar, update:
+
+jsx
+Kopier
+Rediger
+<Link to="/templates">Content Vault</Link>
+(instead of /vault).
+
+Rename Page Header:
+
+In Templates.tsx, replace the <h1>Templates</h1> with <h1>Content Vault</h1>.
+
+Update any breadcrumbs or secondary headings to call it “Content Vault” as well.
+
+Update Sidebar/Card Titles:
+
+If you have a “Templates” card or sidebar link in Dashboard.tsx, change its label to “Content Vault”.
+
+Clean Up Unused Files:
+
+Delete client/src/pages/ContentVault.tsx and its references.
+
+Remove any imports or components that reference “Vault” but now live under /templates.
+
+7. Retest Everything End-to-End
+Generate AI Content with Proper Spacing
+
+Navigate to /templates (now “Content Vault”).
+
+Select a template and click “Generate Content.”
+
+Confirm the caption text appears with correct line breaks and spacing.
+
+Save to Vault & Calendar
+
+Click “Save to Vault” on a generated item. Confirm it appears in the “My Vault” list on the same page.
+
+Click “Save to Calendar” on a vault item. Confirm it POSTs to /api/calendar/add successfully and updates the calendar UI.
+
+PDF Exports
+
+Click “Download Vogue Calendar PDF” for a specific week. Confirm it opens a PDF in a new tab (no errors).
+
+Click “Export Vault as Vogue PDF.” Confirm it opens a PDF URL (no “.txt” file).
+
+Navigation & UI Labels
+
+In the site header, click “Content Vault.” Confirm it loads /templates without 404.
+
+Page title reads “Content Vault.” No instances of “Templates” remain as the primary label.
+

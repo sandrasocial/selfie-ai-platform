@@ -1,0 +1,335 @@
+// -----------------------------------------------------------------------------
+// SELFIE STARTER KIT™ – FULL COURSE PAGE + AESTHETIC COLLECTIONS MODULE
+// Matches luxury editorial spec (monochrome, square‑edge, no gradients).
+// -----------------------------------------------------------------------------
+
+import React, { useState, useEffect, useRef } from "react";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import Header from "@/components/layout/Header";
+import CollectionSelector from "@/components/aesthetics/CollectionSelector";
+import {
+  STARTER_KIT_COURSE,
+  CourseLesson,
+} from "@/../../shared/starterKitCourseData";
+import { apiRequest } from "@/lib/queryClient";
+
+// ------------------------------
+// Utility hooks
+// ------------------------------
+
+/** Shrinks headline tracking once hero scrolls out of view. */
+function useHeroScrollEffect(ref: React.RefObject<HTMLElement>) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.remove("tracking-tight");
+        } else {
+          el.classList.add("tracking-tight");
+        }
+      },
+      { threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [ref]);
+}
+
+/** Plays camera‑shutter sound on demand. */
+function useShutter() {
+  const ref = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    ref.current = new Audio("/sounds/camera-shutter.mp3");
+  }, []);
+  return () => {
+    ref.current?.currentTime = 0;
+    ref.current?.play();
+  };
+}
+
+// ------------------------------
+// Types
+// ------------------------------
+interface CourseProgress {
+  moduleId: string;
+  lessonId: string;
+  completed: boolean;
+  timeSpent: number;
+}
+
+// ------------------------------
+// MAIN COURSE COMPONENT
+// ------------------------------
+export default function StarterKitCourse() {
+  const [activeModule, setActiveModule] = useState("module-1");
+  const [currentLesson, setCurrentLesson] = useState<{ moduleId: string; lesson: CourseLesson } | null>(null);
+  const [selectedAesthetic, setSelectedAesthetic] = useState<number | null>(null);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const playShutter = useShutter();
+
+  // -------------------------
+  // Data fetching
+  // -------------------------
+  const { data: progress = [] } = useQuery<CourseProgress[]>({
+    queryKey: ["/api/starter-kit/progress"],
+  });
+
+  // -------------------------
+  // Mutations
+  // -------------------------
+  const completeLessonMutation = useMutation({
+    mutationFn: (payload: { moduleId: string; lessonId: string; timeSpent: number }) =>
+      apiRequest("/api/starter-kit/complete-lesson", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/starter-kit/progress"] });
+      playShutter();
+      toast({
+        title: "Progress Saved",
+        description: "Lesson marked complete.",
+      });
+    },
+  });
+
+  const workbookMutation = useMutation({
+    mutationFn: (lessonId: string) => apiRequest(`/api/ai/workbook?lesson=${lessonId}`),
+    onSuccess: () => {
+      toast({ title: "Workbook ready", description: "Download your personalized PDF." });
+    },
+  });
+
+  // -------------------------
+  // Helpers
+  // -------------------------
+  const totalLessons = STARTER_KIT_COURSE.reduce((acc, m) => acc + m.lessons.length, 0);
+  const completedLessons = progress.filter((p) => p.completed).length;
+  const overallProgress = totalLessons ? (completedLessons / totalLessons) * 100 : 0;
+
+  const moduleProgress = (id: string) => {
+    const module = STARTER_KIT_COURSE.find((m) => m.id === id);
+    if (!module) return 0;
+    const done = progress.filter((p) => p.moduleId === id && p.completed).length;
+    return module.lessons.length ? (done / module.lessons.length) * 100 : 0;
+  };
+
+  // -------------------------
+  // Render helpers
+  // -------------------------
+  const LessonCard = ({ lesson, moduleId }: { lesson: CourseLesson; moduleId: string }) => {
+    const isCompleted = progress.some((p) => p.moduleId === moduleId && p.lessonId === lesson.id && p.completed);
+
+    // Brand Aesthetic Builder special UI (Module 5 – lesson 5‑1)
+    const isAestheticBuilder = moduleId === "module-5" && lesson.id === "lesson-5-1";
+
+    return (
+      <div className="border border-[#B5B5B3] p-6 space-y-6">
+        {/* Video / Embed */}
+        {lesson.videoUrl && (
+          <div className="w-full h-0 pb-[56.25%] relative bg-black">
+            <iframe
+              src={lesson.videoUrl}
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; fullscreen; picture-in-picture"
+              title={lesson.title}
+            />
+          </div>
+        )}
+
+        {/* Headline & Copy */}
+        <div className="prose max-w-none first-letter:text-5xl first-letter:font-['Cormorant_Garamond'] first-letter:float-left first-letter:pr-3 first-letter:leading-[0.9]">
+          {lesson.content && <p>{lesson.content}</p>}
+        </div>
+
+        {/* Aesthetic Builder */}
+        {isAestheticBuilder && (
+          <>
+            <h3 className="font-['Cormorant_Garamond'] text-3xl">Design Like a CEO™</h3>
+            <CollectionSelector showPurchaseOption={true} onSelect={(id) => setSelectedAesthetic(id)} />
+            {selectedAesthetic !== null && (
+              <button
+                className="border border-[#171719] px-4 py-2 uppercase text-sm tracking-wide hover:bg-[#171719] hover:text-white"
+                onClick={() => workbookMutation.mutate(lesson.id)}
+              >
+                Generate Workbook
+              </button>
+            )}
+          </>
+        )}
+
+        {/* Completion CTA */}
+        {!isCompleted && (
+          <button
+            className="border border-[#171719] px-4 py-2 uppercase text-sm tracking-wide hover:bg-[#171719] hover:text-white"
+            disabled={completeLessonMutation.isPending}
+            onClick={() =>
+              completeLessonMutation.mutate({ moduleId, lessonId: lesson.id, timeSpent: 300 })
+            }
+          >
+            {completeLessonMutation.isPending ? "Saving…" : "Mark Complete"}
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  // -------------------------
+  // JSX
+  // -------------------------
+  const heroRef = useRef<HTMLHeadingElement>(null);
+  useHeroScrollEffect(heroRef);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] text-[#171719] font-inter">
+      <Header />
+
+      {/* Ambient Hero */}
+      <section className="relative h-[60vh] overflow-hidden">
+        <video
+          src="/videos/ambient-loop.mp4"
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        <div className="relative z-10 flex h-full items-center justify-center">
+          <h1
+            ref={heroRef}
+            className="text-6xl font-light uppercase transition-[letter-spacing] duration-300"
+            style={{ fontFamily: "Cormorant Garamond" }}
+          >
+            Selfie Starter Kit™
+          </h1>
+        </div>
+      </section>
+
+      {/* Course Progress */}
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex justify-between items-center py-6 border-b border-[#B5B5B3]">
+          <p className="text-sm">{Math.round(overallProgress)}% complete</p>
+          <div className="w-1/2 h-1 bg-[#B5B5B3] relative">
+            <div
+              className="h-full bg-[#171719] transition-all"
+              style={{ width: `${overallProgress}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Module Timeline & Content */}
+      <div className="max-w-6xl mx-auto flex">
+        {/* Left rail timeline */}
+        <aside className="w-48 py-12 border-r border-[#B5B5B3] hidden lg:block">
+          <div className="flex flex-col gap-10">
+            {STARTER_KIT_COURSE.map((module) => (
+              <button
+                key={module.id}
+                className={cn("text-left uppercase text-xs tracking-wide", {
+                  "font-semibold": activeModule === module.id,
+                })}
+                onClick={() => setActiveModule(module.id)}
+              >
+                {module.title}
+                <div className="h-px bg-[#B5B5B3] mt-2 relative">
+                  <span
+                    className="absolute top-0 left-0 h-full bg-[#171719]"
+                    style={{ width: `${moduleProgress(module.id)}%` }}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        {/* Module & Lesson content */}
+        <main className="flex-1 py-12 px-6 space-y-20">
+          {STARTER_KIT_COURSE.map((module) => (
+            <section key={module.id} id={module.id} className="space-y-14">
+              <header className="space-y-2">
+                <h2 className="font-['Cormorant_Garamond'] text-4xl leading-tight">
+                  {module.title}
+                </h2>
+                <p className="text-[#4C4B4B] max-w-xl">{module.description}</p>
+              </header>
+
+              <div className="space-y-14">
+                {module.lessons.map((lesson) => (
+                  <LessonCard key={lesson.id} lesson={lesson} moduleId={module.id} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </main>
+      </div>
+
+      {/* Hidden audio for shutter */}
+      <audio src="/sounds/camera-shutter.mp3" className="hidden" />
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// SEPARATE PAGE – AI Imagery Collections (can be routed to /aesthetic-collections)
+// -----------------------------------------------------------------------------
+export function AestheticCollections() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] text-[#171719] font-inter">
+      <Header />
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <h1
+            className="text-5xl font-light mb-4"
+            style={{ fontFamily: "Cormorant Garamond" }}
+          >
+            AI Imagery Collections
+          </h1>
+          <p className="text-lg text-[#4C4B4B] font-light max-w-2xl mx-auto">
+            Curated aesthetic collections designed to elevate your brand with sophisticated visual storytelling
+          </p>
+        </div>
+
+        {/* Collections */}
+        <CollectionSelector showPurchaseOption={true} />
+
+        {/* Benefits */}
+        <div className="mt-16 border-t border-[#B5B5B3] pt-16 grid md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Editorial Quality",
+              desc: "Professional-grade imagery curated for luxury brand aesthetics",
+            },
+            {
+              title: "AI-Optimized",
+              desc: "Designed to work seamlessly with our AI brand strategy tools",
+            },
+            {
+              title: "Complete Package",
+              desc: "Includes color palettes, font suggestions, and tone guidelines",
+            },
+          ].map((b) => (
+            <div key={b.title} className="text-center">
+              <h3
+                className="text-xl font-light mb-3"
+                style={{ fontFamily: "Cormorant Garamond" }}
+              >
+                {b.title}
+              </h3>
+              <p className="text-[#4C4B4B] font-light">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

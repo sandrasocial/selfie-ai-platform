@@ -1,0 +1,42 @@
+🛠️ PHASE ONE: LIVE FOUNDING MEMBER VERSION
+
+We are launching the SELFIE AI™ platform in "Founding Member Mode" using the features that are already working. Do not attempt to fix or launch any broken or unfinished modules yet. Just focus on the following:
+
+✅ TASK 1: Fix Navigation + Routing
+
+1. Ensure login status is consistent across all pages (no "Log In" appearing after login)
+2. Add full navigation header to the Selfie Blueprint page so users can navigate back
+3. Create and route a working **Sandra AI Chat page** with a proper layout (title: "Chat with Sandra AI™")
+4. Fix the Sandra AI Chat link in the header to avoid 404 error
+5. Fix the Module 2 button in the Template page — should route to `/module2`, not `/module3`
+
+✅ TASK 2: Add “Coming Soon” Labels to Unfinished Modules
+
+1. For Modules 3–5 and any broken features, display a banner or label:
+   > "✨ Coming Soon — This feature is part of our premium roadmap. Founding members get early access."
+
+✅ TASK 3: Set Founding Member Pricing Logic
+
+1. Tag any new registered users as `foundingMember = true` in the database
+2. On the pricing page, show the message:
+   > "**Founding Member Launch** – Join now for $27/month. Get full access to all current features + locked-in perks for future updates."
+
+✅ TASK 4: Domain Setup Support
+
+1. Prepare for deployment to `app.selfieschool.com`
+2. Ensure routing works on live domain just like it does in preview
+3. Help connect this custom domain and make sure login/session persist
+
+✅ DO NOT TOUCH:
+- Module 3–5 content
+- Existing users and their Branded by Selfie access logic
+- Anthropic AI or workbook generation logic in Module 2 (already being tested manually)
+
+Our goal is to launch a **stable and functional soft beta** with:
+- 30-day Templates ✔️
+- AI Studio ✔️
+- Sandra Chat ✔️ (after routing fix)
+
+This phase will bring in paid users while we keep building behind the scenes.
+
+Let me know when these 4 tasks are done and tested, then we’ll move to full monetization integration and course tier access.

@@ -1,0 +1,110 @@
+// BEGIN PROMPT
+In client/src/components/VisualStudioEditor.tsx, fix the blank Filerobot crop modal by ensuring the current preview image is correctly passed into the Filerobot Image Editor’s `src` prop and that the container is visible.
+
+1. **Import and state variables**  
+   Make sure you have these at the top:
+   ```js
+   import { FilerobotImageEditor } from 'filerobot-image-editor';
+   import React, { useState } from 'react';
+   …
+   const [cropModalOpen, setCropModalOpen] = useState(false);
+   const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+   const [editedImage, setEditedImage] = useState<string>(initialImageSrc); // this holds the current preview’s src
+Open the crop modal with the correct src
+Update your “Crop” button handler to set cropImageSrc to the current image’s data URL (or existing editedImage state) before opening:
+
+jsx
+Kopier
+Rediger
+<button
+  className="bg-black text-white font-semibold p-2 rounded-none opacity-100"
+  onClick={() => {
+    setCropImageSrc(editedImage);      // pass the current preview image URL here
+    setCropModalOpen(true);
+  }}
+>
+  Crop
+</button>
+Render the Filerobot Editor with the src
+Inside your JSX, replace the existing modal code with something like:
+
+jsx
+Kopier
+Rediger
+{cropModalOpen && cropImageSrc && (
+  <div
+    id="crop-modal"
+    className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+  >
+    <div className="relative w-4/5 h-4/5 bg-white">
+      <button
+        onClick={() => setCropModalOpen(false)}
+        className="absolute top-4 right-4 bg-black text-white p-2 rounded-none"
+      >
+        Cancel
+      </button>
+      <FilerobotImageEditor
+        src={cropImageSrc}
+        config={{
+          tools: ['crop'],
+          Rotate: true,
+          Crop: {
+            presetRatio: null,
+          },
+        }}
+        onComplete={(editedInfo) => {
+          // editedInfo.imageBase64 is the new cropped image
+          setEditedImage(editedInfo.imageBase64);
+          setCropModalOpen(false);
+        }}
+        onClose={() => setCropModalOpen(false)}
+        language="en"
+        annotationsCommon={{
+          fill: '#222',
+        }}
+        Text={{ text: { content: ' ' } }}
+        CrossOriginEmbedImage={false}
+      />
+    </div>
+  </div>
+)}
+Key points:
+• The modal <div> must have a visible container (e.g. w-4/5 h-4/5 bg-white flex items-center justify-center) so you can see the editor.
+• src={cropImageSrc} ensures the editor loads the current image; if cropImageSrc is null or incorrect, the window stays white.
+• onComplete replaces editedImage with the cropped result and closes the modal.
+
+Ensure editedImage is used for the preview
+Your preview <img> or <canvas> should use editedImage as its source:
+
+jsx
+Kopier
+Rediger
+<div className="w-2/3">
+  <img
+    src={editedImage}
+    alt="Preview"
+    id="preview-image"
+    className="max-w-full max-h-full object-contain"
+  />
+</div>
+If you’re still using a <canvas>, make sure you update that canvas with editedImage after cropping.
+
+Remove any extra, conflicting crop code
+
+Delete/comment out any existing manual crop handlers in this component.
+
+Only rely on Filerobot’s modal for cropping.
+
+Run tests
+
+Upload an image → click Crop → the modal appears with your actual photo visible inside the Filerobot editor.
+
+Resize/drag the cropping box, then click Apply (the editor’s default button).
+
+Confirm the cropped result appears in the main preview.
+
+Once you verify the Filerobot editor shows the image instead of blank white, stop.
+// END PROMPT
+
+Kopier
+Rediger

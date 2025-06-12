@@ -1,0 +1,860 @@
+﻿// SelfieStarterKit.jsx
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { 
+ Play, CheckCircle, Clock, Download, ArrowLeft, ArrowRight, ChevronDown, ChevronUp
+} from 'lucide-react';
+import Header from '@/components/layout/Header';
+import { apiRequest } from '@/lib/queryClient';
+import { cn } from '@/lib/utils';
+import img01 from '@/assets/placeholder-01.jpg';
+import img02 from '@/assets/placeholder-02.jpg';
+import img03 from '@/assets/placeholder-03.jpg';
+import img04 from '@/assets/placeholder-04.jpg';
+import img05 from '@/assets/placeholder-05.jpg';
+import img06 from '@/assets/placeholder-06.jpg';
+import img07 from '@/assets/placeholder-07.jpg';
+import img08 from '@/assets/placeholder-08.jpg';
+
+
+const COURSE_DATA = [
+ {
+   id: 'module-1',
+   title: 'Start Here',
+   subtitle: 'Your Brand, Your Power',
+   lessons: [{ id: 'brand-power', title: 'Your Brand, Your Power', duration: '8 min' }]
+ },
+ {
+   id: 'module-2',
+   title: 'Selfie Editing',
+   subtitle: 'Edit Like a Pro (Even on iPhone)',
+   lessons: [
+     { id: 'presets', title: 'Applying Your Presets', duration: '12 min' },
+     { id: 'iphone-edit', title: 'iPhone Quick Edit', duration: '8 min' }
+   ]
+ },
+ {
+   id: 'module-3',
+   title: 'Smart Edits With Apps',
+   subtitle: 'Add Mood Without Losing the Real You',
+   lessons: [
+     { id: 'hypic', title: 'Editorial Edge with Hypic', duration: '10 min' },
+     { id: 'capcut', title: 'Luxe Video with CapCut', duration: '15 min' }
+   ]
+ },
+ {
+   id: 'module-4',
+   title: 'Hands-Free Like a CEO',
+   subtitle: 'Shoot Solo, Stay in Flow',
+   lessons: [{ id: 'hands-free', title: 'Voice & Gesture Control', duration: '8 min' }]
+ },
+ {
+   id: 'module-5',
+   title: 'Brand Aesthetic Builder',
+   subtitle: 'Design Like a CEO™',
+   lessons: [{ id: 'aesthetic', title: 'Your Visual Strategy', duration: '20 min' }]
+ },
+ {
+   id: 'module-6',
+   title: 'Captions That Convert',
+   subtitle: 'Write Like a Vibe',
+   lessons: [{ id: 'captions', title: 'Words That Connect', duration: '15 min' }]
+ }
+];
+
+
+const AESTHETIC_COLLECTIONS = [
+ { id: 'pink', name: 'PINK', images: ['https://i.postimg.cc/1XJQ9GQ6/1.png', 'https://i.postimg.cc/qRXGsqML/2.png', 'https://i.postimg.cc/FKMFWBhz/3.png', 'https://i.postimg.cc/Dw7GCswR/4.png', 'https://i.postimg.cc/8cKGnbdp/5.png', 'https://i.postimg.cc/J4dbrRhG/6.png'] },
+ { id: 'cream', name: 'CREAM', images: ['https://i.postimg.cc/gkdkdq86/7.png', 'https://i.postimg.cc/C1C0YHHx/8.png', 'https://i.postimg.cc/L8TKZ6Ty/9.png', 'https://i.postimg.cc/PqgGcKGC/10.png', 'https://i.postimg.cc/8PLx8Qxy/11.png', 'https://i.postimg.cc/RVQ0wCPr/12.png'] },
+ { id: 'beige', name: 'BEIGE', images: ['https://i.postimg.cc/XYNYWBLG/13.png', 'https://i.postimg.cc/C5krYJvr/14.png', 'https://i.postimg.cc/yNLHyQC6/15.png', 'https://i.postimg.cc/tCKM9ZP7/16.png', 'https://i.postimg.cc/ZKGKWmKF/17.png', 'https://i.postimg.cc/D0yQ24KB/18.png'] },
+ { id: 'coastal', name: 'COASTAL', images: ['https://i.postimg.cc/L5gNjnsQ/25.png', 'https://i.postimg.cc/9XCsQ7jn/26.png', 'https://i.postimg.cc/vBjJf3m2/27.png', 'https://i.postimg.cc/W3PxGCn1/28.png', 'https://i.postimg.cc/9Mz6HJFf/29.png', 'https://i.postimg.cc/Nfh9K0gn/30.png'] },
+ { id: 'energy', name: 'ENERGY & HEALING', images: ['https://i.postimg.cc/HL7QHc0W/31.png', 'https://i.postimg.cc/Njg5K0zj/32.png', 'https://i.postimg.cc/Y0K5mWGy/33.png', 'https://i.postimg.cc/02MpGLsX/34.png', 'https://i.postimg.cc/x1MLmDgQ/35.png', 'https://i.postimg.cc/9QppGgdv/36.png'] },
+ { id: 'golden', name: 'GOLDEN HOUR', images: ['https://i.postimg.cc/qgbTJ7m6/37.png', 'https://i.postimg.cc/GpFfTGMP/38.png', 'https://i.postimg.cc/Fz1gxkcx/39.png', 'https://i.postimg.cc/d1CzqBH9/40.png', 'https://i.postimg.cc/9QsGxyqj/41.png', 'https://i.postimg.cc/kXz5RD38/42.png'] },
+ { id: 'health', name: 'HEALTH & WELLNESS', images: ['https://i.postimg.cc/4yyCwWNs/43.png', 'https://i.postimg.cc/Gh8pT5nm/44.png', 'https://i.postimg.cc/RZLfLxMb/45.png', 'https://i.postimg.cc/rsBCJx59/46.png', 'https://i.postimg.cc/Rhf89pT6/47.png', 'https://i.postimg.cc/LsCnxLRV/48.png'] },
+ { id: 'moody', name: 'MOODY & MODERN', images: ['https://i.postimg.cc/T3rMhDgL/49.png', 'https://i.postimg.cc/GmW6XBD8/50.png', 'https://i.postimg.cc/LXKdQRVK/51.png', 'https://i.postimg.cc/bJ0jW7qP/52.png', 'https://i.postimg.cc/Y0fVD4CK/53.png', 'https://i.postimg.cc/5050W5pm/54.png'] },
+ { id: 'minimal', name: 'MINIMALISTIC', images: ['https://i.postimg.cc/8z9J3wVW/61.png', 'https://i.postimg.cc/Dz8FGgSy/62.png', 'https://i.postimg.cc/pTvGZ9Cv/63.png', 'https://i.postimg.cc/NFXbyLKW/64.png', 'https://i.postimg.cc/RVYtjhNr/65.png', 'https://i.postimg.cc/15XXqN1h/66.png'] }
+];
+
+
+export default function SelfieStarterKit() {
+ const [selectedModule, setSelectedModule] = useState('module-1');
+ const [selectedLesson, setSelectedLesson] = useState('brand-power');
+ const [notes, setNotes] = useState({});
+ const [heroOverlayVisible, setHeroOverlayVisible] = useState(true);
+ const [expandedModules, setExpandedModules] = useState({ 'module-1': true });
+ const [selectedAesthetic, setSelectedAesthetic] = useState(null);
+ const [completedLessons, setCompletedLessons] = useState({});
+ const { toast } = useToast();
+ const queryClient = useQueryClient();
+
+
+ useEffect(() => {
+   const handleScroll = () => {
+     const elements = document.querySelectorAll('.fade-in-element');
+     elements.forEach(el => {
+       const rect = el.getBoundingClientRect();
+       if (rect.top < window.innerHeight * 0.8) {
+         el.classList.add('visible');
+       }
+     });
+   };
+   window.addEventListener('scroll', handleScroll);
+   return () => window.removeEventListener('scroll', handleScroll);
+ }, []);
+
+
+ const toggleModule = (moduleId) => {
+   setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
+ };
+
+
+ const markComplete = (moduleId, lessonId) => {
+   setCompletedLessons(prev => ({ ...prev, [`${moduleId}-${lessonId}`]: true }));
+   toast({ title: "Progress Saved", description: "Lesson marked complete." });
+ };
+
+
+ const generateWorkbook = async (templateId, title) => {
+   toast({ title: "Generating...", description: `Creating your ${title}` });
+   setTimeout(() => {
+     toast({ title: "Ready!", description: "Your personalized workbook is ready to download." });
+   }, 2000);
+ };
+
+
+ const progress = Object.keys(completedLessons).length / COURSE_DATA.reduce((acc, m) => acc + m.lessons.length, 0) * 100;
+
+
+ return (
+   <div className="min-h-screen bg-white">
+     <style jsx>{`
+       .fade-in-element {
+         opacity: 0;
+         transform: translateY(20px);
+         transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+       }
+       .fade-in-element.visible {
+         opacity: 1;
+         transform: translateY(0);
+       }
+       .parallax-bg {
+         transform: translateY(var(--parallax-offset, 0));
+         transition: transform 0.1s linear;
+       }
+     `}</style>
+     
+     <Header />
+
+
+     {/* Hero Video Section */}
+     <section className="relative w-full h-screen overflow-hidden">
+       <div className="absolute inset-0 bg-black">
+         <div style={{padding:'56.25% 0 0 0',position:'relative',height:'100%'}}>
+           <iframe 
+             src="https://player.vimeo.com/video/1091785973?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+             frameBorder="0"
+             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+             style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}}
+             title="Welcome To Selfie Starter Kit"
+           />
+         </div>
+       </div>
+       
+       <div 
+         className={cn(
+           "absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center transition-all duration-1500",
+           !heroOverlayVisible && "opacity-0 pointer-events-none"
+         )}
+       >
+         <div className="text-center text-white px-8 fade-in-element visible">
+           <h1 className="font-['Cormorant_Garamond'] text-7xl md:text-9xl font-normal mb-8 tracking-tight">
+             Welcome to Your Transformation
+           </h1>
+           <p className="text-xl md:text-3xl font-light mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
+             Master the art of confident, authentic selfies that build your personal brand.
+           </p>
+           <Button 
+             onClick={() => setHeroOverlayVisible(false)}
+             size="lg"
+             className="bg-white text-[#171719] hover:bg-[#F1F1F1] border-0 px-16 py-6 text-xl uppercase tracking-[0.2em] font-light transition-all duration-300 hover:tracking-[0.3em]"
+           >
+             Begin Your Journey
+           </Button>
+         </div>
+       </div>
+     </section>
+
+
+     {/* Course Header */}
+     <section className="relative bg-[#F1F1F1] py-24 overflow-hidden">
+       <div 
+         className="absolute inset-0 opacity-5"
+         style={{ backgroundImage: `url(${img01})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+       />
+       <div className="relative max-w-7xl mx-auto px-8 text-center">
+         <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.3em] font-light">SELFIE STARTER KIT™</span>
+         <h1 className="font-['Cormorant_Garamond'] text-7xl md:text-8xl font-normal text-[#171719] mt-6 mb-8">
+           Your Journey Begins
+         </h1>
+         <div className="max-w-2xl mx-auto mt-12">
+           <div className="flex justify-between text-sm text-[#4C4B4B] mb-3 uppercase tracking-wider">
+             <span>Progress</span>
+             <span>{Math.round(progress)}% Complete</span>
+           </div>
+           <Progress value={progress} className="h-1 bg-white/50" />
+         </div>
+       </div>
+     </section>
+
+
+     {/* Main Content */}
+     <div className="max-w-7xl mx-auto px-8 py-16">
+       
+       {/* Module 1 */}
+       <div className="mb-16 fade-in-element">
+         <div 
+           className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+           onClick={() => toggleModule('module-1')}
+         >
+           <div className="p-8 flex items-center justify-between">
+             <div>
+               <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 1</span>
+               <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Start Here</h2>
+               <p className="text-[#4C4B4B] font-light mt-1 text-lg">Your Brand, Your Power</p>
+             </div>
+             {expandedModules['module-1'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+           </div>
+         </div>
+
+
+         {expandedModules['module-1'] && (
+           <div className="border-x border-b border-[#B5B5B3] bg-white">
+             <div className="p-12 space-y-12">
+               <div className="aspect-video bg-black">
+                 <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                   <iframe src="https://player.vimeo.com/video/1091863622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Welcome" />
+                 </div>
+               </div>
+
+
+               <div className="prose prose-xl max-w-none">
+                 <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                   Welcome, gorgeous. You're not here to play small anymore.
+                 </p>
+                 <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                   This Starter Kit isn't just a bundle of tools — it's your first step into a more magnetic version of you. A version that shows up online with clarity, confidence, and camera-ready energy.
+                 </p>
+                 <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                   You don't need more noise. You need a system. So let's simplify and elevate — together.
+                 </p>
+               </div>
+
+
+               <div className="grid md:grid-cols-3 gap-6">
+                 <div className="border border-[#B5B5B3] p-6 text-center hover:shadow-md transition-shadow">
+                   <h4 className="font-['Cormorant_Garamond'] text-xl mb-2">Light & Airy</h4>
+                   <p className="text-[#4C4B4B] font-light text-sm">DNG or ZIP</p>
+                 </div>
+                 <div className="border border-[#B5B5B3] p-6 text-center hover:shadow-md transition-shadow">
+                   <h4 className="font-['Cormorant_Garamond'] text-xl mb-2">Dark & Moody</h4>
+                   <p className="text-[#4C4B4B] font-light text-sm">Premium preset</p>
+                 </div>
+                 <div className="border border-[#B5B5B3] p-6 text-center hover:shadow-md transition-shadow">
+                   <h4 className="font-['Cormorant_Garamond'] text-xl mb-2">Scandinavian Urban</h4>
+                   <p className="text-[#4C4B4B] font-light text-sm">Editorial style</p>
+                 </div>
+               </div>
+
+
+               <Button className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] border-0 py-6 text-lg uppercase tracking-wider">
+                 Tap to Access Your Presets
+               </Button>
+
+
+               <div className="relative">
+                 <img src="https://i.postimg.cc/4ypPywML/21.png" alt="Reflection" className="w-full" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+                   <div className="text-white">
+                     <h3 className="font-['Cormorant_Garamond'] text-3xl mb-2">Reflection</h3>
+                     <p className="text-lg font-light">What's been holding you back from showing up fully online?</p>
+                   </div>
+                 </div>
+               </div>
+
+
+               <div className="bg-[#F1F1F1] p-8">
+                 <h4 className="font-['Cormorant_Garamond'] text-2xl mb-6">Quick Checklist Before Moving On</h4>
+                 <div className="space-y-4">
+                   <label className="flex items-center gap-3 text-[#4C4B4B] cursor-pointer">
+                     <input type="checkbox" className="w-5 h-5" />
+                     <span className="font-light text-lg">Watched the intro video</span>
+                   </label>
+                   <label className="flex items-center gap-3 text-[#4C4B4B] cursor-pointer">
+                     <input type="checkbox" className="w-5 h-5" />
+                     <span className="font-light text-lg">Ready to install your presets</span>
+                   </label>
+                   <label className="flex items-center gap-3 text-[#4C4B4B] cursor-pointer">
+                     <input type="checkbox" className="w-5 h-5" />
+                     <span className="font-light text-lg">Feeling grounded in your why</span>
+                   </label>
+                 </div>
+               </div>
+
+
+               <div className="text-center pt-8">
+                 <Button 
+                   onClick={() => markComplete('module-1', 'brand-power')}
+                   className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white px-12 py-4 text-lg uppercase tracking-wider transition-all"
+                 >
+                   Next: Define Your Signature Style →
+                 </Button>
+               </div>
+             </div>
+           </div>
+         )}
+       </div>
+
+
+       {/* Module 2 */}
+       <div className="mb-16 fade-in-element">
+         <div 
+           className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+           onClick={() => toggleModule('module-2')}
+         >
+           <div className="p-8 flex items-center justify-between">
+             <div>
+               <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 2</span>
+               <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Selfie Editing</h2>
+               <p className="text-[#4C4B4B] font-light mt-1 text-lg">Edit Like a Pro (Even on iPhone)</p>
+             </div>
+             {expandedModules['module-2'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+           </div>
+         </div>
+
+
+         {expandedModules['module-2'] && (
+           <div className="border-x border-b border-[#B5B5B3] bg-white">
+             <div className="p-12 space-y-12">
+               <div>
+                 <h3 className="font-['Cormorant_Garamond'] text-3xl mb-6">Applying Your Presets</h3>
+                 <div className="aspect-video bg-black mb-8">
+                   <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                     <iframe src="https://player.vimeo.com/video/1091863084?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Applying your presets" />
+                   </div>
+                 </div>
+               </div>
+
+
+               <div>
+                 <h3 className="font-['Cormorant_Garamond'] text-3xl mb-6">Editing Inside the iPhone App</h3>
+                 <div className="aspect-video bg-black">
+                   <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                     <iframe src="https://player.vimeo.com/video/1091863103?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Editing inside the iPhone app" />
+                   </div>
+                 </div>
+               </div>
+
+
+               <div className="prose prose-xl max-w-none">
+                 <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                   Scroll-stopping content isn't about having the best gear. It's about knowing how to work your angles, lighting, and editing flow. This masterclass walks you through my exact routine to make your selfies look polished, powerful, and luxurious—using only your phone.
+                 </p>
+               </div>
+
+
+               <div className="grid md:grid-cols-3 gap-8">
+                 <div className="space-y-4">
+                   <span className="text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">01</span>
+                   <h4 className="font-['Cormorant_Garamond'] text-2xl">Lightroom Preset Magic</h4>
+                   <p className="text-[#4C4B4B] font-light">Import presets, tap photo, create preset, name it "Glow Up One"</p>
+                 </div>
+                 <div className="space-y-4">
+                   <span className="text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">02</span>
+                   <h4 className="font-['Cormorant_Garamond'] text-2xl">Apply, Adjust & Save</h4>
+                   <p className="text-[#4C4B4B] font-light">Fine-tune contrast, exposure, highlights for natural look</p>
+                 </div>
+                 <div className="space-y-4">
+                   <span className="text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">03</span>
+                   <h4 className="font-['Cormorant_Garamond'] text-2xl">iPhone Quick Edit</h4>
+                   <p className="text-[#4C4B4B] font-light">Exposure -20, Brilliance -20, Warmth +8, Vignette +70</p>
+                 </div>
+               </div>
+
+
+               <div className="bg-[#171719] text-white p-12 relative overflow-hidden">
+                 <div className="absolute top-0 right-0 text-[20rem] font-['Cormorant_Garamond'] text-white/5 leading-none">"</div>
+                 <p className="text-2xl font-light italic relative z-10 max-w-3xl">
+                   You don't need more apps — you need a routine. And the confidence to trust it.
+                 </p>
+               </div>
+
+
+               <Card className="border-0 shadow-lg bg-gradient-to-br from-[#F1F1F1] to-white p-8">
+                 <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">AI Editing Flow Workbook</h4>
+                 <p className="text-[#4C4B4B] font-light mb-6">Your personalized editing flow—created by AI and tailored to your presets, pace, and vibe.</p>
+                 <Button 
+                   onClick={() => generateWorkbook('9CC35B05-3616-4EB8-898E-8C15E46A9F05', 'Editing Flow Workbook')}
+                   className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] border-0"
+                 >
+                   Generate My Editing Flow Workbook
+                 </Button>
+               </Card>
+
+
+               <div className="text-center pt-8">
+                 <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white px-12 py-4 text-lg uppercase tracking-wider">
+                   Next: Smart Edits With Apps →
+                 </Button>
+               </div>
+             </div>
+           </div>
+         )}
+       </div>
+
+
+       {/* Module 3 */}
+       <div className="mb-16 fade-in-element">
+         <div 
+           className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+           onClick={() => toggleModule('module-3')}
+         >
+           <div className="p-8 flex items-center justify-between">
+             <div>
+               <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 3</span>
+               <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Smart Edits With Apps</h2>
+               <p className="text-[#4C4B4B] font-light mt-1 text-lg">Add Mood Without Losing the Real You</p>
+             </div>
+             {expandedModules['module-3'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+           </div>
+         </div>
+
+
+         {expandedModules['module-3'] && (
+           <div className="border-x border-b border-[#B5B5B3] bg-white">
+             <div className="p-12 space-y-12">
+               <div>
+                 <h3 className="font-['Cormorant_Garamond'] text-3xl mb-6">Editing with Hypic</h3>
+                 <div className="aspect-video bg-black mb-8">
+                   <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                     <iframe src="https://player.vimeo.com/video/1091863129?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Editing with Hyp
+
+
+<div className="bg-[#F1F1F1] p-8 mb-8">
+                <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">Sandra's Exact Flow – Hypic</h4>
+                <ul className="space-y-3 text-[#4C4B4B] font-light">
+                  <li>• Open Hypic → Edit</li>
+                  <li>• Upload selfie from Module 2</li>
+                  <li>• Filters → Low Key → strength 50%</li>
+                  <li>• Adjust Brightness, Contrast, Sharpness, Highlights</li>
+                  <li>• Optional Retouch for subtle polish</li>
+                </ul>
+              </div>
+
+
+              <div className="relative overflow-hidden p-12 my-12" style={{ backgroundImage: `url(${img02})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                <div className="absolute inset-0 bg-black/70"></div>
+                <p className="relative z-10 text-white text-2xl font-light italic text-center max-w-3xl mx-auto">
+                  "Think of Hypic as your 'editorial lens.' Use it when you want your content to feel less 'Insta' and more like a fashion mag."
+                </p>
+              </div>
+            </div>
+
+
+            <div>
+              <h3 className="font-['Cormorant_Garamond'] text-3xl mb-6">CapCut for Luxe Video</h3>
+              <div className="aspect-video bg-black">
+                <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                  <iframe src="https://player.vimeo.com/video/1091863154?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Video editing with CapCut" />
+                </div>
+              </div>
+            </div>
+
+
+            <div className="grid md:grid-cols-2 gap-12">
+              <div>
+                <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">Film Like a CEO</h4>
+                <ul className="space-y-2 text-[#4C4B4B] font-light">
+                  <li>• iPhone Camera 4K @ 30 fps</li>
+                  <li>• Natural light preferred</li>
+                  <li>• Clean, minimal background</li>
+                  <li>• Eye-level lens position</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">CapCut Workflow</h4>
+                <ul className="space-y-2 text-[#4C4B4B] font-light">
+                  <li>• New Project → import clips → trim</li>
+                  <li>• Adjust: Contrast +4, Sharpen +26</li>
+                  <li>• Clarity +14, Vignette +10</li>
+                  <li>• Apply to All → Export 4K/30 fps</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-[#F1F1F1] p-8">
+              <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">Editing Flow Strategy Workbook</h4>
+              <p className="text-[#4C4B4B] font-light mb-6">AI-generated routine based on your app, filters, and style.</p>
+              <Button 
+                onClick={() => generateWorkbook('9CC35B05-3616-4EB8-898E-8C15E46A9F05', 'Editing Strategy Workbook')}
+                className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] border-0"
+              >
+                Generate My Editing Workbook
+              </Button>
+            </Card>
+
+
+            <div className="text-center pt-8">
+              <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white px-12 py-4 text-lg uppercase tracking-wider">
+                Next: Hands-Free Like a CEO →
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+
+
+    {/* Module 4 */}
+    <div className="mb-16 fade-in-element">
+      <div 
+        className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+        onClick={() => toggleModule('module-4')}
+      >
+        <div className="p-8 flex items-center justify-between">
+          <div>
+            <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 4</span>
+            <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Hands-Free Like a CEO</h2>
+            <p className="text-[#4C4B4B] font-light mt-1 text-lg">Shoot Solo, Stay in Flow</p>
+          </div>
+          {expandedModules['module-4'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+        </div>
+      </div>
+
+
+      {expandedModules['module-4'] && (
+        <div className="border-x border-b border-[#B5B5B3] bg-white">
+          <div className="p-12 space-y-12">
+            <div className="aspect-[9/16] max-w-md mx-auto bg-black">
+              <div style={{padding:'216.7% 0 0 0',position:'relative'}}>
+                <iframe src="https://player.vimeo.com/video/1091865311?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Custom Command Tutorial" />
+              </div>
+            </div>
+
+
+            <div className="prose prose-xl max-w-none text-center">
+              <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                You don't need a tripod or team. This lesson shows how to film scroll-stopping content solo with phone, voice, and gestures.
+              </p>
+            </div>
+
+
+            <div className="bg-[#F1F1F1] p-12">
+              <h3 className="font-['Cormorant_Garamond'] text-3xl mb-8 text-center">Setup – iPhone Gesture + Voice Shortcut</h3>
+              <ol className="space-y-4 text-[#4C4B4B] font-light text-lg max-w-2xl mx-auto">
+                <li><span className="font-medium">1.</span> Settings → Accessibility → Touch → AssistiveTouch ON</li>
+                <li><span className="font-medium">2.</span> Custom Actions → Double Tap → Take Photo</li>
+                <li><span className="font-medium">3.</span> Accessibility → Voice Control ON</li>
+                <li><span className="font-medium">4.</span> Now say "Tap Take Photo" for hands-free shooting</li>
+              </ol>
+            </div>
+
+
+            <div className="relative p-16 text-center" style={{ backgroundImage: `url(${img03})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="absolute inset-0 bg-white/90"></div>
+              <div className="relative z-10">
+                <h4 className="font-['Cormorant_Garamond'] text-3xl mb-4">Practice Challenge</h4>
+                <p className="text-xl text-[#4C4B4B] font-light">Film a 10-second hands-free clip with 2–3 poses.</p>
+              </div>
+            </div>
+
+
+            <div className="bg-[#171719] text-white p-12">
+              <p className="text-2xl font-light italic text-center max-w-3xl mx-auto">
+                "Most people wait for the 'right time' to show up. You? You set the camera, say the word, and start leading. That's CEO energy."
+              </p>
+            </div>
+
+
+            <Card className="border-0 shadow-lg bg-[#F1F1F1] p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 text-[#B5B5B3] text-sm uppercase tracking-wider">Coming Soon</div>
+              <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4 text-[#4C4B4B]">AI Pose Guide Workbook</h4>
+              <p className="text-[#4C4B4B] font-light mb-6">Beginner-to-advanced solo pose prompts for hands-free filming.</p>
+              <Button disabled className="w-full bg-[#B5B5B3] text-white border-0 cursor-not-allowed">
+                Coming Soon – Generate My Pose Guide
+              </Button>
+            </Card>
+
+
+            <div className="text-center pt-8">
+              <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white px-12 py-4 text-lg uppercase tracking-wider">
+                Next: Build Your Brand Aesthetic →
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+
+
+    {/* Module 5 */}
+    <div className="mb-16 fade-in-element">
+      <div 
+        className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+        onClick={() => toggleModule('module-5')}
+      >
+        <div className="p-8 flex items-center justify-between">
+          <div>
+            <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 5</span>
+            <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Brand Aesthetic Builder</h2>
+            <p className="text-[#4C4B4B] font-light mt-1 text-lg">Design Like a CEO™</p>
+          </div>
+          {expandedModules['module-5'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+        </div>
+      </div>
+
+
+      {expandedModules['module-5'] && (
+        <div className="border-x border-b border-[#B5B5B3] bg-white">
+          <div className="p-12 space-y-12">
+            <div className="text-center max-w-3xl mx-auto">
+              <h3 className="font-['Cormorant_Garamond'] text-5xl mb-4">Design Like a CEO™</h3>
+              <p className="text-xl text-[#4C4B4B] font-light">Your visual strategy starts here.</p>
+              <p className="text-lg text-[#4C4B4B] font-light mt-4">
+                Turn your vibe into a visual brand without a designer. Choose a curated aesthetic; AI will generate your complete visual strategy, ready to download.
+              </p>
+            </div>
+
+
+            <div className="bg-[#F1F1F1] p-12 text-center">
+              <h4 className="font-['Cormorant_Garamond'] text-3xl mb-8">Reflection Prompt</h4>
+              <p className="text-xl text-[#4C4B4B] font-light mb-4">If your brand walked into the room…</p>
+              <div className="space-y-2 text-lg text-[#4C4B4B] font-light">
+                <p>• What would she be wearing?</p>
+                <p>• How would she move?</p>
+                <p>• What energy would she leave behind?</p>
+              </div>
+            </div>
+
+
+            <div className="space-y-8">
+              <h4 className="font-['Cormorant_Garamond'] text-3xl text-center mb-8">Brand Aesthetic Collections</h4>
+              <div className="grid md:grid-cols-3 gap-8">
+                {AESTHETIC_COLLECTIONS.map((collection) => (
+                  <div 
+                    key={collection.id}
+                    onClick={() => setSelectedAesthetic(collection.id)}
+                    className={cn(
+                      "cursor-pointer transition-all duration-300 border-2",
+                      selectedAesthetic === collection.id ? "border-[#171719] shadow-xl" : "border-transparent hover:border-[#B5B5B3]"
+                    )}
+                  >
+                    <h5 className="font-['Cormorant_Garamond'] text-2xl text-center py-4 bg-[#F1F1F1]">{collection.name}</h5>
+                    <div className="grid grid-cols-3 gap-1">
+                      {collection.images.map((img, idx) => (
+                        <div key={idx} className="aspect-square">
+                          <img src={img} alt={`${collection.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-[#F1F1F1] to-white p-8">
+              <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">Branding Blueprint Workbook</h4>
+              <p className="text-[#4C4B4B] font-light mb-6">AI will generate your complete visual strategy based on your selected aesthetic.</p>
+              <Button 
+                onClick={() => generateWorkbook('6724E507-38D0-4C4C-8C2D-CEC891968D73', 'Branding Blueprint')}
+                disabled={!selectedAesthetic}
+                className={cn(
+                  "w-full border-0",
+                  selectedAesthetic ? "bg-[#171719] text-white hover:bg-[#2A2A2A]" : "bg-[#B5B5B3] text-white cursor-not-allowed"
+                )}
+              >
+                {selectedAesthetic ? 'Generate My Branding Blueprint' : 'Select an Aesthetic First'}
+              </Button>
+            </Card>
+          </div>
+        </div>
+      )}
+    </div>
+
+
+    {/* Module 6 */}
+    <div className="mb-16 fade-in-element">
+      <div 
+        className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg"
+        onClick={() => toggleModule('module-6')}
+      >
+        <div className="p-8 flex items-center justify-between">
+          <div>
+            <span className="text-[#B5B5B3] text-sm uppercase tracking-[0.2em]">MODULE 6</span>
+            <h2 className="font-['Cormorant_Garamond'] text-4xl font-normal text-[#171719] mt-2">Captions That Convert</h2>
+            <p className="text-[#4C4B4B] font-light mt-1 text-lg">Write Like a Vibe</p>
+          </div>
+          {expandedModules['module-6'] ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+        </div>
+      </div>
+
+
+      {expandedModules['module-6'] && (
+        <div className="border-x border-b border-[#B5B5B3] bg-white">
+          <div className="p-12 space-y-12">
+            <div className="text-center max-w-3xl mx-auto">
+              <h3 className="font-['Cormorant_Garamond'] text-5xl mb-4">Write Like a Vibe</h3>
+              <p className="text-xl text-[#4C4B4B] font-light">Visuals stop the scroll — words build the connection.</p>
+            </div>
+
+
+            <div className="prose prose-xl max-w-none">
+              <p className="text-xl leading-relaxed text-[#4C4B4B] font-light">
+                This is where your audience decides whether they just liked your look or actually felt something. Learn to write captions that sound like you, resonate deeply, and invite people in—without feeling fake or salesy.
+              </p>
+            </div>
+
+
+            <div className="bg-[#F1F1F1] p-12">
+              <h4 className="font-['Cormorant_Garamond'] text-3xl mb-6">What You'll Get</h4>
+              <div className="space-y-4">
+                <h5 className="text-xl font-medium text-[#171719]">Personalized AI-powered Caption Strategy Guide</h5>
+                <p className="text-[#4C4B4B] font-light">You'll learn to craft story angles, write like you speak, use AI for captions, and build a repeatable system.</p>
+                <div className="pt-4">
+                  <p className="font-medium text-[#171719] mb-2">How It Works:</p>
+                  <ol className="space-y-2 text-[#4C4B4B] font-light">
+                    <li>1. Answer a few short questions</li>
+                    <li>2. SELFIE AI™ generates: brand tone, post angles, custom hooks, and three done-for-you captions</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="relative p-16" style={{ backgroundImage: `url(${img04})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="absolute inset-0 bg-black/70"></div>
+              <div className="relative z-10 text-white text-center">
+                <h4 className="font-['Cormorant_Garamond'] text-3xl mb-4">Practice Prompt</h4>
+                <p className="text-2xl font-light italic mb-2">"This is for the girl I used to be…"</p>
+                <p className="text-lg font-light">Write freely, post, and tag @ssasocial.</p>
+              </div>
+            </div>
+
+
+            <div className="bg-white border-4 border-[#171719] p-12">
+              <p className="text-2xl font-light italic text-center max-w-3xl mx-auto text-[#171719]">
+                "Think of your captions like a voice note to your best friend. Don't overthink it. Just tell the truth, make her feel seen, and invite her into something bigger."
+              </p>
+            </div>
+
+
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-[#F1F1F1] p-8">
+              <h4 className="font-['Cormorant_Garamond'] text-2xl mb-4">Caption Strategy Workbook</h4>
+              <p className="text-[#4C4B4B] font-light mb-6">Generate your personalized caption guide with AI-powered insights.</p>
+              <Button 
+                onClick={() => generateWorkbook('25FB2EEB-6366-49D5-82A0-98553DCF4C60', 'Caption Guide')}
+                className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] border-0"
+              >
+                Generate My Caption Guide
+              </Button>
+            </Card>
+          </div>
+        </div>
+      )}
+    </div>
+
+
+    {/* Final Section */}
+    <section className="mt-32 fade-in-element">
+      <div className="relative overflow-hidden" style={{ backgroundImage: `url(${img05})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="absolute inset-0 bg-white/95"></div>
+        <div className="relative z-10 py-24 px-12 text-center">
+          <h2 className="font-['Cormorant_Garamond'] text-6xl mb-8 text-[#171719]">
+            You Did That. And You're Just Getting Started.
+          </h2>
+          
+          <div className="max-w-4xl mx-auto space-y-6 text-xl text-[#4C4B4B] font-light leading-relaxed">
+            <p>
+              You didn't just download a kit. You showed up for yourself, opened the camera, got clear, and took action. That energy builds a brand.
+            </p>
+            <div className="grid md:grid-cols-4 gap-4 my-12">
+              <div className="text-center">
+                <div className="text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                <p className="text-sm uppercase tracking-wider">Branded Visual Identity</p>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                <p className="text-sm uppercase tracking-wider">Custom Editing Workflow</p>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                <p className="text-sm uppercase tracking-wider">Caption System</p>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                <p className="text-sm uppercase tracking-wider">Confident YOU</p>
+              </div>
+            </div>
+            <p className="text-2xl italic">
+              This was about reclaiming your voice—and making sure it's seen.
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div className="bg-[#171719] text-white py-20 px-12">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="font-['Cormorant_Garamond'] text-5xl mb-6">Your Next Move</h3>
+          <p className="text-xl font-light mb-8">
+            Ready to grow your audience, build offers, and monetize your story?
+          </p>
+          <h4 className="text-3xl font-['Cormorant_Garamond'] mb-8">BRANDED BY SELFIE™</h4>
+          <p className="text-lg font-light mb-12 max-w-2xl mx-auto">
+            My signature course to take you from showing up to selling, without cringe or hustle.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto mb-12">
+            <ul className="space-y-3 font-light">
+              <li>• Build a clear content strategy</li>
+              <li>• Design your digital offer</li>
+              <li>• Attract aligned clients without burnout</li>
+            </ul>
+            <ul className="space-y-3 font-light">
+              <li>• Create content that converts in your voice</li>
+              <li>• Become the face of your brand (and love it)</li>
+            </ul>
+          </div>
+
+
+          <div className="bg-white text-[#171719] p-12 mb-12">
+            <h4 className="font-['Cormorant_Garamond'] text-3xl mb-6">Final Challenge</h4>
+            <p className="text-lg font-light mb-4">
+              Post a power selfie using your new preset and an AI-generated caption.
+            </p>
+            <p className="text-xl italic mb-2">
+              "This time, I'm not shrinking. I'm building something that reflects me. The era of Selfie CEO begins now."
+            </p>
+            <p className="text-lg font-light">
+              Tag @ssasocial for a repost.
+            </p>
+          </div>
+
+
+          <Button 
+            size="lg"
+            className="bg-white text-[#171719] hover:bg-[#F1F1F1] border-0 px-16 py-6 text-xl uppercase tracking-[0.2em] font-light"
+          >
+            Explore Branded By Selfie™
+          </Button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

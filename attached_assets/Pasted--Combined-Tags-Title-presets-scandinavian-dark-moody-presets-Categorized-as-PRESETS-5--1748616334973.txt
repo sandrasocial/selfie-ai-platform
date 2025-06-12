@@ -1,0 +1,187 @@
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+  Line Item: "The Selfie Starter Kit" - $17.00 x 1 = $17
+  Product Tags: "starterkit"
+  Combined Tags/Title: " starterkit the selfie starter kit"
+  ✓ Categorized as STARTERKIT: +$17
+
+Order #7087442231458: $17.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie Starter Kit" - $17.00 x 1 = $17
+  Product Tags: "starterkit"
+  Combined Tags/Title: " starterkit the selfie starter kit"
+  ✓ Categorized as STARTERKIT: +$17
+
+Order #7087260139682: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Dark & Moody Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7086962442402: $15.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+  Line Item: "Scandinavian Light & Dreamy Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian light & dreamy presets"
+  ✓ Categorized as PRESETS: +$5
+  Line Item: "Scandinavian Dark & Moody Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7086545600674: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Light & Dreamy Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian light & dreamy presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7085185466530: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7084910215330: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7083748753570: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Light & Dreamy Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian light & dreamy presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7081288073378: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Dark & Moody Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+
+SKIPPING Order #7078477267106: $0.00 (Zero value - likely refund/test)
+
+Order #7077524537506: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7077091213474: $10.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$5
+  Line Item: "Scandinavian Dark & Moody Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7075426042018: $5.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Dark & Moody Presets" - $5.00 x 1 = $5
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$5
+
+Order #7074869641378: $197.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $197.00 x 1 = $197
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$197
+
+Order #7073439285410: $197.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $197.00 x 1 = $197
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$197
+
+Order #7072843464866: $97.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $97.00 x 1 = $97
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$97
+
+Order #7071696847010: $97.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $97.00 x 1 = $97
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$97
+
+Order #7068689465506: $97.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $97.00 x 1 = $97
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$97
+
+Order #7067907358882: $97.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "The Selfie to CEO Blueprint" - $97.00 x 1 = $97
+  Product Tags: "selfietoceo"
+  Combined Tags/Title: " selfietoceo the selfie to ceo blueprint"
+  ✓ Categorized as SELFIETOCEO: +$97
+
+SKIPPING Order #7067148648610: $0.00 (Zero value - likely refund/test)
+
+Order #7065560055970: $49.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Scandinavian Dark & Moody Presets" - $49.00 x 1 = $49
+  Product Tags: "presets"
+  Combined Tags/Title: " presets scandinavian dark & moody presets"
+  ✓ Categorized as PRESETS: +$49
+
+Order #7060745257122: $49.00 (Currency: USD)
+Order Tags: ""
+  Line Item: "Nordic Deep Urban Presets" - $49.00 x 1 = $49
+  Product Tags: "presets"
+  Combined Tags/Title: " presets nordic deep urban presets"
+  ✓ Categorized as PRESETS: +$49
+
+SKIPPING Order #7058734383266: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058715541666: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058704433314: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058676678818: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058670289058: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058619302050: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7058598887586: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7056413982882: $0.00 (Zero value - likely refund/test)
+
+SKIPPING Order #7056344121506: $0.00 (Zero value - likely refund/test)
+
+--- FINAL BREAKDOWN ---
+Total Revenue: $4798.5
+Starterkit: $1943
+Presets: $263
+SelfietoCEO: $2464
+Subscription: $0
+Uncategorized: $297
+Growth: 290.153671030165%
+Previous Period Total: $1229.9

@@ -1,0 +1,46 @@
+// PROMPT STARTS HERE
+
+🛠️ FINAL FIX INSTRUCTION: Voice & Personalization Missing in Workbook Output
+
+📍 Issue:
+1. The 30-60-90 day content in the preview and PDF is **generic** and lacks Sandra's personal brand tone.
+2. The name "Sandra" is only inserted in one section — it's missing from the rest of the workbook.
+3. The voice isn't bold, real-talk, or emotionally activating. It reads like a generic coach, not Sandra's empowering, bestie-style tone.
+
+🎯 Goal:
+Ensure ALL AI-generated workbook sections (title, strategy, insights, action steps, and phases) use Sandra’s exact brand voice **and** include her name **at least once per section**.
+
+✅ Fix Checklist:
+
+1. **Personalization Must-Have:**
+   - Every AI-generated section must include the user’s name (e.g. “Sandra”) at least once.
+   - Example: “Sandra, your journey from that heartbreak moment is what gives your brand magnetic power…”
+
+2. **Voice Guidelines:**
+   - Bold, motivating, direct tone
+   - Bestie-style real talk (like a glam big sister meets business coach)
+   - Use emotionally rich language and relatable metaphors
+   - Avoid generic coaching phrases like "Your past is your power" without making it personal
+
+3. **Reinforce Framework:**
+   - Highlight Sandra’s story as a **digital self-reinvention mentor**
+   - Tie the action steps directly to her story: divorced at 39, mom of 3, rebuilt visibility online, launched Branded By Selfie
+   - Example: “After your divorce, Sandra, the camera became your mirror — now it’s your movement.”
+
+4. **Tech Fix:**
+   - Update `workbookAI.ts` and prompt templates to:
+     - Enforce a minimum of 500 characters per phase section
+     - Use a templated personalization token like `{{userName}}` and inject Sandra’s name server-side
+     - Run a final regex pass before submission that adds “Sandra” where missing
+
+5. **Test Plan:**
+   - Fill in story prompts for Module 1
+   - Click “Generate Workbook”
+   - Confirm that:
+     - Sandra’s name appears in each major section
+     - The tone is raw, powerful, and feels like HER
+     - The PDF and preview match
+
+🖤 This fix will finally align the workbook output with Sandra’s brand voice and identity, giving users a premium, personalized, emotionally activating experience.
+
+// PROMPT ENDS HERE

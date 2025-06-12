@@ -1,0 +1,94 @@
+Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: Branded By Selfie cours
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: Branded By Selfie course
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: F
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Fi
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Fin
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Fina
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Finan
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financ
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financi
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financia
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financial
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financiall
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financiallt
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financiall
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially 
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially F
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially Fr
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially Fre
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+contentScript.bundle.js:4785 Event target tag: TEXTAREA
+contentScript.bundle.js:4785 Current value: Financially Free
+contentScript.bundle.js:4785 Current shortcuts: []
+contentScript.bundle.js:4785 Data received in content script: []
+index-CixhFUsE.js:317 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+(anonymous) @ index-CixhFUsE.js:317
+hu @ index-CixhFUsE.js:40
+Fa @ index-CixhFUsE.js:40
+ak @ index-CixhFUsE.js:40
+Cs @ index-CixhFUsE.js:40
+xg @ index-CixhFUsE.js:40
+bs @ index-CixhFUsE.js:38
+(anonymous) @ index-CixhFUsE.js:40Understand this warning
+index-CixhFUsE.js:48 
+            
+            
+           POST https://selfie-ai-assistant-ssa27.replit.app/api/generate-content 401 

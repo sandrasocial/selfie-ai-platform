@@ -1,0 +1,161 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
+import { supabase } from '@/lib/supabaseClient';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+export default function SupabaseCallback() {
+  const [, setLocation] = useLocation();
+  const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'expired' | 'invalid'>('loading');
+  const [error, setError] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
+
+  useEffect(() => {
+    handleAuthCallback();
+  }, []);
+
+  const handleAuthCallback = async () => {
+    try {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const searchParams = new URLSearchParams(window.location.search);
+
+      const error = hashParams.get('error') || searchParams.get('error');
+      const errorDescription = hashParams.get('error_description') || searchParams.get('error_description');
+
+      if (error) {
+        if (error === 'otp_expired' || errorDescription?.includes('expired')) {
+          setError('Your magic link has expired. Please request a new one.');
+          setStatus('expired');
+        } else if (error === 'access_denied') {
+          setError('Access was denied. Please try again.');
+          setStatus('error');
+        } else {
+          setError(errorDescription || `Authentication failed: ${error}`);
+          setStatus('error');
+        }
+        return;
+      }
+
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
+      const type = hashParams.get('type');
+
+      if (accessToken && type === 'magiclink') {
+        const { data: { session }, error: sessionError } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken || '',
+        });
+
+        if (sessionError) throw sessionError;
+
+        if (session?.user) {
+          setUserEmail(session.user.email || '');
+          setStatus('success');
+          const redirectPath = localStorage.getItem('redirectAfterLogin') || '/dashboard';
+          localStorage.removeItem('redirectAfterLogin');
+          setTimeout(() => setLocation(redirectPath), 2000);
+          return;
+        }
+      }
+
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+      if (sessionError) throw sessionError;
+
+      if (session?.user) {
+        setUserEmail(session.user.email || '');
+        setStatus('success');
+        const redirectPath = localStorage.getItem('redirectAfterLogin') || '/dashboard';
+        localStorage.removeItem('redirectAfterLogin');
+        setTimeout(() => setLocation(redirectPath), 2000);
+      } else {
+        setError('No valid authentication found. The link may be invalid or expired.');
+        setStatus('invalid');
+      }
+    } catch (error: any) {
+      if (error.message?.includes('expired')) {
+        setError('Your magic link has expired. Please request a new one.');
+        setStatus('expired');
+      } else if (error.message?.includes('Invalid')) {
+        setError('Invalid authentication link. Please try again.');
+        setStatus('invalid');
+      } else {
+        setError(error.message || 'Authentication failed. Please try again.');
+        setStatus('error');
+      }
+    }
+  };
+
+  const getStatusTitle = () => {
+    switch (status) {
+      case 'loading': return 'Completing Sign In...';
+      case 'success': return 'Welcome to SELFIE AI™';
+      case 'expired': return 'Link Expired';
+      case 'error': return 'Authentication Error';
+      case 'invalid': return 'Invalid Link';
+      default: return 'Processing...';
+    }
+  };
+
+  const getStatusDescription = () => {
+    switch (status) {
+      case 'loading': return 'Please wait while we sign you in';
+      case 'success': return userEmail ? `Successfully signed in as ${userEmail}` : 'You have been successfully signed in';
+      case 'expired': return 'Your magic link has expired';
+      case 'error': return 'There was an issue with your authentication';
+      case 'invalid': return 'The authentication link is invalid';
+      default: return 'Processing your authentication...';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center p-8">
+      <Card className="w-full max-w-md border-black">
+        <CardHeader className="text-center">
+          <CardTitle className="font-['Prata'] text-2xl text-black">
+            {getStatusTitle()}
+          </CardTitle>
+          <CardDescription className="text-gray-600">
+            {getStatusDescription()}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {status === 'success' && (
+            <div className="text-center space-y-4">
+              <p className="text-sm text-gray-600">
+                Redirecting you to the dashboard...
+              </p>
+              <Button onClick={() => setLocation('/dashboard')} variant="outline">
+                Continue to Dashboard
+              </Button>
+            </div>
+          )}
+
+          {(status === 'error' || status === 'expired' || status === 'invalid') && (
+            <div className="space-y-4">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm text-red-800">{error}</p>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={() => setLocation('/supabase-auth')} className="flex-1">
+                  Get New Link
+                </Button>
+                <Button onClick={() => setLocation('/')} variant="outline" className="flex-1">
+                  Go Home
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {status === 'loading' && (
+            <div className="text-center">
+              <p className="text-xs text-gray-500">
+                This may take a few moments...
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

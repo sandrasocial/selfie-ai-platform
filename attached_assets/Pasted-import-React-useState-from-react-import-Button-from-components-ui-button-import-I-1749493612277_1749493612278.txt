@@ -1,0 +1,176 @@
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+
+const imageURLs = [
+  "https://i.postimg.cc/tgWrXYrj/1.jpg",
+  "https://i.postimg.cc/wBYqQnNc/2.jpg",
+  "https://i.postimg.cc/TwQJt4cJ/3.jpg",
+  "https://i.postimg.cc/GmZYK0hN/4.jpg",
+  "https://i.postimg.cc/hGhDT94n/5.jpg",
+  "https://i.postimg.cc/SNz6DQzg/6.jpg"
+];
+
+export default function Module5BrandBuilder() {
+  const [inspirationImages, setInspirationImages] = useState<string[]>([]);
+  const [showBoldColors, setShowBoldColors] = useState(false);
+  const [palette, setPalette] = useState(["#D3CFCF", "#A2A2A2", "#4C4B4B"]);
+  const [fontPrimary, setFontPrimary] = useState("Cormorant Garamond");
+  const [fontSecondary, setFontSecondary] = useState("Neue Einstellung");
+  const [keywords, setKeywords] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleAIAssist = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/ai/brand-aesthetic", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inspirationImages })
+      });
+
+      if (!response.ok) throw new Error("AI suggestion failed");
+      const data = await response.json();
+
+      setPalette(data.palette);
+      setFontPrimary(data.fontPrimary);
+      setFontSecondary(data.fontSecondary);
+      setKeywords(data.keywords);
+    } catch (error) {
+      toast({ title: "Something went wrong", description: "AI couldn't generate your brand aesthetic." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const payload = {
+        inspirationImages,
+        palette,
+        fontPrimary,
+        fontSecondary,
+        keywords
+      };
+
+      const response = await fetch("/api/pdf/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          template_id: "6724E507-38D0-4C4C-8C2D-CEC891968D73",
+          data: payload
+        })
+      });
+
+      const { public_share_url } = await response.json();
+      window.open(public_share_url, "_blank");
+    } catch (error) {
+      toast({ title: "PDF generation failed", description: "Please try again later." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-[#F1F1F1] p-8 text-[#171719] font-light">
+      <h2 className="text-4xl mb-6 font-light" style={{ fontFamily: "Cormorant Garamond" }}>
+        Design Like a CEO™ – Your Brand Aesthetic Builder
+      </h2>
+
+      {/* Image Selection */}
+      <div className="mb-10">
+        <h3 className="text-2xl mb-4" style={{ fontFamily: "Cormorant Garamond" }}>
+          Select Visual Inspiration
+        </h3>
+        <div className="grid grid-cols-3 gap-4">
+          {imageURLs.map((url, i) => (
+            <img
+              key={i}
+              src={url}
+              alt={`Inspo ${i + 1}`}
+              className={`w-full border ${inspirationImages.includes(url) ? "border-[#171719]" : "border-transparent"} cursor-pointer`}
+              onClick={() => {
+                setInspirationImages(prev =>
+                  prev.includes(url)
+                    ? prev.filter(img => img !== url)
+                    : [...prev, url]
+                );
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Color Palette */}
+      <div className="mb-10">
+        <h3 className="text-2xl mb-2" style={{ fontFamily: "Cormorant Garamond" }}>
+          Your Color Palette
+        </h3>
+        <div className="flex space-x-4 mb-4">
+          {palette.map((color, i) => (
+            <input
+              key={i}
+              type="color"
+              value={color}
+              onChange={e => {
+                const newPalette = [...palette];
+                newPalette[i] = e.target.value;
+                setPalette(newPalette);
+              }}
+              className="w-10 h-10 border border-[#B5B5B3]"
+            />
+          ))}
+        </div>
+        {!showBoldColors && (
+          <button onClick={() => setShowBoldColors(true)} className="text-sm underline text-[#4C4B4B]">
+            I want more color ✿
+          </button>
+        )}
+      </div>
+
+      {/* Fonts & Keywords */}
+      <div className="grid md:grid-cols-2 gap-8 mb-10">
+        <Input
+          value={fontPrimary}
+          onChange={e => setFontPrimary(e.target.value)}
+          placeholder="Primary Font"
+          className="bg-transparent border border-[#B5B5B3]"
+        />
+        <Input
+          value={fontSecondary}
+          onChange={e => setFontSecondary(e.target.value)}
+          placeholder="Secondary Font"
+          className="bg-transparent border border-[#B5B5B3]"
+        />
+      </div>
+      <Textarea
+        value={keywords}
+        onChange={e => setKeywords(e.target.value)}
+        placeholder="Describe your vibe, keywords, tone, brand energy…"
+        className="w-full border border-[#B5B5B3] bg-transparent min-h-[120px]"
+      />
+
+      {/* Action Buttons */}
+      <div className="mt-10 flex flex-wrap gap-4">
+        <Button
+          onClick={handleAIAssist}
+          disabled={loading}
+          className="bg-transparent border border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white tracking-wide uppercase"
+        >
+          {loading ? "Thinking…" : "Let AI Suggest My Brand Aesthetic"}
+        </Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="bg-[#171719] text-white hover:bg-[#4C4B4B] tracking-wide uppercase"
+        >
+          {loading ? "Generating..." : "Generate My Brand Blueprint"}
+        </Button>
+      </div>
+    </div>
+  );
+}

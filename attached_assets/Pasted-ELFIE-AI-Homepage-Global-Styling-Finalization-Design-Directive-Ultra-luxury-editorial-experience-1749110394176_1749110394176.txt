@@ -1,0 +1,200 @@
+ELFIE AI™ Homepage + Global Styling Finalization
+Design Directive: Ultra-luxury editorial experience for a powerful personal brand platform
+Reference Moodboard + Screenshots: Already provided
+
+✅ GLOBAL DESIGN SYSTEM – MUST IMPLEMENT EXACTLY
+🎨 COLOR PALETTE (use only these 4 tones)
+Replace all soft beige, overlays, gray transparencies with:
+
+Color Use	HEX Code
+Background/Primary	#F1F1F1
+Accent (Light Gray)	#B5B5B3
+Text/Secondary	#4C4B4B
+Black/Overlay Text	#171719
+
+✍️ TYPOGRAPHY
+Type	Font	Usage
+Headings	Cormorant Garamond	All titles, section headers, CTA labels
+Body Text	Inter Light (fallback: Helvetica Neue)	Descriptions, paragraphs, nav links
+
+Font Sizes + Weights (baseline guidance):
+
+H1: 64px / Cormorant / font-weight: 400
+
+H2: 36px / Cormorant / italic
+
+Body: 16–18px / Inter / font-weight: 300
+
+Button Text: UPPERCASE / 14px / letter-spacing: 0.5px
+
+🌐 GLOBAL RULES (Apply site-wide)
+No emojis, icons, or emojis in CTA/buttons — minimalist, clean editorial interface.
+
+All overlay text (cards/images/sections) must be white (#F1F1F1) for maximum contrast and luxury feel.
+
+Header and footer backgrounds: solid black or dark gray (#171719) — consistent on every page.
+
+Header + nav text = always white, clean spacing.
+
+Remove all iconography in buttons (camera, arrow, etc.).
+
+Re-enable hover animation on cards (soft zoom in, slight drop shadow or thin underline animation).
+
+All CTA buttons:
+
+Solid version: black bg, white text
+
+Transparent version: white border, transparent background, white text
+
+Hover state: Invert (white bg, black text OR underline)
+
+Placeholders: Use solid black divs with white center-aligned text ADD IMAGE (uppercase).
+
+Navigation: Add a “Log In” button to top right, styled inline with other links.
+
+🏠 HOMEPAGE DESIGN — Donald Miller Flow
+🖼 Hero Section
+Full-bleed black & white background:
+→ https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg
+
+Text overlay:
+
+markdown
+Kopier
+Rediger
+Turn Your Selfies Into  
+*Strategic Brand Assets*
+Buttons:
+
+START YOUR JOURNEY (black solid, white text)
+
+VIEW PLANS (white border, transparent)
+
+Text must always stay ABOVE shoulders and face in mobile view. Adjust vertical placement using media queries.
+
+👩‍💻 About Section (scroll-down hero)
+Layout:
+
+Left: Text block
+
+Center: Image Placeholder
+
+Right: Mini bio (with italic serif pull-quote)
+
+Example Copy:
+
+css
+Kopier
+Rediger
+Hi, I’m Sandra.  
+Personal branding mentor. Single mom of 3.  
+Building my dream life from rock bottom—and teaching women to do the same.
+✨ Transformation Section (Before & After)
+2-column image grid (BEFORE | AFTER)
+
+Overlay text (must be white and visible on all screen sizes):
+
+mathematica
+Kopier
+Rediger
+90  
+Days  
+120K  
+Followers  
+1.7M  
+Reach
+Right image: overlay quote block
+
+css
+Kopier
+Rediger
+Looking Forward  
+From broken to unbreakable
+🛠 Platform Tools (Cards Section)
+Each card: AI Studio, Template Library, Sandra AI, Strategy Workbooks
+
+Layout: 4-grid desktop, stacked mobile
+
+Hover: slight zoom-in or underline animate
+
+Card format:
+
+Title: Cormorant Garamond
+
+Body: Inter Light
+
+Background: white with soft border or shadow
+
+Overlay text: white, no icons
+
+💳 Pricing Section (3-column)
+FREE / SELFIE PRO / EMPIRE VIP
+
+No icons
+
+CTA buttons: follow global style rules (no icons, hover invert)
+
+Align spacing and padding with new global UI
+
+🔚 Footer
+Background: #171719 (no beige)
+
+Text: all white
+
+Email input: light gray bg, black text
+
+Remove extra spacing and re-align links into 3 columns:
+
+Platform
+
+Connect
+
+Resources
+
+Add: Social links inline at the bottom in all caps
+
+📲 MOBILE SPECIFIC FIXES (Must do)
+Hero text must NOT cover face. Use @media breakpoints to vertically reposition.
+
+Overlay text must remain white and readable.
+
+Navigation menu must display the SS logo, “SANDRA” wordmark, and hamburger menu cleanly — no beige.
+
+CTA buttons must stack center-aligned with correct padding.
+
+All grid sections (cards, pricing, image galleries) must stack vertically, center-aligned, clean spacing.
+
+📄 NEXT TASK FOR DEV:
+Once all styling + structure is implemented, generate:
+
+🗂 SELFIE AI™ DESIGN SYSTEM DOC
+This should include:
+
+Color palette + usage
+
+Fonts + font styles
+
+Image overlays + placeholder rules
+
+Component styling (buttons, cards, nav, footer)
+
+Layout types:
+
+Hero section
+
+Bio + image block
+
+Grid gallery
+
+Section stack
+
+Animation / hover standards
+
+Spacing / padding values
+
+CTA rules
+
+Mobile layout grid
+
+Sandra will paste it into Google Docs to use across all future feature builds.
+

@@ -1,0 +1,145 @@
+
+We are upgrading the SELFIE AI™ platform to align with a high-end, editorial-style brand system. Apply the new neutral color palette, luxury typography, and updated page content across all core views.
+
+🎨 Updated Global Design System
+COLOR PALETTE
+Role	HEX
+Light Background	#F1F1F1
+Accent Gray	#B5B5B3
+Text Gray	#4C4B4B
+Deep Black	#171719
+White	#FFFFFF
+
+TYPOGRAPHY
+Headlines: Prata serif, font-weight: 400, letter-spacing: -1%
+
+Body text: Helvetica Neue, font-weight: 300, font-size: 16px, line-height: 1.6
+
+Quotes / emphasis: Prata Italic
+
+BUTTONS
+Primary: background: #171719, color: #FFFFFF, hover → background: #B5B5B3
+
+Secondary: transparent, border: 1px solid #171719, hover → color: #B5B5B3
+
+All buttons: border-radius: 0px, padding: 12px 24px, transition: 0.3s ease
+
+SPACING & STRUCTURE
+Section padding: 48px top & bottom
+
+Grid system: 12-column, with max-width containers
+
+Hover animations: scale on cards, fade-in-up on scroll
+
+Divider lines: 2px solid #B5B5B3, width 64px
+
+📄 Pages to Update + LUXURY COPY
+1. AI Studio Page
+Header:
+The Studio
+Subhead:
+Bring your content to life with AI that gets your voice.
+
+Sections:
+
+✨ Selfie Enhancer – "Upload a selfie. Get content that converts."
+
+✨ Reel Caption Generator – "Your story. Your spark. Written in your words."
+
+✨ Affirmations + Hooks – "Words that build her. From the inside out."
+
+2. Sandra AI Page
+Header:
+Sandra AI™
+Subhead:
+Your personal mentor—ready to listen, guide, and hype you up.
+
+Chat Placeholder Copy:
+"Hey love—what do you need today? A pep talk? A plan? Or just a real one who gets it?"
+
+3. Presets Page
+Header:
+The Selfie Glow-Up Presets
+Subhead:
+Effortless edits. Editorial results. Your light, your story.
+
+CTA Buttons:
+
+“Download the Preset Pack”
+
+“See Before & Afters”
+
+4. Templates Page
+Header:
+Your Daily Content Vault
+Subhead:
+30 days of branded prompts, ready to post. All you. All intentional.
+
+Feature cards:
+
+"Day 1: Introduce Yourself (but with energy)"
+
+"Day 15: That One Turning Point"
+
+"Day 30: Your Future Self. In Focus."
+
+5. Pricing Page
+Header:
+Choose Your Path to Visibility
+Subhead:
+From starter to empire-builder—find your level of support.
+
+Plans:
+
+Free Plan: “Perfect for testing the waters.”
+
+Pro Plan: “Your full content studio unlocked.”
+
+VIP: “1:1 brand luxury. Done for you. Done with you.”
+
+6. Calendar Page
+Header:
+Plan Your Empire, Day by Day
+Subhead:
+A visual flow for building consistency and confidence.
+
+Quote at top:
+“Consistency is your new superpower.”
+
+7. Workbook Viewer Page
+Header:
+Your Strategy Blueprint
+Subhead:
+Custom-built from your answers. This is the roadmap to your personal brand power.
+
+Final Page CTA:
+“Ready to show up for her?”
+Button: “Open My Vault”
+
+8. Login / Signup
+Login Tagline:
+“Your glow-up starts here.”
+Signup Prompt:
+“Join the women building brands that heal, help, and get paid.”
+
+9. Footer
+Add quote bar above:
+“Power is the new pretty.” (Prata Italic, center, underline #B5B5B3)
+
+Footer Links:
+
+AI Studio
+
+My Templates
+
+Strategy Workbooks
+
+Chat With Sandra
+
+Support
+
+Terms / Privacy
+
+Once complete, restart the application and notify me when all pages reflect the new system.
+
+Let me know when you’re ready for Phase 2: micro-interaction animations, editorial carousel modules, and moodboard layouts. 🖤

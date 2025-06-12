@@ -1,0 +1,145 @@
+Please rebuild the Dashboard page with the following strategy-driven structure and logic, following the SELFIE AI™ brand system.
+
+✅ VISUAL + UX STRUCTURE OVERVIEW
+🎯 Hero Section
+Full-bleed B&W image of Sandra
+
+Headline (H1): Welcome back, [UserName]. Your empire starts here.
+
+Subheading: Choose your path. Build your power.
+
+CTA Buttons:
+
+“Start Where You Left Off” → /studio
+
+“See All Tools” → scrolls to tools section
+
+🧱 Offer Ladder Blocks (Main Feature Section)
+Design: 4 Luxe Cards representing the offer ladder
+Behavior:
+
+Mobile: Horizontal scroll
+
+Desktop: 2x2 grid
+
+Animations: Soft scale on hover + subtle glow
+
+Each card is purchase-aware (not progress-locked)
+
+🔓 CARD 1 — Freebie: Show Your Face™
+Status: Always Open
+
+Title: “Free Guide”
+
+Tagline: Start showing up with confidence—even if you’ve been hiding.
+
+CTA: “Download Guide” → /freebie/selfie-guide
+
+Design: Light card with flatlay or mirror selfie
+
+💼 CARD 2 — Selfie Starter Kit ($67)
+Status: Unlocked after purchase
+
+If purchased: “Start the Kit” → /courses/starter-kit
+
+If not purchased: “Get the Kit” → /products/starter-kit
+
+Tagline: Your selfie system for lighting, posing, editing + content.
+
+Design: Pale gray card, outline + glow effect
+
+✨ CARD 3 — Branded by Selfie™ ($397)
+Status: Unlocked after purchase
+
+If purchased: “Start Branded Course” → /courses/branded
+
+If not purchased: “Unlock Brand Builder” → /products/branded-by-selfie
+
+Tagline: Show up as the brand. Boldly, beautifully, strategically.
+
+Design: Dark card with gold border hover
+
+👑 CARD 4 — VIP Empire Builder
+Status: Always open for application
+
+CTA: “Apply Now” → /vip/apply
+
+Tagline: Your business. Your brand. Fully activated.
+
+Design: Black card, luxury styling + subtle stars ✨
+
+🔁 Progress Tracker Section
+Visual horizontal tracker (Optional):
+
+Steps: Freebie ✅ → Kit ✅ → Branded 🟡 → VIP 🔒
+
+Small “You Are Here” marker
+
+Optional: Display “Next Best Step” pulled from AI (Sandra AI)
+
+✨ Sandra AI Daily Prompt Block
+Title: “Sandra Says…”
+
+Quote: Auto-generated affirmation or hook
+
+CTA: “Post it Now” or “Save to Calendar”
+
+Optional: Small dropdown with voice note (future idea)
+
+🛠 Tools Hub
+Grid of icon cards linking to tools:
+
+Sandra AI Chat
+
+Selfie Uploader
+
+Caption Generator
+
+Strategy Workbooks
+
+Content Calendar
+
+Pose Coach
+
+🧠 Weekly Planner Widget
+Scrollable day-by-day timeline (Mon–Sun)
+
+Mini-dots indicate planned content
+
+Tooltip on hover: shows planned hook or selfie
+
+CTA: “Generate Caption” or “Add Content”
+
+💭 Moodboard Strip (Optional)
+Scrollable 3x1 strip:
+
+Uploaded selfie
+
+Vision board image
+
+Brand quote or future selfie
+
+CTA: “Update Your Moodboard”
+
+📦 Offer Ladder Roadmap (Footer Widget)
+Clean roadmap line:
+[Freebie ✅] → [Kit ✅] → [Branded 🔓] → [VIP 🔓]
+
+Floating card previews on hover
+
+Use gold outline + “You Are Here” badge
+
+✅ Design Requirements (from Brand System)
+Fonts: Cormorant Garamond (titles), Neue Einstellung (body)
+
+Color palette: #F1F1F1, #B5B5B3, #4C4B4B, #171719
+
+CTA buttons: Transparent with sharp black border, all caps
+
+Overlay text: White only
+
+No icons or emojis
+
+Hover states: Soft scale + fade shadow
+
+Image placeholders: Black with white overlay “[Upload Your Image]

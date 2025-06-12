@@ -1,0 +1,151 @@
+🧭 1. /dashboard
+ Tool cards load properly with correct tiers
+
+ Subscription status visible
+
+ Sandra AI entry point visible (floating S button)
+
+ Mobile: Responsive layout, no horizontal scroll
+
+✅ Flag if: tools don’t match subscription level, or layout breaks below 400px
+
+🎨 2. /studio
+ Tool grid appears and is scrollable
+
+ Locked tools show proper overlays (Free/Pro/VIP)
+
+ Badge colors are correct per tier
+
+ Mobile: Cards stack vertically
+
+✅ Flag if: hover states missing, VIP/Pro badges incorrect
+
+✍️ 3. /studio/editor
+ Editor loads with sample prompt
+
+ Output styling matches design (font, padding)
+
+ Hover over CTA buttons behaves correctly
+
+ Mobile: Input and output fit vertically
+
+✅ Flag if: overflow, non-responsive fields, or spacing issues
+
+📸 4. /studio/photo-vault
+ Grid appears with placeholder images or error state
+
+ Upload button works (test dummy upload)
+
+ Locked tools appear with proper tier overlay
+
+✅ Flag if: content breaks grid, no feedback on upload
+
+🚀 5. /studio/boost
+ Sandra integration works
+
+ Uploads or boost options trigger correct CTA
+
+ Badge/locked logic shown on restricted features
+
+✅ Flag if: broken button logic, missing feedback, loading bugs
+
+🧠 6. /studio/notes
+ Note-saving system works
+
+ Input is styled correctly (no default browser textarea)
+
+ Cards list below or to the side of editor
+
+ Mobile: Easy to tap, no hidden content
+
+✅ Flag if: inputs too small, no “save” feedback, scroll bugs
+
+📅 7. /planner
+ No duplicate uploads
+
+ Date picker works and saves
+
+ Sandra suggestions load properly
+
+ Mobile: Clean layout, vertical stacking
+
+✅ Flag if: duplicates, unresponsive save, mobile overflow
+
+📦 8. /drops
+ Cards show title, date, tier
+
+ Locked drops show CTA
+
+ Opened drops show Notion/PDF viewer or download link
+
+ Admin uploads visible if logged in
+
+✅ Flag if: missing preview, tier gating bug
+
+📚 9. /courses
+ All 3 courses listed (Starter Kit, Branded, VIP)
+
+ CTA goes to proper lesson/module
+
+ Mobile: Course previews stack cleanly
+
+✅ Flag if: missing images, bad mobile layout
+
+🔐 10. /account
+ User info shows email and subscription tier
+
+ Button to update plan or billing visible
+
+ Dark/light UI states load correctly
+
+✅ Flag if: subscription tier doesn't display or buttons fail
+
+💳 11. /checkout and /checkout/:productId
+ Product name and price load
+
+ Stripe integration functions
+
+ Discount or coupon logic (if any) works
+
+ Mobile: No field cutoff
+
+✅ Flag if: price wrong, route mismatch, no feedback on fail
+
+📑 12. /privacy and /terms
+ Font updated (not browser default)
+
+ Copy legible and matches brand style
+
+ Header/footer styling consistent
+
+✅ Flag if: serif/sans inconsistency or missing padding
+
+👩‍🎨 13. /sandra-ai
+ Sandra floating button visible everywhere
+
+ Tone selector, 3 mood prompts, locked logic work
+
+ Chat UI styled with serif quotes + black/white theme
+
+ Mobile: Chat is 100% width and scrollable
+
+✅ Flag if: chat overlaps UI, no tone setting
+
+✅ Additional Checks
+ /thank-you/:productId – Confirm success message + button works
+
+ /supabase-auth – Confirm redirect works and session shows up
+
+ /supabase-auth/callback – Should not redirect to homepage, only to dashboard
+
+ /dev-login – Use only for local/testing (disable before production)
+
+🧾 Optional Final Checklist
+ Logo, favicon, and brand name visible on all pages
+
+ Footer exists and has correct links
+
+ No page has broken scroll or horizontal overflow
+
+ Meta title + description per route (Assistant can generate these!)
+

@@ -1,0 +1,70 @@
+We’ve completed the Branded by Selfie™ course page, including layout, AI tools, styling, and course logic.
+Now, please restore and redesign the Selfie Starter Kit™ course using the following instructions:
+
+🔁 RESTORE ORIGINAL CONTENT FROM SELFIE STARTER KIT™
+Restore everything as originally built, including:
+
+✅ All 6 original modules and lesson content
+✅ All video embeds (Vimeo, hosted, or linked)
+✅ All previously implemented AI tools and workbook generators
+✅ All custom titles, lesson descriptions, and logic
+✅ The original functionality, including any custom interactions and notes
+
+⚠️ Important: This is not a duplicate of the Branded course. Please retrieve and restore the original Selfie Starter Kit™ content and flow, as previously developed.
+
+🎨 APPLY NEW DESIGN + UX/UI FROM BRANDED BY SELFIE™
+Once restored, apply the updated layout and visual styling used in the Branded by Selfie™ course:
+
+Typography: Use Cormorant Garamond for titles and Inter Light for body text
+
+Colors: Keep luxury tones (#F1F1F1, #171719, #B5B5B3), no gradients
+
+Remove all emojis ❌
+
+Add progress indicators, consistent lesson cards, updated navigation
+
+Sidebar with collapsible modules and hover transitions
+
+Responsive mobile layout and luxury hover effects
+
+Consistent spacing, modern styling, white space between sections
+
+✅ Style should match Branded by Selfie™, but content must remain unique to the Selfie Starter Kit™.
+
+🖼️ INTEGRATE AESTHETIC IMAGE COLLECTIONS
+We’ve now completed aesthetic libraries with image collections and mockups for brand visuals.
+
+Please prepare the system to support:
+
+Pulling images dynamically from hosted albums (e.g. Postimg galleries)
+
+Assigning each collection (e.g. Pink, Cream, Noir) with:
+
+Instagram post images (1080x1080)
+
+Story images (1080x1920)
+
+One branded mockup preview
+
+Using the mockups for visual selection (not dropdowns)
+
+💡 These aesthetic packs will later be integrated as part of AI-powered brand strategy tools in both courses.
+
+🔄 ROUTING VERIFICATION
+Please verify that routing and page logic is working correctly:
+
+/courses/starter-kit → Selfie Starter Kit™ course (restored + redesigned)
+
+/courses/branded → Branded by Selfie™ course (already complete – do not change)
+
+Please confirm once:
+
+The Selfie Starter Kit™ content is fully restored
+
+Visual design is updated
+
+Aesthetic collection logic is ready to plug in
+
+Both course pages are correctly routed and fully functional
+
+Thank you!

@@ -1,0 +1,129 @@
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+
+export default function SelfieStarterKit() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      {/* HERO SECTION */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(https://i.postimg.cc/wMP7QtTN/IMG-8435-jpg.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-20" />
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          <h1 className="text-6xl lg:text-8xl mb-12 text-white leading-tight" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Selfie smarter.<br />
+            Show up bolder.
+          </h1>
+          <Link href="/checkout/starter-kit">
+            <Button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black text-lg px-12 py-4 uppercase tracking-wide rounded-none" style={{ fontFamily: 'Neue Einstellung' }}>
+              GET THE KIT – $67
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* BEFORE & AFTER */}
+      <section className="px-6 py-20 bg-[#F1F1F1]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center">
+              <img src="https://i.postimg.cc/XNt6zt4j/1.png" alt="Before" className="w-full max-w-md mx-auto mb-6" />
+              <h3 className="text-2xl text-[#4C4B4B]" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Before: overwhelmed, hiding, unsure
+              </h3>
+            </div>
+            <div className="text-center">
+              <img src="https://i.postimg.cc/d05zmx5K/2.png" alt="After" className="w-full max-w-md mx-auto mb-6" />
+              <h3 className="text-2xl text-[#4C4B4B]" style={{ fontFamily: 'Cormorant Garamond' }}>
+                After: branded, bold, booked.
+              </h3>
+            </div>
+          </div>
+          <blockquote className="text-3xl text-[#171719] italic text-center mt-16 leading-relaxed" style={{ fontFamily: 'Cormorant Garamond' }}>
+            "Your camera roll tells your story. Let's rewrite it."
+          </blockquote>
+        </div>
+      </section>
+
+      {/* WHAT'S INSIDE */}
+      <section className="px-6 py-20 bg-[#4C4B4B]">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-5xl text-center text-white mb-16" style={{ fontFamily: 'Cormorant Garamond' }}>
+            What's Inside The Kit
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: 'Lighting Setup', image: 'https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png' },
+              { title: 'Caption Scripts', image: 'https://i.postimg.cc/PxvRkfVQ/story-Image1.png' },
+              { title: 'Preset Formulas', image: 'https://i.postimg.cc/R0KtrjQn/story-Image2.png' },
+            ].map((item, i) => (
+              <div key={i} className="group cursor-pointer hover:scale-105 transition-transform">
+                <div className="aspect-square bg-cover bg-center relative" style={{ backgroundImage: `url(${item.image})` }}>
+                  <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-white text-2xl text-center" style={{ fontFamily: 'Cormorant Garamond' }}>{item.title}</h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STORY SECTION */}
+      <section className="px-6 py-20 bg-[#F1F1F1]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <img src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" alt="Story" className="w-full" />
+              <div className="absolute inset-0 bg-black bg-opacity-40" />
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <h3 className="text-white text-3xl lg:text-4xl text-center leading-tight" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  "I started with one mirror selfie at 11PM—just to feel something again."
+                </h3>
+              </div>
+            </div>
+            <div>
+              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light">
+                What came next wasn't magic—it was small steps. Lighting tricks. Posing hacks. Finally pressing POST.
+              </p>
+              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light mt-6">
+                That's what this kit gives you: a way back to yourself, one selfie at a time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SOCIAL PROOF GRID */}
+      <section className="px-6 py-20 bg-[#171719]">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-5xl text-white mb-12" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Real moments. Real confidence. Real content.
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+            {[
+              'https://i.postimg.cc/Fz2HJ2Dg/IMG-3479.jpg',
+              'https://i.postimg.cc/wMP7QtTN/IMG-8435-jpg.jpg',
+            ].map((url, i) => (
+              <div key={i} className="aspect-square bg-cover bg-center" style={{ backgroundImage: `url(${url})` }} />
+            ))}
+          </div>
+          <Link href="/checkout/starter-kit">
+            <Button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] text-lg px-12 py-4 uppercase tracking-wide rounded-none" style={{ fontFamily: 'Neue Einstellung' }}>
+              START YOURS → $67
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,74 @@
+﻿<section class="bg-[#F1F1F1] py-24 px-6 md:px-12">
+  <div class="max-w-5xl mx-auto text-center mb-16">
+    <h2 class="text-4xl md:text-6xl font-light font-['Cormorant Garamond'] text-[#171719] leading-tight">
+      Captions That Convert
+    </h2>
+    <p class="mt-6 text-lg md:text-xl font-['Neue Einstellung'] text-[#4C4B4B] max-w-3xl mx-auto">
+      Your words are magnetic. This lesson helps you write captions that sound like you — and sell without the cringe.
+    </p>
+  </div>
+
+
+  <!-- AI-Powered Caption Guide -->
+  <div class="bg-white p-10 border border-[#171719] mb-20">
+    <h3 class="text-2xl font-['Cormorant Garamond'] text-[#171719] mb-4">
+      Download Your AI Caption Guide
+    </h3>
+    <p class="text-[#4C4B4B] text-base mb-6 font-['Neue Einstellung'] leading-relaxed">
+      Get a personalized workbook with your story arcs, magnetic hooks, and ready-to-post captions based on your brand tone.
+    </p>
+    <a href="#" class="inline-block uppercase border border-[#171719] text-[#171719] px-6 py-3 text-sm tracking-wide font-['Neue Einstellung'] hover:bg-[#171719] hover:text-white transition">
+      Generate My Caption Guide
+    </a>
+  </div>
+
+
+  <!-- Lesson Breakdown -->
+  <div class="grid md:grid-cols-2 gap-16 mb-24">
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        What You’ll Learn
+      </h4>
+      <ul class="list-disc pl-6 text-[#4C4B4B] space-y-2 font-['Neue Einstellung']">
+        <li>Craft your signature story themes</li>
+        <li>Write like you speak — with ease</li>
+        <li>Generate high-converting captions with AI</li>
+        <li>Create a repeatable writing system</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        Practice Prompt
+      </h4>
+      <p class="text-[#4C4B4B] text-base font-['Neue Einstellung'] leading-relaxed">
+        Start your next post with this line:<br />
+        <span class="italic block mt-4 text-lg text-[#171719]">“This is for the girl I used to be…”</span><br />
+        Let it flow. Be raw. Then post it. Your truth is magnetic.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- Sandra Tip -->
+  <div class="bg-[#171719] text-white py-12 px-8 md:px-16 text-center mb-20">
+    <h4 class="text-2xl font-['Cormorant Garamond'] italic mb-4">Sandra’s Copy Tip</h4>
+    <p class="text-base font-['Neue Einstellung'] max-w-2xl mx-auto">
+      “Think of your captions like a voice note to your best friend. Don’t overthink it. Just tell the truth, make her feel seen, and invite her into something bigger.”
+    </p>
+  </div>
+
+
+  <!-- CTA Block -->
+  <div class="text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-4">Final Challenge</h4>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung'] mb-6">
+      Post using one of your new AI-generated hooks and end with:
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-[#171719] text-lg max-w-xl mx-auto mb-6">
+      “If this hit home, DM me ‘READY’ and I’ll send you something special.”
+    </blockquote>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung']">
+      Tag <strong>@ssasocial</strong> — and Sandra will hype it up on stories.
+    </p>
+  </div>
+</section>

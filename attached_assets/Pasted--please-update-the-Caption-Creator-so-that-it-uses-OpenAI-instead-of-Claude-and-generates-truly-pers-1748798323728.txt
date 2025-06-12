@@ -1,0 +1,141 @@
+ please update the Caption Creator so that it uses OpenAI instead of Claude and generates truly personalized captions based on each user’s input (not Sandra’s story). Follow these steps exactly:
+
+1. Swap Claude API Calls for OpenAI
+Locate anywhere the code imports or calls Claude (Anthropic) APIs (e.g., import * as anthropic from 'anthropic-sdk' or similar).
+
+Remove those imports and references.
+
+Install and import the OpenAI client instead. For example, in your existing caption‐generation service file (likely under client/src/services or inside CaptionCreator), replace:
+
+js
+Kopier
+Rediger
+// Old Claude import (example)
+import { Claude } from '@anthropic-ai/sdk';
+
+// Replace with OpenAI import
+import OpenAI from 'openai';
+Initialize the OpenAI client using the existing OPENAI_API_KEY environment variable (make sure this is set in Replit’s Secrets). Example:
+
+js
+Kopier
+Rediger
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+2. Revise the Caption‐Generation Prompt
+Open the function that constructs the AI prompt (likely named something like generateCaptions() or inside CaptionContextProvider).
+
+Replace any hard‐coded references to Sandra’s story with placeholder tokens that insert each user’s own “Selfie Context” or “Story Input” text field. For example, instead of:
+
+“Using Sandra’s personal branding journey story, craft a caption that…”
+it should read:
+“Using the following description of the user’s photo and brand [INSERT_USER_CONTEXT], generate a social media caption in everyday language. Include 1–2 relevant emojis (no more) that match the tone. Do not reference Sandra’s story.”
+
+Example Prompt Template (adjust to match your existing code’s style):
+
+txt
+Kopier
+Rediger
+You are an AI copywriter trained to voice each woman’s unique story in simple, friendly language with a touch of emojis. The user has provided this context:  
+“[USER_INPUT]”  
+
+Write three different Instagram captions (max 150 characters each) that:  
+• Reflect the user’s own voice—encouraging, authentic, everyday language.  
+• Include 1–2 appropriate emojis—no more than two.  
+• Avoid fluff and overused clichés.  
+• Use simple words and a conversational tone.  
+
+Return results as a JSON array of three objects:  
+[  
+  { “caption”: “…” },  
+  { “caption”: “…” },  
+  { “caption”: “…” }  
+]
+Ensure any presets or sub‐templates (hooks, frameworks, etc.) also use the user’s context in the same way. Wherever you previously had a “Sandra’s story” template, replace it with the user’s input from the text area.
+
+3. Call OpenAI’s Completion Endpoint
+Replace the Claude API call (e.g., claude.complete({ model: 'claude-2', prompt })) with an OpenAI chat/completion call. For example:
+
+js
+Kopier
+Rediger
+const response = await openai.chat.completions.create({
+  model: "gpt-4o-mini",            // or another GPT-4 variant you have access to  
+  messages: [
+    { role: "system", content: "You are an expert social copywriter." },
+    { role: "user", content: constructedPrompt }
+  ],
+  temperature: 0.7,
+  max_tokens: 180
+});
+const captionsJson = JSON.parse(response.choices[0].message.content);
+Adjust any token or JSON‐parsing logic so it matches how OpenAI returns data. If your prompt expects a JSON array, ensure you parse it accordingly and assign to your state.
+
+4. Update Tone, Voice, and Emoji Logic
+Everyday Language:
+
+Use straightforward phrasing (e.g., “Loving this shot? Caption it like…”).
+
+Avoid long sentences or corporate jargon.
+
+Signature Emojis:
+
+After you parse the three captions, insert or verify that each caption ends (or begins) with exactly one or two emojis that match the feeling. (e.g., “Just nailed that selfie 💁‍♀️.”)
+
+If you previously had a function to strip out extra emojis, remove it—allow 1–2 only.
+
+Examples (for your reference, not to hard‐code):
+
+“Feeling confident in this look—let’s go! ✨”
+
+“New day, new goals. Let’s crush it 💪.”
+
+5. Test & Validate
+Desktop Testing:
+
+Enter different “Selfie Context” strings (e.g., “I’m a yoga instructor teaching my first outdoor class,” “I just launched my skincare line,” “Celebrating five years in my business”).
+
+Click “Generate” and make sure the captions reference that context, not Sandra’s story.
+
+Verify captions use only 1–2 emojis and a conversational tone.
+
+Mobile Testing:
+
+On small screens, swipe from controls to preview and confirm the new captions appear—and no references to Sandra.
+
+Ensure the “Copy to Clipboard” button still works.
+
+Error Cases:
+
+If OpenAI returns a malformed response, show a user‐friendly error: “⚠️ Sorry, something went wrong—please try again.”
+
+If the user input is empty, disable the “Generate” button and show a tooltip: “Please tell me about your photo or brand.”
+
+6. Remove All Claude/Anthropic Dependencies
+Uninstall any Claude‐related packages from package.json to avoid conflicts:
+
+bash
+Kopier
+Rediger
+npm uninstall @anthropic-ai/sdk
+Delete any old prompt files or helper functions that specifically reference Claude. We only want the new OpenAI logic to remain.
+
+Final Check
+All OpenAI calls use OPENAI_API_KEY (ensure it’s set in Replit Secrets).
+
+Captions change based on each user’s “Selfie Context.”
+
+Tone is everyday language; emojis are limited to 1–2 per caption.
+
+UI styling (Prata serif, black/white, minimalistic) remains identical to the existing design.
+
+No references to Sandra’s story appear in generated captions.
+
+Once implemented, push your changes and share a new preview link so I can verify. Thank you!
+
+
+
+
+
+

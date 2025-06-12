@@ -1,0 +1,88 @@
+🌟 PAGE: /courses/starter-kit
+Purpose: Deliver the Selfie Starter Kit experience like a premium editorial masterclass.
+Vibe: Vogue meets Notion — minimal, luxe, and motivational.
+
+1️⃣ HERO SECTION
+Element	Content
+Title	Selfie Starter Kit
+Subheadline	"The foundation for your magnetic online presence."
+Progress Bar	Display: Module 1 of 4 or linear progress bar
+Background	https://i.postimg.cc/Bbn4rXK7/3.png (set to opacity: 0.15 or overlay with rgba(241, 241, 241, 0.85))
+
+Typography:
+
+Title: Cormorant Garamond, 48–60px, serif, black
+
+Subtext: Neue Einstellung, 16–18px, medium gray
+
+Layout Tip: Centered in a vertical container, max-width 960px, padding 100px 24px top/bottom
+
+2️⃣ MODULE LIST
+Layout:
+Vertical scroll
+
+One full-width card per module
+
+Responsive grid if needed for desktop
+
+Each Module Includes:
+Block	Styling + Behavior
+Module Title	Cormorant Garamond, 24–28px
+Video Block	Embed or thumbnail placeholder with play icon
+Description	Short summary, 1–2 sentences, Neue Einstellung, gray text
+CTAs	
+→ Mark Complete (changes state)	
+→ Save Notes (toggles note area)	
+→ Download Workbook (PDF button)	
+Style: Transparent, border-only, sharp edges, uppercase	
+
+| Notes Area | Toggle: Hidden by default → expand into Notion-style editable text block (save to local or backend /api/notes) |
+| Status Tag | Top right or under title
+Examples: ✔ Completed / 🔒 Locked until [Date] / ⏳ In Progress (Icons optional — text-only preferred for luxe tone) |
+
+Animation & Feedback:
+Slide down animation on expand
+
+Smooth scroll to current module
+
+“Mark Complete” → changes border color or tag (ex: from gray → black)
+
+3️⃣ STICKY FOOTER CTA
+Element	Description
+Sticky Button	Resume Where You Left Off → scrolls to active module
+Style	Transparent, black border, Neue Einstellung, centered
+Optional	Floating “Ask Sandra” button (bottom-right) for instant course support
+
+4️⃣ MOBILE UX
+Component	Behavior
+Modules	Accordion-style (tap to expand)
+CTAs	Stack vertically, touch-friendly
+Notes	Tap to toggle + save
+Sticky Button	Always visible once scrolled below fold
+
+5️⃣ DESIGN SYSTEM
+Element	Details
+Fonts	Cormorant Garamond for headings
+Neue Einstellung for UI	
+Colors	Background: #F1F1F1
+Text: #171719	
+Gray: #4C4B4B	
+Buttons	Transparent
+2px border	
+Sharp corners (0px radius)	
+Hover: Subtle shadow or invert background	
+Card Backgrounds	White or soft beige overlay
+Shadow on hover	
+Dividers: rgba(0,0,0,0.08)	
+
+🛠 DEV INSTRUCTIONS
+Pull course status + completion per user from /api/course-progress
+
+Save notes via /api/notes?module=1
+
+Gate locked modules by date or /api/purchases
+
+Highlight active module by scroll or last completed item
+
+Make “Resume” button scroll to current module or next unlocked
+

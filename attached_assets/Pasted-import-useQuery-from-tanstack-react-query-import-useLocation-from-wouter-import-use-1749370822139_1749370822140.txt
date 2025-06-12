@@ -1,0 +1,192 @@
+import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
+import { useMemo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import type { Workbook } from "@shared/schema";
+
+export default function ViewWorkbook() {
+  const [location] = useLocation();
+  const workbookId = useMemo(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+  }, [location]);
+
+  const { data: workbook, isLoading, error } = useQuery<Workbook>({
+    queryKey: ["/api/workbooks", workbookId],
+    enabled: !!workbookId
+  });
+
+  const safeParseArray = (data: any): string[] => {
+    if (!data) return [];
+    if (Array.isArray(data)) return data;
+    if (typeof data === 'string') {
+      try {
+        const parsed = JSON.parse(data);
+        return Array.isArray(parsed) ? parsed : [parsed];
+      } catch {
+        return data.split('\n').filter(item => item.trim());
+      }
+    }
+    return [];
+  };
+
+  const actionItems = safeParseArray(workbook?.actionItems);
+  const customFrameworks = safeParseArray(workbook?.customFrameworks);
+  const keyInsights = safeParseArray(workbook?.keyInsights);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-luxury-white flex items-center justify-center">
+        <p className="font-helvetica text-sm text-luxury-text-gray">Loading workbook...</p>
+      </div>
+    );
+  }
+
+  if (error || !workbook) {
+    return (
+      <div className="min-h-screen bg-luxury-white flex items-center justify-center text-center">
+        <div className="space-y-6 max-w-md">
+          <h1 className="font-prata text-3xl text-luxury-headline">Unable to load workbook</h1>
+          <p className="font-helvetica text-luxury-text-gray">
+            There was an issue loading your workbook content. Please try again later.
+          </p>
+          <Button onClick={() => window.history.back()} variant="outline" className="btn-secondary">
+            Back to Course
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-luxury-white">
+      <div className="max-w-4xl mx-auto px-4 py-16 space-y-12">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <Button
+            onClick={() => window.location.href = '/my-workbooks'}
+            className="btn-secondary"
+          >
+            Back to My Workbooks
+          </Button>
+          <p className="text-sm font-helvetica text-luxury-text-gray">
+            Created {workbook.createdAt ? format(new Date(workbook.createdAt), "MMM d, yyyy") : 'Recently'}
+          </p>
+        </div>
+
+        {/* Title */}
+        <div className="space-y-3">
+          <h1 className="text-4xl font-prata text-luxury-headline leading-tight">{workbook.title}</h1>
+          <p className="text-sm font-helvetica text-luxury-text-gray uppercase tracking-widest">
+            MODULE {workbook.moduleId} — {workbook.moduleTitle}
+          </p>
+          <div className="luxury-divider"></div>
+        </div>
+
+        {/* Content Sections */}
+        <div className="space-y-12">
+          {/* Strategy */}
+          {workbook.personalizedStrategy && (
+            <Card className="border-luxury-accent">
+              <CardHeader>
+                <CardTitle className="font-prata text-xl text-luxury-headline uppercase tracking-wide">
+                  Personalized Strategy
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 font-helvetica text-luxury-text-gray leading-relaxed">
+                {workbook.personalizedStrategy.split('\n').map((line, i) => (
+                  line.trim() && <p key={i}>{line.trim()}</p>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Action Items */}
+          {actionItems.length > 0 && (
+            <Card className="border-luxury-accent">
+              <CardHeader>
+                <CardTitle className="font-prata text-xl text-luxury-headline uppercase tracking-wide">
+                  Action Items
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 font-helvetica text-luxury-text-gray">
+                {actionItems.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-luxury-headline text-white flex items-center justify-center font-semibold text-sm">
+                      {i + 1}
+                    </div>
+                    <p className="leading-relaxed">{item}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Frameworks */}
+          {customFrameworks.length > 0 && (
+            <Card className="border-luxury-accent">
+              <CardHeader>
+                <CardTitle className="font-prata text-xl text-luxury-headline uppercase tracking-wide">
+                  Your Frameworks
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {customFrameworks.map((fw, i) => (
+                  <div key={i} className="bg-luxury-light p-4 rounded-lg border border-luxury-accent">
+                    <h4 className="font-prata text-md text-luxury-headline mb-2">
+                      Framework {i + 1}
+                    </h4>
+                    <p className="font-helvetica text-luxury-text-gray whitespace-pre-line">
+                      {fw}
+                    </p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Implementation */}
+          {workbook.implementationPlan && (
+            <Card className="border-luxury-accent">
+              <CardHeader>
+                <CardTitle className="font-prata text-xl text-luxury-headline uppercase tracking-wide">
+                  Implementation Plan
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 font-helvetica text-luxury-text-gray leading-relaxed">
+                {workbook.implementationPlan
+                  .split('{')[0]
+                  .split('\n')
+                  .filter(p => p.trim())
+                  .map((p, i) => (
+                    <p key={i}>{p.trim()}</p>
+                  ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Key Insights */}
+          {keyInsights.length > 0 && (
+            <Card className="border-luxury-accent">
+              <CardHeader>
+                <CardTitle className="font-prata text-xl text-luxury-headline uppercase tracking-wide">
+                  Key Insights
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 font-helvetica text-luxury-text-gray">
+                {keyInsights.map((insight, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="w-2 h-2 rounded-full bg-luxury-headline mt-2" />
+                    <p className="leading-relaxed">{insight}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

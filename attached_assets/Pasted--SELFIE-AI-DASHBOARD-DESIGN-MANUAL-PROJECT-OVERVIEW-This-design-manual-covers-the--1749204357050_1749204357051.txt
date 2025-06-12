@@ -1,0 +1,194 @@
+**SELFIE AI™ DASHBOARD DESIGN MANUAL**
+
+---
+
+### 📊 PROJECT OVERVIEW
+
+This design manual covers the **Member Dashboard** for SELFIE AI™ — a personalized brand-building HQ inspired by editorial luxury brands like Tom Ford, Vogue, and Chanel. The dashboard blends minimalism, emotional depth, and strategic functionality to guide users through their empowerment journey.
+
+---
+
+## ✨ VISUAL SYSTEM
+
+**Typography:**
+
+* Headings: `Cormorant Garamond` (serif, elegant, editorial)
+* Body/UI: `Neue Einstellung` (clean sans-serif)
+
+**Color Palette:**
+
+* Luxury Black: `#171719`
+* Soft White: `#F1F1F1`
+* Warm Gray: `#B5B5B3`
+* Graphite: `#4C4B4B`
+
+**Style Rules:**
+
+* All corners = 0px (sharp)
+* Buttons = uppercase, border only (no icons)
+* Hover effects = soft scale + drop shadow
+* Background imagery = desaturated
+* Offer Cards = Grayscale images with section-specific hierarchy
+
+**Global Components:**
+
+* Header: Already implemented (transparent on hero, solid on scroll)
+* Footer: Consistent across all pages (white text, no icons)
+
+---
+
+## 🔄 USER STATE BEHAVIOR
+
+User access is based on purchased products:
+
+* `starterKit`: grants access to Kit tools
+* `brandedBySelfie`: grants access to Branded course + tools
+* `vipAccess`: unlocks all tools + VIP visual badges
+
+Mocked via:
+
+```ts
+const [userPurchases, setUserPurchases] = useState({
+  starterKit: false,
+  brandedBySelfie: false,
+  vipAccess: false
+});
+```
+
+This logic should be updated later with real purchase validation.
+
+---
+
+## 🌌 DASHBOARD LAYOUT STRUCTURE
+
+### 1. **Hero Welcome Block**
+
+* Full-bleed background: [https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png](https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png)
+* Overlay:
+
+  * `H1`: Welcome back, \[UserName]. Your empire starts here.
+  * `Subtext`: Choose your path. Build your power.
+  * Buttons:
+
+    * "START WHERE YOU LEFT OFF"
+    * "SEE ALL TOOLS"
+
+### 2. **Offer Ladder Cards**
+
+4 interactive cards with editorial photo backgrounds:
+
+* Freebie: `https://i.postimg.cc/7Z08QgRY/80.png`
+* Starter Kit: `https://i.postimg.cc/Bbn4rXK7/3.png`
+* Branded: `https://i.postimg.cc/nhDpf8Xx/35.png`
+* VIP: `https://i.postimg.cc/V673b4J4/81.png`
+
+**Card Styles:**
+
+* Light: White background, thin gray border
+* Gray: White background, dark hover border
+* Dark: Graphite background, gold hover border
+* Luxury: Black background, subtle stars if VIP
+
+**Content Includes:**
+
+* Title + subtitle
+* Tagline
+* CTA: varies by state (e.g., Unlock Now, Start Course)
+* Status badge (Owned, Locked)
+
+### 3. **Progress Tracker**
+
+* Visual path: Freebie → Kit → Branded → VIP
+* Shows checkmarks or hollow dots based on access
+* VIP uses crown icon instead of dot
+
+### 4. **Sandra Says (Daily Prompt)**
+
+* Background image: `https://i.postimg.cc/dQ5q8mbb/22.png`
+* `filter: grayscale(100%)` + dark overlay
+* Layout:
+
+  * H3: Sandra Says
+  * Quote: "Your brand is your mirror. Make it magnetic."
+  * CTA: \[POST IT NOW] + \[SAVE TO CALENDAR]
+
+### 5. **Tool Hub Section** (ID = tools-section)
+
+6 Tool Cards, shown in a 3-column grid:
+
+* Sandra AI Chat
+* Selfie Uploader
+* Caption Generator
+* Strategy Workbooks
+* Content Calendar
+* Pose Coach
+
+**Each Tool Card:**
+
+* Icon block: white on black
+* Title: white serif
+* Border: light gray, turns white on hover
+* Optional background textures (low opacity):
+
+  * `https://i.postimg.cc/wxc1QX0g/3.png`
+  * `https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png`
+
+### 6. **Weekly Planner**
+
+* Background section image: `https://i.postimg.cc/Fs2XZPDB/78.png`
+* 7 grid columns (Mon–Sun)
+* Each day:
+
+  * Dot indicator: black (planned) or gray (empty)
+  * Hover reveal task text (if planned)
+  * Bottom CTA: "MANAGE CALENDAR"
+
+### 7. **Footer Progress Bar**
+
+* Background texture: `https://i.postimg.cc/Xqq62mRT/48.png`
+* Show horizontal badge path of Freebie > Kit > Branded > VIP
+* If `purchased`, show filled circle with check
+* If `open`, show solid dot
+* If locked, show outline circle
+
+---
+
+## ⚖️ DEV INSTRUCTIONS (REPLIT ASSISTANT)
+
+1. **Use global Header/Footer component across all views**
+2. Use `Cormorant Garamond` for all serif titles and `Neue Einstellung` for body
+3. Apply sharp edges on all cards and buttons (no radius)
+4. CTA buttons must:
+
+   * Be uppercase
+   * Use transparent or white fill
+   * Have 2px solid border
+   * No emoji or icons
+5. Background images must use:
+
+   * `filter: grayscale(100%)` in CSS
+   * Consistent spacing and padding for card height and text hierarchy
+6. Use the following image pairings for each `offerLadderCard`:
+
+```ts
+offerLadderCards = [
+  { id: 'freebie', bgImage: 'https://i.postimg.cc/7Z08QgRY/80.png' },
+  { id: 'starter-kit', bgImage: 'https://i.postimg.cc/Bbn4rXK7/3.png' },
+  { id: 'branded', bgImage: 'https://i.postimg.cc/nhDpf8Xx/35.png' },
+  { id: 'vip', bgImage: 'https://i.postimg.cc/V673b4J4/81.png' }
+]
+```
+
+7. Sandra Says block: use `https://i.postimg.cc/dQ5q8mbb/22.png` as background
+8. Tool Cards: may use `https://i.postimg.cc/wxc1QX0g/3.png` or `flatlay-overlay-Url.png` as textures
+9. Weekly Planner section: background image = `https://i.postimg.cc/Fs2XZPDB/78.png`
+10. Footer tracker: use `https://i.postimg.cc/Xqq62mRT/48.png` as section background
+11. Always include fallback userName → `Queen`
+12. Show/hide progress using conditional checkmarks
+13. Allow horizontal scroll if needed on mobile views
+
+---
+
+This manual ensures the SELFIE AI™ dashboard remains visually consistent, editorially elegant, and conversion-optimized.
+
+Let’s move to the next page when ready. ✨

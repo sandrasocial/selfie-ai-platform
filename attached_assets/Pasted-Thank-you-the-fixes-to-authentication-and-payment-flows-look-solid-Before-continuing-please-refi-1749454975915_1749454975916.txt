@@ -1,0 +1,58 @@
+Thank you — the fixes to authentication and payment flows look solid. Before continuing, please refine and limit your next steps to the **items below only**.
+
+---
+
+## ❌ DO NOT YET TOUCH
+- ❌ Viral Selfie Blueprint modules (we will handle later)
+- ❌ Presets page (this refers to Lightroom preset downloads, not templates)
+- ❌ Trello-style templates ("30-Day Content Journey") – please pause
+- ❌ Instagram API (I haven’t connected access tokens yet – hold on this)
+- ❌ Niche discovery tool / brand audit onboarding (not yet designed)
+- ❌ Analytics pages (we will build later)
+
+---
+
+## ✅ REQUESTED NEXT ACTIONS ONLY
+
+1. 🔐 **Verify Access Control Logic is Enforced**
+   - Course pages are unlocked *only* after Stripe one-time purchase (not subscription)
+   - AI tools are locked behind monthly subscription
+   - Free users only get access to PDF Guide download + newsletter
+
+2. 🔁 **Dashboard Navigation Cleanup**
+   - Make sure all links go to correct destinations:
+     - Dashboard tools
+     - Courses overview
+     - AI tools
+     - My Account
+   - Do not add or remove links — just fix broken routes
+
+3. 🧠 **Prep Instagram Integration (but do not connect)**
+   - Leave `/instagramService.ts` and frontend display placeholder ready
+   - Add "Connect Instagram" button with non-functional OAuth flow for now
+   - Do not attempt API call or login without token credentials
+
+4. ✅ **Test Stripe Payment Webhooks**
+   - Simulate successful one-time and subscription purchase
+   - Confirm appropriate access is granted via updated access guards
+   - Confirm users see access immediately after payment (without refresh)
+
+5. 🧪 **Run Full Feature Sanity Check**
+   - Sandra AI
+   - Strategy Coach
+   - Pose Coach
+   - Visual Studio Editor
+   - Content Vault
+   - Content Generator
+   - Weekly Planner
+   - Calendar
+   - Template Customizer
+
+Report any feature that:
+- Doesn’t load
+- Has broken components
+- Fails to respond to user input
+
+---
+
+🛑 REMINDER: No styling or layout changes. No new pages. No feature redesigns. Do not overwrite or delete any existing user-facing component.

@@ -1,0 +1,190 @@
+ Update Starter Kit™ With Official Lesson Content
+
+Hi again! You're doing a great job on the redesign of the Selfie Starter Kit™ using the Branded By Selfie layout.
+
+This is a follow-up to provide the official lesson/module content that needs to be used across the course.
+
+You've already integrated the correct video URLs — please keep those as-is.
+
+✅ What I need you to do now:
+For each module and lesson:
+
+Replace placeholder or default text with the written content below
+
+Keep the video embeds exactly as you’ve already implemented them
+
+Make sure all AI CTAs, checklists, quotes, Sandra’s Tips, and reflection prompts are preserved and match each module
+
+Use Branded By Selfie’s layout and styling
+
+Stick to my design rules:
+
+❌ No emojis
+
+❌ No rounded corners
+
+✅ Use Cormorant Garamond for headings
+
+✅ Maintain the luxury editorial tone and spacing
+
+🧾 Lesson Content: Use this to populate the modules
+(Note: All the correct video URLs are already in place — do not change them.)
+
+Intro Section
+Title: Welcome to the Selfie Starter Kit™
+Subtitle: A high-end editorial system to glow up your brand with clarity, confidence, and camera-ready energy.
+Quote: “This is your first step toward becoming the face of your brand—on your terms.”
+
+Module 1: Step Into the Glow Era
+Subtitle: Welcome · Preset Install · Reflection
+Reflection Prompt:
+What’s been holding you back from showing up fully online?
+Textarea placeholder: Write it down. Say it out loud. Then let it go.
+
+Checklist Before Moving On:
+
+Watched the welcome video
+
+Downloaded your presets
+
+Ready to dive into your first AI-generated workbook
+
+CTA Button: Next: Signature Selfie Style
+
+Module 2: Signature Selfie Style
+Subtitle: Presets · Light Edits · Your Visual Glow-Up
+
+Lesson 1: Applying Your Presets
+Lesson 2: Editing in the iPhone Camera App
+
+Workflow: Your Signature Edit Flow:
+
+Import your Selfie Glow Up presets into Lightroom Mobile
+
+Apply your favorite filter and fine-tune for natural contrast and warmth
+
+Use the iPhone edit shortcut if you're on the go
+
+Preview before/after to feel your transformation
+
+Save your signature edit as a new preset to reuse
+
+Quote:
+“Hold your finger on the photo to see the before/after. That glow-up hits different when you can feel the shift.”
+
+CTA Button: Next: Smart Edits With Apps
+
+Module 3: Smart Edits With Apps
+Subtitle: Hypic · CapCut · Your AI Editing Flow
+
+Lesson 1: Editing with Hypic
+Lesson 2: CapCut for Luxe Video
+
+AI Workbook CTA:
+Download your Personalized Editing Flow Workbook
+Powered by SELFIE AI™
+
+Sandra’s Tip:
+“Think of Hypic as your editorial lens. Use it when you want your selfies to feel less ‘Insta’ and more like a fashion mag.”
+
+Practice Prompt:
+Try editing the same photo in both Lightroom and Hypic.
+Post a story slide with a poll:
+“Which one feels more me – Classic Glow or Cinematic Mood?”
+
+CTA Button: Next: Hands-Free Like a CEO →
+
+Module 4: Hands-Free Like a CEO
+Subtitle: Gesture shortcuts · Voice command · Pose guide
+
+Lesson: Gesture & Voice Shortcut Tutorial
+
+Setup Guide: iPhone Gesture Shortcut:
+
+Go to Settings → Accessibility
+
+Tap Touch → AssistiveTouch → Enable
+
+Add “Take Photo” as a custom action (Double Tap)
+
+Enable Voice Control
+
+Say “Tap Take Photo” to capture hands-free
+
+Download CTA: AI Pose Guide Workbook
+Includes solo pose prompts for scroll-stopping content
+
+Challenge:
+Film your first hands-free video.
+Share with your preset. Caption it:
+“Filmed it solo. Posted it with power. Selfie CEO activated.”
+Tag @ssasocial — I’ll be resharing my favorites.
+
+CTA Button: Next: Build Your Brand Aesthetic →
+
+Module 5: Brand Aesthetic Builder
+Subtitle: Design Like a CEO™ — your visual strategy starts here
+
+Workbook CTA: Download Your Branding Blueprint
+Helps define your fonts, colors, mood, and layout style.
+
+Moodboard Upload or Canva Challenge:
+Create a dream aesthetic moodboard. Upload it or share it to stories.
+
+Brand Identity Reflection:
+If your brand walked into the room…
+
+What would she be wearing?
+
+How would she move?
+
+What feeling would she leave behind?
+
+CTA Button: Next: Copy That Connects →
+
+Module 6: Copy That Connects
+Subtitle: Caption strategy & AI writing made magnetic
+
+Workbook CTA: Launch Your Caption Strategy Guide
+Helps you write posts that sound like you, connect deeply, and drive action.
+
+Practice Prompt:
+Start your caption with:
+“This is for the girl I used to be…”
+
+Sandra’s Tip:
+“Think of your captions like a voice note to your best friend. Don’t overthink it. Just tell the truth. Make her feel seen. Invite her in.”
+
+Challenge CTA:
+Use your AI-generated caption and post it today.
+End with:
+“If this hit home, DM me ‘READY’ and I’ll send you something special.”
+Tag @ssasocial — I’ll hype it up.
+
+CTA Button: Next: Final Brand Blueprint →
+
+Final Section: Closing CTA Block
+Title: You Did That — and You’re Just Getting Started
+
+Closing Copy:
+You didn’t just download a kit.
+You showed up for yourself. You got clear. You got intentional.
+And that energy — the one that moved you to take action — that’s what builds a brand that lasts.
+
+You now have:
+
+A brand identity
+
+A personalized editing routine
+
+A voice that connects
+
+Momentum
+
+Italic Summary:
+This wasn't about filters. It was about clarity.
+It wasn’t about algorithms. It was about confidence.
+
+Final CTA Button:
+Ready for the Next Step — Branded by Selfie™ →
+

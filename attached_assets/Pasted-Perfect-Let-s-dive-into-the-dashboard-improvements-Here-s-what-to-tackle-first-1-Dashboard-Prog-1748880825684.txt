@@ -1,0 +1,91 @@
+Perfect! Let’s dive into the dashboard improvements. Here’s what to tackle first:
+
+1. Dashboard Progress Tracking (90-Day Journey)
+
+Goal: Show each user exactly where they are in their 90-day content plan (e.g., “Day 14 of 90 completed”).
+
+Tasks for AI Agent:
+
+In client/src/pages/Dashboard.tsx, add a new “90-Day Progress” section at the top.
+
+Fetch the user’s completedDays: number[] from their profile (or local state).
+
+Display a horizontal progress bar (0–100%) where the fill = (completedDays.length / 90) * 100.
+
+Below the bar, list “Days Completed: X of 90” and show the specific day numbers (e.g., “Completed: Days 1, 2, 3…”).
+
+Style it using our brand colors (Black fill, Soft Beige background) and Prata/Helvetica fonts.
+
+2. Content Filtering by Day/Category
+
+Goal: Let users filter templates or generated content on the dashboard (e.g., show only “Month 2: Days 31–60” or filter by “Reels” vs “Story Slides”).
+
+Tasks for AI Agent:
+
+In Dashboard.tsx, add a dropdown or tabs labeled “Month 1,” “Month 2,” “Month 3.”
+
+Month 1 = Days 1–30, Month 2 = 31–60, Month 3 = 61–90.
+
+When a tab is clicked, filter the displayed list of completedDays or upcoming days accordingly.
+
+Also add a “Content Type” dropdown (options: “All,” “Reel Prompts,” “Captions,” “Story Slides”).
+
+Filter the day list by that content type, using metadata in TemplateRegistry (e.g., each template has a type field).
+
+3. Batch Content Generation
+
+Goal: Allow users to generate content for multiple days in one go (e.g., “Generate Days 14–20”).
+
+Tasks for AI Agent:
+
+In Dashboard.tsx, add a “Batch Generate” button next to the 90-Day Progress section.
+
+Clicking it opens a modal with two number inputs: “Start Day (1–90)” and “End Day (1–90).”
+
+Validate that start < end and both are between 1 and 90.
+
+On “Generate,” loop through each day in that range:
+
+Call /api/generate-content/:day (or use the existing generation endpoint) for each day, using the user’s profile.
+
+Show a loading indicator (“Generating content for Days X–Y…”) and a confirmation when complete.
+
+4. Save & Organize: Content Vault
+
+Goal: Give users a place to see all their generated posts, search by day or keyword, and tag favorites.
+
+Tasks for AI Agent:
+
+Create a new page client/src/pages/ContentVault.tsx.
+
+Fetch the user’s stored content items from /api/user-content. Each item should include day, templateName, generatedText, dateCreated.
+
+Display a searchable table or grid: columns = Day, Template Name, Preview (first 50 characters), Date Created, Tag/Favorite.
+
+Add a search input that filters by template name or text snippet.
+
+Add a “Favorite” star icon they can click to tag content. Store favorites in the user’s profile via /api/tag-content.
+
+5. Export Options & Visual Calendar
+
+Goal: Let users download their 90-day plan as a PDF or view it on a calendar grid.
+
+Tasks for AI Agent:
+
+On the Dashboard, add two new buttons: “Download 90-Day PDF” and “Open Calendar View.”
+
+Download PDF: Call /api/export-plan which returns a PDF blob. Trigger a download with filename 90-Day-Selfie-Plan.pdf.
+
+Calendar View: Create client/src/pages/ContentCalendar.tsx. Use a simple CSS grid (7 columns × 13 rows) to map days 1–90 to calendar cells. Each cell shows the day number and a preview icon if content is generated.
+
+Highlight completed days in Soft Beige, uncompleted in Light Gray. Clicking a cell opens a detail modal showing full generated content for that day.
+
+Next Steps:
+
+Start with Progress Tracking and Filtering in Dashboard.tsx.
+
+Once progress UI is live, add Batch Generation.
+
+Build out the Content Vault page and related endpoints.
+
+Finish with Export PDF and Calendar View.

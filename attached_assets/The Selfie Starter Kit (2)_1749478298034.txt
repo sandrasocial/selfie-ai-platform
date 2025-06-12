@@ -1,0 +1,55 @@
+﻿export default function Module3VideoMagic() {
+  return (
+    <div className="bg-[#F1F1F1] text-[#171719] min-h-screen font-sans">
+      {/* Hero Section */}
+      <section className="w-full py-24 px-6 bg-black text-white text-center">
+        <h1 className="text-6xl font-light font-serif mb-4">Video Magic – Branded & Crisp</h1>
+        <p className="italic text-lg max-w-2xl mx-auto">Create Reels that feel like a Vogue campaign—no camera crew required.</p>
+      </section>
+
+
+      {/* Lesson Container */}
+      <section className="max-w-5xl mx-auto py-20 px-4 space-y-16">
+        {/* Lesson 4 */}
+        <div>
+          <h2 className="text-4xl font-serif italic mb-4">Lesson 4: Create Scroll-Stopping Reels</h2>
+          <p className="text-lg leading-relaxed mb-6">Ever seen those dreamy, cinematic Reels and thought, “How do they make it look so effortless?” Here’s the truth: it’s not the gear. It’s the settings—and the energy.</p>
+          <div className="aspect-video bg-gray-300 mb-6 rounded-lg"></div>
+          <ul className="space-y-3 pl-6 list-disc">
+            <li><strong>Film Like a CEO:</strong> iPhone settings → 4K, 30fps. Clean background. Natural light. Eye-level lens.</li>
+            <li><strong>CapCut Edit Flow:</strong> Trim intros, Adjust with Contrast +4, Sharpen +26, Clarity +14, Vignette +10, Export in 4K.</li>
+            <li><strong>Optional:</strong> Upload final to Lightroom Mobile (Premium) to apply your branded preset.</li>
+          </ul>
+          <div className="mt-6">
+            <a href="#" className="uppercase border border-black px-6 py-3 font-medium tracking-wide hover:bg-black hover:text-white transition-all">Generate Your Video Edit Guide</a>
+          </div>
+        </div>
+
+
+        {/* Lesson 5 */}
+        <div>
+          <h2 className="text-4xl font-serif italic mb-4">Lesson 5: Pro Trick – Video Presets in Lightroom</h2>
+          <p className="text-lg leading-relaxed mb-6">Want your Reels to match your photo aesthetic? Lightroom Mobile’s paid version lets you apply presets to video for that editorial, branded glow.</p>
+          <div className="aspect-video bg-gray-300 mb-6 rounded-lg"></div>
+          <ul className="space-y-3 pl-6 list-decimal">
+            <li>Open Lightroom Mobile (Premium)</li>
+            <li>Import your exported CapCut video</li>
+            <li>Apply preset + adjust</li>
+            <li>Export and save</li>
+          </ul>
+          <div className="mt-6">
+            <a href="#" className="uppercase border border-black px-6 py-3 font-medium tracking-wide hover:bg-black hover:text-white transition-all">Build Your Preset Strategy Guide</a>
+          </div>
+        </div>
+      </section>
+
+
+      {/* CTA Section */}
+      <section className="bg-[#171719] text-white text-center py-20">
+        <h3 className="text-3xl font-serif italic mb-4">CEO Energy Only</h3>
+        <p className="max-w-xl mx-auto text-lg leading-relaxed mb-6">This isn’t about filters. It’s about frequency. Post your Reel using your new branded flow and tag @ssasocial—I’ll be reposting my faves 🖤</p>
+        <a href="#" className="uppercase border border-white px-6 py-3 font-medium tracking-wide hover:bg-white hover:text-black transition-all">Next: Design Your Brand Look</a>
+      </section>
+    </div>
+  );
+}

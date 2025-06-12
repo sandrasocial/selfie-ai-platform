@@ -1,0 +1,100 @@
+Final QA + Full Course Audit (Pre-Deployment)
+Please run a full, start-to-finish audit of the entire Selfie Starter Kit course.
+
+You must go through the entire experience as if you were a new user — from course access to full completion — and verify that all components, user flows, and AI integrations are functioning exactly as intended.
+
+🔁 Start-to-Finish Flow
+Course Access & Routing
+
+Confirm route access from /courses/starter-kit
+
+Confirm user is routed correctly after login and has full course access
+
+Design & Layout
+
+Confirm all 6 modules are visible
+
+Confirm all 9 aesthetic collections are rendering with correct images (no broken links)
+
+Confirm the interface retains the original luxury editorial design (spacing, typography, mobile view)
+
+Video Lessons
+
+Confirm videos play correctly in Modules 1–4
+
+Confirm Modules 5 & 6 have no video components (they were intentionally removed)
+
+Aesthetic Selection
+
+Confirm user can select one aesthetic in Module 5
+
+Confirm it persists and is sent to the backend
+
+Textareas / Notes
+
+Confirm each module includes correct prompt text above the notes:
+
+Module 2: “What are your editing struggles or goals? Mention your favorite tools, aesthetic, or speed needs.”
+
+Module 3: “What kind of content do you film? Reels, tutorials, storytelling? Share any challenges with editing or flow.”
+
+Module 5: “What 3–5 words describe the vibe you want for your brand? Mention colors, mood, or your inspiration.”
+
+Module 6: “What topics do you post about? What do you want your audience to feel, learn, or do from your content?”
+
+Confirm notes save silently without displaying toast popups
+
+Confirm textareas save user input per module
+
+Workbook Generation
+
+Confirm workbook generation buttons appear below the textareas (not above)
+
+Confirm each workbook generates successfully and links user to /my-workbooks
+
+Confirm PDFs open in a new tab using window.open() with the returned PDFMonkey link
+
+/my-workbooks Page
+
+Confirm this page displays generated workbooks per user
+
+Confirm all styling matches the luxury editorial design
+
+If no workbooks exist, show proper empty state messaging
+
+If workbooks exist, show title, module, and link to download/open
+
+Module Completion
+
+Confirm all "Complete Lesson" and "Mark Complete" buttons work
+
+Confirm progress bar updates across modules as lessons are marked
+
+Final Section
+
+Confirm final success message appears once all modules are complete
+
+Confirm CTA ("Explore Branded by Selfie") works
+
+🛠 Tech Details To Preserve
+Do not remove or alter any styling, layout, or existing logic unless specified.
+
+Maintain all current templateId values in the generateWorkbook() calls:
+
+Module 2: 9CC35B05-3616-4EB8-898E-8C15E46A9F05
+
+Module 3: 9CC35B05-3616-4EB8-898E-8C15E46A9F05
+
+Module 5: 6724E507-38D0-4C4C-8C2D-CEC891968D73
+
+Module 6: 25FB2EEB-6366-49D5-82A0-98553DCF4C60
+
+Please return a checklist of:
+
+✅ Working features
+
+❌ Bugs, broken elements, or inconsistencies
+
+🛠 Suggestions for UX improvement before deployment
+
+This is the final QA before production — please be thorough.

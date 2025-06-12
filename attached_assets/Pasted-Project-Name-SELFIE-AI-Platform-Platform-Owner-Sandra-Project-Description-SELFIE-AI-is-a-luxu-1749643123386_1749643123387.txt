@@ -1,0 +1,121 @@
+Project Name:
+SELFIE AI™ Platform
+
+Platform Owner: Sandra
+
+Project Description:
+SELFIE AI™ is a luxury editorial-style web and installable platform empowering women to turn selfies into brand assets and build digital empires. It combines premium online courses, AI tools, and strategy frameworks into a tiered-access ecosystem powered by Supabase, OpenAI, Anthropic, Leonardo AI, Stripe, and PostgreSQL.
+
+🚨 IMPORTANT DIRECTIVE:
+⚠️ DO NOT make any changes to the frontend layout, UI components, styling, UX flows, or visual design.
+❗Only handle logic, backend connections, functionality integration, and production setup.
+📝 If something requires a new interface or visual change, list it clearly at the end under "UI Tasks to Be Implemented" for the platform owner to handle.
+
+🔧 DEVELOPMENT OBJECTIVES FOR PRODUCTION READINESS
+1. 📦 Course Content Integration
+Finalize backend logic for course content upload via /admin/drops:
+
+Ensure files upload, associate with correct course, and are stored in PostgreSQL.
+
+No UI work — logic only.
+
+Validate Vimeo video player integration and progress tracking (logic only).
+
+2. 💳 Stripe Live Configuration
+Switch Stripe to live/production mode.
+
+Test payment flows and webhook logic for:
+
+$67 Starter Kit (Course-only tier)
+
+$397 Branded by Selfie (Course + AI tools)
+
+VIP Empire Builder (Application-based)
+
+Do not modify UI elements or pricing display components.
+
+3. 📧 Email Automation
+Verify Resend API configuration and complete backend testing of:
+
+Magic link login emails
+
+Purchase confirmation emails
+
+Upgrade notifications
+
+Logic only — no email template design changes.
+
+4. 📊 Dashboard Interfaces (Backend Logic Only)
+Implement backend logic and endpoints for:
+
+User dashboard data aggregation (course progress, tool usage, daily quote)
+
+Admin dashboard analytics (user stats, VIP applications, content uploads)
+
+Do not create or modify dashboard UI components.
+
+At the end, list any required frontend components or display views.
+
+5. 📱 PWA Enablement
+Add logic to enable Progressive Web App support:
+
+Service worker setup
+
+Asset caching
+
+Offline content support for courses and tools
+
+Do not alter layout or UI — list any frontend components that need to support PWA functionality.
+
+6. 🧠 Final AI Integration Testing
+Ensure all AI tools are connected and functional in production:
+
+Sandra AI (Anthropic Claude)
+
+Strategy Coach (OpenAI GPT-4o)
+
+Pose Coach (Replicate + photo upload logic)
+
+Content Generator (Leonardo AI + filters)
+
+Confirm access controls are tier-based (STARTER, BRANDED, VIP).
+
+Do not modify AI tool UI components — backend logic only.
+
+🔁 System Architecture & Flow
+Supabase: Magic link authentication & session
+
+PostgreSQL: Drizzle ORM with full user and course schema
+
+Stripe: Subscription control with webhooks
+
+Uploadcare + Replicate: File handling and enhancement
+
+REST API: Express with typed endpoints
+
+Frontend: React (TypeScript) — DO NOT MODIFY UI
+
+📦 Deployment Targets
+Platform: Web (React + Express)
+
+Hosting: Replit
+
+Installable App: Progressive Web App (PWA)
+
+Online & Offline Modes: Enable caching and offline mode logic
+
+Language: English only for now; prepare localization structure
+
+📋 AT THE END — Provide the following:
+UI Tasks to Be Implemented by Owner:
+If any new UI components, layout changes, or frontend adjustments are needed to support the backend logic, list them clearly under this section with descriptions like:
+
+“Create UI component to display XYZ”
+
+“Add button to trigger ABC API call”
+
+“Add visual metrics block for dashboard”
+
+✅ Final Goal:
+Bring SELFIE AI™ Platform to production launch readiness with all backend systems fully tested, AI tools connected, Stripe in live mode, and admin/user dashboards functional from a data perspective. The frontend and design system will be handled exclusively by the platform owner.
+

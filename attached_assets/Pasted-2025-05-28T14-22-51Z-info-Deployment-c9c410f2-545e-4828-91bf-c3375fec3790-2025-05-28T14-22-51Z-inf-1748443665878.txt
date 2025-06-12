@@ -1,0 +1,119 @@
+2025-05-28T14:22:51Z info: Deployment: c9c410f2-545e-4828-91bf-c3375fec3790
+2025-05-28T14:22:51Z info: Build: 2e5f01cf-bec9-4611-a54c-62a4489802cf
+2025-05-28T14:22:51Z info: Connecting to builder
+2025-05-28T14:22:57Z info: Builder connected
+2025-05-28T14:22:57Z info: Installing packages
+2025-05-28T14:22:58Z info: Starting Build
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+
+vite v5.4.14 building for production...
+
+transforming...
+
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+✓ 2089 modules transformed.
+
+rendering chunks...
+
+computing gzip size...
+
+../dist/public/index.html                                          0.63 kB │ gzip:   0.38 kB
+
+../dist/public/assets/51-D60zCEeI.png                             86.64 kB
+
+../dist/public/assets/21-Bk9v30on.png                            147.59 kB
+
+../dist/public/assets/47-D9Q6C2IT.png                            172.40 kB
+
+../dist/public/assets/31-Y4NI0LxZ.png                            401.51 kB
+../dist/public/assets/43-CVVl66cU.png                            535.45 kB
+
+../dist/public/assets/3-Bkxc_siM.png                             709.33 kB
+
+../dist/public/assets/23-Clo5Nd4b.png                            726.13 kB
+
+../dist/public/assets/30-BmYJm7Qj.png                            726.99 kB
+
+../dist/public/assets/29-DJ0JdTEl.png                            738.57 kB
+
+../dist/public/assets/IMG_3198-DbmC-gDK.jpeg                     853.75 kB
+
+../dist/public/assets/96-y3wpXjLJ.png                            859.03 kB
+
+../dist/public/assets/95-CzQwWFrf.png                            984.50 kB
+
+../dist/public/assets/24-BqosvcRj.png                          1,030.32 kB
+
+../dist/public/assets/45-mJXUPh0v.png                          1,045.46 kB
+
+../dist/public/assets/25-CP0kTPLT.png                          1,106.73 kB
+
+../dist/public/assets/46-K-naRA9P.png                          1,257.80 kB
+../dist/public/assets/27-f6EbZbyU.png                          1,272.14 kB
+
+../dist/public/assets/28-DyuLlgaO.png                          1,345.39 kB
+
+../dist/public/assets/IMG_4838-CfV8Jt2S.jpeg                   1,350.51 kB
+
+../dist/public/assets/92-DjtptqbP.png                          1,365.10 kB
+
+../dist/public/assets/IMG_1939-CIsfJ96_.jpeg                   1,387.49 kB
+
+../dist/public/assets/22-DHMcd4Rb.png                          1,426.10 kB
+
+../dist/public/assets/100-Nm57Fkq_.png                         1,445.73 kB
+
+../dist/public/assets/61-BIpfVLDW.png                          1,452.70 kB
+
+../dist/public/assets/1-kOoZaTva.png                           1,754.28 kB
+
+../dist/public/assets/26-CByqHo65.png                          1,812.69 kB
+
+../dist/public/assets/42-BhgAUJNn.png                          1,827.55 kB
+
+../dist/public/assets/4-1udTKgHf.png                           1,842.72 kB
+
+../dist/public/assets/The viral Selfie Blueprint-A9ziEwB5.png  1,877.05 kB
+
+../dist/public/assets/2-DgDQ14rf.png                           2,004.93 kB
+../dist/public/assets/94-D0XcDfTz.png                          2,343.52 kB
+../dist/public/assets/91-CQvvmKTx.png                          3,417.73 kB
+
+../dist/public/assets/index-BnxT0ErS.css                         103.57 kB │ gzip:  16.35 kB
+
+../dist/public/assets/index-Shl_ihIE.js                          657.89 kB │ gzip: 187.01 kB
+
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+✓ built in 14.02s
+
+
+  dist/index.js  127.3kb
+
+⚡ Done in 230ms
+
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.4.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.1
+npm notice To update run: npm install -g npm@11.4.1
+npm notice
+
+2025-05-28T14:23:18Z info: Pushing pid1 binary layer...
+2025-05-28T14:23:20Z info: Pushing hosting layer...
+2025-05-28T14:23:20Z info: Pushing Repl layer...
+2025-05-28T14:23:20Z info: Retrieved cached nix layer
+2025-05-28T14:23:20Z info: Created hosting layer
+2025-05-28T14:23:41Z info: Created pid1 binary layer
+2025-05-28T14:26:56Z info: Connecting to builder
+2025-05-28T14:26:56Z info: Builder connected
+2025-05-28T14:26:56Z info: Installing packages

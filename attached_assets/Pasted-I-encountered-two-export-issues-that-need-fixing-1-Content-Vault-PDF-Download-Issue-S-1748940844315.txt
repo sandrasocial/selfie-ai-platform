@@ -1,0 +1,84 @@
+I encountered two export issues that need fixing:
+
+---
+
+## 1. Content Vault PDF Download Issue  
+**Symptom:** Clicking “Export Vault as Vogue PDF” downloads a `.txt` file instead of our PDFMonkey-generated PDF. It’s not using the correct template.
+
+**What to Fix:**
+1. In the `/api/export-content-vault` route (server/routes.ts):
+   - Confirm we’re calling `generateVogueCollectionPDF(...)` and returning a JSON object with `{ url: pdfUrl }`.
+   - Ensure we set `res.setHeader('Content-Type', 'application/json')` before sending.
+   - Double-check `generateVogueCollectionPDF` uses the correct `PDFMONKEY_VOGUE_COLLECTION_TEMPLATE_ID` (77D103E4-D767-4F7E-8154-CD25B9B38AAF).
+
+2. On the client side (ContentVault.tsx):
+   - The Axios request should be:
+     ```js
+     const res = await axios.get('/api/export-content-vault');
+     const { url } = res.data; 
+     window.open(url, '_blank');
+     ```
+   - Remove any code that forces a “.txt” download. We need the response as JSON, not a blob.  
+   - If we did `responseType: 'blob'` anywhere, remove it so Axios parses JSON.
+
+3. Test:
+   - After fixing, click “Export Vault as Vogue PDF” and confirm it opens a PDF URL (not a TXT).  
+   - Inspect the network tab—API should return status 200 with JSON `{ "url": "<pdfMonkeyURL>" }`.
+
+---
+
+## 2. Calendar PDF Export Error  
+**Symptom:** When exporting the calendar PDF, the console shows:
+PDF export error: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+
+kotlin
+Kopier
+Rediger
+This means the frontend tried to parse HTML (likely an error page) as JSON.
+
+**What to Fix:**
+1. In the `/api/export-calendar-week/:weekNumber` route (server/routes.ts):
+   - Wrap the call to `generateVogueCalendarPDF(...)` in a `try/catch`. On success: `res.json({ url: pdfUrl })`. On failure: `res.status(500).json({ error: error.message })`.
+   - Ensure no part of this route does `res.sendFile` or renders HTML. Always return JSON.
+
+2. On the client side (Calendar.tsx):
+   - The code should be:
+     ```js
+     try {
+       const res = await axios.get(`/api/export-calendar-week/${weekNumber}`);
+       const { url } = res.data;
+       window.open(url, '_blank');
+     } catch (err) {
+       console.error('PDF export error:', err.response?.data || err.message);
+       alert('Failed to generate PDF. Please try again.');
+     }
+     ```
+   - Remove any `.then(res => res.json())` calls since we’re using Axios.  
+   - Confirm Axios is not expecting HTML. It should parse JSON by default.
+
+3. Confirm Route Is Hit Properly:
+   - Check server logs when calling `/api/export-calendar-week/1`.  
+   - If the route throws an unhandled exception, Express might return an HTML error page, causing the JSON parse error.  
+   - Fix any uncaught exceptions inside `generateVogueCalendarPDF` or the route logic so it never returns HTML.
+
+4. Test:
+   - In DevTools → Network tab, click “Download Vogue Calendar PDF.”  
+   - Verify response is `200 OK` with `{ "url": "<pdfMonkeyURL>" }`.  
+   - Verify no HTML is returned. If errors persist, capture the full response body to diagnose.
+
+---
+
+### Summary
+- Ensure both export endpoints always return JSON with `{ url: pdfUrl }`.
+- Remove any code that forces a plain-text download or tries to parse HTML.
+- Confirm client Axios calls match the server’s JSON response pattern.
+- Test both “Export Vault” and “Download Calendar PDF” to verify they open the actual PDF URL.
+
+Please implement these fixes so exports work seamlessly without manual copy/paste, and let me know when they’re resolved.  
+
+
+
+
+
+
+

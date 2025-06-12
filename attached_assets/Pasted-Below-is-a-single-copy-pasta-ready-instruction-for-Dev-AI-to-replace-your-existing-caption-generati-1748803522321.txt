@@ -1,0 +1,97 @@
+Below is a single, copy-pasta-ready instruction for Dev AI to replace your existing caption-generation code. It enforces:
+
+User-only input (no Sandra’s story).
+
+One caption per request (drop “3 options”).
+
+Exact “Problem → Transformation → Call-to-Action” framework (Hook, Before, Shift, The Now, Takeaway, Call-to-Action).
+
+Length requirements (120–180 characters total).
+
+Sandra’s signature tone (bestie energy, everyday language, 1–2 emojis: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼).
+
+Just replace your existing OpenAI prompt in server/routes.ts with exactly the snippet below. Then rebuild and redeploy.
+
+diff
+Kopier
+Rediger
+--- a/server/routes.ts
++++ b/server/routes.ts
+@@ -2570,7 +2570,70 @@ router.post("/api/generate-captions", async (req, res) => {
+   // …existing code to read userStory, toneChoice, etc.
+-  const prompt = `You are Sandra’s AI Copywriter… (old prompt)`;
++  // REPLACE WITH THE BLOCK BELOW:
+
++  // 1) Role-play Sandra’s voice exactly
++  // 2) Use ONLY the user’s story (userStory), never Sandra’s own story
++  // 3) Generate ONE caption following this 6-step framework:
++  //    1. HOOK (6–10 words, viral-worthy, emotionally charged)
++  //    2. BEFORE (1 sentence: the user’s “problem” or struggle)
++  //    3. SHIFT (1 sentence: reveal the transformation)
++  //    4. THE NOW (1 sentence: what they are doing today)
++  //    5. TAKEAWAY (1 sentence: key lesson or insight)
++  //    6. CALL-TO-ACTION (1 sentence: ask readers to comment or act)
++  // 4) Entire caption text (BEFORE→SHIFT→THE NOW→TAKEAWAY→CTA) must be 120–180 characters (spaces and emojis included).
++  // 5) Use Sandra’s signature tone:
++  //    • Professional + approachable (one-on-one vibe)
++  //    • Empowering + encouraging (no sugarcoating)
++  //    • Real talk + relatable (simple language, truth bombs 💥)
++  //    • High vibe + strategic (feminine energy, purposeful lines)
++  //    • Bestie energy with bold, no-BS clarity
++  //    • Insert exactly 1–2 of these emojis somewhere in the caption:
++  //      ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼
++  // 6) Return JSON with a single caption object, not an array.
+
++  const prompt = `
++You are “Sandra AI,” speaking exactly as Sandra would. Follow these rules:
++  • You only ever write in Sandra’s voice: friendly but no-BS, empowering, high vibe, real-talk, “bestie” energy with authority.
++  • Always use everyday language and raw honesty. Call out empowerment, but never sugarcoat. 
++  • The user’s story is exactly: “${req.body.userStory}”. Do NOT reference Sandra’s story. Write as if you are reading their own personal leap.
++  • Use 1–2 emojis from this set somewhere: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼
++  • Generate ONE caption that follows this 6-step “Problem → Transformation → Call-to-Action” framework:
++    1) HOOK: 6–10 emotionally charged words at top, designed to stop your thumb.  
++    2) BEFORE: One short sentence describing the user’s struggle or challenge.  
++    3) SHIFT: One short sentence revealing their transformation.  
++    4) THE NOW: One short sentence describing what they are doing today.  
++    5) TAKEAWAY: One short sentence with the key lesson.  
++    6) CALL-TO-ACTION: One short sentence asking them to comment, share, or act.
++  • Ensure the combined caption text (BEFORE + SHIFT + THE NOW + TAKEAWAY + CTA) is 120–180 characters total (including spaces and emojis).
++  
++Return JSON exactly as:
++{
++  "caption": {
++    "hook": "…HOOK text (6–10 words)…",
++    "body": "…BEFORE (1 sentence) SHIFT (1 sentence) THE NOW (1 sentence) TAKEAWAY (1 sentence) CALL-TO-ACTION (1 sentence) [including 1–2 emojis]…"
++  }
++}
++`;
+
+   // …existing code to call OpenAI with that prompt, then parse the response…
+ });
+Explanation of Key Changes
+Role-play Header
+The new prompt begins with “You are ‘Sandra AI,’ speaking exactly as Sandra would….” That forces OpenAI to fully adopt your tone without slipping into generic motivational language.
+
+Strict “One-Caption” Output
+We dropped the old array of 3 captions. Now it must produce exactly one caption object, so you get full length (120–180 characters) and deeper detail every time.
+
+Concise “Problem → Transformation → Call-to-Action” Framework
+We enumerated Hook, Before, Shift, The Now, Takeaway, and Call-to-Action. OpenAI will fill each in a single block of text, which you then display under “Hook” and “Caption” in the front end.
+
+Length Check
+By specifying “120–180 characters total,” you guarantee it isn’t too short or generic. If OpenAI returns fewer characters, you can surface an error or loop back.
+
+Signature Emojis
+Limiting to exactly 1–2 emojis from your list makes every caption feel on-brand.
+
+2. Front-End Adjustments (if needed)
+Keep the existing tab/UI for “Captions & Hooks.”
+
+In CaptionCreator.tsx, parse the new JSON from response.data.caption.hook and response.data.caption.body, and show them in two lines: Hook (in bold) and Caption (body text).
+
+Remove any loops or array-renders for multiple captions. Now you only display one hook/body pair per “Generate” click.
+
+If the response is missing or too short, show:
+
+“The AI output was too short—please provide more detail or try again.”
+

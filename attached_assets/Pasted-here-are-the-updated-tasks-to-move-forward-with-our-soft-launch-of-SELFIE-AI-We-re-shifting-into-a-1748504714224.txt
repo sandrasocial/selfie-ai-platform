@@ -1,0 +1,81 @@
+here are the updated tasks to move forward with our soft launch of SELFIE AI™. We're shifting into a founding member launch using only the core features that are currently working — while we finalize the rest in the background.
+
+✅ PRIORITY 1: LOCK THE SELFIE BLUEPRINT MODULES
+Only Module 1 is currently working.
+
+Please lock access to Modules 2–5 and hide the navigation to these pages.
+
+Replace the current Selfie Blueprint dashboard with this placeholder message:
+
+text
+Kopier
+Rediger
+🚧 The Viral Selfie Blueprint™ is unlocking soon for our Founding Members! 
+All 5 modules are being upgraded for a high-end, personalized experience. 
+You’ll be the first to access the full transformation the moment it drops.
+Disable direct routing to /module2, /module3, etc. (they should redirect to the Blueprint dashboard with this message if accessed manually).
+
+Keep Module 1 disabled from public view for now to avoid confusion until all modules are stable.
+
+✅ PRIORITY 2: FIX ROUTING FOR SANDRA AI CHAT
+The Sandra AI Chat link in the header currently leads to a 404 page.
+
+Please:
+
+Create a dedicated page at /sandra-ai
+
+Display the Sandra chat interface
+
+Ensure it loads properly and connects to Anthropic API
+
+Add this route to the main navigation bar
+
+✅ PRIORITY 3: CONNECT CUSTOM DOMAIN app.selfieschool.com
+Sandra has already purchased selfieschool.com
+
+She's currently adding the DNS settings:
+
+Type: CNAME
+
+Name: app
+
+Points to: cname.replit.com or the Replit hosting target
+
+Once DNS is configured, please:
+
+Connect the Replit deployment to app.selfieschool.com
+
+Ensure all routing works properly on the live version (home, login, dashboard, AI studio, templates, etc.)
+
+✅ PRIORITY 4: UPDATE HOMEPAGE & TEMPLATES PAGE
+Homepage: Ensure login status is consistent across all pages. Currently, some pages say “Log in” even when the user is already authenticated.
+
+Selfie Blueprint: Add a “Coming Soon” badge or overlay to clearly indicate it’s locked.
+
+Fix navigation: Add header to all pages (Selfie Blueprint is missing it).
+
+Ensure that after login, users are redirected to the dashboard with access to:
+
+30-Day Templates
+
+AI Studio
+
+Sandra AI Chat (once fixed)
+
+✅ FUTURE TASKS (DO NOT START YET)
+We’ll request these after the soft launch:
+
+Rebuild/verify Module 2–5 AI Workbooks
+
+Full user role system (Selfie Pro, Branded by Selfie Student, VIP)
+
+Upsells and downsells after checkout
+
+Welcome email flows and CRM automations
+
+Downloadable app functionality (long-term roadmap)
+
+Final Notes:
+Sandra is preparing to launch her Founding Member tier at $47/month. All features listed above need to work smoothly before adding payment. Focus only on these right now to ensure a clean, working soft launch.
+
+Please confirm each item once complete.

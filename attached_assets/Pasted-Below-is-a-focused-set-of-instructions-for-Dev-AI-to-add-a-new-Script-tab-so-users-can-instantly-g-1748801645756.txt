@@ -1,0 +1,197 @@
+Below is a focused set of instructions for Dev AI to add a new “Script” tab—so users can instantly get a short video script (voice‐over lines, b-roll cues, and on-camera prompts) that follows Sandra’s style and story framework. We’ll keep the same black-and-white, Prata-font layout and add one more tab next to “Visuals.” No existing tabs change; we simply inject a fourth tab called “Script.”
+
+1. Front-End Changes (CaptionCreator.tsx)
+Add a new Tab Button
+In the tabs navigation (where you currently have “Captions & Hooks,” “Hashtags,” “Framework,” “Visuals”), insert another <Tab> labeled “Script.” For example:
+
+tsx
+Kopier
+Rediger
+<Tabs>
+  <Tab label="Captions & Hooks" />
+  <Tab label="Hashtags" />
+  <Tab label="Framework" />
+  <Tab label="Visuals" />
+  <Tab label="Script" />     {/* ← New */}
+</Tabs>
+Extend activeTab State and Render Logic
+Wherever you switch on activeTab, add a case for "Script" so that when that tab is active, you render our new ScriptUI component (see step 3). For example:
+
+tsx
+Kopier
+Rediger
+{activeTab === "Captions & Hooks" && <CaptionsAndHooksSection ... />}
+{activeTab === "Hashtags"       && <HashtagsSection        ... />}
+{activeTab === "Framework"      && <FrameworkSection       ... />}
+{activeTab === "Visuals"        && <VisualsSection         ... />}
+{activeTab === "Script"         && <ScriptSection          {...props} />}
+Create a New <ScriptSection> Component
+At the bottom of CaptionCreator.tsx (or in a new file like ScriptSection.tsx), build a minimal UI that mirrors the other tabs’ layout. It needs:
+
+A heading: “Video Script (Voice-Over + B-Roll + On-Camera)”
+
+A text area (read-only) where the generated script will appear.
+
+A “Copy” icon/button next to it.
+
+A “Save to Calendar” button (reuse same logic as other tabs).
+
+A loading spinner of identical style when waiting on the API.
+
+Example structure in JSX:
+
+tsx
+Kopier
+Rediger
+function ScriptSection({ isLoading, scriptResult, onCopy, onSave }) {
+  return (
+    <div className="script-container">
+      <h2 className="section-title">Video Script</h2>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : scriptResult ? (
+        <div className="script-output-box">
+          <pre>{scriptResult}</pre>
+          <button className="copy-btn" onClick={onCopy}>
+            <CopyIcon />
+          </button>
+        </div>
+      ) : (
+        <p className="no-data">Enter your story above and click “Generate” to see a script.</p>
+      )}
+      <button className="save-calendar-btn" onClick={onSave}>
+        <CalendarIcon /> Save to Calendar
+      </button>
+    </div>
+  );
+}
+CSS classes (.script-container, .section-title, etc.) should match existing styling conventions (white background, black border, Prata font, consistent padding).
+
+Wire Up “Generate” to Fetch Script
+In your handleGenerate (or equivalent) function, after you fetch captions/hooks, also send a second request to a new endpoint—POST /api/generate-script—passing exactly the same user input (context/story, tone choice, etc.). Store the returned script string in scriptResult state. Ensure you set isLoadingScript = true until it returns.
+
+tsx
+Kopier
+Rediger
+async function handleGenerate() {
+  // existing captions + hooks request …
+  setIsLoadingScript(true);
+  const scriptRes = await fetch("/api/generate-script", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ storyInput: userStory, tone: selectedTone }),
+  });
+  const { script } = await scriptRes.json();
+  setScriptResult(script);
+  setIsLoadingScript(false);
+}
+2. Back-End Changes (server/routes.ts)
+Create a New POST Route
+Add a new route at /api/generate-script. It should expect JSON payload:
+
+json
+Kopier
+Rediger
+{ "storyInput": string, "tone": string }
+Then invoke OpenAI with a Script-Centered Prompt that follows this format:
+
+less
+Kopier
+Rediger
+You are Sandra’s AI Story Coach. Based on the user’s story ({storyInput}) and their chosen tone (e.g., “empowering,” “conversational,” “inspirational”), generate **ONE** short Instagram–friendly video script. This script must include:
+1) A brief **voice-over narration** (about 2–3 sentences) that opens with a “Hook” (attention-getter).  
+2) A “B-Roll” cue line indicating what visuals to show (e.g., “(Show montage of selfies improving over time),” “(Show behind-the-scenes of Sandra editing a selfie),” etc.).  
+3) A brief **on-camera prompt** for the user (e.g., “(Cut to camera: Let me tell you why I left my 9-to-5...),” “(Face-to-camera: Smile and say: ’It’s okay to be nervous!’).”  
+
+Follow the “Becoming HER” framework loosely—Hook → Before (context) → Now (what’s happening) → Takeaway/CTA—all in a single script block.  
+Total length: 3–4 short paragraphs. Do NOT mention “Sandra,” only speak as the user’s voice.  
+Use 1–2 emojis appropriately (no more).  
+Example output:
+
+Voice-Over: “Ever felt trapped in a job you didn’t love? (Show B-roll of tired morning commute) Now I spend my mornings crafting the perfect selfie that tells my own story. (Cut to camera: “Hey, it’s me, finally living life my way!”) Share this if you need reassurance today! 🙌”
+
+Only return the final script block—no extra JSON, no markdown, just plain text.
+Validate Input Length
+If storyInput.trim().length < 10, immediately return:
+
+json
+Kopier
+Rediger
+{ "error": "Please provide at least 10 characters describing your unique story so I can build a captivating video script." }
+Call OpenAI
+Use your existing OpenAI‐client setup (no new dependency). For example:
+
+ts
+Kopier
+Rediger
+import OpenAI from "openai";
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+app.post("/api/generate-script", async (req, res) => {
+  const { storyInput, tone } = req.body;
+  if (!storyInput || storyInput.trim().length < 10) {
+    return res.status(400).json({ error: "Please provide at least 10 characters…" });
+  }
+
+  const prompt = `
+    You are Sandra’s AI Story Coach. Based on the user’s story (“${storyInput}”) and their chosen tone (“${tone}”), produce one short Instagram video script:
+    1) Voice-Over (Hook → context → now → takeaway/CTA).  
+    2) B-Roll cue indicating what visuals to show.  
+    3) On-Camera line guiding the user to speak.  
+    Use 1–2 emojis max. Output only the final script block in plain text.
+  `;
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini", // or whichever high-quality model you’re using
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.8,
+      max_tokens: 200,
+    });
+    const script = response.choices?.[0]?.message?.content?.trim() || "";
+    return res.json({ script });
+  } catch (err) {
+    console.error("OpenAI Script Error:", err);
+    return res.status(500).json({ error: "AI service error—please try again." });
+  }
+});
+3. CSS / Styling
+Add any new CSS classes for .script-container, .script-output-box, etc., but reuse the same Prata serif, black-border, white background style as the other tab sections.
+
+Ensure the tab button for “Script” matches the other tab button spacing/hover/active styles.
+
+No mobile vs. desktop layout changes beyond what’s already used for other tabs: on mobile, it should appear inside the same horizontal carousel mechanism; on desktop, side-by-side with whatever preview exists (or simply stacked if there’s no preview needed).
+
+4. Final Smoke Test
+Render & Navigation
+
+Confirm the “Script” tab appears after “Visuals.”
+
+Clicking it shows the “Video Script” heading and either a prompt to generate or the previously generated script.
+
+Generate Flow
+
+Enter a detailed user story in the context textarea (≥ 10 chars).
+
+Click “Generate.”
+• The captions/hooks and hashtags tabs continue working as before.
+• The new “Script” tab now shows a short script matching sample format, e.g.:
+
+pgsql
+Kopier
+Rediger
+Voice-Over: “Ever feel stuck watching your selfies go nowhere? (Show B-roll of scrolling feed)… Now I start my day by capturing my own vibe. (Cut to camera: “Hey, I’m on a journey to redefine my personal brand!”) Save this if you need a reminder to keep pushing yourself. 💫”
+Verify copy-to-clipboard copies the entire script.
+
+Input Validation
+
+If you type fewer than 10 characters and click “Generate,” you see an error under “Script”:
+“Please provide at least 10 characters describing your unique story so I can build a captivating video script.”
+
+Styling Audit
+
+“Script” tab text and container match the same black borders, white backgrounds, Prata serif title sizing.
+
+On mobile, “Script” appears as a slide in the existing horizontal carousel (swipeable exactly like “Visuals” and “Captions & Hooks”).
+
+Once Dev AI applies these instructions, you’ll have a fully functional “Script” tab—letting users instantly get a short video script (voice-over, b-roll, on-camera) in Sandra’s signature style.

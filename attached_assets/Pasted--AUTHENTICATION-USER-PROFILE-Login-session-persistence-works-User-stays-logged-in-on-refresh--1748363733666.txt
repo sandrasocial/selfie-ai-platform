@@ -1,0 +1,91 @@
+🔐 AUTHENTICATION & USER PROFILE
+ Login/session persistence works (User stays logged in on refresh)
+
+ "Hi, [Name]" displays correctly on all platform pages (not just home)
+
+ Brand profile saves AND loads correctly (no placeholder text)
+
+ User-specific data flows into all content generation features
+
+🧠 DAY 1–30 TEMPLATE SYSTEM
+ All 30 days are fully implemented with correct titles + card descriptions
+
+ Day-specific templates pull authentic, personalized content
+
+ No “souls”, no fluff – matches Sandra's voice 100%
+
+ Story slides = full sentences (not 3-word placeholders)
+
+ Emojis are included strategically in captions only
+
+ CTA + SEO keywords + hashtags showing per day
+
+ “Generate My Content” button works on each card
+
+ Cards are correctly locked/unlocked by subscription
+
+🎥 CONTENT GENERATION FLOW
+ /api/generate-content uses actual user profile
+
+ No more 401 errors on generate-content or save-profile
+
+ Rebuild story, niche, and offer flows into AI prompt dynamically
+
+ AI responds with unique output (not fallback templates)
+
+💰 STRIPE INTEGRATION & PLAN ACCESS
+ Stripe checkout for SELFIE PRO at $47/month is working
+
+ User access tier updates after payment
+
+ Free plan shows Day 1 only
+
+ Pro users can access all 30 days
+
+ Subscription status shows in user profile
+
+🖼 UX/UI DESIGN VERIFICATION
+ Fonts = Prata for headings + Inter for body
+
+ Buttons = black/white with correct hover
+
+ Hero background shows Sandra image
+
+ Vogue-style layout across dashboard, templates, course
+
+ Responsive mobile layout tested
+
+🎓 COURSE + AI STUDIO SYSTEM
+ All modules in Viral Selfie Blueprint load correctly
+
+ Workbook generation and saving works
+
+ Sandra AI mentor is responding in-brand
+
+ AI Studio tools generate:
+
+Reels
+
+Captions
+
+Story slides
+
+Hashtags
+
+SEO
+
+Pose & lighting recs
+
+Mood-based ideas
+
+📊 INSIGHTS & CONTENT LIBRARY
+ All generated content is saved in user’s dashboard
+
+ Users can copy/export content
+
+ Analytics dashboard shows content use (basic OK for now)
+
+ Vault is searchable/filterable by content type
+
+📢 DEVELOPER PROMPT TO SEND:
+"Please go through each of these checklist points and confirm in the console/logs/backend that the feature is working exactly as intended. This includes personalized content output, session persistence, Stripe integration, locked cards, and accurate UI rendering. Once we’ve verified everything, we’ll proceed to QA with our early access users."

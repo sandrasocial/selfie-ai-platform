@@ -1,0 +1,96 @@
+This prompt will bring the homepage in full alignment with Sandra’s luxury editorial vision (inspired by Chanel, Vogue, YSL). Minimal. Moody. Magnetic.
+
+🎨 1. Apply THIS Neutral Color Palette (Replace ALL Beige)
+Use ONLY these tones across the entire app:
+
+Name	Hex	Use
+Snow White	#F1F1F1	Backgrounds, content blocks
+Stone Gray	#B5B5B3	Card backgrounds, section overlays
+Graphite	#4C4B4B	Text, footer background
+Jet Black	#171719	Headers, buttons, body copy, hero overlay text
+
+→ Replace all soft beige, cream, or warm tones with the above. Use contrast and layering to maintain elegance.
+
+✒️ 2. Typography System (Editorial-Grade)
+Headers: Prata, weight 400, -1% letter spacing, black or graphite text
+
+Body Text: Helvetica Neue, weight 300, 16px, 1.6 line-height
+
+Buttons: Uppercase Helvetica Neue, 14px, white text on black background
+
+💥 3. Hero Section Fixes
+Text color: #171719 or white depending on the background photo
+
+No transparency on text
+
+Optional: Add a very subtle linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0)) overlay if photo contrast is low
+
+Clean hero layout: Logo left, headline center, two clear buttons: “Start Your Journey” + “View Plans”
+
+🖱️ 4. Card Animations + Hover States
+Reinstate luxe hover behavior across all content blocks:
+
+css
+Kopier
+Rediger
+.card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+Apply to:
+
+Pricing cards
+
+AI Studio, Sandra AI, Workbooks
+
+Image carousels
+
+Before/After image grid
+
+🧭 5. Navigation Fix
+Use full black nav with white text or transparent over hero, then solid on scroll
+
+Keep "SANDRA" with your black logo—centered or left-aligned
+
+Remove all extra icons unless absolutely necessary (less is luxe)
+
+Font: Prata for name, Helvetica Neue for links
+
+🖼️ 6. Image Placeholders (for uploading later)
+Add elegant placeholders across homepage where final photos will go:
+
+Size: aspect-ratio: 4/5
+
+Style: background-color: #F1F1F1; border: 1px dashed #B5B5B3;
+
+Centered text: “Upload Image Here” in Helvetica Neue, #999
+
+Placeholder zones:
+
+Hero image
+
+Quote section
+
+Before/After gallery
+
+Footer CTA (optional)
+
+🖤 7. Make it More LUX
+Add 2px lines in #4C4B4B as dividers between major sections
+
+Apply fadeInUp or slideInLeft animations on scroll (use framer-motion or CSS)
+
+Use max spacing between sections (padding-top: 80px; padding-bottom: 80px;)
+
+Full-bleed image section with black overlay + Prata quote headline in white
+
+Scroll smoothly. Keep transitions subtle but rich.
+
+🚫 Remove:
+Beige in nav, footer, backgrounds
+
+Extra icons cluttering nav or hero stats
+
+Any soft or rounded borders—use 0px for clean cuts
+

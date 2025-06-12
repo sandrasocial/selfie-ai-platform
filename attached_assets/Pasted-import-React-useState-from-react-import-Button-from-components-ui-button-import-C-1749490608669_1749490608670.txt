@@ -1,0 +1,667 @@
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import Header from '@/components/layout/Header';
+
+export default function StarterKitIntro() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      {/* Hero Section */}
+      <section className="py-24 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-6xl text-[#171719] font-light italic leading-tight" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Welcome to the Selfie Starter Kit™
+          </h1>
+          <p className="text-lg text-[#4C4B4B] mt-6 font-light max-w-2xl mx-auto">
+            A high-end editorial system to glow up your brand with clarity, confidence, and camera-ready energy.
+          </p>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="flex justify-center py-8">
+        <div className="w-24 h-px bg-[#B5B5B3]"></div>
+      </div>
+
+      {/* Intro Video */}
+      <section className="px-6 pb-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="aspect-video bg-black mb-6">
+            <iframe
+              src="https://player.vimeo.com/video/1091785973"
+              className="w-full h-full border-0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              title="Welcome To Selfie Starter Kit"
+            ></iframe>
+          </div>
+          <p className="text-center text-[#4C4B4B] italic font-light max-w-xl mx-auto">
+            “This is your first step toward becoming the face of your brand—on your terms.”
+          </p>
+        </div>
+      </section>
+
+      {/* Module 1: Step Into the Glow Era */}
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 1</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Step Into the Glow Era
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Welcome · Preset Install · Reflection</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Video */}
+              <div className="aspect-video bg-black">
+                <iframe
+                  src="https://player.vimeo.com/video/1091863622"
+                  className="w-full h-full border-0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  title="Welcome to Your Glow Era"
+                ></iframe>
+              </div>
+
+              {/* Reflection Prompt */}
+              <div className="space-y-4">
+                <h3 className="text-xl text-[#171719] font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Reflection Prompt
+                </h3>
+                <p className="italic text-[#4C4B4B]">
+                  What’s been holding you back from showing up fully online?
+                </p>
+                <Textarea
+                  placeholder="Write it down. Say it out loud. Then let it go."
+                  className="border border-[#B5B5B3] bg-transparent min-h-[100px] text-[#171719] font-light"
+                />
+              </div>
+
+              {/* Checklist */}
+              <div className="bg-[#F1F1F1] p-6 border border-[#B5B5B3]">
+                <h4 className="text-lg font-light mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Quick Checklist Before Moving On
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-[#4C4B4B] font-light">
+                  <li>Watched the welcome video</li>
+                  <li>Downloaded your presets</li>
+                  <li>Ready to dive into your first AI-generated workbook</li>
+                </ul>
+              </div>
+
+              {/* CTA Button */}
+              <div className="text-center pt-2">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Signature Selfie Style
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import Header from '@/components/layout/Header';
+
+export default function ModuleTwo() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      {/* Module 2 Container */}
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          {/* Header */}
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 2</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Signature Selfie Style
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Presets · Light Edits · Your Visual Glow-Up</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {/* Expanded Content */}
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Video 1 */}
+              <div>
+                <h3 className="text-xl text-[#171719] font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Applying Your Presets
+                </h3>
+                <div className="aspect-video bg-black">
+                  <iframe
+                    src="https://player.vimeo.com/video/1091863084"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title="Applying Your Presets"
+                  ></iframe>
+                </div>
+              </div>
+
+              {/* Video 2 */}
+              <div>
+                <h3 className="text-xl text-[#171719] font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Editing in the iPhone Camera App
+                </h3>
+                <div className="aspect-video bg-black">
+                  <iframe
+                    src="https://player.vimeo.com/video/1091863103"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title="iPhone Editing"
+                  ></iframe>
+                </div>
+              </div>
+
+              {/* Workflow Steps */}
+              <div className="bg-[#F1F1F1] p-6 border border-[#B5B5B3]">
+                <h4 className="text-lg font-light mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Your Signature Edit Flow
+                </h4>
+                <ol className="list-decimal list-inside space-y-2 text-[#4C4B4B] font-light">
+                  <li>Import your Selfie Glow Up presets into Lightroom Mobile</li>
+                  <li>Apply your favorite filter and fine-tune for natural contrast and warmth</li>
+                  <li>Use the iPhone edit shortcut if you're on the go</li>
+                  <li>Preview before/after to feel your transformation</li>
+                  <li>Save your signature edit as a new preset to reuse</li>
+                </ol>
+              </div>
+
+              {/* Quote */}
+              <blockquote className="italic border-l-4 border-[#171719] pl-4 text-[#4C4B4B]">
+                “Hold your finger on the photo to see the before/after. That glow-up hits different when you can feel the shift.”
+              </blockquote>
+
+              {/* CTA Button */}
+              <div className="text-center pt-4">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Smart Edits With Apps
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, Download } from 'lucide-react';
+import Header from '@/components/layout/Header';
+
+export default function ModuleThree() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          {/* Module Header */}
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 3</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Smart Edits With Apps
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Hypic · CapCut · Your AI Editing Flow</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Video 1: Hypic */}
+              <div>
+                <h3 className="text-xl text-[#171719] font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Editing with Hypic
+                </h3>
+                <div className="aspect-video bg-black">
+                  <iframe
+                    src="https://player.vimeo.com/video/1091863129"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title="Editing with Hypic"
+                  ></iframe>
+                </div>
+              </div>
+
+              {/* Video 2: CapCut */}
+              <div>
+                <h3 className="text-xl text-[#171719] font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  CapCut for Luxe Video
+                </h3>
+                <div className="aspect-video bg-black">
+                  <iframe
+                    src="https://player.vimeo.com/video/1091863154"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title="Video editing with CapCut"
+                  ></iframe>
+                </div>
+              </div>
+
+              {/* Workbook Download Section */}
+              <div className="border border-[#B5B5B3] p-6 bg-[#F1F1F1] space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Your Personalized Editing Flow Workbook
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  Based on your editing style, goals, and workflow preferences. Powered by SELFIE AI™.
+                </p>
+                <Button
+                  className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  Generate Workbook
+                </Button>
+              </div>
+
+              {/* Sandra Tip */}
+              <div className="bg-[#171719] text-white p-6 text-center">
+                <h4 className="text-xl italic mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Sandra’s Tip
+                </h4>
+                <p className="font-light">
+                  “Think of Hypic as your editorial lens. Use it when you want your selfies to feel less ‘Insta’ and more like a fashion mag.”
+                </p>
+              </div>
+
+              {/* Practice Prompt */}
+              <div className="border-t border-[#B5B5B3] pt-6">
+                <h4 className="text-lg font-light mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Practice Prompt
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  Try editing the same photo in both Lightroom and Hypic. Post a story slide with a poll:
+                  <br />
+                  <strong>“Which one feels more me – Classic Glow or Cinematic Mood?”</strong>
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <div className="text-center pt-4">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Hands-Free Like a CEO →
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, Download } from 'lucide-react';
+import Header from '@/components/layout/Header';
+
+export default function ModuleFour() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          {/* Module Header */}
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 4</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Hands-Free Like a CEO
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Gesture shortcuts · Voice command · Pose guide</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Tutorial Video */}
+              <div>
+                <h3 className="text-xl text-[#171719] font-light mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Gesture & Voice Shortcut Tutorial
+                </h3>
+                <div className="aspect-video bg-black">
+                  <iframe
+                    src="https://player.vimeo.com/video/1091865311"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title="Custom Command Tutorial"
+                  ></iframe>
+                </div>
+              </div>
+
+              {/* Step-by-Step Setup Guide */}
+              <div className="bg-[#F1F1F1] p-6 border border-[#B5B5B3] space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Setup Guide: iPhone Gesture Shortcut
+                </h4>
+                <ol className="list-decimal list-inside space-y-2 text-[#4C4B4B] font-light">
+                  <li>Go to Settings → Accessibility</li>
+                  <li>Tap Touch → AssistiveTouch → Enable</li>
+                  <li>Add “Take Photo” as a custom action (Double Tap)</li>
+                  <li>Go back → Accessibility → Voice Control → Enable</li>
+                  <li>Say “Tap Take Photo” to capture hands-free</li>
+                </ol>
+              </div>
+
+              {/* AI Pose Workbook CTA */}
+              <div className="border border-[#B5B5B3] p-6 space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  AI Pose Guide Workbook
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  This download includes beginner-to-advanced solo pose prompts to help you create scroll-stopping content—even if you're filming alone.
+                </p>
+                <Button
+                  className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  Download AI Pose Guide
+                </Button>
+              </div>
+
+              {/* Challenge Block */}
+              <div className="bg-[#171719] text-white p-6 text-center">
+                <h4 className="text-xl italic mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Creative Challenge
+                </h4>
+                <p className="font-light leading-relaxed">
+                  Film your first hands-free video using gesture or voice control. Share it to stories with your new preset. Caption it:
+                  <br />
+                  <br />
+                  <em>"Filmed it solo. Posted it with power. Selfie CEO activated."</em>
+                  <br />
+                  <br />
+                  Tag @ssasocial — I’ll be resharing my favorites.
+                </p>
+              </div>
+
+              {/* Next CTA */}
+              <div className="text-center pt-4">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Build Your Brand Aesthetic →
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, UploadCloud } from 'lucide-react';
+import Header from '@/components/layout/Header';
+
+export default function ModuleFive() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          {/* Module Header */}
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 5</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Brand Aesthetic Builder
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Design Like a CEO™ — your visual strategy starts here</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Workbook CTA */}
+              <div className="bg-[#F1F1F1] p-6 border border-[#B5B5B3] space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Download Your Branding Blueprint
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  This workbook helps you define your fonts, colors, mood, and layout style so your brand feels consistent and high-end across every post.
+                </p>
+                <Button
+                  className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light"
+                >
+                  Generate Design Like a CEO™ Workbook
+                </Button>
+              </div>
+
+              {/* Moodboard Upload / Canva CTA */}
+              <div className="border border-[#B5B5B3] p-6 space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Moodboard Upload or Canva Challenge
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  Use Canva or your favorite app to create a moodboard that reflects your dream aesthetic. Then upload it below or share to stories to lock it in.
+                </p>
+                <Button
+                  variant="outline"
+                  className="border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light flex items-center gap-2"
+                >
+                  <UploadCloud className="w-4 h-4" />
+                  Upload Moodboard
+                </Button>
+              </div>
+
+              {/* Creative Prompt */}
+              <div className="bg-white border border-[#171719] p-8 text-center">
+                <h4 className="text-xl italic text-[#171719] mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Brand Identity Reflection
+                </h4>
+                <p className="text-[#4C4B4B] font-light leading-relaxed">
+                  If your brand walked into the room… <br />
+                  What would she be wearing? <br />
+                  How would she move? <br />
+                  What feeling would she leave behind?
+                </p>
+              </div>
+
+              {/* CTA to Next */}
+              <div className="text-center pt-4">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Copy That Connects →
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
+import Header from '@/components/layout/Header';
+
+export default function ModuleSix() {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const toggleExpand = () => setIsExpanded(prev => !prev);
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] font-light">
+      <Header />
+
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto border border-[#B5B5B3] bg-white">
+          {/* Module Header */}
+          <div
+            onClick={toggleExpand}
+            className="p-6 border-b border-[#B5B5B3] cursor-pointer flex items-center justify-between"
+          >
+            <div>
+              <span className="text-sm text-[#4C4B4B] uppercase tracking-wide font-medium">Module 6</span>
+              <h2 className="text-3xl text-[#171719] font-light mt-1" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Copy That Connects
+              </h2>
+              <p className="italic text-[#4C4B4B] font-light mt-1">Caption strategy & AI writing made magnetic</p>
+            </div>
+            {isExpanded ? <ChevronUp className="w-6 h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-6 h-6 text-[#4C4B4B]" />}
+          </div>
+
+          {isExpanded && (
+            <div className="p-6 space-y-10">
+              {/* Workbook CTA */}
+              <div className="bg-[#F1F1F1] p-6 border border-[#B5B5B3] space-y-4">
+                <h4 className="text-lg font-light" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Launch Your Caption Strategy Guide
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  Inside this workbook, AI helps you write posts that sound like you, connect deeply, and drive action.
+                </p>
+                <Button
+                  className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light"
+                >
+                  Generate My Caption Guide
+                </Button>
+              </div>
+
+              {/* Practice Prompt */}
+              <div className="border border-[#B5B5B3] p-6">
+                <h4 className="text-lg font-light mb-3" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Practice Prompt
+                </h4>
+                <p className="text-[#4C4B4B] font-light">
+                  Write a caption starting with:
+                  <br />
+                  <span className="italic">
+                    “This is for the girl I used to be…”
+                  </span>
+                  <br />
+                  Let it flow. Don’t edit. Let your truth do the talking.
+                </p>
+              </div>
+
+              {/* Sandra’s Copy Tip */}
+              <div className="bg-[#171719] text-white p-6">
+                <h4 className="text-lg italic mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Sandra's Copy Tip
+                </h4>
+                <p className="font-light italic">
+                  “Think of your captions like a voice note to your best friend. Don’t overthink it. Just tell the truth. Make her feel seen. Invite her in.”
+                </p>
+              </div>
+
+              {/* Challenge CTA */}
+              <div className="bg-white border border-[#171719] p-8 text-center">
+                <h4 className="text-xl italic text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+                  Creative Challenge
+                </h4>
+                <p className="text-[#4C4B4B] font-light leading-relaxed">
+                  Use your AI-generated caption and post it today. <br />
+                  End with:
+                  <br />
+                  <span className="italic">“If this hit home, DM me 'READY' and I’ll send you something special.”</span>
+                  <br />
+                  Then tag <strong>@ssasocial</strong> — so I can hype it up on stories.
+                </p>
+              </div>
+
+              {/* CTA to Next */}
+              <div className="text-center pt-4">
+                <Button className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-6 py-3">
+                  Next: Final Brand Blueprint →
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+<div className="bg-white border border-[#171719] p-10 text-center">
+  <h2 className="text-3xl font-light italic mb-6 text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>
+    You Did That — and You’re Just Getting Started
+  </h2>
+
+  <p className="text-[#4C4B4B] font-light leading-relaxed mb-6 max-w-2xl mx-auto">
+    You didn’t just download a kit.
+    You showed up for yourself. You got clear. You got intentional.
+    And that energy — the one that moved you to take action — that’s what builds a brand that lasts.
+  </p>
+
+  <p className="text-[#4C4B4B] font-light leading-relaxed mb-6 max-w-2xl mx-auto">
+    You now have a brand identity.
+    A personalized editing routine.
+    A voice that knows how to connect — not just post.
+    Most of all, you have momentum.
+  </p>
+
+  <p className="text-[#4C4B4B] font-light italic leading-relaxed mb-8 max-w-2xl mx-auto">
+    This wasn't about filters.
+    It was about clarity.
+    It wasn’t about algorithms.
+    It was about confidence.
+  </p>
+
+  <p className="text-[#4C4B4B] font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+    You are the face of your brand now — and it’s only the beginning.
+  </p>
+
+  <Button
+    className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide font-light px-8 py-3"
+    onClick={() => window.location.href = "/products/branded-by-selfie"}
+  >
+    Ready for the Next Step — Branded by Selfie™ →
+  </Button>
+</div>
+
+

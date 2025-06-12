@@ -1,0 +1,143 @@
+Role: Full-stack developer for SELFIE AI™ platform
+Goal: Connect and fix core logic across all course pages, PDF generation tools, and AI-based personalization.
+NOTE: Do not redesign or touch layout unless required to fix functionality. New elements must follow SELFIE AI™ brand rules (sharp, clean, black/white, no emojis/icons).
+
+🔧 FIX SET 4 TASKS
+1. Courses Page Logic (Global)
+✅ Page route is correct
+
+❌ FIX: Course access logic
+
+If user owns the product → show “Access” CTA → direct route to course page
+
+If user does NOT own → show “Unlock” CTA → route to landing or checkout page
+
+❌ FIX: Remove any outdated overlays showing “Unlock with Plan” or pricing overlays
+
+2. Selfie Starter Kit Course Page
+✅ UX is approved
+
+❌ FIX: AI content generators not connected to brand profile
+
+Inject user.brandProfile context into:
+
+Caption Prompts
+
+Strategy Workbooks
+
+Daily Content Prompts
+
+❌ FIX: PDF Monkey templates not generating correctly
+
+Verify API key and POST payload
+
+Attach correct user data to PDF generation endpoint
+
+Trigger PDF download + display success message
+
+❌ Landing page = 404
+
+Locate any duplicate pages that may have been created
+
+If missing, build a placeholder landing page with:
+
+Header: “The Ultimate Starter Kit for Your Selfie Empire”
+
+Subtext: “Unlock confidence, strategy, and content that sells”
+
+CTA: “Join Now” → checkout
+
+3. Branded by Selfie Course Page
+❌ FIX: Upload course content (modules, videos, text sections)
+
+Pull from Sandra’s approved slides + video embed codes (Vimeo)
+
+❌ FIX: PDF workbooks not created
+
+Create custom PDFMonkey templates per module
+
+Link AI content inputs → PDF output per module
+
+Store generated PDFs in user account under pdf_history
+
+❌ FIX: AI tool inputs missing user personalization
+
+All Sandra AI modules should pull from:
+
+Brand identity
+
+Story
+
+Visual aesthetic
+
+Magnetic message data
+
+❌ UX Cleanup Needed: (function-only)
+
+Remove emojis from text blocks
+
+Remove rounded corners on buttons or cards
+
+Reduce side nav clutter (no redesign—just limit visible text to module titles)
+
+4. Empire Builder VIP Course Page
+❌ FIX: Page not built
+
+Create initial shell page: route /courses/empire-builder
+
+Add placeholder hero block: “Your Empire. Elevated.”
+
+Placeholder section with 3 locked modules, each saying “Coming Soon”
+
+Add logic to only show to users with subscription_tier = vip
+
+5. Auth Page (Supabase Auth)
+❌ FIX: Minor UX bugs
+
+Ensure inputs are functional (password reset, email input)
+
+Add minimal black/white styling (no redesign):
+
+Header: “Sign In to Build Your Brand Empire”
+
+Remove default rounded inputs/buttons
+
+Transparent outline button style with all caps
+
+6. Drops Page
+✅ Route exists
+
+❌ FIX: Add logic for monthly drop content
+
+Pull from a drops table (title, description, release_date, CTA link)
+
+Auto-display any drop with release_date <= today
+
+CTA: “Explore Drop” → can link to product or internal landing
+
+7. Summer Collab Page
+✅ Route exists
+
+❌ FIX: Add integration with Instagram & Facebook APIs to show real-time:
+
+Followers
+
+Engagement rate
+
+Link-in-bio clicks (if available)
+
+Optional: Use placeholders or mock values now, wire live logic later
+
+💾 DATABASE + API
+Ensure all fixes use:
+
+supabase.user_profiles.brand_data
+
+supabase.courses.purchases
+
+supabase.pdf_history
+
+supabase.drops
+
+pdfmonkey.api (personalized template system)
+

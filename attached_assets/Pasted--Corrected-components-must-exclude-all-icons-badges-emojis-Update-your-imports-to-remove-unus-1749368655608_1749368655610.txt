@@ -1,0 +1,166 @@
+// Corrected components must exclude all icons, badges, emojis
+// Update your imports to remove unused ones
+import React, { useState, useEffect } from 'react';
+import Header from '@/components/layout/Header';
+import { Calendar as UICalendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+
+interface CalendarEntry {
+  id: number;
+  dayNumber: number;
+  contentText: string;
+  templateName?: string;
+  isStrategy: boolean;
+  hookText: string;
+  hashtags: string;
+  createdAt: string;
+  day?: string;
+}
+
+export default function Calendar() {
+  // ...same state & useEffect logic as before...
+
+  // Inside your return:
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#F1F1F1', fontFamily: 'Inter, sans-serif' }}>
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-[120px]">
+        <div className="absolute inset-0 bg-black">
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full h-full bg-[#000] text-white flex flex-col justify-center items-center text-center p-8">
+              <h1 className="text-[64px] font-[400] font-['Cormorant Garamond'] leading-tight">
+                Plan Your Empire, Day by Day
+              </h1>
+              <p className="italic text-[18px] font-light max-w-3xl mt-6">
+                A visual flow for building consistency and confidence. Your content calendar becomes your strategic advantage.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Add Entry Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-[36px] italic font-['Cormorant Garamond'] text-[#171719]">Select Date</CardTitle>
+            </CardHeader>
+            <CardContent className="mt-8">
+              <UICalendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-none border-0" />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-[36px] italic font-['Cormorant Garamond'] text-[#171719]">Add New Entry</CardTitle>
+            </CardHeader>
+            <CardContent className="mt-6 space-y-6">
+              <div>
+                <Label className="text-sm">Day</Label>
+                <Select value={newEntry.day} onValueChange={(value) => setNewEntry({ ...newEntry, day: value })}>
+                  <SelectTrigger className="mt-2 bg-transparent border border-[#B5B5B3] text-[#171719]">
+                    <SelectValue placeholder="Select day..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                      <SelectItem key={day} value={day}>{day}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label className="text-sm">Content</Label>
+                <Textarea
+                  placeholder="What will you post?"
+                  value={newEntry.contentText}
+                  onChange={(e) => setNewEntry({ ...newEntry, contentText: e.target.value })}
+                  rows={3}
+                  className="mt-2 border border-[#B5B5B3] bg-transparent text-[#171719]"
+                />
+              </div>
+
+              <div>
+                <Label className="text-sm">Hook (Optional)</Label>
+                <Input
+                  placeholder="Compelling hook..."
+                  value={newEntry.hookText}
+                  onChange={(e) => setNewEntry({ ...newEntry, hookText: e.target.value })}
+                  className="mt-2 border border-[#B5B5B3] bg-transparent text-[#171719]"
+                />
+              </div>
+
+              <div>
+                <Label className="text-sm">Hashtags (Optional)</Label>
+                <Input
+                  placeholder="#hashtags #here"
+                  value={newEntry.hashtags}
+                  onChange={(e) => setNewEntry({ ...newEntry, hashtags: e.target.value })}
+                  className="mt-2 border border-[#B5B5B3] bg-transparent text-[#171719]"
+                />
+              </div>
+
+              <div className="flex gap-4 mt-6">
+                <Button className="bg-black text-white uppercase tracking-[0.5px] text-[14px] w-full" onClick={addCalendarEntry}>
+                  Add Entry
+                </Button>
+                <Button
+                  className="border border-white text-white uppercase tracking-[0.5px] text-[14px] w-full bg-transparent"
+                  onClick={() => setIsDialogOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Weekly View */}
+      {Object.keys(groupedEntries).length > 0 && (
+        <section className="bg-[#171719] py-20 px-4 text-white">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-[36px] italic font-['Cormorant Garamond'] text-center mb-10">Your Content Week</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {Object.entries(groupedEntries).map(([day, entries]) => (
+                <Card key={day} className="bg-[#F1F1F1] border border-[#B5B5B3] p-6 text-[#171719]">
+                  <h3 className="uppercase text-center text-xl font-['Cormorant Garamond'] mb-4">{day}</h3>
+                  <div className="space-y-4">
+                    {entries.map((entry) => (
+                      <div key={entry.id} className="bg-[#B5B5B3] p-4">
+                        <p className="text-sm mb-2">{entry.contentText}</p>
+                        {entry.hookText && <p className="text-xs italic mb-1">Hook: {entry.hookText}</p>}
+                        {entry.hashtags && <p className="text-xs text-[#4C4B4B]">{entry.hashtags}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Empty State */}
+      {Object.keys(groupedEntries).length === 0 && (
+        <section className="py-20 px-4 bg-[#F1F1F1] text-center">
+          <h3 className="text-[36px] italic font-['Cormorant Garamond'] text-[#171719] mb-6">Your Calendar Awaits</h3>
+          <p className="text-[18px] text-[#4C4B4B] max-w-lg mx-auto">
+            Start planning your content strategy by adding your first entry above. Your future self will thank you.
+          </p>
+          <div className="mt-12 italic text-sm">Build your empire, one post at a time.</div>
+        </section>
+      )}
+    </div>
+  );
+}

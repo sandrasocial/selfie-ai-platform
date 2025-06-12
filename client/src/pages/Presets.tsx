@@ -1,0 +1,161 @@
+
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { Link } from 'wouter';
+
+export default function Presets() {
+  const { data: user } = useQuery({
+    queryKey: ["/api/me"],
+    retry: false,
+  });
+
+  const [uploadedPresets, setUploadedPresets] = useState<any[]>([]);
+  const { toast } = useToast();
+
+  const handlePresetUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      Array.from(files).forEach(file => {
+        if (file.name.endsWith('.xmp') || file.name.endsWith('.lrtemplate')) {
+          const newPreset = {
+            id: Date.now() + Math.random(),
+            name: file.name.replace(/\.[^/.]+$/, ""),
+            file: file,
+          };
+          setUploadedPresets(prev => [...prev, newPreset]);
+          toast({
+            title: "Preset Uploaded",
+            description: `${file.name} added to your collection`,
+          });
+        }
+      });
+    }
+  };
+
+  const downloadPreset = (preset: any) => {
+    const url = URL.createObjectURL(preset.file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = preset.file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Preset Downloaded",
+      description: `${preset.name} is ready for Lightroom`,
+    });
+  };
+
+  const isPro = user?.plan === 'pro';
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Header user={user} />
+
+      {/* Hero */}
+      <section className="py-24 px-4 bg-black text-white text-center">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="font-['Cormorant Garamond'] text-5xl md:text-6xl mb-6 tracking-wide uppercase">
+            Lightroom Presets
+          </h1>
+          <div className="w-24 h-px mx-auto bg-white opacity-40 mb-6"></div>
+          <p className="font-['Neue Einstellung'] text-lg max-w-2xl mx-auto opacity-80">
+            Sandra's signature presets for stunning, brand-aligned content
+          </p>
+        </div>
+      </section>
+
+      {/* Main */}
+      <main className="py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          {!isPro && (
+            <div className="mb-12 border border-gray-300 p-10 text-center bg-gray-50">
+              <h2 className="font-['Cormorant Garamond'] text-2xl uppercase mb-4 tracking-wide text-black">
+                Premium Presets for PRO Members
+              </h2>
+              <p className="font-['Neue Einstellung'] text-gray-600 max-w-md mx-auto mb-6">
+                These exclusive Lightroom filters are only available for PRO members. 
+                Unlock the full preset library today.
+              </p>
+              <Link href="/pricing">
+                <Button className="uppercase font-['Neue Einstellung'] px-6 py-3 bg-black text-white hover:bg-neutral-800 rounded-none">
+                  Upgrade to PRO
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {isPro && (
+            <div className="space-y-12">
+              {/* Upload Section */}
+              <Card className="border border-black">
+                <CardContent className="p-10">
+                  <h2 className="font-['Cormorant Garamond'] text-2xl uppercase mb-4 tracking-wide text-black">
+                    Upload Presets
+                  </h2>
+                  <div className="w-12 h-px bg-black mb-6"></div>
+                  <p className="font-['Neue Einstellung'] text-gray-700 mb-6">
+                    Upload your custom .xmp or .lrtemplate files
+                  </p>
+                  <div className="border-2 border-dashed border-gray-300 p-10 text-center">
+                    <input
+                      type="file"
+                      multiple
+                      accept=".xmp,.lrtemplate"
+                      onChange={handlePresetUpload}
+                      className="hidden"
+                      id="preset-upload"
+                    />
+                    <label htmlFor="preset-upload" className="cursor-pointer block text-black font-['Neue Einstellung']">
+                      Click to upload your preset files
+                      <p className="text-sm text-gray-500 mt-2">Accepted formats: .xmp, .lrtemplate</p>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Presets Gallery */}
+              {uploadedPresets.length > 0 && (
+                <Card className="border border-black">
+                  <CardContent className="p-10">
+                    <h2 className="font-['Cormorant Garamond'] text-2xl uppercase mb-6 tracking-wide text-black">
+                      Your Preset Collection
+                    </h2>
+                    <div className="w-12 h-px bg-black mb-8"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {uploadedPresets.map((preset) => (
+                        <div key={preset.id} className="border border-gray-300 p-6">
+                          <div className="bg-gray-100 h-32 mb-4 flex items-center justify-center text-sm text-gray-500 font-['Neue Einstellung']">
+                            Thumbnail Placeholder
+                          </div>
+                          <h3 className="font-['Neue Einstellung'] text-black mb-2 text-sm uppercase tracking-wide">
+                            {preset.name}
+                          </h3>
+                          <Button 
+                            onClick={() => downloadPreset(preset)}
+                            className="uppercase text-sm font-['Neue Einstellung'] bg-black text-white hover:bg-neutral-800 rounded-none w-full py-2"
+                          >
+                            Download
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

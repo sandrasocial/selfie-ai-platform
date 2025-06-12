@@ -1,0 +1,66 @@
+🧠 DEV AI INSTRUCTION: MODULE 2 – Crafting Opinion-Based Content
+
+✅ GOAL:
+Create Module 2 of the SELFIE BLUEPRINT inside the Blueprint Course system. The structure, style, and layout must exactly match Module 1 (luxury, scroll-based, Vogue-style aesthetic).
+
+✅ DESIGN & STYLE SPECS (SAME AS MODULE 1):
+
+Layout: Scroll-based, clean, no slides. Use content blocks or cards to break up sections
+
+Fonts: Prata-style serif for headers, modern sans-serif for body text
+
+Colors:
+
+Background: Pure white #FFFFFF
+
+Text: Black #000000
+
+Accents (if needed): Soft gray #F7F7F7, no beige or gold
+
+Spacing: Wide breathing room between sections, clear visual hierarchy
+
+Tone: Direct, everyday language, emotionally empowering (Sandra’s voice)
+
+No bullet overload or corporate formatting—this should feel premium and editorial
+
+✅ MODULE NAME:
+Module 2 – Crafting Opinion-Based Content
+
+✅ STRUCTURE:
+
+Use the following rewritten sections below and break them into elegant content blocks with:
+
+Header: Bold and clear
+
+Subtext / Paragraphs: Short, digestible, authentic voice
+
+Pull Quotes (optional): Use standout lines as visual callouts
+
+Card Sections (optional): Use to separate principles or frameworks
+
+End of Module CTA: Guide the user to reflect or journal on their core message or bold opinion
+
+✅ MODULE 2 CONTENT (paste in blocks, not slides):
+
+[PASTE all the rewritten text from Module 2 here — the version we've refined together.]
+(Since you've already approved the shortened rewrite in your voice, just paste that version here.)
+
+✅ NOTES:
+
+Match the luxury PDF aesthetic from Module 1 so when downloaded, the layout mirrors what’s previewed
+
+Ensure 30-60-90 day plan is cleanly formatted if added later
+
+Position Sandra as the expert throughout with emotionally engaging but clear tone
+
+✅ TEST CHECKLIST:
+
+ Does Module 2 load seamlessly on scroll?
+
+ Does the preview match the PDF layout exactly?
+
+ Are all content blocks spaced properly for readability?
+
+ Are all fonts, colors, and tone matching Module 1?
+
+ Can the user journal/reflect on their opinion by the end?

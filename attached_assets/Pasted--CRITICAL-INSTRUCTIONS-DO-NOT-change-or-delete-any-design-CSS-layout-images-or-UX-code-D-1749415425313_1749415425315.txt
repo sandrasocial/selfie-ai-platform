@@ -1,0 +1,113 @@
+🚨 CRITICAL INSTRUCTIONS:
+- DO NOT change or delete any design, CSS, layout, images, or UX code.
+- DO NOT modify any style system (typography, color, structure).
+- DO NOT refactor or rename any folders or pages without explicit mapping.
+- DO NOT touch font systems or brand layout.
+✅ Focus only on functionality, logic, routing, and restoring lost features.
+
+---
+
+🛠️ OBJECTIVE:
+Fix broken logic, restore deleted tools, correct routing/auth issues, and realign the access control system according to this business model:
+
+---
+
+## 🎯 Correct Pricing & Access Logic
+
+| Plan Name | Type | Access To |
+|-----------|------|-----------|
+Free | Email opt-in | Selfie Guide PDF (download), newsletter  
+Starter ($67) | One-time | Selfie Starter Kit course only  
+Branded ($397) | One-time | Branded by Selfie™ course only  
+VIP Mentorship | Application | No course inside; manual access approval  
+SELFIE AI™ ($39/mo) | Subscription | AI tools, content vault, strategy coach, planner only
+
+- ❌ Courses are **not** part of the SELFIE AI™ membership
+- ✅ Tools are only included in the SELFIE AI™ membership
+- ✅ Course access must be granted via one-time payment (Shopify integration for now)
+- ✅ Free guide download should not require full login flow
+
+---
+
+## 🔧 FIX THESE FUNCTIONALITY ISSUES
+
+### ✅ Magic Link Login
+- Current Supabase auth flow fails: clicking the link in email redirects to `/supabase-auth` instead of `/supabase-auth/callback`
+- Fix redirect so users land on the callback route and are properly logged in
+- Ensure guest users can browse landing/marketing pages before logging in
+
+### ✅ Payment Errors
+- Stripe payment routes and webhooks are currently broken
+- Restore Stripe payment validation and post-payment redirects
+- Confirm product SKUs and pricing match: $67 (Starter), $397 (Branded), $39/mo (Subscription)
+- Fix broken purchase access logic for course routes
+
+---
+
+## 🧩 RESTORE LOST TOOLS
+
+1. **Preset Templates Page** (renamed version of "Your 30-Day Content Journey")
+   - Restore original Trello-style template board page
+   - Ensure AI content generator feeds into it (daily reels, captions, slides)
+   - Reference custom Trello templates if uploaded in `/assets/templates/`
+
+2. **Viral Selfie Blueprint™ Modules**
+   - Pages are partially present: complete Modules 2–5
+   - Polish prompt instructions, UI copy, and AI workbook generation for each module
+
+3. **Brand Strategy Input Tool (Dashboard Section)**
+   - Rebuild missing dashboard section:
+     - Ask user questions: niche, content style, frequency, brand keywords
+     - Store responses in user profile or local config
+     - Make this data available to all AI tools for personalization
+
+4. **Niche Discovery + Brand Audit Tool**
+   - Restore deleted onboarding experience:
+     - User answers questions if they’re unsure about niche
+     - AI (Sandra) analyzes input and suggests:
+       - Personal brand niche
+       - Post types and cadence
+       - Bio optimization tips
+       - Feed layout design (based on SELFIE AI™ brand style)
+     - Display results in onboarding completion screen
+
+5. **Instagram Integration (API in progress)**
+   - Resume implementation of `/instagramService.ts`
+   - Connect to Instagram API to fetch latest posts for each user (via OAuth or scraping)
+   - Display Instagram content in Dashboard or Analytics view
+
+6. **Analytics Pages**
+   - Restore deleted `/dashboard/collab-summer-insights` or similar page
+   - Reconnect routes for "Empire Builder" CTA buttons to this page
+   - Ensure page has placeholder charts or metrics blocks
+
+---
+
+## 🧭 STRUCTURE CORRECTIONS
+
+- Fix `/dashboard` global navigation:
+  - Add missing links: Presets, Brand Setup, Courses
+  - Remove broken routes
+  - Do NOT change styles or icons — structure only
+
+- Add proper route guards:
+  - Course pages → must check for one-time purchase access
+  - Tools pages → must check for active subscription
+  - Guide → no login required, but email-gated
+
+---
+
+✅ Do not alter:
+- UI design
+- Typography system
+- Navigation layout design
+- Color palette, button styles, animations
+
+🟢 Just fix:
+- Logic
+- Routing
+- Access control
+- Lost functionality
+
+---
+

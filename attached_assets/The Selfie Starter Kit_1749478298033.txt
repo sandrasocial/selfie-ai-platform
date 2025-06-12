@@ -1,0 +1,91 @@
+﻿import React from "react";
+
+
+export default function ModuleOneWelcome() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] text-[#171719] font-sans">
+      {/* HERO SECTION */}
+      <section className="relative px-6 py-24 lg:py-32 text-center bg-cover bg-center" style={{ backgroundImage: 'url(https://i.postimg.cc/1tzsLtw0/IMG-2827.jpg)' }}>
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h1 className="text-5xl lg:text-6xl font-light font-serif text-white mb-6">Welcome to Your Glow Era</h1>
+          <p className="text-xl font-light text-white italic">It’s not just about content. It’s about becoming visible again—to yourself and the world.</p>
+        </div>
+      </section>
+
+
+      {/* MODULE OVERVIEW */}
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <div className="mb-16 text-center">
+          <h2 className="text-3xl font-serif font-light mb-4">Start Here – Your Brand, Your Power</h2>
+          <p className="text-lg text-[#4C4B4B] max-w-2xl mx-auto">
+            You’re not here to play small. This Starter Kit isn’t just tools—it’s the start of a magnetic version of you.
+            Show up online with clarity, confidence, and camera-ready energy.
+          </p>
+        </div>
+
+
+        <div className="space-y-16">
+          {/* Step 1 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">📸 Step 1: Install Your Signature Presets</h3>
+            <p className="text-[#4C4B4B] mb-4">Light. Urban. Dark. These mobile filters unlock your vibe—not perfection.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Access Presets</button>
+          </div>
+
+
+          {/* Step 2 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">💄 Step 2: Master Your Editing Routine</h3>
+            <p className="text-[#4C4B4B] mb-4">Watch how I use CapCut, Lightroom & iPhone tools to create scroll-stopping content.</p>
+            <div className="flex gap-4 flex-wrap">
+              <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Watch Masterclass</button>
+              <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Generate Workbook</button>
+            </div>
+          </div>
+
+
+          {/* Step 3 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">✍️ Step 3: Define Your Brand Voice</h3>
+            <p className="text-[#4C4B4B] mb-4">Your fonts. Your tone. Your expression. Let’s shape your brand’s aesthetic and message.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Open Branding Doc</button>
+          </div>
+
+
+          {/* Step 4 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">🧠 Step 4: Start Telling Your Story</h3>
+            <p className="text-[#4C4B4B] mb-4">Learn how to write posts that feel real, get noticed, and convert without sounding salesy.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Launch Caption Guide</button>
+          </div>
+        </div>
+      </section>
+
+
+      {/* REFLECTION BLOCK */}
+      <section className="bg-white py-20 px-6 border-t border-[#E5E5E5]">
+        <div className="max-w-3xl mx-auto text-center">
+          <h4 className="text-2xl font-serif font-light mb-6">🧠 Reflection Prompt</h4>
+          <p className="text-[#4C4B4B] italic mb-6">
+            “What’s been holding you back from showing up fully online?”
+          </p>
+          <p className="text-[#4C4B4B]">Write it down. Say it out loud. Then get ready to let it go.</p>
+        </div>
+      </section>
+
+
+      {/* CHECKLIST SECTION */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-2xl mx-auto">
+          <h4 className="text-xl font-serif font-light mb-6">✅ Quick Checklist Before Moving On</h4>
+          <ul className="list-disc list-inside space-y-3 text-[#4C4B4B]">
+            <li>Watched the welcome video</li>
+            <li>Downloaded your presets</li>
+            <li>Ready to dive into your first AI-generated workbook</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  );
+}

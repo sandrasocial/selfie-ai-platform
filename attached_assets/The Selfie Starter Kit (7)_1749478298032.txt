@@ -1,0 +1,75 @@
+﻿<section class="bg-[#F1F1F1] py-24 px-6 md:px-12">
+  <!-- Header -->
+  <div class="max-w-5xl mx-auto text-center mb-16">
+    <h2 class="text-4xl md:text-6xl font-light font-['Cormorant Garamond'] text-[#171719] leading-tight">
+      Design Like You Mean It
+    </h2>
+    <p class="mt-6 text-lg md:text-xl font-['Neue Einstellung'] text-[#4C4B4B] max-w-3xl mx-auto">
+      Your brand isn't just seen — it's felt. In this final module, we define your visual world through AI-powered elegance.
+    </p>
+  </div>
+
+
+  <!-- Visual Identity Workbook -->
+  <div class="bg-white p-10 border border-[#171719] mb-20">
+    <h3 class="text-2xl font-['Cormorant Garamond'] text-[#171719] mb-4">
+      Create Your Visual Identity Guide
+    </h3>
+    <p class="text-[#4C4B4B] text-base mb-6 font-['Neue Einstellung'] leading-relaxed">
+      Generate a fully customized branding PDF — your fonts, color palette, layout tips, and visual moodboard in one aesthetic blueprint.
+    </p>
+    <a href="#" class="inline-block uppercase border border-[#171719] text-[#171719] px-6 py-3 text-sm tracking-wide font-['Neue Einstellung'] hover:bg-[#171719] hover:text-white transition">
+      Build My Identity Guide
+    </a>
+  </div>
+
+
+  <!-- Why This Matters -->
+  <div class="grid md:grid-cols-2 gap-16 mb-24">
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        Why It Matters
+      </h4>
+      <p class="text-[#4C4B4B] text-base font-['Neue Einstellung'] leading-relaxed">
+        Consistency builds trust. A clear, editorial visual identity ensures your content looks and feels like you — every time.
+        From reels to freebies, this is your foundation for high-end brand expression.
+      </p>
+    </div>
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        What’s Inside Your Guide
+      </h4>
+      <ul class="list-disc pl-6 text-[#4C4B4B] space-y-2 font-['Neue Einstellung']">
+        <li>Your brand color palette</li>
+        <li>Font pairings</li>
+        <li>Spacing & layout structure</li>
+        <li>Moodboard tone + aesthetic</li>
+        <li>Brand style examples</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- Sandra Quote -->
+  <div class="bg-[#171719] text-white py-12 px-8 md:px-16 text-center mb-20">
+    <h4 class="text-2xl font-['Cormorant Garamond'] italic mb-4">Sandra’s Design Reminder</h4>
+    <p class="text-base font-['Neue Einstellung'] max-w-2xl mx-auto">
+      “If your grid doesn’t feel like you, it’s not your brand yet. Let’s fix that.”
+    </p>
+  </div>
+
+
+  <!-- Practice Challenge -->
+  <div class="text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-4">Creative Challenge</h4>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung'] mb-6">
+      Use your new brand guide to design one custom Canva or Figma post that reflects your moodboard.
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-[#171719] text-lg max-w-xl mx-auto mb-6">
+      “This is the beginning of something bigger. CEO energy only.”
+    </blockquote>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung']">
+      Post it + tag <strong>@ssasocial</strong> — and let your next-level brand be seen.
+    </p>
+  </div>
+</section>

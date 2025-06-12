@@ -1,0 +1,480 @@
+// ========================================
+// API ROUTE: /api/me-with-profile
+// ========================================
+
+// /api/me-with-profile.js - Enhanced user data with profile and access info
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const { user } = await getAuth(req);
+    
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    // Fetch user data from your user table
+    const userData = await getUserData(user.id);
+    
+    // Fetch brand profile
+    const brandProfile = await getBrandProfile(user.id);
+    
+    // Calculate access levels
+    const accessInfo = calculateUserAccess(userData);
+    
+    const response = {
+      ...userData,
+      brandProfile,
+      brandProfileComplete: !!brandProfile?.is_complete,
+      accessLevels: accessInfo,
+      hasActiveSubscription: accessInfo.hasActiveTrial || accessInfo.hasActiveSubscription
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Error fetching user with profile:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+async function getUserData(userId) {
+  const { data, error } = await supabase
+    .from('users')
+    .select(`
+      *,
+      subscriptions(*),
+      purchases(*)
+    `)
+    .eq('id', userId)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+async function getBrandProfile(userId) {
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+
+  // Don't throw error if profile doesn't exist
+  if (error && error.code !== 'PGRST116') {
+    throw error;
+  }
+  
+  return data;
+}
+
+function calculateUserAccess(userData) {
+  const now = new Date();
+  const purchases = userData.purchases || [];
+  
+  // Check for active subscription
+  const activeSubscription = userData.subscriptions?.find(sub => 
+    sub.status === 'active' && new Date(sub.current_period_end) > now
+  );
+
+  // Check trial periods from purchases
+  let trialInfo = {
+    hasActiveTrial: false,
+    trialType: null,
+    trialDaysLeft: 0,
+    trialEndDate: null
+  };
+
+  // Starter Kit - 30 day trial
+  const starterKitPurchase = purchases.find(p => p.product_id === 'starter-kit');
+  if (starterKitPurchase) {
+    const purchaseDate = new Date(starterKitPurchase.created_at);
+    const trialEndDate = new Date(purchaseDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+    const daysLeft = Math.max(0, Math.ceil((trialEndDate - now) / (24 * 60 * 60 * 1000)));
+    
+    if (daysLeft > 0) {
+      trialInfo = {
+        hasActiveTrial: true,
+        trialType: 'starter',
+        trialDaysLeft: daysLeft,
+        trialEndDate
+      };
+    }
+  }
+
+  // Branded Course - 90 day trial (overrides starter if both exist)
+  const brandedPurchase = purchases.find(p => p.product_id === 'branded-by-selfie');
+  if (brandedPurchase) {
+    const purchaseDate = new Date(brandedPurchase.created_at);
+    const trialEndDate = new Date(purchaseDate.getTime() + (90 * 24 * 60 * 60 * 1000));
+    const daysLeft = Math.max(0, Math.ceil((trialEndDate - now) / (24 * 60 * 60 * 1000)));
+    
+    if (daysLeft > 0) {
+      trialInfo = {
+        hasActiveTrial: true,
+        trialType: 'branded',
+        trialDaysLeft: daysLeft,
+        trialEndDate
+      };
+    }
+  }
+
+  // Determine access levels
+  const hasStarter = !!starterKitPurchase || trialInfo.hasActiveTrial || !!activeSubscription;
+  const hasBranded = !!brandedPurchase || trialInfo.trialType === 'branded' || !!activeSubscription;
+  const hasVip = userData.vip_status || (activeSubscription?.tier === 'vip');
+
+  return {
+    hasActiveSubscription: !!activeSubscription,
+    subscriptionTier: activeSubscription?.tier || null,
+    ...trialInfo,
+    
+    // Feature access flags
+    canAccessAI: hasStarter,
+    canAccessWorkbooks: hasBranded,
+    canAccessAdvancedFeatures: hasVip,
+    canAccessCourses: !!starterKitPurchase || !!brandedPurchase || hasVip,
+    
+    // Tier access flags
+    hasStarterAccess: hasStarter,
+    hasBrandedAccess: hasBranded,
+    hasVipAccess: hasVip,
+    
+    // Purchase history
+    ownedProducts: purchases.map(p => p.product_id),
+    purchaseDates: {
+      starterKit: starterKitPurchase?.created_at || null,
+      brandedCourse: brandedPurchase?.created_at || null
+    }
+  };
+}
+
+// ========================================
+// API ROUTE: /api/onboarding/brand-hub
+// ========================================
+
+// /api/onboarding/brand-hub.js - Handle brand onboarding completion
+export default async function handler(req, res) {
+  const { user } = await getAuth(req);
+  
+  if (!user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  switch (req.method) {
+    case 'POST':
+      return handleOnboardingComplete(req, res, user);
+    case 'GET':
+      return handleGetOnboardingStatus(req, res, user);
+    default:
+      res.setHeader('Allow', ['POST', 'GET']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
+
+async function handleOnboardingComplete(req, res, user) {
+  try {
+    const { profileData, onboardingStep } = req.body;
+
+    // Save or update brand profile
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .upsert({
+        user_id: user.id,
+        ...profileData,
+        is_complete: true,
+        onboarding_completed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+
+    if (profileError) throw profileError;
+
+    // Update user onboarding status
+    const { error: userError } = await supabase
+      .from('users')
+      .update({
+        brand_onboarding_complete: true,
+        onboarding_completed_at: new Date().toISOString()
+      })
+      .eq('id', user.id);
+
+    if (userError) throw userError;
+
+    // Track onboarding completion event
+    await trackEvent('brand_onboarding_completed', {
+      userId: user.id,
+      profileCompleteness: calculateProfileCompleteness(profileData)
+    });
+
+    res.status(200).json({
+      success: true,
+      profile,
+      message: 'Brand onboarding completed successfully'
+    });
+
+  } catch (error) {
+    console.error('Error completing brand onboarding:', error);
+    res.status(500).json({ error: 'Failed to complete onboarding' });
+  }
+}
+
+async function handleGetOnboardingStatus(req, res, user) {
+  try {
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    const { data: userData } = await supabase
+      .from('users')
+      .select('brand_onboarding_complete, onboarding_completed_at')
+      .eq('id', user.id)
+      .single();
+
+    res.status(200).json({
+      isComplete: userData?.brand_onboarding_complete || false,
+      completedAt: userData?.onboarding_completed_at,
+      profile: profile || null,
+      profileCompleteness: profile ? calculateProfileCompleteness(profile) : 0
+    });
+
+  } catch (error) {
+    console.error('Error fetching onboarding status:', error);
+    res.status(500).json({ error: 'Failed to fetch onboarding status' });
+  }
+}
+
+function calculateProfileCompleteness(profile) {
+  const requiredFields = [
+    'brand_mission',
+    'ideal_audience', 
+    'visual_aesthetic',
+    'tone_voice',
+    'industry'
+  ];
+  
+  const completedFields = requiredFields.filter(field => 
+    profile[field] && profile[field].trim().length > 0
+  ).length;
+  
+  return Math.round((completedFields / requiredFields.length) * 100);
+}
+
+// ========================================
+// MIDDLEWARE: AI Access Guard
+// ========================================
+
+// /middleware/aiAccessGuard.js - Protect AI endpoints
+export function aiAccessGuard(handler) {
+  return async (req, res) => {
+    try {
+      const { user } = await getAuth(req);
+      
+      if (!user) {
+        return res.status(401).json({ error: 'Authentication required' });
+      }
+
+      // Check if user has access to AI features
+      const userData = await getUserData(user.id);
+      const accessInfo = calculateUserAccess(userData);
+      
+      if (!accessInfo.canAccessAI) {
+        return res.status(403).json({ 
+          error: 'AI access requires Starter Kit or active subscription',
+          upgradeUrl: '/products/starter-kit',
+          requiredTier: 'starter'
+        });
+      }
+
+      // Check if brand profile is required and exists
+      const requiresProfile = req.query.requiresProfile === 'true' || req.body?.requiresProfile;
+      
+      if (requiresProfile) {
+        const brandProfile = await getBrandProfile(user.id);
+        
+        if (!brandProfile?.is_complete) {
+          return res.status(428).json({
+            error: 'Brand profile required for personalized AI responses',
+            onboardingUrl: '/onboarding/brand-hub',
+            message: 'Complete your 3-minute brand setup for personalized results'
+          });
+        }
+        
+        // Add profile context to request
+        req.brandProfile = brandProfile;
+      }
+
+      // Add access info to request
+      req.userAccess = accessInfo;
+      req.userData = userData;
+      
+      return handler(req, res);
+      
+    } catch (error) {
+      console.error('AI access guard error:', error);
+      return res.status(500).json({ error: 'Access validation failed' });
+    }
+  };
+}
+
+// ========================================
+// USAGE EXAMPLES
+// ========================================
+
+// /api/sandra-ai.js - Protected AI endpoint
+import { aiAccessGuard } from '../middleware/aiAccessGuard';
+
+const handler = aiAccessGuard(async (req, res) => {
+  const { prompt, requirePersonalization = true } = req.body;
+  
+  // Access user data and profile from middleware
+  const { userData, userAccess, brandProfile } = req;
+  
+  // Build personalized prompt
+  let enhancedPrompt = prompt;
+  
+  if (brandProfile && requirePersonalization) {
+    const profileContext = formatProfileForAI(brandProfile);
+    enhancedPrompt = `${profileContext}\n\n${prompt}`;
+  }
+  
+  // Make AI call with enhanced prompt
+  const aiResponse = await callOpenAI(enhancedPrompt);
+  
+  // Track usage for analytics
+  await trackAIUsage({
+    userId: userData.id,
+    feature: 'sandra-ai',
+    hasProfile: !!brandProfile,
+    accessType: userAccess.hasActiveSubscription ? 'subscription' : 'trial'
+  });
+  
+  res.json({ 
+    response: aiResponse,
+    personalized: !!brandProfile,
+    accessInfo: {
+      tier: userAccess.subscriptionTier || userAccess.trialType,
+      daysLeft: userAccess.trialDaysLeft
+    }
+  });
+});
+
+export default handler;
+
+// ========================================
+// DATABASE MIGRATIONS
+// ========================================
+
+// Add these columns to your users table:
+/*
+ALTER TABLE users ADD COLUMN brand_onboarding_complete BOOLEAN DEFAULT FALSE;
+ALTER TABLE users ADD COLUMN onboarding_completed_at TIMESTAMP;
+ALTER TABLE users ADD COLUMN vip_status BOOLEAN DEFAULT FALSE;
+
+-- Create purchases table if it doesn't exist
+CREATE TABLE IF NOT EXISTS purchases (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  product_id VARCHAR(255) NOT NULL,
+  stripe_payment_intent_id VARCHAR(255),
+  amount INTEGER,
+  currency VARCHAR(3) DEFAULT 'usd',
+  status VARCHAR(50) DEFAULT 'completed',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create subscriptions table if it doesn't exist  
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  stripe_subscription_id VARCHAR(255) UNIQUE,
+  tier VARCHAR(50) NOT NULL, -- 'starter', 'branded', 'vip'
+  status VARCHAR(50) NOT NULL, -- 'active', 'canceled', 'past_due'
+  current_period_start TIMESTAMP,
+  current_period_end TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes
+CREATE INDEX idx_purchases_user_id ON purchases(user_id);
+CREATE INDEX idx_purchases_product_id ON purchases(product_id);
+CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id);
+CREATE INDEX idx_subscriptions_status ON subscriptions(status);
+*/
+
+// ========================================
+// REACT HOOKS FOR FRONTEND
+// ========================================
+
+// /hooks/useUserAccess.js
+import { useQuery } from '@tanstack/react-query';
+
+export function useUserAccess() {
+  const { data: user, ...queryResult } = useQuery({
+    queryKey: ['/api/me-with-profile'],
+    queryFn: async () => {
+      const response = await fetch('/api/me-with-profile', {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to fetch user data');
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+  });
+
+  return {
+    user,
+    accessLevels: user?.accessLevels || {},
+    hasProfile: user?.brandProfileComplete || false,
+    isLoading: queryResult.isLoading,
+    error: queryResult.error,
+    refetch: queryResult.refetch
+  };
+}
+
+// /hooks/useBrandProfile.js  
+export function useBrandProfile() {
+  const { data: profile, ...queryResult } = useQuery({
+    queryKey: ['brand-profile'],
+    queryFn: async () => {
+      const response = await fetch('/api/onboarding/brand-hub', {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to fetch profile');
+      return response.json();
+    }
+  });
+
+  const completeBrandProfile = useMutation({
+    mutationFn: async (profileData) => {
+      const response = await fetch('/api/onboarding/brand-hub', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profileData }),
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to complete profile');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['brand-profile']);
+      queryClient.invalidateQueries(['/api/me-with-profile']);
+    }
+  });
+
+  return {
+    profile: profile?.profile,
+    isComplete: profile?.isComplete || false,
+    completeness: profile?.profileCompleteness || 0,
+    completeProfile: completeBrandProfile.mutate,
+    isCompleting: completeBrandProfile.isPending,
+    ...queryResult
+  };
+}

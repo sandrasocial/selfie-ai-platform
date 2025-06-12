@@ -1,0 +1,174 @@
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Check, X } from "lucide-react";
+import { useLocation } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+
+export default function EmpireBuilderVIP() {
+  const [, setLocation] = useLocation();
+
+  const programFeatures = [
+    "Private weekly 1:1 coaching calls",
+    "Brand strategy blueprint + story work", 
+    "Instagram + sales page audits",
+    "AI-powered content workflows",
+    "Confidence coaching + mindset rituals",
+    "Access to all courses (Selfie Starter Kit + Branded)",
+    "Personal dashboard"
+  ];
+
+  const whoItsFor = [
+    "You're making $5K+ per month but feel stuck",
+    "You have a clear vision but need strategy",
+    "You're ready to invest in premium mentorship",
+    "You want to become known as THE expert",
+    "You're committed to showing up consistently"
+  ];
+
+  const whoItsNotFor = [
+    "You're just starting out in business",
+    "You want quick fixes or magic solutions", 
+    "You're not ready to invest in yourself",
+    "You prefer DIY approaches over mentorship",
+    "You're looking for the cheapest option"
+  ];
+
+  const testimonials = [
+    {
+      quote: "Sandra helped me go from invisible to industry leader in 6 months. My confidence and revenue both tripled.",
+      author: "Sarah M.",
+      title: "Marketing Consultant"
+    },
+    {
+      quote: "The VIP experience gave me clarity I'd been searching for years. Now I attract dream clients effortlessly.",
+      author: "Jessica K.", 
+      title: "Life Coach"
+    },
+    {
+      quote: "Working with Sandra 1:1 transformed not just my business, but how I show up in the world. Priceless.",
+      author: "Amanda R.",
+      title: "Online Educator"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      <Header />
+      
+      <section className="relative min-h-screen flex items-center justify-center text-center">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(23, 23, 25, 0.4), rgba(23, 23, 25, 0.4)), url('https://i.postimg.cc/fLSsQQth/IMG-6384-jpg.jpg')` }} />
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          <h1 className="text-6xl md:text-7xl mb-4 text-white" style={{ fontFamily: 'Cormorant Garamond' }}>Build Your Brand.</h1>
+          <h2 className="text-4xl md:text-5xl italic mb-8 text-white" style={{ fontFamily: 'Cormorant Garamond' }}>Step Into Empire Energy.</h2>
+          <p className="text-lg text-white/90 mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>
+            Personalized mentorship for the woman ready to lead with her story, strategy, and presence.
+          </p>
+          <Button onClick={() => setLocation('/vip/apply')} className="bg-transparent border border-white text-white hover:bg-white hover:text-[#171719] uppercase tracking-wide px-8 py-3" style={{ fontFamily: 'Neue Einstellung', fontSize: '14px', letterSpacing: '0.5px' }}>Apply Now</Button>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-[#F1F1F1]">
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <h2 className="text-5xl md:text-6xl mb-6 text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>What's Inside Empire Builder VIP</h2>
+          <p className="text-lg text-[#4C4B4B] max-w-3xl mx-auto" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>
+            Everything you need to build an empire-level personal brand that attracts premium opportunities.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div>
+            <h3 className="text-3xl text-[#171719] mb-8" style={{ fontFamily: 'Cormorant Garamond' }}>Your VIP Experience Includes:</h3>
+            <div className="space-y-4">
+              {programFeatures.map((feature, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <Check className="w-5 h-5 text-[#4C4B4B]" />
+                  <span className="text-[#4C4B4B] text-base" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Card className="bg-white border border-[#B5B5B3] shadow-sm">
+            <CardContent className="p-8">
+              <h4 className="text-2xl text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>Premium Mentorship</h4>
+              <p className="text-[#4C4B4B] leading-relaxed" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>
+                This isn't just coaching—it's a complete transformation. You'll work directly with Sandra to build an empire-level brand that positions you as the go-to expert in your field.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <h2 className="text-5xl md:text-6xl text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>Is Empire Builder VIP Right For You?</h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-12">
+          <Card className="bg-[#F1F1F1] hover:scale-105 transition-transform">
+            <CardContent className="p-8">
+              <h3 className="text-3xl text-[#171719] mb-8 text-center" style={{ fontFamily: 'Cormorant Garamond' }}>This Is For You If:</h3>
+              <div className="space-y-4">
+                {whoItsFor.map((item, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <Check className="w-5 h-5 text-[#4C4B4B]" />
+                    <span className="text-[#4C4B4B]" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#171719] hover:scale-105 transition-transform">
+            <CardContent className="p-8">
+              <h3 className="text-3xl text-white mb-8 text-center" style={{ fontFamily: 'Cormorant Garamond' }}>This Is NOT For You If:</h3>
+              <div className="space-y-4">
+                {whoItsNotFor.map((item, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <X className="w-5 h-5 text-white/60" />
+                    <span className="text-white/80" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <h2 className="text-5xl md:text-6xl text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>Empire Builder Success Stories</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, i) => (
+            <Card key={i} className="bg-white border border-[#B5B5B3] shadow-sm hover:shadow-md hover:scale-105 transition-all">
+              <CardContent className="p-8">
+                <blockquote className="text-[#4C4B4B] italic mb-6 leading-relaxed" style={{ fontFamily: 'Cormorant Garamond', fontSize: '18px' }}>
+                  "{t.quote}"
+                </blockquote>
+                <p className="text-[#171719] font-medium" style={{ fontFamily: 'Neue Einstellung' }}>{t.author}</p>
+                <p className="text-[#B5B5B3] text-sm" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>{t.title}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-[#171719]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl md:text-6xl text-white mb-8" style={{ fontFamily: 'Cormorant Garamond' }}>Investment In Your Empire</h2>
+          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>
+            Starts at $3,000. Full pricing shared during discovery call.
+          </p>
+          <p className="text-white/60 mb-12" style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}>
+            This is a premium mentorship experience designed for serious entrepreneurs ready to invest in their empire.
+          </p>
+          <Button onClick={() => setLocation('/vip/apply')} className="bg-transparent border border-white text-white hover:bg-white hover:text-[#171719] uppercase tracking-wide px-8 py-3" style={{ fontFamily: 'Neue Einstellung', fontSize: '14px', letterSpacing: '0.5px' }}>Apply Now</Button>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

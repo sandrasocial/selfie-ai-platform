@@ -1,0 +1,178 @@
+Add Module 2 — Selfie Editing
+📁 Context: This module goes inside the STARTER_KIT_COURSE data structure and is rendered through LessonContent inside StarterKitCourse.jsx.
+🧱 Objective: Add one new module and lesson containing stacked video players, a three-part editing tutorial, AI-generated PDF workbook (PDFMonkey), styled instructional blocks, and a quote.
+🧬 Design System:
+
+Typography: Cormorant Garamond for headers, Inter Light for body
+
+Colors: #171719, #4C4B4B, #F1F1F1
+
+Layout: no icons, no rounded corners, no emojis, elegant spacing
+
+Button: black bg, white text, hover = inverted
+
+🔹 Step 1: Insert Module in STARTER_KIT_COURSE
+ts
+Kopier
+{
+  id: 'selfie-editing',
+  title: 'Selfie Editing',
+  lessons: [
+    {
+      id: 'edit-like-a-pro',
+      title: 'Edit Like a Pro (Even on iPhone)',
+      type: 'video',
+      duration: '9 min',
+      videoUrl: '', // leave empty — we’ll render two manual iframes
+      description: 'Learn to create polished, powerful, luxurious edits—just using your phone.',
+      content: `Let’s be honest—scroll-stopping content isn’t about having the best gear. It’s about knowing how to work your angles, lighting, and editing flow.`,
+      resources: {
+        videos: [
+          {
+            title: 'Applying Your Presets',
+            url: 'https://player.vimeo.com/video/1091863084?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479'
+          },
+          {
+            title: 'Editing Inside the iPhone App',
+            url: 'https://player.vimeo.com/video/1091863103?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479'
+          }
+        ],
+        editingSteps: [
+          "Import your favorite preset into Lightroom",
+          "Fine-tune brightness and warmth to fit your vibe",
+          "Apply natural contrast (skip harsh edits)",
+          "Use the iPhone’s built-in tools when you're short on time",
+          "Save your new look as a preset for quick reuse"
+        ],
+        quote: "You don’t need more apps — you need a routine. And the confidence to trust it.",
+        pdfMonkey: {
+          templateId: '9CC35B05-3616-4EB8-898E-8C15E46A9F05',
+          buttonText: 'Generate My Editing Flow Workbook',
+          description: 'Your personalized editing flow — created by AI and tailored to your presets, your pace, and your vibe. Preview the exact tools, steps, and settings you’ll come back to again and again.'
+        }
+      }
+    }
+  ]
+}
+🔹 Step 2: Update <LessonContent /> JSX Handling
+Inside the conditional check for this lesson (edit-like-a-pro), render the following custom components beneath the hero video block:
+
+🎥 Two Stacked Video Players
+jsx
+Kopier
+{lesson.resources?.videos?.map((video) => (
+  <div key={video.title} className="w-full aspect-video mb-8">
+    <iframe
+      src={video.url}
+      title={video.title}
+      frameBorder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowFullScreen
+      className="w-full h-full"
+    />
+  </div>
+))}
+📝 Lightroom Editing Instructions (3 Parts)
+jsx
+Kopier
+<section className="py-12 bg-white border-t border-[#F1F1F1]">
+  <div className="max-w-4xl mx-auto px-8 space-y-12">
+    {/* Part 1: Preset Magic */}
+    <div>
+      <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#171719] mb-4">📱 Part 1: Lightroom Preset Magic</h3>
+      <ul className="space-y-2 text-[#4C4B4B] list-disc ml-6 text-base">
+        <li>Open the preset link from your kit</li>
+        <li>Tap the photo → Share → Select Lightroom</li>
+        <li>In Lightroom: Tap circles → Three dots → Create Preset</li>
+        <li>Name it (e.g. “Glow Up One”) and save</li>
+      </ul>
+    </div>
+
+    {/* Part 2: Apply, Adjust, Save */}
+    <div>
+      <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#171719] mb-4">🪞 Part 2: Apply, Adjust & Save</h3>
+      <ul className="space-y-2 text-[#4C4B4B] list-disc ml-6 text-base">
+        <li>Import selfie into Lightroom → Tap Presets → Yours</li>
+        <li>Adjust intensity for natural look</li>
+        <li>Fine-tune with: Contrast, Exposure, Highlights, Details</li>
+        <li><strong>Pro tip:</strong> Hold on the photo for before/after preview</li>
+        <li>Save edit as new preset → Name it “The Selfie Glow Up”</li>
+      </ul>
+    </div>
+
+    {/* Part 3: iPhone Quick Edit */}
+    <div>
+      <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#171719] mb-4">📝 Part 3: iPhone-Only Quick Edit</h3>
+      <ul className="space-y-2 text-[#4C4B4B] list-disc ml-6 text-base">
+        <li>Exposure: -20</li>
+        <li>Brilliance: -20</li>
+        <li>Highlights: -10</li>
+        <li>Shadows: -20</li>
+        <li>Contrast: -5</li>
+        <li>Black Point: -20</li>
+        <li>Vibrance: -69</li>
+        <li>Warmth: +8</li>
+        <li>Sharpness: +30</li>
+        <li>Definition: +14</li>
+        <li>Vignette: +70</li>
+        <li><em>Use Copy Edits → Paste to All for batching.</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+📗 PDFMonkey Workbook Generator
+jsx
+Kopier
+<section className="py-12 bg-[#F1F1F1] border-t border-[#B5B5B3]">
+  <div className="max-w-3xl mx-auto px-8 text-center">
+    <p className="text-[#4C4B4B] mb-6 text-base">
+      {lesson.resources?.pdfMonkey?.description}
+    </p>
+    <Button
+      className="bg-[#171719] text-white hover:bg-[#2A2A2A] border-0 px-10 py-3 uppercase text-sm tracking-wide"
+      onClick={() => {
+        // Connect to AI/PDFMonkey backend logic
+        window?.generateEditingWorkbook?.({
+          templateId: lesson.resources?.pdfMonkey?.templateId
+        });
+      }}
+    >
+      {lesson.resources?.pdfMonkey?.buttonText}
+    </Button>
+  </div>
+</section>
+🔁 Signature Edit Flow
+jsx
+Kopier
+<section className="py-12 bg-white border-t border-[#F1F1F1]">
+  <div className="max-w-3xl mx-auto px-8">
+    <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#171719] mb-6">Your Signature Edit Flow</h3>
+    <ol className="list-decimal ml-6 text-[#4C4B4B] space-y-2">
+      {lesson.resources?.editingSteps?.map((step, idx) => (
+        <li key={idx}>{step}</li>
+      ))}
+    </ol>
+  </div>
+</section>
+🧠 Pull Quote
+jsx
+Kopier
+<section className="py-8 bg-[#F1F1F1] border-t border-[#B5B5B3]">
+  <div className="max-w-2xl mx-auto px-8">
+    <blockquote className="border-l-4 border-[#171719] pl-6 italic font-['Cormorant_Garamond'] text-[#4C4B4B] text-lg">
+      “{lesson.resources?.quote}”
+    </blockquote>
+  </div>
+</section>
+🚀 Final CTA
+jsx
+Kopier
+<section className="py-16 bg-white text-center">
+  <Button
+    size="lg"
+    className="bg-[#171719] text-white hover:bg-[#2A2A2A] border-0 px-12 py-4 uppercase tracking-wider"
+    onClick={goToNextLesson}
+  >
+    Next: Smart Edits With Apps →
+  </Button>
+</section>

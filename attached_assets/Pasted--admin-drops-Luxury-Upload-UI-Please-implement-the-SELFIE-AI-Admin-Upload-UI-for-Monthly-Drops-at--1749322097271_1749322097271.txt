@@ -1,0 +1,98 @@
+/admin/drops Luxury Upload UI
+Please implement the SELFIE AI™ Admin Upload UI for Monthly Drops at /admin/drops using the following design and interaction instructions.
+
+🖼 1. Full-Bleed Editorial Hero
+Background image (optional): https://i.postimg.cc/W4tbWRNr/45.png
+
+Overlay:
+
+Title: “Upload Your Next Drop”
+
+Font: Cormorant Garamond, 64px, #171719
+
+Subtitle: “Curate content. Elevate brands.”
+
+Font: Neue Einstellung, 18px italic, #4C4B4B
+
+📋 2. Section Layout & Labels
+Break form into 3 sections:
+
+Step 1 — Details
+
+Step 2 — Upload Assets
+
+Step 3 — Publish Date & Access
+
+Section Label Style:
+
+Font: Neue Einstellung, 14px uppercase
+
+Color: #4C4B4B
+
+Subtle underline or divider line using #B5B5B3
+
+🏷 3. Tier Badge Selector (Instead of Dropdown)
+Display tier badges horizontally:
+
+[ FREE ] [ PRO ] [ VIP ]
+
+Behavior:
+
+Sharp square shape (no radius)
+
+Border: 1px solid #171719
+
+Selected: black bg, white text
+
+Hover: darken background slightly
+
+📁 4. Upload Field (Editorial Drop Zone)
+Drag-and-drop area:
+
+Dashed border, muted gray
+
+Placeholder: “Drop a PDF, ZIP or add your Notion link below…”
+
+Below field: optional text input:
+
+Placeholder: https://notion.so/your-drop-url
+
+🪞 5. Floating Preview Card (Optional)
+If title and tier are filled:
+
+Float preview card on right side (mobile = top)
+
+Content:
+
+Title (Cormorant Garamond)
+
+Release date
+
+Tier badge
+
+Style: white bg, black 1px border, light drop shadow
+
+📌 6. Sticky Upload Bar
+At bottom of screen (sticky)
+
+Button: UPLOAD DROP
+
+Transparent background
+
+Sharp 1px black border
+
+Neue Einstellung, uppercase, spacing 0.5px
+
+Hover = darken and underline
+
+🎨 Additional UI Details
+Add thin vertical divider lines between sections
+
+Use muted captions under inputs in Neue Einstellung italic
+
+Replace “Drop Title” with “Drop Name”
+
+Use tooltip icons (italic serif on hover) for inline guidance
+
+⚠️ This page must be admin-only. Redirect unauthorized users to homepage with message: “You don’t have access to this page.”
+⚠️ Do not modify or restyle any existing layout or dashboard elements.

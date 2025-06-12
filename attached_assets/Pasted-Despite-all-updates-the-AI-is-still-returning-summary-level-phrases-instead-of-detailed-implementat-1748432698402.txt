@@ -1,0 +1,69 @@
+Despite all updates, the AI is still returning summary-level phrases instead of detailed implementation paragraphs. This is blocking workbook quality.
+
+🔴 Current Problem Output:
+json
+Kopier
+Rediger
+phase_30: "A documented personal brand story and visual transformation journey ready to share"
+phase_60: "A consistent content presence and the beginning of an engaged community"
+phase_90: "Expanded visibility, a clear offer aligned with your story, and positioning as the go-to expert"
+✅ REQUIRED SYSTEM FIXES (FINAL VERSION):
+✅ STEP 1: FORCE AI TO RETURN FULL PARAGRAPHS
+In server/workbookAI.ts → Replace the AI prompt block with:
+
+ts
+Kopier
+Rediger
+Return ONLY this format as a clean JSON:
+{
+  "phase_30": "Write a FULL implementation paragraph (min 3–4 sentences) describing exactly what Sandra’s client should focus on during the first 30 days. Include specific action steps, results, and mindset shifts. Must use Sandra’s emotionally empowering tone.",
+  "phase_60": "Write a FULL implementation paragraph (min 3–4 sentences) explaining what happens by day 60. Include actions taken, brand/content results, community growth, and internal transformation. Use Sandra’s motivational brand voice.",
+  "phase_90": "Write a FULL implementation paragraph (min 3–4 sentences) showing the final results by day 90. Include visibility, monetization, and personal leadership outcomes. No summaries allowed."
+}
+
+DO NOT return 1-sentence summaries.
+DO NOT use placeholders like “content consistency.”
+Each value must be a fully written paragraph. Minimum 50 characters.
+✅ STEP 2: VALIDATE AI RESPONSE LENGTH
+Immediately after AI response:
+
+ts
+Kopier
+Rediger
+if (
+  !phase_30 || phase_30.length < 100 ||
+  !phase_60 || phase_60.length < 100 ||
+  !phase_90 || phase_90.length < 100
+) {
+  console.error("⚠️ PHASE GENERATION TOO SHORT — Fallback rejected", {
+    phase_30, phase_60, phase_90
+  });
+  throw new Error("AI phase output too short. Please regenerate for full detailed content.");
+}
+✅ STEP 3: ADD DEBUG LOGS FOR REVIEW
+ts
+Kopier
+Rediger
+console.log("✅ Full AI Phase Output:");
+console.log("Phase 30:", phase_30);
+console.log("Phase 60:", phase_60);
+console.log("Phase 90:", phase_90);
+✅ STEP 4: PREVENT FALLBACK FROM OVERRIDING OUTPUT
+Audit the full workbook generation pipeline and confirm:
+
+phase_30, phase_60, phase_90 are not being overwritten by defaults elsewhere (e.g. in pdfMonkeyGenerator.ts or schema.ts)
+
+No final fallback logic like phase_30 || "Story foundation & voice clarity" exists in display or payload layers
+
+✅ SUCCESS =
+ No summaries allowed in any phase_xx
+
+ Each phase must be 3–4 sentences (100+ characters)
+
+ System blocks any short output
+
+ Console logs actual response for review
+
+ Workbook preview and PDF use full AI output
+
+Once complete, I will re-test and confirm on my end. Let’s get this final fix locked in. 🖤

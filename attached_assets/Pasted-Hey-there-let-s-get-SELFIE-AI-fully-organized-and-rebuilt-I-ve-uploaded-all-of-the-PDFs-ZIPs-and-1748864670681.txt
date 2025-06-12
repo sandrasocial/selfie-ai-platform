@@ -1,0 +1,265 @@
+Hey there—let’s get SELFIE AI™ fully organized and rebuilt. I’ve uploaded all of the PDFs, ZIPs, and the CSV checklist. Follow these steps in order. Do not skip ahead. If anything is missing or a file path doesn't match, pause and let me know.
+
+---
+
+## 1. Asset Cleanup & Organization
+
+1.1 Create the following folder structure under `client/src/assets` (if it doesn’t already exist):
+   • `images/`
+     – `images/logo/`
+     – `images/hero/`
+     – `images/portraits/`
+   • `docs/`
+     – `docs/analytics-screenshots/`
+     – `docs/presets/`
+     – `docs/shared-templates/`
+     – `docs/storybank/`
+     – `docs/course-content/`
+     – `docs/old-prompts/`
+   • `testimonials/`
+   • `transcripts/`
+   • `placeholders/`
+
+1.2 Move or delete files as follows:
+   • Delete all 1.png–110.png (Viral Selfie course slides). If the `viral-selfie-slides` folder is now empty, delete the folder itself.
+   • Create `/client/src/assets/docs/analytics-screenshots` and move these files there (if they exist):
+      – audience.png  
+      – follows.png  
+      – views.png  
+      – visits.png  
+      – reach.png  
+      – interactions.png  
+     If any of those don’t exist, skip them.
+
+   • Move all “previous prompt” files (`.txt`, `.md`, `.docx`, etc.) into `/client/src/assets/docs/old-prompts/`. If I told you to delete any, delete them instead.
+
+   • Create `/client/src/assets/images/logo` and move all logo files (e.g., `logo.svg`, `logo.png`) into it.
+   • Create `/client/src/assets/images/hero` and move `heroimage1.jpeg` through `heroimage5.jpeg` into it.
+   • Create `/client/src/assets/images/portraits` and move `portraitimage.jpg` and `portraitimage2.jpg` into it.
+
+   • Create `/client/src/assets/testimonials` and move every `skjermbilde*.png` and any `testimonials.png` into that folder.
+   
+   • Create `/client/src/assets/docs/presets` and move the following files into it:
+      – `Scandinavian Light & Dreamy.xmp`  
+      – `Nordic Deep Urban.xmp`  
+      – `Scandinavian dark and moody.xmp`  
+      – `glowup.xmp`  
+      – `Scandinavian Light & Dreamy.dng`  
+      – `Nordic Deep Urban.dng`  
+      – `Scandinavian dark and moody.dng`  
+     If any preset files are not uploaded yet, tell me before proceeding.
+
+   • Create `/client/src/assets/docs/storybank` and move all “storybank” PDF files into it.
+   • Create `/client/src/assets/docs/shared-templates` and move `shared.zip` (30-day templates) into it.
+   • Create `/client/src/assets/docs/course-content` and move all remaining course-related PDF files (except storybank) into it.
+
+   • Make sure `/client/src/assets/placeholders/` contains **only**:
+      – `placeholder.jpg` (small 1×1 white JPEG)  
+      – `video-placeholder.png` (small play-icon PNG)  
+     If you see duplicates of these elsewhere, delete those duplicates.
+
+   • Delete any now-empty or redundant folders under `/client/src/assets` (for example, `viral-selfie-slides` or `uploads` if they are empty).
+
+   → After completing all moves/deletions, confirm: 
+   “✅ Asset folders reorganized and cleaned.”
+
+---
+
+## 2. Build the Image Registry File
+
+2.1 Create a new file at:
+client/src/config/ImageRegistry.ts
+
+arduino
+Kopier
+Rediger
+
+2.2 In that file, paste the following object exactly. We’ll replace the `{{…}}` placeholders later with real URLs:
+
+```ts
+// client/src/config/ImageRegistry.ts
+
+export const ImageRegistry = {
+// 1. HERO IMAGES
+hero: [
+ "{{hero1_url}}",
+ "{{hero2_url}}",
+ // Add up to 5 for now if you have them
+],
+
+// 2. LOGO
+logo: [
+ "{{logo_url}}"
+],
+
+// 3. PORTRAITS
+portrait: [
+ "{{portrait1_url}}",
+ "{{portrait2_url}}"
+],
+
+// 4. SELFIES (if any uploaded)
+selfies: [
+ // (none uploaded yet—fill later if needed)
+],
+
+// 5. BEFORE & AFTER (if any)
+beforeAfter: [
+ // (none uploaded yet—fill later if needed)
+],
+
+// 6. FLATLAYS (if any)
+flatlays: [
+ // (none uploaded yet—fill later if needed)
+],
+
+// 7. PLACEHOLDERS (always local)
+placeholders: {
+ image: "/client/src/assets/placeholders/placeholder.jpg",
+ video: "/client/src/assets/placeholders/video-placeholder.png"
+},
+
+// 8. PRODUCT MOCKUPS (future)
+productMockups: [
+ // (fill later if/when uploaded)
+],
+
+// 9. CARD BACKGROUNDS (future)
+cardBackgrounds: [
+ // (fill later if/when uploaded)
+]
+};
+2.3 Replace the {{hero1_url}}, {{logo_url}}, and {{portrait1_url}}, etc., with the actual direct URLs once they’re available. For now, leave the placeholders.
+→ Confirm after creating ImageRegistry.ts:
+“✅ ImageRegistry.ts created in client/src/config, with placeholders intact.”
+
+3. Reference the Brand Guide for Styling
+3.1 Your brand guide PDF is here:
+
+bash
+Kopier
+Rediger
+/brand/docs/Brand_Guide.pdf
+3.2 Whenever you generate or update UI components, refer to that PDF for:
+
+Color HEX codes under /styles/tailwind.config.js
+
+Font stacks and sizes (Prata for headings, Helvetica Neue for body)
+
+Spacing rules, button styles, hover states, etc.
+
+3.3 At this stage, do not swap in final images—just apply basic styling (colors, fonts, spacing) to newly created UI components according to the brand guide.
+→ Confirm:
+“✅ Brand Guide referenced; basic styling tokens applied to new components.”
+
+4. Run the CSV Checklist (Rebuild & Refine Instructions)
+4.1 The CSV is here:
+
+bash
+Kopier
+Rediger
+/brand/docs/SELFIE_AI_Audit_Implementation_Checklist.csv
+4.2 Treat each row as a discrete task. For each row:
+
+Locate the file path in the CSV’s “File Path” column (e.g., client/src/components/VisualsStudio.tsx).
+
+Perform the “Action” exactly (delete code, refactor, add new component, etc.).
+
+If a row instructs you to “apply Sandra’s tone,” use first-person, everyday language as per the Brand Guide.
+
+After completing each logical section (e.g., Content Generation Engine, Starter Kit, PRO features), run lint and any tests:
+
+arduino
+Kopier
+Rediger
+# In /client
+npm run lint
+npm run test
+
+# In /server
+npm run lint
+npm run test
+If any tests or linting errors appear, fix them before moving to the next row.
+
+4.3 Keep a running CHANGELOG.md at the project root. After each section, append a bullet like:
+
+css
+Kopier
+Rediger
+- [YYYY-MM-DD] [Added/Changed/Fixed]: Short description of what was done (matching CSV instruction).
+→ Confirm after finishing all rows:
+“✅ CSV tasks complete, all files updated, no lint/test errors.”
+
+5. Wire Up the ImageRegistry & Placeholder Logic
+5.1 Go through all image imports in your React code. Anywhere you see something like:
+
+js
+Kopier
+Rediger
+import heroImg from "../../assets/images/heroimage1.jpeg";
+replace it with:
+
+tsx
+Kopier
+Rediger
+import { ImageRegistry } from "../config/ImageRegistry";
+const imgUrl = ImageRegistry.hero[0] || ImageRegistry.placeholders.image;
+<img src={imgUrl} alt="..." />;
+5.2 For any component expecting a video or mockup, use:
+
+tsx
+Kopier
+Rediger
+<video src={ImageRegistry.placeholders.video} controls poster={ImageRegistry.placeholders.image} />
+5.3 Confirm there are no direct local imports pointing to old image paths.
+→ Confirm:
+“✅ All components using ImageRegistry and placeholders; no stray local image imports remain.”
+
+6. Basic Functionality Check
+6.1 Run the entire app locally:
+
+shell
+Kopier
+Rediger
+# In /client
+npm run dev
+# In /server
+npm run dev
+6.2 Click through key pages:
+
+Homepage / Hero
+
+3-Post Story Arc Creator
+
+Starter Kit Module
+
+Dashboard
+
+Any PRO features that exist
+
+Visual Studio image editor (confirm placeholders appear without errors)
+
+6.3 If any UI component is broken or missing, log the error details and pause.
+→ Confirm when the app runs without crashes and pages load (even if images are placeholders):
+“✅ App builds and loads; basic functionality intact.”
+
+7. Final UX Review & Refinements (Post-Implementation)
+7.1 After all code tasks are done and the basic app loads, do a quick UX review:
+
+Check fonts, colors, spacing against the Brand Guide.
+
+Confirm buttons (primary/secondary) use correct colors and hover states.
+
+Verify forms (inputs, textareas) have the right border styles and focus states.
+
+Make sure navigation (header/footer) matches specs.
+
+7.2 Note any small adjustments—margins, font sizes, or missing hover states—and add them to CHANGELOG.md under a “UX Refinements” section.
+
+7.3 Once that’s complete, reply:
+“✅ UX review done. All styling and spacing match the Brand Guide.”
+
+Wrap-Up
+By following steps 1→7 in strict order, we’ll go from messy asset folders to a fully reorganized, branded, and refactored SELFIE AI™ platform. Please start with step 1 and let me know when you’ve completed each confirmation. If you encounter any missing files or ambiguous instructions, pause and ask before proceeding.
+
+Let’s do it! 🚀✨

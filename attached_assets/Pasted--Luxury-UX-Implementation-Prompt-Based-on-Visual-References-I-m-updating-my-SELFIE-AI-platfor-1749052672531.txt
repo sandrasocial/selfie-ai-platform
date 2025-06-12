@@ -1,0 +1,131 @@
+👩‍💻 Luxury UX Implementation Prompt Based on Visual References
+
+I’m updating my SELFIE AI™ platform to reflect a high-end, editorial experience. I’ve uploaded luxury layout references—please help me implement these design elements in a way that aligns with our brand style:
+
+🖤 GLOBAL DESIGN SYSTEM (use throughout the platform)
+Color Palette
+
+Black: #000000
+
+White: #FFFFFF
+
+Soft Beige: #F5E6DC
+
+Light Gray: #CCCCCC
+
+Dark Gray: #222222
+
+Typography
+
+Headers: Prata (Google Font), font-weight: 400, letter-spacing: -1%, line-height: 1.2
+
+Body Text: Helvetica Neue, fallback sans-serif, font-weight: 300, font-size: 16px, line-height: 1.6
+
+Button Styles
+
+Primary: Black background, white text, border-radius: 0px, hover → background: #F5E6DC, fade transition
+
+Secondary: Transparent with black border, black text, hover → text color: #F5E6DC
+
+Section Spacing
+
+48px top/bottom padding for every section
+
+12-column responsive grid layout
+
+Avoid full bleed unless image is intentional background
+
+🎯 DESIGN ELEMENTS TO IMPLEMENT
+1. Hero Section (Inspired by “Social Media Manager” + “The Luxe Edit”)
+Full-bleed editorial photo (black & white or muted tones)
+
+Overlay H1: Prata 64px, white or black depending on contrast
+
+Subhead under H1: Helvetica Neue Light 24px
+
+Add thin horizontal beige line under headline (2px, #F5E6DC)
+
+CTA Buttons: Black + Outline (hover animation: upward slide + fade-in)
+
+2. Section Layouts (Inspired by Kara Layne + Mod + Luxe Edit)
+Alternating sections: White → Black → Soft Beige backgrounds
+
+Add asymmetrical text/image layouts:
+
+Left text + right image (vice versa on next section)
+
+Use max-width: 640px on text blocks for elegance
+
+Image hover: subtle scale up + 10% brightness increase
+
+3. Editorial Card Grid (Inspired by “Vision Board” & “Glow Templates”)
+Use for:
+
+Dashboard visual blocks
+
+Moodboard pages
+
+“Luxury Inspiration Gallery” feature
+
+Style:
+
+3-column grid with square/portrait images
+
+Overlay serif headlines (e.g. “FOCUS on you”) in white
+
+Header (Prata Uppercase 18px), Script subheader (cursive or Great Vibes / Playfair Display)
+
+Card hover: soft zoom with beige shadow outline
+
+4. Scroll-Based Animation (Inspired by MOD + Kara Layne)
+Fade-in sections as user scrolls (30% delay stagger)
+
+Slide-up animation for CTA buttons and image overlays
+
+Use ScrollTrigger or similar JS animation library
+
+5. Product / Pricing Sections (Inspired by Luxe Edit + Ameliana)
+3-column grid
+
+Add Soft Beige header divider bar: “Choose Your Plan” in Prata Uppercase 20px
+
+Use numbers (01, 02, 03) behind pricing boxes like shown in MOD layout
+
+Animate in from left/right with 200ms delay per box
+
+6. Footer Section (Inspired by Kara Layne & Ameliana)
+Split footer into 3 columns
+
+Left: Logo + tagline
+
+Center: Menu links
+
+Right: Contact + social
+
+Add soft gray divider line above footer
+
+Optional quote block above footer:
+
+“Power is the new pretty.”
+
+Prata Italic, centered, Soft Beige underline
+
+7. Dashboard Style Update (Inspired by MOD + Luxe Edit)
+Black sidebar with thin white icons
+
+Main content: alternating black/white blocks with serif section headers
+
+Include headline overlays in cards (e.g. “MINDSET,” “FOCUS,” “GLOW”)
+
+Quote carousel at the bottom of dashboard in Soft Beige
+
+📸 ASSET TYPES TO EXPECT:
+Full-bleed editorial portrait (cover use)
+
+Flatlay aesthetic (coffee, lipstick, planner)
+
+Branded selfie gallery
+
+Custom image overlays with text ("Monday Mood", “Focus on You” etc.)
+
+Please structure all layout components with clean spacing, editorial typography, and subtle micro-interactions (not flashy). This should feel like a mix between a fashion magazine and an intuitive app.

@@ -1,0 +1,109 @@
+// Homepage.tsx
+import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
+import Header from '@/components/layout/Header';
+
+export default function Homepage() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: 'url(https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png)',
+            filter: 'grayscale(100%)'
+          }}
+        />
+        <div className="absolute inset-0 bg-[rgba(23,23,25,0.6)]" />
+
+        <div className="relative z-10 text-center text-white max-w-4xl px-6">
+          <h1 className="text-6xl md:text-7xl font-normal mb-4" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            Turn Your Selfies Into
+            <br /><em className="italic">Strategic Brand Assets</em>
+          </h1>
+          <p className="text-xl font-light mb-8" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            The most powerful branding tool is already in your hand—your phone.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/dashboard">
+              <Button className="uppercase px-6 py-3 border border-white bg-transparent text-white rounded-none tracking-wide text-sm">
+                Start Your Brand Journey
+              </Button>
+            </Link>
+            <Link href="/plans">
+              <Button className="uppercase px-6 py-3 border border-white bg-transparent text-white rounded-none tracking-wide text-sm">
+                View Plans
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Proof Section */}
+      <section className="bg-[#171719] text-white py-20 text-center">
+        <h2 className="text-4xl mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Transformation</h2>
+        <p className="italic mb-12" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>See the power of strategic personal branding</p>
+
+        <div className="grid grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
+          <div>
+            <p className="text-3xl">90</p>
+            <p className="text-sm uppercase tracking-wide">Days</p>
+          </div>
+          <div>
+            <p className="text-3xl">120K</p>
+            <p className="text-sm uppercase tracking-wide">Followers</p>
+          </div>
+          <div>
+            <p className="text-3xl">1.7M</p>
+            <p className="text-sm uppercase tracking-wide">Reach</p>
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-8">
+          <img src="https://i.postimg.cc/XNt6zt4j/1.png" alt="Before Grid" className="w-1/3 object-cover grayscale" />
+          <img src="https://i.postimg.cc/d05zmx5K/2.png" alt="After Grid" className="w-1/3 object-cover grayscale hover:scale-105 transition-transform duration-300" />
+        </div>
+      </section>
+
+      {/* About Sandra */}
+      <section className="bg-[#F1F1F1] text-[#171719] py-20 px-6 grid md:grid-cols-3 items-center gap-12 max-w-6xl mx-auto">
+        <div>
+          <h3 className="italic text-2xl mb-4" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Hi, I’m Sandra.</h3>
+          <p style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            Personal branding mentor. Single mom of 3. Building my dream life from rock bottom—and teaching women to do the same.
+          </p>
+        </div>
+        <div className="bg-black w-full h-96 flex items-center justify-center text-white" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+          ADD IMAGE
+        </div>
+        <div>
+          <p className="italic text-lg mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            "Every selfie tells a story. Let’s make yours unforgettable."
+          </p>
+          <p style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            Photographer, Educator, Canada <br /> Living, Entrepreneur & Mamma
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-12 text-center">
+        <p className="mb-4" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Get my private selfie strategies weekly</p>
+        <div className="flex justify-center gap-2">
+          <input 
+            type="email" 
+            placeholder="Enter your email" 
+            className="px-4 py-2 text-black" 
+            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+          />
+          <Button className="uppercase px-6 py-2 border border-white bg-transparent text-white rounded-none text-sm" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            Subscribe
+          </Button>
+        </div>
+      </footer>
+    </div>
+  );
+}

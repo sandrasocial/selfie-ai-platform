@@ -1,0 +1,1062 @@
+﻿import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { 
+  Play, CheckCircle, Clock, Download, ArrowLeft, ArrowRight, ChevronDown, ChevronUp
+} from 'lucide-react';
+import Header from '@/components/layout/Header';
+import { apiRequest } from '@/lib/queryClient';
+import { cn } from '@/lib/utils';
+
+
+const COURSE_DATA = [
+  {
+    id: 'module-1',
+    title: 'Start Here',
+    subtitle: 'Your Brand, Your Power',
+    lessons: [{ id: 'brand-power', title: 'Your Brand, Your Power', duration: '8 min' }]
+  },
+  {
+    id: 'module-2', 
+    title: 'Selfie Editing',
+    subtitle: 'Edit Like a Pro (Even on iPhone)',
+    lessons: [
+      { id: 'presets', title: 'Applying Your Presets', duration: '12 min' },
+      { id: 'iphone-edit', title: 'iPhone Quick Edit', duration: '8 min' }
+    ]
+  },
+  {
+    id: 'module-3',
+    title: 'Smart Edits With Apps', 
+    subtitle: 'Add Mood Without Losing the Real You',
+    lessons: [
+      { id: 'hypic', title: 'Editorial Edge with Hypic', duration: '10 min' },
+      { id: 'capcut', title: 'Luxe Video with CapCut', duration: '15 min' }
+    ]
+  },
+  {
+    id: 'module-4',
+    title: 'Hands-Free Like a CEO',
+    subtitle: 'Shoot Solo, Stay in Flow', 
+    lessons: [{ id: 'hands-free', title: 'Voice & Gesture Control', duration: '8 min' }]
+  },
+  {
+    id: 'module-5',
+    title: 'Brand Aesthetic Builder',
+    subtitle: 'Design Like a CEO™',
+    lessons: [{ id: 'aesthetic', title: 'Your Visual Strategy', duration: '20 min' }]
+  },
+  {
+    id: 'module-6',
+    title: 'Captions That Convert',
+    subtitle: 'Write Like a Vibe',
+    lessons: [{ id: 'captions', title: 'Words That Connect', duration: '15 min' }]
+  }
+];
+
+
+const AESTHETIC_COLLECTIONS = [
+  { id: 'pink', name: 'PINK', images: ['https://i.postimg.cc/QtnSw23T/1.png', 'https://i.postimg.cc/c1t4jf7K/102.png', 'https://i.postimg.cc/CKtpH6Qc/117.png', 'https://i.postimg.cc/SKnwsfxC/126.png', 'https://i.postimg.cc/bwwXXhX6/125.png', 'https://i.postimg.cc/wjGGSRQv/134.png'] },
+  { id: 'cream', name: 'CREAM', images: ['https://i.postimg.cc/ryRY7Nht/10.png', 'https://i.postimg.cc/zvWNBZ8s/110.png', 'https://i.postimg.cc/t4zXWjWy/105.png', 'https://i.postimg.cc/Dfs31h3D/121.png', 'https://i.postimg.cc/YCRXQnST/15.png', 'https://i.postimg.cc/s2t02Bx2/137.png'] },
+  { id: 'beige', name: 'BEIGE', images: ['https://i.postimg.cc/VNCRLn6H/1.png', 'https://i.postimg.cc/WbY6GXqH/10.png', 'https://i.postimg.cc/d1QLSczm/34.png', 'https://i.postimg.cc/W3skLkJZ/24.png', 'https://i.postimg.cc/QMhtHrxG/42.png', 'https://i.postimg.cc/WzHFkYYm/25.png'] },
+  { id: 'coastal', name: 'COASTAL', images: ['https://i.postimg.cc/tC1JZ53k/103.png', 'https://i.postimg.cc/Zqj4DBP0/119.png', 'https://i.postimg.cc/wMn6cCXV/113.png', 'https://i.postimg.cc/wvTT6cxh/110.png', 'https://i.postimg.cc/52SXbtqW/128.png', 'https://i.postimg.cc/zXmvhhx1/132.png'] },
+  { id: 'energy', name: 'ENERGY & HEALING', images: ['https://i.postimg.cc/MTjrNHg1/127161.png', 'https://i.postimg.cc/6p5bwYDW/a-a-bur-A-close-up-of-jasmine-petals-each-with-its-own-unique-a03a9998-01de-41e8-acd3-041b9403e5ac-0.png', 'https://i.postimg.cc/wjpysr6z/xelanft_resting_minimalistic_setting_no_face_seen_bright_natu_a1b2aefd-03ce-4137-8f43-74bed0e9f354_3.png', 'https://i.postimg.cc/Dz520jzx/xelanft_getting_a_massage_minimalistic_setting_no_face_seen_b_5c32c84d-9a8e-4f7f-bdfd-8f283256f5a4_3.png', 'https://i.postimg.cc/Dwrfky3k/xelanft_couple_hands_holding_minimalistic_setting_no_face_se_28a96e3d-ce84-4ddb-a0aa-a51aa03b5777_3.png', 'https://i.postimg.cc/VNvh9DRG/98751.png'] },
+  { id: 'golden', name: 'GOLDEN HOUR', images: ['https://i.postimg.cc/Kz4g8yJc/12.png', 'https://i.postimg.cc/zG12Mqkg/18.png', 'https://i.postimg.cc/j5kPHjLJ/2.png', 'https://i.postimg.cc/CK7jK707/3.png', 'https://i.postimg.cc/MKsX3Gws/57.png', 'https://i.postimg.cc/hGmjGbdw/60.png'] },
+  { id: 'health', name: 'HEALTH & WELLNESS', images: ['https://i.postimg.cc/RFsK7LgR/xelanft-bowl-of-fresh-fruits-minimalistic-setting-no-face-see-1e953559-47d3-4f55-8898-f9ab6cd0cf93-0.png', 'https://i.postimg.cc/XNBkfT0B/xelanft_holding_a_healing_stone_minimalistic_setting_no_face__eda9bbb8-1c02-48ac-b63f-ba1466a3c137_0.png', 'https://i.postimg.cc/W1TmPzq0/xelanft_lemon_water_minimalistic_setting_bright_natural_studi_be04fe14-63de-4481-b34c-bbe4846efe44_1.png', 'https://i.postimg.cc/Ls7Zh85C/xelanft_meditating_in_a_peaceful_calm_environment_no_face_see_9a10e24e-e8c6-4e4b-9bf3-a7f2a4c6abcd_3.png', 'https://i.postimg.cc/qqDw7Tfp/xelanft-A-close-up-of-orchid-petals-each-with-its-own-unique-10d8515c-b5b7-496f-b6a4-85bf5c749fdf-1.png', 'https://i.postimg.cc/XYs5S8b0/xelanft_matcha_minimalistic_counter_bright_natural_studio_lig_5c030848-c20d-4314-b74f-26f9fe0d5833_2.png'] },
+  { id: 'moody', name: 'MOODY & MODERN', images: ['https://i.postimg.cc/SRz1B39j/100.png', 'https://i.postimg.cc/pVh2VdY5/103.png', 'https://i.postimg.cc/PrnktQ50/112.png', 'https://i.postimg.cc/zfc94nQt/116.png', 'https://i.postimg.cc/1znFrS1g/43.png', 'https://i.postimg.cc/WpMMysFg/39.png'] },
+  { id: 'minimal', name: 'MINIMALISTIC', images: ['https://i.postimg.cc/02VLGyr8/1.png', 'https://i.postimg.cc/QCHzNRZp/111.png', 'https://i.postimg.cc/fLhXRX45/176.png', 'https://i.postimg.cc/WzWXZt8C/19.png', 'https://i.postimg.cc/KcqNJk7s/30.png', 'https://i.postimg.cc/2y6xCrYw/27.png'] }
+];
+
+
+export default function SelfieStarterKit() {
+  const [selectedModule, setSelectedModule] = useState('module-1');
+  const [selectedLesson, setSelectedLesson] = useState('brand-power');
+  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [heroOverlayVisible, setHeroOverlayVisible] = useState(true);
+  const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({ 'module-1': true });
+  const [selectedAesthetic, setSelectedAesthetic] = useState<string | null>(null);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+
+  // Load course progress from backend
+  const { data: courseProgress, isLoading } = useQuery({
+    queryKey: ['/api/course-progress/starter-kit'],
+    enabled: true
+  });
+
+
+  // Load saved notes
+  const { data: savedNotes } = useQuery({
+    queryKey: ['/api/course-notes/starter-kit'],
+    enabled: true
+  });
+
+
+  // Initialize notes and progress from backend data
+  useEffect(() => {
+    if ((savedNotes as any)?.notes) {
+      setNotes((savedNotes as any).notes);
+    }
+  }, [savedNotes]);
+
+
+  // Calculate progress from backend data
+  const completedLessons = (courseProgress as any)?.completedLessons || {};
+  const totalLessons = COURSE_DATA.reduce((acc, m) => acc + m.lessons.length, 0);
+  const completedCount = Object.keys(completedLessons).length;
+  const progress = (completedCount / totalLessons) * 100;
+
+
+  // Mutation to mark lesson complete
+  const markCompleteMutation = useMutation({
+    mutationFn: async ({ moduleId, lessonId }: { moduleId: string; lessonId: string }) => {
+      const response = await fetch('/api/course-progress/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          courseId: 'starter-kit',
+          moduleId,
+          lessonId,
+          completed: true
+        })
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/course-progress/starter-kit'] });
+      toast({ title: "Progress Saved", description: "Lesson marked complete." });
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to save progress. Please try again." });
+    }
+  });
+
+
+  // Mutation to save notes
+  const saveNotesMutation = useMutation({
+    mutationFn: async (notesData: Record<string, string>) => {
+      const response = await fetch('/api/course-notes/starter-kit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notes: notesData })
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({ title: "Notes Saved", description: "Your notes have been saved." });
+    }
+  });
+
+
+  // Mutation to generate workbook
+  const generateWorkbookMutation = useMutation({
+    mutationFn: async ({ templateId, title, moduleId }: { templateId: string; title: string; moduleId: string }) => {
+      const response = await fetch('/api/generate/workbook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          templateId,
+          title,
+          moduleId,
+          courseId: 'starter-kit',
+          selectedAesthetic,
+          notes: notes[moduleId] || ''
+        })
+      });
+      return response.json();
+    },
+    onSuccess: (data: any) => {
+      toast({ 
+        title: "Workbook Ready!", 
+        description: "Your personalized workbook has been generated and is ready for download." 
+      });
+      // Trigger download if PDF URL is returned
+      if (data?.downloadUrl) {
+        window.open(data.downloadUrl, '_blank');
+      }
+    },
+    onError: () => {
+      toast({ 
+        title: "Generation Failed", 
+        description: "Unable to generate workbook. Please try again." 
+      });
+    }
+  });
+
+
+  // Animation effects
+  useEffect(() => {
+    const handleScroll = () => {
+      const elements = document.querySelectorAll('.fade-in-element');
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+
+  const toggleModule = (moduleId: string) => {
+    setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
+  };
+
+
+  const markComplete = (moduleId: string, lessonId: string) => {
+    markCompleteMutation.mutate({ moduleId, lessonId });
+  };
+
+
+  const generateWorkbook = async (templateId: string, title: string, moduleId: string = 'general') => {
+    toast({ title: "Generating...", description: `Creating your ${title}` });
+    generateWorkbookMutation.mutate({ templateId, title, moduleId });
+  };
+
+
+  const saveNotes = (moduleId: string, noteText: string) => {
+    const updatedNotes = { ...notes, [moduleId]: noteText };
+    setNotes(updatedNotes);
+    saveNotesMutation.mutate(updatedNotes);
+  };
+
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center px-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#171719] mx-auto mb-4"></div>
+          <p className="text-[#4C4B4B] font-light">Loading your course...</p>
+        </div>
+      </div>
+    );
+  }
+
+
+  return (
+    <div className="min-h-screen bg-white">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .fade-in-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .fade-in-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .parallax-bg {
+            transform: translateY(var(--parallax-offset, 0));
+            transition: transform 0.1s linear;
+          }
+        `
+      }} />
+      
+      <Header />
+
+
+      {/* Hero Video Section */}
+      <section className="relative w-full h-screen overflow-hidden">
+        <div className="absolute inset-0 bg-black">
+          <div style={{padding:'56.25% 0 0 0',position:'relative',height:'100%'}}>
+            <iframe 
+              src="https://player.vimeo.com/video/1091785973?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}}
+              title="Welcome To Selfie Starter Kit"
+            />
+          </div>
+        </div>
+        
+        <div 
+          className={cn(
+            "absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center transition-all duration-1500",
+            !heroOverlayVisible && "opacity-0 pointer-events-none"
+          )}
+        >
+          <div className="text-center text-white px-4 sm:px-6 lg:px-8 fade-in-element visible max-w-6xl mx-auto">
+            <h1 className="font-['Cormorant_Garamond'] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal mb-4 sm:mb-6 lg:mb-8 tracking-tight leading-tight">
+              Welcome to Your Transformation
+            </h1>
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-8 sm:mb-10 lg:mb-12 max-w-4xl mx-auto leading-relaxed opacity-90">
+              Master the art of confident, authentic selfies that build your personal brand.
+            </p>
+            <Button 
+              onClick={() => setHeroOverlayVisible(false)}
+              size="lg"
+              className="bg-white text-[#171719] hover:bg-[#F1F1F1] focus:bg-[#F1F1F1] border-0 px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl uppercase tracking-[0.2em] font-light transition-all duration-300 hover:tracking-[0.3em] focus:tracking-[0.3em] min-h-[44px]"
+            >
+              Begin Your Journey
+            </Button>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Course Header */}
+      <section className="relative bg-[#F1F1F1] py-12 sm:py-16 lg:py-24 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.3em] font-light">SELFIE STARTER KIT™</span>
+          <h1 className="font-['Cormorant_Garamond'] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal text-[#171719] mt-4 sm:mt-6 mb-6 sm:mb-8">
+            Your Journey Begins
+          </h1>
+          <div className="max-w-2xl mx-auto mt-8 sm:mt-12">
+            <div className="flex justify-between text-xs sm:text-sm text-[#4C4B4B] mb-3 uppercase tracking-wider">
+              <span>Progress</span>
+              <span>{Math.round(progress)}% Complete</span>
+            </div>
+            <Progress value={progress} className="h-1 bg-white/50" />
+          </div>
+        </div>
+      </section>
+
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+        
+        {/* Module 1 */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-1')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 1</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Start Here</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Your Brand, Your Power</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {completedLessons['module-1-brand-power'] && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-1'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-1'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div className="aspect-video bg-black">
+                  <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                    <iframe src="https://player.vimeo.com/video/1091863622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Welcome" />
+                  </div>
+                </div>
+
+
+                <div className="prose prose-lg sm:prose-xl max-w-none">
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    Welcome, gorgeous. You're not here to play small anymore.
+                  </p>
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    This Starter Kit isn't just a bundle of tools — it's your first step into a more magnetic version of you. A version that shows up online with clarity, confidence, and camera-ready energy.
+                  </p>
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    You don't need more noise. You need a system. So let's simplify and elevate — together.
+                  </p>
+                </div>
+
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+                  <div className="border border-[#B5B5B3] p-3 sm:p-4 lg:p-6 text-center hover:shadow-md focus-within:shadow-md transition-shadow">
+                    <h4 className="font-['Cormorant_Garamond'] text-lg sm:text-xl mb-2">Light & Airy</h4>
+                    <p className="text-[#4C4B4B] font-light text-sm">DNG or ZIP</p>
+                  </div>
+                  <div className="border border-[#B5B5B3] p-3 sm:p-4 lg:p-6 text-center hover:shadow-md focus-within:shadow-md transition-shadow">
+                    <h4 className="font-['Cormorant_Garamond'] text-lg sm:text-xl mb-2">Dark & Moody</h4>
+                    <p className="text-[#4C4B4B] font-light text-sm">Premium preset</p>
+                  </div>
+                  <div className="border border-[#B5B5B3] p-3 sm:p-4 lg:p-6 text-center hover:shadow-md focus-within:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
+                    <h4 className="font-['Cormorant_Garamond'] text-lg sm:text-xl mb-2">Scandinavian Urban</h4>
+                    <p className="text-[#4C4B4B] font-light text-sm">Editorial style</p>
+                  </div>
+                </div>
+
+
+                <Button className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A] border-0 py-4 sm:py-6 text-base sm:text-lg uppercase tracking-wider min-h-[44px]">
+                  Tap to Access Your Presets
+                </Button>
+
+
+                <div className="relative">
+                  <img src="https://i.postimg.cc/NfrbPGj8/1.png" alt="Reflection" className="w-full" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4 sm:p-6 lg:p-8">
+                    <div className="text-white">
+                      <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-2">Reflection</h3>
+                      <p className="text-base sm:text-lg font-light">What's been holding you back from showing up fully online?</p>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Notes & Reflections</h4>
+                  <Textarea
+                    placeholder="What's been holding you back from showing up fully online? Write your thoughts here..."
+                    value={notes['module-1'] || ''}
+                    onChange={(e) => saveNotes('module-1', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8">
+                  <Button 
+                    onClick={() => markComplete('module-1', 'brand-power')}
+                    disabled={markCompleteMutation.isPending}
+                    className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 text-sm sm:text-base lg:text-lg uppercase tracking-wider transition-all w-full sm:w-auto min-h-[44px]"
+                  >
+                    {markCompleteMutation.isPending ? 'Saving...' : 'Mark Complete & Continue →'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Module 2 */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-2')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 2</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Selfie Editing</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Edit Like a Pro (Even on iPhone)</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {(completedLessons['module-2-presets'] || completedLessons['module-2-iphone-edit']) && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-2'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-2'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div>
+                  <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-4 sm:mb-6">Applying Your Presets</h3>
+                  <div className="aspect-video bg-black mb-6 sm:mb-8">
+                    <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                      <iframe src="https://player.vimeo.com/video/1091863084?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Applying your presets" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-4 sm:mb-6">Editing Inside the iPhone App</h3>
+                  <div className="aspect-video bg-black">
+                    <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                      <iframe src="https://player.vimeo.com/video/1091863103?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Editing inside the iPhone app" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="prose prose-lg sm:prose-xl max-w-none">
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    Scroll-stopping content isn't about having the best gear. It's about knowing how to work your angles, lighting, and editing flow. This masterclass walks you through my exact routine to make your selfies look polished, powerful, and luxurious—using only your phone.
+                  </p>
+                </div>
+
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                  <div className="space-y-4">
+                    <span className="text-4xl sm:text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">01</span>
+                    <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl">Lightroom Preset Magic</h4>
+                    <p className="text-[#4C4B4B] font-light">Import presets, tap photo, create preset, name it "Glow Up One"</p>
+                  </div>
+                  <div className="space-y-4">
+                    <span className="text-4xl sm:text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">02</span>
+                    <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl">Apply, Adjust & Save</h4>
+                    <p className="text-[#4C4B4B] font-light">Fine-tune contrast, exposure, highlights for natural look</p>
+                  </div>
+                  <div className="space-y-4">
+                    <span className="text-4xl sm:text-6xl font-['Cormorant_Garamond'] text-[#B5B5B3]">03</span>
+                    <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl">iPhone Quick Edit</h4>
+                    <p className="text-[#4C4B4B] font-light">Exposure -20, Brilliance -20, Warmth +8, Vignette +70</p>
+                  </div>
+                </div>
+
+
+                <div className="bg-[#171719] text-white p-6 sm:p-8 lg:p-12 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 text-[8rem] sm:text-[12rem] lg:text-[20rem] font-['Cormorant_Garamond'] text-white/5 leading-none">"</div>
+                  <p className="text-lg sm:text-xl lg:text-2xl font-light italic relative z-10 max-w-3xl">
+                    You don't need more apps — you need a routine. And the confidence to trust it.
+                  </p>
+                </div>
+
+
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-[#F1F1F1] to-white p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4">AI Editing Flow Workbook</h4>
+                  <p className="text-[#4C4B4B] font-light mb-4 sm:mb-6">Your personalized editing flow—created by AI and tailored to your presets, pace, and vibe.</p>
+                  <Button 
+                    onClick={() => generateWorkbook('9CC35B05-3616-4EB8-898E-8C15E46A9F05', 'Editing Flow Workbook', 'module-2')}
+                    disabled={generateWorkbookMutation.isPending}
+                    className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A] border-0 min-h-[44px]"
+                  >
+                    {generateWorkbookMutation.isPending ? 'Generating...' : 'Generate My Editing Flow Workbook'}
+                  </Button>
+                </Card>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Your Editing Notes</h4>
+                  <Textarea
+                    placeholder="Document your editing discoveries, preferred settings, and personal style notes..."
+                    value={notes['module-2'] || ''}
+                    onChange={(e) => saveNotes('module-2', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8 space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button 
+                      onClick={() => markComplete('module-2', 'presets')}
+                      disabled={markCompleteMutation.isPending}
+                      className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-4 sm:px-6 lg:px-8 py-3 text-sm sm:text-base uppercase tracking-wider w-full sm:w-auto min-h-[44px]"
+                    >
+                      Complete Presets Lesson
+                    </Button>
+                    <Button 
+                      onClick={() => markComplete('module-2', 'iphone-edit')}
+                      disabled={markCompleteMutation.isPending}
+                      className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-4 sm:px-6 lg:px-8 py-3 text-sm sm:text-base uppercase tracking-wider w-full sm:w-auto min-h-[44px]"
+                    >
+                      Complete iPhone Edit Lesson
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Module 3 */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-3')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 3</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Smart Edits With Apps</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Add Mood Without Losing the Real You</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {(completedLessons['module-3-hypic'] || completedLessons['module-3-capcut']) && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-3'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-3'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div>
+                  <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-4 sm:mb-6">Editing with Hypic</h3>
+                  <div className="aspect-video bg-black mb-6 sm:mb-8">
+                    <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                      <iframe src="https://player.vimeo.com/video/1091863129?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Editing with Hypic" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4">Sandra's Exact Flow – Hypic</h4>
+                  <ul className="space-y-2 sm:space-y-3 text-[#4C4B4B] font-light">
+                    <li>• Open Hypic → Edit</li>
+                    <li>• Upload selfie from Module 2</li>
+                    <li>• Filters → Low Key → strength 50%</li>
+                    <li>• Adjust Brightness, Contrast, Sharpness, Highlights</li>
+                    <li>• Optional Retouch for subtle polish</li>
+                  </ul>
+                </div>
+
+
+                <div className="relative overflow-hidden p-6 sm:p-8 lg:p-12 my-8 sm:my-12" style={{ backgroundImage: `url(https://i.postimg.cc/y8TZd2N3/197.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                  <div className="absolute inset-0 bg-black/70"></div>
+                  <p className="relative z-10 text-white text-lg sm:text-xl lg:text-2xl font-light italic text-center max-w-3xl mx-auto">
+                    "Think of Hypic as your 'editorial lens.' Use it when you want your content to feel less 'Insta' and more like a fashion mag."
+                  </p>
+                </div>
+
+
+                <div>
+                  <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-4 sm:mb-6">CapCut for Luxe Video</h3>
+                  <div className="aspect-video bg-black">
+                    <div style={{padding:'56.25% 0 0 0',position:'relative'}}>
+                      <iframe src="https://player.vimeo.com/video/1091863154?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Video editing with CapCut" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+                  <div>
+                    <h4 className="font-['Cormorant_Garamond'] text-lg sm:text-xl lg:text-2xl mb-3 sm:mb-4">Film Like a CEO</h4>
+                    <ul className="space-y-2 text-[#4C4B4B] font-light">
+                      <li>• iPhone Camera 4K @ 30 fps</li>
+                      <li>• Natural light preferred</li>
+                      <li>• Clean, minimal background</li>
+                      <li>• Eye-level lens position</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-['Cormorant_Garamond'] text-lg sm:text-xl lg:text-2xl mb-3 sm:mb-4">CapCut Workflow</h4>
+                    <ul className="space-y-2 text-[#4C4B4B] font-light">
+                      <li>• New Project → import clips → trim</li>
+                      <li>• Adjust: Contrast +4, Sharpen +26</li>
+                      <li>• Clarity +14, Vignette +10</li>
+                      <li>• Apply to All → Export 4K/30 fps</li>
+                    </ul>
+                  </div>
+                </div>
+
+
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4">Editing Strategy Workbook</h4>
+                  <p className="text-[#4C4B4B] font-light mb-4 sm:mb-6">AI-generated routine based on your app, filters, and style.</p>
+                  <Button 
+                    onClick={() => generateWorkbook('9CC35B05-3616-4EB8-898E-8C15E46A9F05', 'Editing Strategy Workbook', 'module-3')}
+                    disabled={generateWorkbookMutation.isPending}
+                    className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A] border-0 min-h-[44px]"
+                  >
+                    {generateWorkbookMutation.isPending ? 'Generating...' : 'Generate My Editing Workbook'}
+                  </Button>
+                </Card>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Smart Editing Notes</h4>
+                  <Textarea
+                    placeholder="Document your app preferences, filter discoveries, and editing workflow insights..."
+                    value={notes['module-3'] || ''}
+                    onChange={(e) => saveNotes('module-3', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8 space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button 
+                      onClick={() => markComplete('module-3', 'hypic')}
+                      disabled={markCompleteMutation.isPending}
+                      className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-4 sm:px-6 lg:px-8 py-3 text-sm sm:text-base uppercase tracking-wider w-full sm:w-auto min-h-[44px]"
+                    >
+                      Complete Hypic Lesson
+                    </Button>
+                    <Button 
+                      onClick={() => markComplete('module-3', 'capcut')}
+                      disabled={markCompleteMutation.isPending}
+                      className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-4 sm:px-6 lg:px-8 py-3 text-sm sm:text-base uppercase tracking-wider w-full sm:w-auto min-h-[44px]"
+                    >
+                      Complete CapCut Lesson
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Module 4 */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-4')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 4</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Hands-Free Like a CEO</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Shoot Solo, Stay in Flow</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {completedLessons['module-4-hands-free'] && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-4'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-4'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div className="aspect-[9/16] max-w-sm mx-auto bg-black">
+                  <div style={{padding:'216.7% 0 0 0',position:'relative'}}>
+                    <iframe src="https://player.vimeo.com/video/1091865311?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%'}} title="Custom Command Tutorial" />
+                  </div>
+                </div>
+
+
+                <div className="prose prose-lg sm:prose-xl max-w-none text-center">
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    You don't need a tripod or team. This lesson shows how to film scroll-stopping content solo with phone, voice, and gestures.
+                  </p>
+                </div>
+
+
+                <div className="bg-[#F1F1F1] p-6 sm:p-8 lg:p-12">
+                  <h3 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-6 sm:mb-8 text-center">Setup – iPhone Gesture + Voice Shortcut</h3>
+                  <ol className="space-y-3 sm:space-y-4 text-[#4C4B4B] font-light text-base sm:text-lg max-w-2xl mx-auto">
+                    <li><span className="font-medium">1.</span> Settings → Accessibility → Touch → AssistiveTouch ON</li>
+                    <li><span className="font-medium">2.</span> Custom Actions → Double Tap → Take Photo</li>
+                    <li><span className="font-medium">3.</span> Accessibility → Voice Control ON</li>
+                    <li><span className="font-medium">4.</span> Now say "Tap Take Photo" for hands-free shooting</li>
+                  </ol>
+                </div>
+
+
+                <div className="relative p-8 sm:p-12 lg:p-16 text-center" style={{ backgroundImage: `url(https://i.postimg.cc/q792Ky29/38.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                  <div className="absolute inset-0 bg-white/90"></div>
+                  <div className="relative z-10">
+                    <h4 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-3 sm:mb-4">Practice Challenge</h4>
+                    <p className="text-lg sm:text-xl text-[#4C4B4B] font-light">Film a 10-second hands-free clip with 2–3 poses.</p>
+                  </div>
+                </div>
+
+
+                <div className="bg-[#171719] text-white p-6 sm:p-8 lg:p-12">
+                  <p className="text-lg sm:text-xl lg:text-2xl font-light italic text-center max-w-3xl mx-auto">
+                    "Most people wait for the 'right time' to show up. You? You set the camera, say the word, and start leading. That's CEO energy."
+                  </p>
+                </div>
+
+
+                <Card className="border-0 shadow-lg bg-[#F1F1F1] p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-3 sm:p-4 text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-wider">Coming Soon</div>
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4 text-[#4C4B4B]">AI Pose Guide Workbook</h4>
+                  <p className="text-[#4C4B4B] font-light mb-4 sm:mb-6">Beginner-to-advanced solo pose prompts for hands-free filming.</p>
+                  <Button disabled className="w-full bg-[#B5B5B3] text-white border-0 cursor-not-allowed min-h-[44px]">
+                    Coming Soon – Generate My Pose Guide
+                  </Button>
+                </Card>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Hands-Free Filming Notes</h4>
+                  <Textarea
+                    placeholder="Document your setup process, pose ideas, and hands-free filming discoveries..."
+                    value={notes['module-4'] || ''}
+                    onChange={(e) => saveNotes('module-4', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8">
+                  <Button 
+                    onClick={() => markComplete('module-4', 'hands-free')}
+                    disabled={markCompleteMutation.isPending}
+                    className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-8 sm:px-10 lg:px-12 py-3 sm:py-4 text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto min-h-[44px]"
+                  >
+                    {markCompleteMutation.isPending ? 'Saving...' : 'Complete Module 4 →'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Module 5 - Brand Aesthetic Builder */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-5')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 5</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Brand Aesthetic Builder</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Design Like a CEO™</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {completedLessons['module-5-aesthetic'] && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-5'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-5'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div className="text-center max-w-3xl mx-auto">
+                  <h3 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4">Design Like a CEO™</h3>
+                  <p className="text-lg sm:text-xl text-[#4C4B4B] font-light">Your visual strategy starts here.</p>
+                  <p className="text-base sm:text-lg text-[#4C4B4B] font-light mt-3 sm:mt-4">
+                    Turn your vibe into a visual brand without a designer. Choose a curated aesthetic; AI will generate your complete visual strategy, ready to download.
+                  </p>
+                </div>
+
+
+                <div className="bg-[#F1F1F1] p-6 sm:p-8 lg:p-12 text-center">
+                  <h4 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-6 sm:mb-8">Reflection Prompt</h4>
+                  <p className="text-lg sm:text-xl text-[#4C4B4B] font-light mb-3 sm:mb-4">If your brand walked into the room…</p>
+                  <div className="space-y-2 text-base sm:text-lg text-[#4C4B4B] font-light">
+                    <p>• What would she be wearing?</p>
+                    <p>• How would she move?</p>
+                    <p>• What energy would she leave behind?</p>
+                  </div>
+                </div>
+
+
+                <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl lg:text-3xl text-center mb-4 sm:mb-6 lg:mb-8">Brand Aesthetic Collections</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
+                    {AESTHETIC_COLLECTIONS.map((collection) => (
+                      <div 
+                        key={collection.id}
+                        onClick={() => setSelectedAesthetic(collection.id)}
+                        className={cn(
+                          "cursor-pointer transition-all duration-300 border-2 min-h-[44px]",
+                          selectedAesthetic === collection.id ? "border-[#171719] shadow-xl" : "border-transparent hover:border-[#B5B5B3] focus:border-[#B5B5B3]"
+                        )}
+                        tabIndex={0}
+                        role="button"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setSelectedAesthetic(collection.id);
+                          }
+                        }}
+                      >
+                        <h5 className="font-['Cormorant_Garamond'] text-base sm:text-lg lg:text-2xl text-center py-3 sm:py-4 bg-[#F1F1F1]">{collection.name}</h5>
+                        <div className="grid grid-cols-3 gap-px">
+                          {collection.images.map((img, idx) => (
+                            <div key={idx} className="aspect-square">
+                              <img src={img} alt={`${collection.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-[#F1F1F1] to-white p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4">Branding Blueprint Workbook</h4>
+                  <p className="text-[#4C4B4B] font-light mb-4 sm:mb-6">AI will generate your complete visual strategy based on your selected aesthetic.</p>
+                  <Button 
+                    onClick={() => generateWorkbook('6724E507-38D0-4C4C-8C2D-CEC891968D73', 'Branding Blueprint', 'module-5')}
+                    disabled={!selectedAesthetic || generateWorkbookMutation.isPending}
+                    className={cn(
+                      "w-full border-0 min-h-[44px]",
+                      selectedAesthetic ? "bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A]" : "bg-[#B5B5B3] text-white cursor-not-allowed"
+                    )}
+                  >
+                    {generateWorkbookMutation.isPending ? 'Generating...' : 
+                     selectedAesthetic ? 'Generate My Branding Blueprint' : 'Select an Aesthetic First'}
+                  </Button>
+                </Card>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Brand Strategy Notes</h4>
+                  <Textarea
+                    placeholder="Document your aesthetic choices, brand reflections, and visual strategy insights..."
+                    value={notes['module-5'] || ''}
+                    onChange={(e) => saveNotes('module-5', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8">
+                  <Button 
+                    onClick={() => markComplete('module-5', 'aesthetic')}
+                    disabled={markCompleteMutation.isPending}
+                    className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-8 sm:px-10 lg:px-12 py-3 sm:py-4 text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto min-h-[44px]"
+                  >
+                    {markCompleteMutation.isPending ? 'Saving...' : 'Complete Module 5 →'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Module 6 - Captions That Convert */}
+        <div className="mb-8 sm:mb-12 lg:mb-16 fade-in-element">
+          <div 
+            className="border border-[#B5B5B3] bg-white cursor-pointer transition-all duration-300 hover:shadow-lg focus:shadow-lg"
+            onClick={() => toggleModule('module-6')}
+          >
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-between min-h-[44px]">
+              <div>
+                <span className="text-[#B5B5B3] text-xs sm:text-sm uppercase tracking-[0.2em]">MODULE 6</span>
+                <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl lg:text-4xl font-normal text-[#171719] mt-1 sm:mt-2">Captions That Convert</h2>
+                <p className="text-[#4C4B4B] font-light mt-1 text-base sm:text-lg">Write Like a Vibe</p>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                {completedLessons['module-6-captions'] && <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                {expandedModules['module-6'] ? <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" /> : <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-[#4C4B4B]" />}
+              </div>
+            </div>
+          </div>
+
+
+          {expandedModules['module-6'] && (
+            <div className="border-x border-b border-[#B5B5B3] bg-white">
+              <div className="p-4 sm:p-6 lg:p-12 space-y-6 sm:space-y-8 lg:space-y-12">
+                <div className="text-center max-w-3xl mx-auto">
+                  <h3 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4">Write Like a Vibe</h3>
+                  <p className="text-lg sm:text-xl text-[#4C4B4B] font-light">Visuals stop the scroll — words build the connection.</p>
+                </div>
+
+
+                <div className="prose prose-lg sm:prose-xl max-w-none">
+                  <p className="text-lg sm:text-xl leading-relaxed text-[#4C4B4B] font-light">
+                    This is where your audience decides whether they just liked your look or actually felt something. Learn to write captions that sound like you, resonate deeply, and invite people in—without feeling fake or salesy.
+                  </p>
+                </div>
+
+
+                <div className="bg-[#F1F1F1] p-6 sm:p-8 lg:p-12">
+                  <h4 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-4 sm:mb-6">What You'll Get</h4>
+                  <div className="space-y-4">
+                    <h5 className="text-lg sm:text-xl font-medium text-[#171719]">Personalized AI-powered Caption Strategy Guide</h5>
+                    <p className="text-[#4C4B4B] font-light">You'll learn to craft story angles, write like you speak, use AI for captions, and build a repeatable system.</p>
+                    <div className="pt-4">
+                      <p className="font-medium text-[#171719] mb-2">How It Works:</p>
+                      <ol className="space-y-2 text-[#4C4B4B] font-light">
+                        <li>1. Answer a few short questions</li>
+                        <li>2. SELFIE AI™ generates: brand tone, post angles, custom hooks, and three done-for-you captions</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="relative p-8 sm:p-12 lg:p-16" style={{ backgroundImage: `url(https://i.postimg.cc/s1FPRSgY/5.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                  <div className="absolute inset-0 bg-black/70"></div>
+                  <div className="relative z-10 text-white text-center">
+                    <h4 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl mb-3 sm:mb-4">Practice Prompt</h4>
+                    <p className="text-lg sm:text-xl lg:text-2xl font-light italic mb-2">"This is for the girl I used to be…"</p>
+                    <p className="text-base sm:text-lg font-light">Write freely, post, and tag @ssasocial.</p>
+                  </div>
+                </div>
+
+
+                <div className="bg-white border-2 sm:border-4 border-[#171719] p-6 sm:p-8 lg:p-12">
+                  <p className="text-lg sm:text-xl lg:text-2xl font-light italic text-center max-w-3xl mx-auto text-[#171719]">
+                    "Think of your captions like a voice note to your best friend. Don't overthink it. Just tell the truth, make her feel seen, and invite her into something bigger."
+                  </p>
+                </div>
+
+
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-3 sm:mb-4">Caption Strategy Workbook</h4>
+                  <p className="text-[#4C4B4B] font-light mb-4 sm:mb-6">Generate your personalized caption guide with AI-powered insights.</p>
+                  <Button 
+                    onClick={() => generateWorkbook('25FB2EEB-6366-49D5-82A0-98553DCF4C60', 'Caption Guide', 'module-6')}
+                    disabled={generateWorkbookMutation.isPending}
+                    className="w-full bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A] border-0 min-h-[44px]"
+                  >
+                    {generateWorkbookMutation.isPending ? 'Generating...' : 'Generate My Caption Guide'}
+                  </Button>
+                </Card>
+
+
+                <div className="bg-[#F1F1F1] p-4 sm:p-6 lg:p-8">
+                  <h4 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl mb-4 sm:mb-6">Caption Writing Notes</h4>
+                  <Textarea
+                    placeholder="Document your caption discoveries, voice insights, and writing style notes..."
+                    value={notes['module-6'] || ''}
+                    onChange={(e) => saveNotes('module-6', e.target.value)}
+                    className="min-h-[120px] border-[#B5B5B3] focus:border-[#171719] text-base"
+                  />
+                </div>
+
+
+                <div className="text-center pt-4 sm:pt-8">
+                  <Button 
+                    onClick={() => markComplete('module-6', 'captions')}
+                    disabled={markCompleteMutation.isPending}
+                    className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white focus:bg-[#171719] focus:text-white px-8 sm:px-10 lg:px-12 py-3 sm:py-4 text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto min-h-[44px]"
+                  >
+                    {markCompleteMutation.isPending ? 'Saving...' : 'Complete Module 6 →'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+
+        {/* Final Section */}
+        <section className="mt-16 sm:mt-24 lg:mt-32 fade-in-element">
+          <div className="relative overflow-hidden" style={{ backgroundImage: `url(https://i.postimg.cc/QdJvmLsq/315.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="absolute inset-0 bg-white/95"></div>
+            <div className="relative z-10 py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-12 text-center">
+              <h2 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 sm:mb-8 text-[#171719]">
+                You Did That. And You're Just Getting Started.
+              </h2>
+              
+              <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 text-lg sm:text-xl text-[#4C4B4B] font-light leading-relaxed">
+                <p>
+                  You didn't just download a kit. You showed up for yourself, opened the camera, got clear, and took action. That energy builds a brand.
+                </p>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 my-8 sm:my-12">
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                    <p className="text-xs sm:text-sm uppercase tracking-wider">Branded Visual Identity</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                    <p className="text-xs sm:text-sm uppercase tracking-wider">Custom Editing Workflow</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                    <p className="text-xs sm:text-sm uppercase tracking-wider">Caption System</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-4xl font-['Cormorant_Garamond'] text-[#171719] mb-2">✓</div>
+                    <p className="text-xs sm:text-sm uppercase tracking-wider">Hands-Free Filming</p>
+                  </div>
+                </div>
+                <p>
+                  Ready for the next level? <strong>Branded by Selfie</strong> takes this foundation and scales it into a premium personal brand system.
+                </p>
+              </div>
+
+
+              <div className="mt-12 sm:mt-16 space-y-4">
+                <Button className="bg-[#171719] text-white hover:bg-[#2A2A2A] focus:bg-[#2A2A2A] border-0 px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-lg sm:text-xl uppercase tracking-wider w-full sm:w-auto min-h-[44px]">
+                  Explore Branded by Selfie
+                </Button>
+                <p className="text-sm text-[#4C4B4B] font-light">Complete brand strategy + premium AI tools</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}

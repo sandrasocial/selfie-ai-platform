@@ -1,0 +1,123 @@
+ Replace buggy editor with Toast UI + Replicate glam tools (no per-image limits)
+
+1 – Install & Import
+bash
+Kopier
+Rediger
+npm install @toast-ui/react-image-editor @toast-ui/image-editor
+npm install caman       # for LUT/Vogue filters
+tsx
+Kopier
+Rediger
+// components/VisualStudioEditor.tsx
+import ImageEditor from '@toast-ui/react-image-editor';
+import 'tui-image-editor/dist/tui-image-editor.css';   // base CSS
+import Caman from 'caman';                             // LUT support
+2 – Embed the Editor (Styled)
+tsx
+Kopier
+Rediger
+<ImageEditor
+  ref={editorRef}
+  includeUI={{
+    theme: {
+      'common.backgroundColor': '#ffffff',
+      'downloadButton.backgroundColor': '#000',
+      'downloadButton.color': '#fff',
+      'menu.activeIcon.backgroundColor': '#000',
+      'menu.activeIcon.color': '#fff'
+    },
+    initMenu: 'filter',
+    menuBarPosition: 'left'
+  }}
+  cssMaxHeight={600}
+  cssMaxWidth={900}
+  selectionStyle={{cornerSize: 10, rotatingPointOffset: 40}}
+/>
+Wrap in a white container with 1 px black border to keep Vogue layout.
+
+Hide Toast-UI default stickers/text menus (set menu array to ['crop','flip','rotate','filter','adjust']).
+
+3 – Add Vogue LUT Filters
+ts
+Kopier
+Rediger
+const vogueFilters = [
+  { name: 'Glow',   lut: '/luts/glow.png'   },
+  { name: 'Luna',   lut: '/luts/luna.png'   },
+  { name: 'Bare',   lut: '/luts/bare.png'   },
+  { name: 'Cine',   lut: '/luts/cine.png'   },
+  { name: 'Noir',   lut: '/luts/noir.png'   },
+  { name: 'Street', lut: '/luts/street.png' },
+  { name: 'Muse',   lut: '/luts/muse.png'   },
+  { name: 'Skin',   lut: '/luts/skin.png'   },
+  { name: 'Soft',   lut: '/luts/soft.png'   },
+  { name: 'Grace',  lut: '/luts/grace.png'  },
+];
+
+function applyLUT(lutPath) {
+  const canvas = editorRef.current.getInstance().toDataURL();
+  Caman('#tui-image-editor-canvas', function () {
+    this.reloadCanvasData();
+    this.lut(lutPath);
+    this.render();
+  });
+}
+Add each filter to the Toast-UI side bar via addMenuItem('filter', …).
+
+4 – Custom AI Glam Buttons
+Place three black buttons beneath the editor (full-width on mobile, 3-across desktop):
+
+Button	Action	Endpoint
+GLOW-UP	Face retouch	POST https://api.replicate.com/v1/predictions model: tencentarc/gfpgan, input: image
+CLEAN BG	Remove background	model: danielgatis/remove-bg
+STYLE AI	Vogue editorial remix	model: stability-ai/sdxl prompt: 'editorial fashion magazine, soft lighting'
+
+Pseudocode:
+
+ts
+Kopier
+Rediger
+async function runReplicate(model, payload) {
+  const res = await fetch('https://api.replicate.com/v1/predictions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Token ${process.env.REACT_APP_REPLICATE_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({version: model, input: payload})
+  });
+  const {output} = await res.json();
+  editorRef.current.getInstance().loadImageFromURL(output, 'result');
+}
+5 – Download = Client-Side Only
+ts
+Kopier
+Rediger
+const handleDownload = () => {
+  const dataURL = editorRef.current.getInstance().toDataURL();
+  const link = document.createElement('a');
+  link.download = 'selfie-ai-edit.jpg';
+  link.href = dataURL;
+  link.click();
+};
+6 – UI / UX
+Buttons visible by default (opacity:1) — black bg, white text, upper-case, 0 px radius.
+
+Mobile: stack AI buttons vertically, full-width.
+
+Keep the sticky image preview; Toast-UI handles internal scrolling.
+
+7 – Remove Old Editor Code
+Delete PhotoEditorNew.tsx or comment out to prevent bundle bloat.
+
+Point /studio/visuals to the new VisualStudioEditor component.
+
+8 – Next Steps
+Implement above.
+
+Push to preview.
+
+I’ll test filters, AI calls (with my Replicate key), crop & download.
+Once Visual Studio is solid, we’ll replicate the pattern for Pose, Captions, etc.
+

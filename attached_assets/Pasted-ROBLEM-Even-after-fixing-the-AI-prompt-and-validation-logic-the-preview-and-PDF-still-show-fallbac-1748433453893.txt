@@ -1,0 +1,115 @@
+ROBLEM:
+Even after fixing the AI prompt and validation logic, the preview and PDF still show fallback summary phrases like:
+
+"Story foundation & authentic voice clarity"
+
+"Content consistency & voice refinement"
+
+ROOT CAUSE FOUND:
+Hardcoded fallbacks in server/workbookAI.ts at lines 206–208 are overriding the AI response if the phase fields (phase_30, phase_60, phase_90) are missing or empty. The code looks like this:
+
+ts
+Kopier
+Rediger
+phase30: result.phase_30 || "Your 30-day foundation phase will be detailed here.",
+phase60: result.phase_60 || "Your 60-day growth phase will be detailed here.", 
+phase90: result.phase_90 || "Your 90-day authority phase will be detailed here.",
+This is causing the fallback to show even if the AI is generating valid content.
+
+✅ REQUIRED FIXES:
+REMOVE ALL HARDCODED FALLBACKS
+In server/workbookAI.ts, completely remove or neutralize the fallback values. Replace with null or throw error if values missing:
+
+ts
+Kopier
+Rediger
+if (!result.phase_30 || !result.phase_60 || !result.phase_90) {
+   throw new Error("AI failed to return valid 30-60-90 phase data");
+}
+Then:
+
+ts
+Kopier
+Rediger
+phase30: result.phase_30,
+phase60: result.phase_60,
+phase90: result.phase_90,
+UPDATE shared/schema.ts TO MATCH FIELD NAMES
+
+Ensure the schema matches:
+
+ts
+Kopier
+Rediger
+phase_30: z.string(),
+phase_60: z.string(),
+phase_90: z.string(),
+And matches the keys coming from OpenAI response.
+
+VALIDATE AI RESPONSE FORMAT AND LENGTH
+
+In workbookAI.ts after AI completion, validate each phase field:
+
+ts
+Kopier
+Rediger
+if (
+  result.phase_30.length < 100 ||
+  result.phase_60.length < 100 ||
+  result.phase_90.length < 100
+) {
+  throw new Error("AI returned insufficient implementation content");
+}
+DISPLAY LOGGING FOR DEBUGGING
+
+Log AI output and values being passed into preview + PDF generator:
+
+ts
+Kopier
+Rediger
+console.log("AI phase_30:", result.phase_30);
+console.log("AI phase_60:", result.phase_60);
+console.log("AI phase_90:", result.phase_90);
+FORCE FAILURE IF PHASES ARE TOO SHORT
+
+If AI returns summaries or the fallback logic triggers, don’t allow workbook generation. Show error and prompt user to regenerate.
+
+ts
+Kopier
+Rediger
+return res.status(400).json({
+  error: "Phase content too short. Please try again."
+});
+ENSURE PREVIEW + PDF DISPLAY ONLY AI-GENERATED CONTENT
+
+In both preview (ModuleWorkbook.tsx) and PDF generator (pdfMonkeyGenerator.ts):
+
+Only show AI-generated phase_30, phase_60, phase_90
+
+Do NOT fallback to default text under any circumstances
+
+🧪 POST-DEPLOY TEST:
+Go to Module One
+
+Fill out 5 story questions
+
+Click Generate My Workbook
+
+Confirm:
+
+The preview shows full paragraph per phase (not summary phrases)
+
+PDF download matches preview
+
+Console logs show actual AI-generated content
+
+If any phase shows < 100 characters or looks like a title/slogan — it must error out.
+
+Once fixed, I’ll retest the full flow and confirm preview + PDF reflect real Sandra-level 🔥 brilliance.
+
+
+
+
+
+
+

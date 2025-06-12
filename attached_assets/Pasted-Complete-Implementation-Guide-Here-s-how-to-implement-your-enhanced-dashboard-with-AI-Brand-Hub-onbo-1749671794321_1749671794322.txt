@@ -1,0 +1,175 @@
+Complete Implementation Guide
+Here's how to implement your enhanced dashboard with AI Brand Hub onboarding:
+Step 1: Database Updates
+First, update your database schema:
+sql-- Add to users table
+ALTER TABLE users ADD COLUMN brand_onboarding_complete BOOLEAN DEFAULT FALSE;
+ALTER TABLE users ADD COLUMN onboarding_completed_at TIMESTAMP;
+ALTER TABLE users ADD COLUMN vip_status BOOLEAN DEFAULT FALSE;
+
+-- Create or update purchases table
+CREATE TABLE IF NOT EXISTS purchases (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  product_id VARCHAR(255) NOT NULL,
+  stripe_payment_intent_id VARCHAR(255),
+  amount INTEGER,
+  currency VARCHAR(3) DEFAULT 'usd',
+  status VARCHAR(50) DEFAULT 'completed',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create subscriptions table for ongoing memberships
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  stripe_subscription_id VARCHAR(255) UNIQUE,
+  tier VARCHAR(50) NOT NULL, -- 'starter', 'branded', 'vip'
+  status VARCHAR(50) NOT NULL, -- 'active', 'canceled', 'past_due'
+  current_period_start TIMESTAMP,
+  current_period_end TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+Step 2: Router Setup
+Update your router to make dashboard the default landing page:
+javascript// /src/App.js or your router setup
+import { Router, Route, Switch, Redirect } from 'wouter';
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        {/* Dashboard as landing page */}
+        <Route path="/" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
+        
+        {/* Brand onboarding */}
+        <Route path="/onboarding/brand-hub" component={BrandHubOnboarding} />
+        
+        {/* Profile management */}
+        <Route path="/my-brand-profile" component={MyBrandProfile} />
+        
+        {/* Other routes */}
+        <Route path="/studio" component={Studio} />
+        <Route path="/sandra-ai" component={SandraAI} />
+        {/* ... rest of your routes */}
+      </Switch>
+    </Router>
+  );
+}
+Step 3: API Routes Structure
+Create these API files:
+/api/
+  ├── me-with-profile.js     # Enhanced user data
+  ├── user-profiles.js       # Profile CRUD
+  ├── onboarding/
+  │   └── brand-hub.js       # Onboarding completion
+  ├── sandra-ai.js           # Protected AI endpoint
+  └── middleware/
+      └── aiAccessGuard.js   # Access control
+Step 4: Component Integration
+Update your existing dashboard component:
+javascript// Replace your current Dashboard export with:
+export { default } from './components/EnhancedDashboard';
+Step 5: Access Control Implementation
+Here's how to implement the access control in your AI tools:
+javascript// In Sandra AI component
+import { useUserAccess } from '@/hooks/useUserAccess';
+
+function SandraAI() {
+  const { user, accessLevels, hasProfile } = useUserAccess();
+  
+  // Block access if no starter access
+  if (!accessLevels.canAccessAI) {
+    return <UpgradePrompt requiredTier="starter" />;
+  }
+  
+  // Prompt for profile completion if missing
+  if (!hasProfile) {
+    return <ProfileCompletionPrompt />;
+  }
+  
+  // Regular AI interface
+  return <AIInterface />;
+}
+Step 6: Membership Logic
+Here's how the access levels work:
+Free Users:
+
+Studio access only
+Can download freebie
+See locked features
+
+Kit Buyers ($67):
+
+Get 30 days free platform access
+Can use Sandra AI, Weekly Planner
+Access to course content they bought
+After 30 days: keep course access, lose platform features
+
+Branded Buyers ($397):
+
+Get 90 days free platform access
+Full access to all tools except VIP features
+Access to course content
+After 90 days: keep course access, lose some platform features
+
+VIP Members:
+
+Full platform access
+All courses included
+Advanced features
+Ongoing subscription
+
+Step 7: User Flow
+
+User logs in → Lands on Dashboard
+No brand profile → Sees Brand Hub onboarding card
+Completes onboarding → AI tools are personalized
+Uses tools → Content matches their brand voice and goals
+Access expires → Clear upgrade prompts with trial countdown
+
+Step 8: Testing the Integration
+Test these scenarios:
+javascript// Test access levels
+const testUser = {
+  purchases: ['starter-kit'],
+  starterKitPurchaseDate: '2024-01-01', // 30 days ago
+  brandProfileComplete: false
+};
+
+// Should show:
+// - Brand hub onboarding card
+// - Access to AI tools but with profile prompt
+// - Trial countdown
+// - Clear upgrade path when trial expires
+Step 9: Analytics & Tracking
+Add these events for insights:
+javascript// Track important events
+trackEvent('brand_onboarding_started', { userId });
+trackEvent('brand_onboarding_completed', { userId, completeness: 85 });
+trackEvent('ai_tool_accessed', { userId, hasProfile: true, accessType: 'trial' });
+trackEvent('upgrade_prompt_shown', { userId, requiredTier: 'starter' });
+Step 10: Success Metrics
+Monitor these KPIs:
+
+Onboarding completion rate: % who complete brand profile
+AI tool usage: Increase after profile completion
+Trial conversion: % who upgrade before trial expires
+Profile completeness: Average % of fields filled
+Feature adoption: Which tools get used most
+
+Key Benefits You'll See
+For Users:
+
+No more repetitive form filling
+Content that sounds like them
+Clear upgrade path with value demonstration
+Seamless experience across all tools
+
+For Your Business:
+
+Higher engagement with personalized content
+Better trial-to-paid conversion
+Clear upgrade triggers
+Rich user data for product developme

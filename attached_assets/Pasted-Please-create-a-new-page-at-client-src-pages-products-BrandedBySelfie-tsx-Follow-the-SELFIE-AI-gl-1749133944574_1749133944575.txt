@@ -1,0 +1,129 @@
+Please create a new page at:
+client/src/pages/products/BrandedBySelfie.tsx
+
+Follow the SELFIE AI™ global design system:
+
+Font: Cormorant Garamond for headings, Inter Light for body
+
+Colors:
+
+Background: #F1F1F1
+
+Accent: #B5B5B3
+
+Text: #4C4B4B
+
+Overlay/Black: #171719
+
+Buttons:
+
+Solid black w/ white text
+
+White border w/ transparent background
+
+Sharp square corners
+
+Hover state: invert
+
+No icons, emojis, or rounded elements
+
+✅ Page Sections & Content:
+
+Hero Section
+
+Full-bleed mirror selfie (placeholder)
+
+Heading:
+
+css
+Kopier
+Rediger
+You’re not just a brand.  
+You’re the whole story.
+Subheadline:
+
+vbnet
+Kopier
+Rediger
+Branded by Selfie™ is your step-by-step guide to build a personal brand that feels real, looks high-end, and gets attention.
+CTA buttons:
+
+GET STARTED (black solid)
+
+SEE WHAT'S INSIDE (white border)
+
+What You’ll Learn (3 Cards)
+
+Hover cards with subtle shadow
+
+Card 1: Know Your Message
+
+Card 2: Create Powerful Content
+
+Card 3: Look Like a Brand
+
+About Sandra
+
+2-column layout: Image (left), Text (right)
+
+Text:
+
+css
+Kopier
+Rediger
+Hi, I’m Sandra.  
+I started from scratch. No fancy tools. Just a phone and a dream.  
+Now I’ve built a personal brand seen by millions.  
+This program is what I wish I had when I started.
+Italic quote block:
+“Your face, your words, your story — they’re not too much. They’re your power.”
+
+What’s Inside (List or Grid)
+
+✅ Brand Clarity Workbook
+
+✅ Real caption formulas and hooks
+
+✅ Selfie strategy & confidence tools
+
+✅ Content batching system
+
+✅ Canva templates & presets
+
+✅ Weekly action steps
+
+✅ Lifetime access
+
+Testimonials Section (Carousel or Grid)
+
+Add 2–3 styled quote boxes
+
+Placeholder images allowed
+
+Pricing Section
+
+Price: $397
+
+Text:
+
+pgsql
+Kopier
+Rediger
+Get Branded by Selfie™ for $397  
+One-time payment | Lifetime access
+CTA Button: JOIN NOW
+
+Guarantee note: 14-day refund policy. No risk. Real results.
+
+Navigation + Footer
+
+Add to header nav as: Branded
+
+Link to /checkout/branded
+
+Use existing global header/footer styling
+
+All nav/footer text = white
+
+Background = #171719
+

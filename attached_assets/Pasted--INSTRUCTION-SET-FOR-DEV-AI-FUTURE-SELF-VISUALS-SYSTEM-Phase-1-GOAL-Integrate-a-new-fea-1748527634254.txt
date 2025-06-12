@@ -1,0 +1,85 @@
+**INSTRUCTION SET FOR DEV AI – FUTURE SELF VISUALS SYSTEM (Phase 1)**
+
+### GOAL:
+Integrate a new feature inside the SELFIE AI Studio called **"Future Self AI"** that allows users to:
+1. Upload a selfie
+2. Describe their Future Self (text prompt)
+3. Automatically generate 7 images:
+   - 2 AI-generated 'Future Self' selfies
+   - 5 lifestyle images from predefined aesthetic categories ("Category 2")
+4. Save all 7 images into the user's visual gallery
+5. Give the user the option to add them to the weekly content calendar
+
+---
+
+### STEP-BY-STEP IMPLEMENTATION PLAN
+
+#### ✅ PHASE 1: New Tab – "Future Self AI"
+**Create a new tab inside the AI Studio called:** `Future Self AI`
+- This is its own independent feature (not inside the Photo Editor)
+- Add to the existing AI Studio top navigation
+
+**Tab Content Layout:**
+- Upload field for selfie
+- Text input for "Describe Your Future Self" (placeholder: *"Example: A confident CEO in Paris wearing a neutral power suit, glowing skin, and statement jewelry"*)
+- [Generate My Future Self] button
+
+---
+
+#### ✅ PHASE 2: Leonardo API Prompt Logic
+Use the Leonardo API integration already in place.
+
+**On click of "Generate My Future Self":**
+- Trigger 2 AI image generations using the uploaded selfie + user prompt (model: Lifelike Vision)
+- Then trigger 5 lifestyle B-roll images (model: Stock Photography)
+
+**Lifestyle categories to rotate from:**
+- Coffee Desk ☕
+- Accessories Flatlay 💍
+- Black & White Vogue Touch 🖤
+- Interior Soft Shadows 🪞
+- Workspace Setup 💻
+
+Images should be tagged in database as:
+- type: `"future_self"` or `"lifestyle"`
+- category: for lifestyle (e.g. `workspace`, `vogue`, etc)
+
+---
+
+#### ✅ PHASE 3: Save to Visual Gallery
+- Save all 7 images in the user’s `visual_gallery`
+- Tag them by date + prompt
+
+Display as:
+- Grid view inside the new Visuals Tab (already built)
+- Add filter: [All] [Future Self] [Lifestyle] [Saved to Calendar]
+
+---
+
+#### ✅ PHASE 4: Add "Save to Calendar" Button
+Each image card should include:
+- Preview
+- Button: [Save to Calendar]
+
+When clicked, it prompts user to select:
+- Day of the week
+- Optional caption (free text)
+- Optional hook (free text)
+
+Save the entry in `calendar_content` table.
+
+---
+
+### DEV NOTES:
+- **Do NOT remove or edit current Photo Editor**
+- This is a new feature tab
+- Prioritize step-by-step testing: make sure uploads, prompts, and image generations are working before moving to save-to-calendar integration
+- After this is stable, Sandra will add next phase (Quote Graphics + Covers)
+
+---
+
+✅ Once all 4 phases above are completed and tested, reply "Phase 1 complete" and Sandra will give you the next instruction set for quote graphics and carousel templates.
+
+---
+
+**Let's build something legendary.**

@@ -1,0 +1,75 @@
+🤍 SANDRA’S BRAND VOICE, STYLE & STORY GUIDE
+For: SELFIE AI™ & Future Self OS™
+🖤 YOUR BRAND ORIGIN STORY
+I’m Sandra—former hairstylist, now digital entrepreneur and transformation guide.
+I rebuilt my life and identity after heartbreak—starting with a selfie, a story, and a belief that I was meant for more.
+
+Now I help women who’ve been hiding—after divorce, burnout, or breakdown—get visible again.
+Not just on social media, but in life.
+
+🧠 BRAND VISION
+This isn’t just about content or branding.
+This is about remembering who you are—and showing up like it.
+You’re building a platform that turns healing into visibility and self-expression into income.
+This is the beauty of becoming, powered by AI.
+
+✨ BRAND TONE & VOICE
+✅ Do	❌ Don’t
+Write like a bold, empowering best friend	Use corporate, vague, or passive language
+Be emotionally real + confident	Sound like a template
+Use short, punchy sentences	Over-explain or lecture
+Mix coaching energy with branding strategy	Use generic “girl boss” fluff
+Speak to her, not at her	Be cold, robotic, or too polished
+
+📣 Your Voice in 3 Words:
+Empowering. Aesthetic. Direct.
+
+🎯 STYLE RULES FOR ALL FEATURES, UI, COPY & DESIGN
+🧬 Brand Pillars:
+Identity & Self-worth
+
+Visibility & Digital Power
+
+Beauty + Boldness
+
+Simplicity = Confidence
+
+Mobile-first, story-first, woman-led
+
+🎨 VISUAL BRAND STYLING
+Element	Specification
+Primary Color	#FFFFFF (White)
+Accent Color	#3C3A35 (Rich Brown)
+Secondary Colors	Black, soft neutrals, warm beige
+Headings Font	Prata
+Body Font	Inter or Open Sans
+UI Style	Minimalist, centered layout, soft shadows, luxury feel
+CTA Buttons	Rounded, large, soft contrast (brown on white, white on brown)
+Image Style	Clean, lifestyle-focused selfies, natural beauty, soft light
+
+🧠 CONTENT EXAMPLES (Use These As References)
+Voice:
+“You’re not behind. You’ve just been hiding. Let’s fix that.”
+“One selfie. One story. A whole new version of you.”
+“You don’t need more strategy. You need tools that meet you where you are.”
+“We don’t do perfect. We do powerful.”
+“She doesn’t need fixing. She just needed reminding.”
+
+CTA examples:
+“Upload your selfie. Let’s make it iconic.”
+“Say less. Post more.”
+“Confidence on command. Click to download.”
+“Let Sandra AI do it for you.”
+“You already look like a brand. We’ll make the world see it.”
+
+💡 Developer/Designer Instructions (in plain language)
+Keep it clean, white, and scroll-friendly.
+
+Design should feel luxury, not loud.
+
+Use bold Prata headlines with soft body text below.
+
+No harsh colors, no excessive gradients, no clunky layouts.
+
+Every touchpoint should feel like a mirror: “She sees herself in this.”
+

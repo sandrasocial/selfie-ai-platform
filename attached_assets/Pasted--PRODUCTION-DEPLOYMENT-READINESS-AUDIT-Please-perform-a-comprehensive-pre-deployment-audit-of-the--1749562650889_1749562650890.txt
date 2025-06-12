@@ -1,0 +1,144 @@
+# PRODUCTION DEPLOYMENT READINESS AUDIT
+
+Please perform a comprehensive pre-deployment audit of the Selfie AI platform to ensure it's production-ready. Focus on fixing critical issues that would prevent revenue generation.
+
+## 1. AUTHENTICATION SYSTEM AUDIT
+**Fix the magic link authentication flow completely:**
+- Debug why magic link clicks still result in `user_creation_failed` error
+- Ensure `/api/me` endpoint returns proper user data (currently 401 error)
+- Verify the complete flow: magic link click → token validation → user session → dashboard redirect
+- Test that VIP user `ssa@ssasocial.com` can successfully log in via magic link
+- Ensure session persistence works across page refreshes
+
+**Fix these specific issues:**
+```
+Error: https://sselfie.ai/supabase-auth?error=user_creation_failed
+Error: /api/me returns 401 Unauthorized
+```
+
+## 2. DATABASE INTEGRITY CHECK
+**Verify all required tables exist and have correct schemas:**
+- Check that `visual_editor_sessions` table exists (was missing before)
+- Verify user table has all required fields with correct data types
+- Ensure foreign key relationships are properly set up
+- Run any pending database migrations
+- Verify VIP user has correct permissions in database
+
+## 3. API ENDPOINTS FUNCTIONALITY TEST
+**Test all critical revenue-generating endpoints:**
+- `/api/auth/*` - Authentication flows
+- `/api/courses/*` - Course access and progress
+- `/api/sandra-ai/*` - AI chat functionality  
+- `/api/visual-studio/*` - Image editing tools
+- `/api/content-generator/*` - Content creation
+- `/api/strategy-coach/*` - AI coaching
+- `/api/pose-coach/*` - Pose suggestions
+- Stripe payment endpoints
+
+## 4. AI INTEGRATIONS VERIFICATION
+**Ensure all AI services are properly connected:**
+- Sandra AI (Anthropic Claude) - test chat responses
+- Strategy Coach (OpenAI) - test coaching conversations
+- Pose Coach (Anthropic) - test pose suggestions
+- Content Generator - test content creation
+- Visual Studio AI filters - test image processing
+
+**Verify environment variables for:**
+```
+ANTHROPIC_API_KEY
+OPENAI_API_KEY
+LEONARDO_AI_API_KEY
+```
+
+## 5. COURSE SYSTEM VERIFICATION
+**Ensure course delivery works properly:**
+- Selfie Starter Kit course loads and displays content
+- Course progress tracking functions
+- VIP/Branded tier access controls work
+- Course completion triggers work
+- PDF generation for workbooks functions
+
+## 6. PAYMENT FLOW TESTING
+**Critical revenue flows must work:**
+- Stripe checkout for $67 Starter Kit
+- Stripe checkout for $397 Branded by Selfie
+- Subscription management for $47/month SELFIE PRO
+- Access tier verification after payment
+- Webhook handling for subscription updates
+
+## 7. STUDIO TOOLS FUNCTIONALITY
+**All premium tools must work for paid users:**
+- Visual Studio (image editing with AI)
+- Photo Vault (image management)
+- Feed Designer (content planning)
+- Daily Upload Boost (content suggestions)
+- Auto Tagger (AI image analysis)
+- Brand Notes (content organization)
+
+## 8. ERROR HANDLING & LOGGING
+**Production-ready error management:**
+- Proper error responses for all API endpoints
+- User-friendly error messages in UI
+- Console logging for debugging without exposing sensitive data
+- Graceful fallbacks for AI service failures
+
+## 9. ENVIRONMENT CONFIGURATION
+**Verify all production environment variables are set:**
+```
+DATABASE_URL (production database)
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+STRIPE_SECRET_KEY
+STRIPE_WEBHOOK_SECRET
+RESEND_API_KEY
+RESEND_VERIFIED_DOMAIN
+ANTHROPIC_API_KEY
+OPENAI_API_KEY
+LEONARDO_AI_API_KEY
+```
+
+## 10. TYPESCRIPT & BUILD ERRORS
+**Clean codebase for deployment:**
+- Fix all TypeScript errors in server/ and client/
+- Resolve any build warnings
+- Ensure production build completes successfully
+- Remove any console.log statements in production code
+
+## 11. SECURITY AUDIT
+**Production security requirements:**
+- API rate limiting is enabled
+- CORS settings are properly configured
+- Session security is implemented
+- File upload size limits are enforced
+- Input validation on all endpoints
+
+## 12. PERFORMANCE OPTIMIZATION
+**Ensure platform can handle real users:**
+- Database queries are optimized
+- Image uploads are properly processed
+- AI API calls have appropriate timeouts
+- Frontend loads quickly
+- API responses are reasonably fast
+
+## DEPLOYMENT CHECKLIST
+After fixing all issues above:
+
+1. **Run comprehensive tests** on all major user flows
+2. **Verify revenue-critical paths** work end-to-end
+3. **Test with real payment transactions** (small amounts)
+4. **Confirm email delivery** works in production
+5. **Validate user session management** 
+6. **Check all AI integrations** respond properly
+
+## OUTPUT REQUIREMENTS
+For each section above, provide:
+- **Current Status**: Working ✅ or Broken ❌ 
+- **Critical Issues Found**: Specific errors or problems
+- **Fix Applied**: Exact code changes made
+- **Test Results**: Confirmation that fixes work
+- **Deployment Impact**: Any changes needed for production
+
+**Focus on the authentication issues first** - users must be able to log in to generate revenue. Then systematically work through each revenue-critical system.
+
+The goal is a platform where users can successfully: sign up → pay → access courses → use AI tools → get value → stay subscribed.

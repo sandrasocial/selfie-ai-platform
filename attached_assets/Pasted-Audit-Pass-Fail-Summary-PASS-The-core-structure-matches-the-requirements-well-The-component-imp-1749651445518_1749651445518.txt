@@ -1,0 +1,114 @@
+Audit – Pass/Fail Summary
+PASS - The core structure matches the requirements well. The component implements:
+
+✅ High-end editorial design with clean typography
+✅ Cormorant Garamond font usage throughout
+✅ Sharp corners (no rounded elements)
+✅ Six modules with proper structure
+✅ Hero video with Vimeo embed
+✅ Progress tracking logic
+✅ No emojis present
+✅ Module expansion/collapse functionality
+✅ Notes saving system
+✅ Aesthetic selection for Module 5
+
+Issues Found:
+
+API endpoint mismatch: Uses /api/generate/workbook instead of specified endpoints like /api/ai/workbook
+Missing error handling for failed workbook generations
+Aesthetic selection state not persisted to backend
+Module 4 workbook generation is disabled (placeholder)
+Some mutations could be optimized with better loading states
+
+Fixes
+
+Update API endpoints - Replace /api/generate/workbook with module-specific endpoints
+Add aesthetic persistence - Save selected aesthetic to backend via new mutation
+Enhance error handling - Add retry logic and better error messages for AI generation failures
+Enable Module 4 workbook - Remove placeholder state and implement proper generation
+Add loading states - Improve UX during AI generation with progress indicators
+
+AI-Integration Plan
+Workbook Generator
+Flow: User completes module → clicks "Generate Workbook" → AI processes notes + progress → PDF generated → download link provided
+jsxconst generateWorkbookMutation = useMutation({
+  mutationFn: async ({ templateId, moduleId, workbookType }) => {
+    const response = await fetch('/api/ai/workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        templateId,
+        moduleId,
+        workbookType,
+        userNotes: notes[moduleId] || '',
+        selectedAesthetic,
+        progressData: completedLessons,
+        courseId: 'starter-kit'
+      })
+    });
+    return response.json();
+  },
+  onSuccess: (data) => {
+    toast({ title: "Workbook Ready!", description: "Download starting..." });
+    window.open(data.downloadUrl, '_blank');
+  }
+});
+Visual Strategy Builder
+Flow: User selects aesthetic → provides brand reflection notes → AI generates complete visual strategy with mood boards, color palettes, styling guides
+jsxconst generateVisualStrategyMutation = useMutation({
+  mutationFn: async () => {
+    const response = await fetch('/api/ai/visual-strategy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        templateId: '6724E507-38D0-4C4C-8C2D-CEC891968D73',
+        selectedAesthetic,
+        brandReflections: notes['module-5'] || '',
+        completedModules: Object.keys(completedLessons)
+      })
+    });
+    return response.json();
+  }
+});
+Caption Strategy Generator
+Flow: User completes caption module → AI analyzes writing style from notes → generates personalized caption templates, hooks, and voice guide
+jsxconst generateCaptionGuideMutation = useMutation({
+  mutationFn: async () => {
+    const response = await fetch('/api/ai/captions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        templateId: '25FB2EEB-6366-49D5-82A0-98553DCF4C60',
+        writingStyle: notes['module-6'] || '',
+        brandVoice: notes['module-1'] || '',
+        selectedAesthetic
+      })
+    });
+    return response.json();
+  }
+});
+State Shape for Personalization
+jsxconst [userPersonalization, setUserPersonalization] = useState({
+  selectedAesthetic: null,
+  completedAssessments: {},
+  generatedWorkbooks: [],
+  aiInsights: {
+    brandVoice: null,
+    visualStyle: null,
+    contentStrategy: null
+  }
+});
+Component Integration Points
+
+Loading Modals: Add <GenerationModal /> component for AI processing states
+Success Toasts: Enhanced toast system with download progress
+Error Boundaries: Wrap AI features in error boundaries for graceful failures
+Progress Indicators: Real-time generation progress for longer AI operations
+
+Security Considerations
+
+Rate Limiting: Max 3 workbook generations per user per hour
+Auth Checks: Verify user subscription level before AI generation
+File Validation: Sanitize generated PDF downloads
+API Keys: Secure PDF Monkey API keys in environment variables
+User Data: Encrypt stored notes and aesthetic preferences

@@ -1,0 +1,95 @@
+ Final Fiken Sync Fix Instructions
+✅ Goal
+We need the Sync to Fiken button to actually create accounting entries inside the real Fiken company account.
+
+🚨 1. Log API Response From Fiken
+Inside fikenService.ts, please log the full response from the Fiken API:
+
+ts
+Kopier
+Rediger
+console.log("📤 Sending sale to Fiken:", salePayload);
+console.log("📥 Response from Fiken:", response.status, response.data);
+This will confirm if Fiken:
+
+Returns success (201 Created)
+
+Blocks the request (401 Unauthorized or 403 Forbidden)
+
+Has validation issues (400 Bad Request)
+
+📦 2. Fix the Sales Entry Payload Format
+Each entry should be posted as a sale:
+
+bash
+Kopier
+Rediger
+POST https://api.fiken.no/api/v1/companies/{companyId}/sales
+Here’s an example sale body that should work:
+
+json
+Kopier
+Rediger
+{
+  "contact": {
+    "name": "Shopify Sale",
+    "email": "no-reply@sselfie.ai"
+  },
+  "date": "2025-05-30",
+  "description": "Selfie Starter Kit",
+  "incomeAccount": "3000",
+  "amount": 2014.00,
+  "vatType": "HIGH"
+}
+✅ Required fields:
+
+contact.name and contact.email
+
+date (match Shopify order date)
+
+description (match product category: Starter Kit, Course, etc.)
+
+amount (line item total)
+
+vatType: "HIGH" for 25% MVA in Norway
+
+🔒 3. Use Bearer Token Properly
+Make sure headers are:
+
+http
+Kopier
+Rediger
+Authorization: Bearer FIKEN_API_KEY
+Content-Type: application/json
+And pass the correct company ID: 9023538170
+
+📥 4. Add Manual Test Endpoint
+Temporarily add this:
+
+bash
+Kopier
+Rediger
+GET /api/fiken/test-sale
+This will create one fake sales entry with known safe values. Use it to verify:
+
+Credentials work
+
+Endpoint is correct
+
+Sales actually appear inside Fiken
+
+✅ 5. Log Sync Summary in the Dashboard
+Once sales are sent, show:
+
+pgsql
+Kopier
+Rediger
+✓ 7 entries successfully synced to Fiken
+⚠️ 1 failed entry — check product tags
+⚠️ Optional: Stop Syncing Uncategorized Revenue
+Until product tags are fixed, skip uncategorized lines and log:
+
+ts
+Kopier
+Rediger
+console.warn(`⛔ Skipped uncategorized item: ${productName} ($${amount})`);

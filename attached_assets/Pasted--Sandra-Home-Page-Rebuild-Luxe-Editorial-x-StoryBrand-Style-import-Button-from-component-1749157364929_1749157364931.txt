@@ -1,0 +1,109 @@
+// Sandra Home Page Rebuild — Luxe Editorial x StoryBrand Style
+
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      {/* Header */}
+      <header className="fixed top-0 left-0 w-full z-50 text-white backdrop-blur-sm px-8 py-4 flex justify-between items-center" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+        <div className="text-2xl tracking-[0.2em]">SANDRA</div>
+        <nav className="flex space-x-6 text-sm uppercase">
+          <Link href="/studio">Studio</Link>
+          <Link href="/templates">Templates</Link>
+          <Link href="/sandra-ai">AI Chat</Link>
+          <Link href="/calendar">Calendar</Link>
+          <Link href="/vault">Vault</Link>
+          <Link href="/login">Login</Link>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center">
+        <img src="https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png" className="absolute inset-0 w-full h-full object-cover grayscale" />
+        <div className="absolute inset-0 bg-black opacity-50" />
+        <div className="relative z-10 text-center text-white px-6 max-w-4xl">
+          <h1 className="text-6xl md:text-7xl font-normal" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Turn Your Selfies Into...</h1>
+          <h2 className="text-2xl italic my-6" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Strategic Brand Assets</h2>
+          <p className="text-base mb-8" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            The most powerful branding tool is already in your hand—your selfie.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="outline" className="uppercase px-8 py-3 border-2 border-white text-white bg-transparent rounded-none tracking-wider">Explore Tools</Button>
+            <Button variant="outline" className="uppercase px-8 py-3 border-2 border-white text-white bg-transparent rounded-none tracking-wider">Start Free</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Proof Section */}
+      <section className="bg-white py-20 text-center">
+        <h3 className="text-xl mb-6" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Real Results</h3>
+        <div className="flex justify-center space-x-12 text-3xl font-medium" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          <div><strong>90</strong><div className="text-sm">Days</div></div>
+          <div><strong>120K</strong><div className="text-sm">Followers</div></div>
+          <div><strong>1.7M</strong><div className="text-sm">Reach</div></div>
+        </div>
+      </section>
+
+      {/* About Sandra */}
+      <section className="bg-[#171719] text-white px-6 py-20 flex flex-col md:flex-row items-center justify-center gap-12">
+        <div className="w-full md:w-1/2">
+          <h2 className="text-4xl mb-6" style={{ fontFamily: 'Cormorant Garamond, serif' }}>From Broken to Unbreakable</h2>
+          <p className="text-base" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+            After a 14-year marriage ended, I rebuilt my life, brand, and confidence—using only my iPhone, my story, and my selfies. Now, I help women do the same. Start small. Start now. Show up as you.
+          </p>
+        </div>
+        <div className="w-full md:w-1/2 bg-black h-64 flex items-center justify-center text-white text-sm tracking-wider" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>[ Upload Your Image ]</div>
+      </section>
+
+      {/* Platform Benefits */}
+      <section className="bg-white py-20 px-6">
+        <h2 className="text-4xl text-center mb-16" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What You’ll Unlock</h2>
+        <div className="grid md:grid-cols-4 gap-6 text-center">
+          {['AI Studio', 'Template Library', 'Sandra AI Chat', 'Strategy Workbooks'].map((title, i) => (
+            <div key={i} className="p-6 border hover:shadow-lg transition-all rounded-none">
+              <h3 className="text-xl mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{title}</h3>
+              <p className="text-sm" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Tap into tools that make branding effortless.</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Offer Ladder */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <h2 className="text-4xl text-center mb-16" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Build Your Brand in 4 Steps</h2>
+        <div className="grid md:grid-cols-4 gap-6 text-center">
+          {['Free Guide', 'Starter Kit', 'Branded', 'VIP'].map((step, i) => (
+            <div key={i} className="p-6 border rounded-none bg-white hover:shadow-xl transition-all">
+              <h3 className="text-xl mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>{step}</h3>
+              <p className="text-sm" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Your journey to showing up starts here.</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="bg-white py-20 px-6">
+        <h2 className="text-4xl text-center mb-16" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Women Finding Their Voice</h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {["Your words changed me... I stopped searching for approval.",
+            "I don’t believe in myself anymore… but I just posted my story.",
+            "My husband moved out... your videos gave me hope."
+          ].map((quote, i) => (
+            <div key={i} className="p-6 border text-sm italic" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>{`"${quote}"`}</div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-12 px-6 text-center">
+        <p className="mb-4" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Stay connected. Subscribe for tools + trainings.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <input type="email" placeholder="Enter your email" className="px-4 py-3 text-black w-64" />
+          <Button className="uppercase border-2 border-white text-white bg-transparent px-8 py-3 rounded-none" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>Subscribe</Button>
+        </div>
+      </footer>
+    </div>
+  );
+}

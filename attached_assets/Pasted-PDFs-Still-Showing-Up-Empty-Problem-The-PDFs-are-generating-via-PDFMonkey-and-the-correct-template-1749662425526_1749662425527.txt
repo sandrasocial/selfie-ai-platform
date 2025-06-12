@@ -1,0 +1,82 @@
+PDFs Still Showing Up Empty
+Problem:
+The PDFs are generating via PDFMonkey, and the correct templates are being used, but the content is still blank — no user notes or personalized fields are appearing in the PDF body.
+
+🎯 Objective:
+Ensure that each PDF workbook:
+
+Uses the correct template ID
+
+Sends correct, non-empty JSON payload to PDFMonkey
+
+Includes module-specific user data: notes, aesthetic choice, visual strategy, editing goals, etc.
+
+Matches PDFMonkey variable field names exactly
+
+✅ Action Checklist for Fixing the Issue:
+Log Payload Before API Call
+Add a console log before the fetch call to confirm:
+
+ts
+Kopier
+console.log("Sending to PDFMonkey:", {
+  document_template_id,
+  payload: {
+    ...payload
+  }
+});
+This will help confirm if actual user data is being sent or if it's undefined/null.
+
+Verify Template Key Matching
+Example: if PDFMonkey template uses voice_style, your payload cannot send voiceStyle. Case and underscore-sensitive.
+
+Ensure notes[moduleId] is properly passed
+For example:
+
+ts
+Kopier
+payload: {
+  voice_style: notes["module-6"],
+  editing_goals: notes["module-2"],
+  aesthetic: selectedAesthetic
+}
+Confirm JSON is inside document.payload
+Payload structure must look like this:
+
+json
+Kopier
+{
+  "document": {
+    "document_template_id": "TEMPLATE-ID-HERE",
+    "payload": {
+      "voice_style": "Warm, witty, inspiring",
+      "caption_goals": "Empower women through authenticity",
+      "hashtags": "#SelfieQueen"
+    }
+  }
+}
+Test With Hardcoded Sample Data
+As a fallback test, manually create a payload with hardcoded sample values and generate one PDF:
+
+ts
+Kopier
+payload: {
+  voice_style: "Confident, casual",
+  brand_vibe: "Modern, minimal, luxury",
+  goals: "Grow on IG and build brand trust"
+}
+If that works, the problem is with how you're retrieving dynamic user input (likely undefined).
+
+Verify Notes Are Stored Before Sending
+Ensure notes[moduleId] exists and is saved before the generation call is triggered.
+
+🧪 Expected Fix Confirmation:
+Once implemented, generate a test workbook and confirm:
+
+PDF contains the expected input fields filled (e.g. under “Your Brand Voice” → real values appear)
+
+No undefined, empty, or default filler content
+
+Templates dynamically populate based on textarea input per module
+
+Let me know once this is confirmed working or if logs indicate the payload is empty so we can patch at the root.

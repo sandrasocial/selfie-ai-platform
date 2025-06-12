@@ -1,0 +1,109 @@
+🖥️ PAGE TITLE: “Sandra in Marbella — Summer Collaborations”
+🌴 1. Hero Section: Editorial Arrival
+Background Image: Full-bleed Marbella lifestyle shot (use: https://i.postimg.cc/cL5Bqq3Z/1.png)
+
+Headline: Sandra in Marbella
+
+Subheadline: “A summer of sun, stories, and brand storytelling.”
+
+CTA: "Partner With Me" → scrolls to pitch or opens form
+
+✨ 2. About Sandra Block
+Image: Use beauty/glam headshot (https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg)
+
+Headline: "Hi, I'm Sandra."
+
+Subtext (short bio):
+Single mom. Branding coach. Creator.
+With over 120K combined followers and a signature look that blends glam and grit, I help women turn their face into their brand.
+This summer, I’m bringing my camera, content, and community to Marbella. Let’s create magic together.
+
+📊 3. Stats + Reach Preview
+Styled as luxury stat blocks (clean serif on soft beige):
+
+TikTok: 55,000+ followers
+
+Instagram: 73,600+ followers
+
+Monthly Reach: 1.7M+ views
+
+Engagement Rate: (pull from analytics)
+
+Top audience location: Norway, Sweden, UK, US
+
+Primary content: Beauty, branding, confidence, lifestyle
+
+Add CTA: "Download Media Kit" (PDF)
+
+🎥 4. Content Examples Gallery
+Title: "What brand storytelling looks like with me."
+Layout: 3-column grid of videos/images with hover caption
+
+Include:
+
+BTS/filming image → https://i.postimg.cc/0QVy2L7N/Heroimagehomaepage_(1).png
+
+TikTok style Reel (MP4 from uploads)
+
+Luxury close-up selfie
+
+Marbella vibe photos → https://i.postimg.cc/N097BN8X/2.png
+
+Use muted border + soft transitions on hover
+
+🤝 5. Trusted By (Partnership Logos)
+Use uploaded logo image here (logo partnerships.png)
+Header: "Brands I've partnered with:"
+Optional subtext: "From global icons to boutique disruptors."
+
+📦 6. What I Offer
+Create a clean 2-column grid of packages:
+
+Package	Includes
+1. Content Feature	1 Reel + 1 Story Mention + Tag
+2. Editorial Set	1 UGC video, 3 stills, brand styling
+3. Full Campaign	1-week activation, product placement, 5 assets
+VIP Co-Creation	Let’s design something iconic together (custom quote)
+
+Add callout text: “All content is created and edited by me. I use my own camera gear, editorial presets, and proven content strategy.”
+
+📬 7. Collaboration Form
+Title: "Let’s Collaborate — Summer ‘25"
+Form fields:
+
+Name
+
+Brand / Company
+
+Email
+
+Type of collaboration
+
+Message
+
+Button: "Submit Inquiry" → styled transparent with black border, thin serif
+
+🖤 8. Footer
+Quote section:
+"Let’s do this together, shall we…" — Sandra
+
+Mini menu (in serif): [Back to Selfie AI] [Instagram] [Email Me]
+Use white-on-black footer theme with logo
+
+✅ Add-ons to include:
+Floating “Download Media Kit” button
+
+Scroll-triggered section animation (fade in)
+
+Mobile-friendly stacked version
+
+DEV IMPLEMENTATION NOTES:
+Use page route: /summer-collabs
+
+Pull real analytics from uploaded ZIP
+
+All photos hosted via Postimg (already optimized)
+
+Fonts: Cormorant Garamond (headlines), Neue Einstellung (text)
+
+Background: #F1F1F1 cream / black accents / grayscale tones

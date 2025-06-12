@@ -1,0 +1,82 @@
+
+> rest-express@1.0.0 dev
+🔑 Stripe TEST mode initialized: sk_test_s
+💳 Payment processing mode: DEVELOPMENT
+🧪 TEST MODE: Using test payments only
+🔗 Shopify webhooks configured successfully
+8:05:51 AM [express] Server listening on port 5000!
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found
+🔍 Auth check - Session data: {
+  hasSession: true,
+  userId: undefined,
+  email: undefined,
+  authenticated: undefined,
+  devLogin: undefined,
+  testLogin: undefined
+}
+❌ No valid authentication session found

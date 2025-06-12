@@ -1,0 +1,116 @@
+Task:
+Implement a floating transparent navigation bar styled like a luxury fashion brand (Vogue / Chanel inspired), and update the brand header to include Sandra’s name with logo. Add scroll behavior, responsive layout, and hover animations.
+
+🧭 NAVIGATION BAR UPGRADE
+Placement & Positioning:
+
+position: absolute; top: 0; width: 100%; z-index: 1000;
+
+No background (fully transparent)
+
+Padding: 24px 48px
+
+On scroll: transition to soft beige background (#F5E6DC) with smooth fade-in (0.4s ease)
+
+Typography & Styling:
+
+Brand text: SANDRA in Prata, font-size: 24px, letter-spacing: -1%, text-transform: uppercase
+
+Nav links: Helvetica Neue, font-size: 14px, text-transform: uppercase, letter-spacing: 1px
+
+Link color:
+
+On transparent: #FFFFFF
+
+On scroll: #000000
+
+Active/hover state: add underline using ::after pseudo-element
+
+::after { content: ''; height: 2px; width: 0; background: #F5E6DC; transition: width 0.3s ease; }
+
+a:hover::after { width: 100%; }
+
+🔁 SCROLL INTERACTION
+Trigger behavior:
+
+On scroll Y > 60px:
+
+Background: #F5E6DC
+
+Text color: #000000
+
+Logo: swap to black or adjust blend mode
+
+On scroll Y < 60px:
+
+Reset to transparent
+
+Suggested code logic (JS or React-style):
+
+js
+Kopier
+Rediger
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav-wrapper');
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+Add .scrolled CSS:
+
+css
+Kopier
+Rediger
+.nav-wrapper.scrolled {
+  background: #F5E6DC;
+  transition: background 0.4s ease;
+}
+
+.nav-wrapper.scrolled a {
+  color: #000;
+}
+👑 BRANDMARK INTEGRATION
+Logo Integration Component:
+Use either of these layouts depending on space:
+
+Horizontal:
+
+html
+Kopier
+Rediger
+<div class="brand">
+  <img src="/assets/logo-black.png" alt="S Logo" />
+  <div class="brand-text">
+    <h1>SANDRA</h1>
+    <p class="subtitle">by SELFIE AI™</p>
+  </div>
+</div>
+Vertical (for mobile or footer):
+
+html
+Kopier
+Rediger
+<div class="brand-vertical">
+  <img src="/assets/logo-white.png" alt="S Logo" />
+  <h1>SANDRA</h1>
+  <p class="subtitle">by SELFIE AI™</p>
+</div>
+Style Notes:
+
+h1: Prata, font-size: 24px, uppercase, tight kerning (-0.5px)
+
+.subtitle: Helvetica Neue, font-size: 12px, letter-spacing: 2%, gray tone #999
+
+Make sure logo file swaps based on dark/light section (black for light, white for dark)
+
+✅ Final Checks
+Ensure nav is mobile responsive (collapsible or simplified layout on screens < 768px)
+
+Nav should stay fixed at top once user scrolls past hero (use position: fixed + background change)
+
+Add fade-in scroll animation for nav items (use @keyframes fadeInUp)
+
+Replace all navbar-brand or site-title mentions with SANDRA by SELFIE AI™ block
+

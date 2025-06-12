@@ -1,0 +1,85 @@
+SELFIE AI™ FULL DEV AUDIT REQUEST
+To: Dev AI
+From: Sandra, Founder of SELFIE AI™
+Mission: Perform a full audit of the SELFIE AI™ platform in its current preview state. Your job is to check
+if everything is working as expected, and identify any technical errors, missing functionality, routing
+issues, broken tools, API failures, or database problems. Do not make design changes. Only verify logic,
+routing, backend, and functionality.
+ KEY INSTRUCTIONS:
+This is a logic and functionality audit only. UX/UI fixes will come later.
+You are allowed to test pages, trigger features, and simulate user flows.
+For anything broken, flag it clearly and assign a fix suggestion.
+Use structured notes per page/feature for clarity.
+ PLATFORM AREAS TO AUDIT
+1. Authentication & Login
+[ ] Magic link login via Supabase
+[ ] Emergency login route fallback
+[ ] Auth persistence across tools/pages
+[ ] My Account: can update profile, change password
+2. Global Navigation & Routing
+[ ] Dashboard loads as default after login
+[ ] All nav and footer links route correctly
+[ ] Pricing, Contact, Support pages exist and work
+[ ] Dev access button removed from header
+3. Dashboard Page
+[ ] All tool cards route to correct pages
+[ ] Content plan section triggers AI content from brand profile
+[ ] Brand Hub onboarding displays saved data
+[ ] “Your Empire Path” logic works (Access vs Unlock)
+4. Studio Page + Tools
+[ ] Selfie Editor tool loads gallery, save works
+[ ] Photo Vault filters work and display correct data
+[ ] Feed Designer allows upload, drag/drop, toggle views
+[ ] Daily Upload + AI Quote works
+[ ] Auto Tagger runs logic and saves tags
+[ ] Brand Notes display and can be generated/edited
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+1
+5. AI Tools + Content Systems
+[ ] Visual Strategy auto-fills brand profile, saves results
+[ ] AI tools do not require re-entering data repeatedly
+[ ] Strategy outputs are viewable and stored
+[ ] Templates generate personalized content from user profile
+[ ] PDF Monkey workbooks generate and download properly
+6. Courses System
+[ ] Selfie Starter Kit: content loads, AI tools function
+[ ] Branded by Selfie: content uploads, PDF templates generate
+[ ] Empire Builder: placeholder structure visible
+[ ] Course access logic (Access/Unlock) functions correctly
+7. Content & Offer Pages
+[ ] Templates page: cards generate content, correct routing
+[ ] Pricing: tiers are correct and buttons work
+[ ] Freebie: unlock gate works, download triggers
+[ ] Drops page loads upcoming content
+[ ] Preset landing page loads correctly
+8. Admin / Backend Logic
+[ ] Admin dashboard routes correctly
+[ ] User data is saving (profile, uploads, notes, quotes, tags)
+[ ] Analytics and course access is trackable
+📊 DELIVERABLE:
+Please return a structured report with: - [ ] All broken or missing logic, clearly described - [ ] Database
+errors, API call failures, or file issues - [ ] Any non-working routes or silent failures - [ ] Success status of
+each section above ( / )
+Once logic is confirmed working across all sections, we will move into full UI/UX redesign.
+Thank you. Let's get this clean and production-ready

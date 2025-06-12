@@ -1,0 +1,101 @@
+1. Fix “Glow” Filter Logic
+What’s happening:
+Their existing getCombinedFilter probably outputs something like grayscale(0.5) (or an empty string), which overrides color and makes the image grey at low intensities.
+
+Goal for Glow:
+At intensity = 0, no change; at 100, gentle brightness and contrast boost.
+
+Correct formula:
+
+js
+Kopier
+Rediger
+const strength = filterIntensity / 100;   // 0.0–1.0
+// e.g. max brightness +0.2, max contrast +0.1
+return `brightness(${1 + 0.2 * strength}) contrast(${1 + 0.1 * strength})`;
+Dev-AI Prompt for Glow
+txt
+Kopier
+Rediger
+// BEGIN PROMPT
+In client/src/components/VisualStudioEditor.tsx, locate the function `getCombinedFilter(selectedFilter, filterIntensity)`.  
+Update the “Glow” case so it reads:
+
+```js
+case 'Glow': {
+  const strength = filterIntensity / 100;  
+  return `brightness(${1 + 0.2 * strength}) contrast(${1 + 0.1 * strength})`;
+}
+Ensure no grayscale, sepia, or other filters are applied here. Keep all other filter cases unchanged. Run tests, then stop.
+// END PROMPT
+
+yaml
+Kopier
+Rediger
+
+1. **Run that prompt** in Dev-AI.  
+2. **You test Glow**:  
+   - Upload a photo → apply Glow at 0, 30, 60, 100.  
+   - Verify at 0 it’s unchanged; at 100 it’s subtly brighter/contrasty, not grey.
+
+---
+
+## 2. Repeat for “Luna” Filter
+
+If Luna oversaturates or greys out at some intensity, use a similar approach. For example:
+
+```js
+case 'Luna': {
+  const strength = filterIntensity / 100;  
+  return `saturate(${1 + 0.15 * strength}) brightness(${1 + 0.05 * strength})`;
+}
+Dev-AI Prompt for Luna
+txt
+Kopier
+Rediger
+// BEGIN PROMPT
+In VisualStudioEditor.tsx, find the “Luna” filter inside getCombinedFilter.  
+Change it to:
+
+```js
+case 'Luna': {
+  const strength = filterIntensity / 100;  
+  return `saturate(${1 + 0.15 * strength}) brightness(${1 + 0.05 * strength})`;
+}
+Leave all other cases unchanged. Run tests, then stop.
+// END PROMPT
+
+yaml
+Kopier
+Rediger
+
+---
+
+## 3. Verify and Adjust Other Presets
+
+Go through each remaining preset (Bare, Cine, Noir, Street, Muse, Skin, Soft, Grace) one by one:
+
+- **Bare** might be a mild warm-up:  
+  ```js
+  const strength = filterIntensity / 100;
+  return `sepia(${0.2 * strength}) brightness(${1 + 0.05 * strength})`;
+Noir = pure greyscale at 100, but at low intensity it’s a slight desaturation:
+
+js
+Kopier
+Rediger
+const strength = filterIntensity / 100;
+return `grayscale(${0.6 * strength}) contrast(${1 + 0.1 * strength})`;
+Tweak each so no preset ever forces a full greyscale at low intensities.
+
+For each, use a similar Dev-AI prompt structure:
+
+txt
+Kopier
+Rediger
+// BEGIN PROMPT
+In VisualStudioEditor.tsx, update the “[PresetName]” case in getCombinedFilter to:
+  const strength = filterIntensity / 100;  
+  return `...your new CSS filter string...`;
+Leave others untouched. Run tests, then stop.
+// END PROMPT

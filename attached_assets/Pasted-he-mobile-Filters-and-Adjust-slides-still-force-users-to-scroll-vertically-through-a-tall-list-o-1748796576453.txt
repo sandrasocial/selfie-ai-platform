@@ -1,0 +1,93 @@
+he mobile “Filters” and “Adjust” slides still force users to scroll vertically through a tall list of buttons and sliders instead of letting them swipe horizontally through the options. We need to turn each slide into a true, touch-friendly horizontal carousel of feature icons, with pop-up controls, so users can pick a filter or adjustment without losing sight of the preview. Here’s exactly what to do:
+
+1. Replace the vertical grid of filter buttons with a horizontal, swipeable carousel
+
+On mobile (and tablet), display the Vogue filters as a single row of large, square black buttons (each 80×80 px) aligned left-to-right, inside a container with overflow-x: auto; display: flex; and no vertical scrollbar.
+
+Each filter button should show a minimal white icon or text label (e.g., “Glow,” “Luna,” etc.) centered, using Prata font.
+
+Below that row, reserve a small “Intensity” pill (e.g., “Intensity: 65%”) that only appears when a filter is actively selected; it should slide up from under the filter carousel as a semi-transparent black overlay with white text.
+
+Swiping left/right anywhere on the filter button row should scroll through all 10 filters. Add subtle left/right chevron overlays at 10 % from each edge (semi-transparent black with white chevrons) that only appear while the user is touching or hovering.
+
+Tapping a filter button selects that filter and immediately applies it to the Preview. The “Intensity” pill appears. If the user taps “Intensity” or the pill’s numeric value, a small horizontal slider pops up (black track, white thumb) that lets them adjust from 0–100 % in real time. Once they tap outside the slider, it collapses and leaves the chosen intensity.
+
+On desktop (≥ 768 px), the existing grid of filters can remain as is (two columns), but wrap it in a fixed‐height container so it never pushes the Preview below the fold on narrower browser windows.
+
+2. Turn the vertical “Adjust” sliders into a horizontal swipe carousel of adjustment icons
+
+Instead of stacking “Brightness,” “Contrast,” “Vignette,” etc. vertically, replace that entire block on mobile with a single horizontal row of black icon buttons (each 80×80 px) representing each adjustment (sun icon for brightness, circle for contrast, droplet for saturation, thermometer for temperature, and a vignette icon for edges).
+
+Render this row inside a container with overflow-x: auto; display: flex; so users can swipe through all adjustment icons. Add the same semi-transparent chevron overlays on the far left/right that appear when they touch or hover.
+
+When the user taps on an adjustment icon (for example, the sun), open a small pop-up “Adjust Brightness” panel directly above that icon:
+
+Show a mini vertical slider (black track, white thumb) for that specific adjustment, labeled “Brightness: 35%.”
+
+The user can drag it up/down to update the image in real time.
+
+Tapping outside the slider or hitting a close “✕” icon in its top-right collapses that panel.
+
+Beneath the carousel of icons, keep the “Reset All” and “Download” buttons (black background, white text), always visible.
+
+On desktop, the adjustment sliders remain visible side-by-side under the “Adjust” tab as before; only on screens narrower than 768 px do you switch to this icon-based carousel + pop-up sliders approach.
+
+3. Ensure the Preview always remains at the very top, with no vertical scrolling required to adjust filters or sliders
+
+The overall <VisualStudioEditor> layout for mobile should be:
+
+Preview header (“Preview • Enhanced/Original toggle”)
+
+Large Preview image (occupying about 40 % of vertical screen height)
+
+Mobile carousel container (either the filter buttons row or the adjustment icons row, depending on which slide is active)
+
+Swipe indicator dots or a small “Filters • Adjust” label above the carousel to show which slide is active (use white text on transparent dark overlay).
+
+Reset All + Download row (always visible below whichever carousel is active).
+
+All of this must fit on a standard iPhone screen without requiring the user to scroll down to find the preview again. The only vertical scrolling should be inside the filter-button row or adjustment-icon row (i.e., the user swipes horizontally).
+
+4. Responsive breakpoints and style consistency
+
+Use a media query at max-width: 767px to switch to the above mobile carousel layout. On larger screens, keep the existing two-column desktop view (filters and adjustments side-by-side under the Preview).
+
+Maintain the luxury Vogue styling: black backgrounds, white Prata labels, subtle 2 px white borders around buttons, thin charcoal shadows on active states, and the same hover/focus transitions you’ve already implemented.
+
+For the swipe functionality, use react-swipeable. Attach its onSwipedLeft and onSwipedRight handlers to move between the two slides (“Filters” vs. “Adjust”). Add aria-label to each slide for accessibility (“Filters carousel slide” and “Adjust carousel slide”).
+
+5. Testing and Verification
+
+Mobile (iPhone/Android):
+
+Open /studio/visuals on a phone browser.
+
+Confirm the Preview always remains on screen at the top.
+
+Swipe left/right anywhere on the carousel area to switch between “Filters” and “Adjust.”
+
+On the “Filters” carousel, swipe through all 10 filter buttons; tap a filter to apply instantly, then tap the “Intensity” pill to slide up the intensity control and drag it.
+
+On the “Adjust” carousel, swipe through all adjustment icons; tap one (e.g., Brightness) and drag its pop-up slider.
+
+Verify “Reset All” and “Download” always remain visible below the carousel.
+
+Desktop (≥ 768px):
+
+Open the same page on a desktop browser.
+
+Confirm the Preview is at the top with no layout changes.
+
+Under the Preview, “Filters” and “Adjust” appear side-by-side as before.
+
+Confirm horizontal swipe/click doesn’t activate (desktop stays in two-column mode).
+
+Edge Cases:
+
+Tap quickly between adjacent filter buttons—no glitched transitions.
+
+Open the “Intensity” slider then tap outside—slider collapses.
+
+Tap multiple adjustment icons consecutively—each pop-up closes when another opens.
+
+Once you’ve implemented this, send me a test link so I can verify the mobile UX myself. If anything feels off—whether a button is too small to tap, or the swipe threshold is too sensitive—adjust the CSS and swipeable settings (delta, deltaX) accordingly. Thanks!

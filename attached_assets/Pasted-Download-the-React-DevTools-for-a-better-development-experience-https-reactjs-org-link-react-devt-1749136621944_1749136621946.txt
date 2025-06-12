@@ -1,0 +1,89 @@
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+branded-by-selfie:1 Each dictionary in the list "icons" should contain a non-empty UTF8 string field "sizes".Understand this warning
+branded-by-selfie:1 Each dictionary in the list "icons" should contain a non-empty UTF8 string field "type".Understand this warning
+branded-by-selfie:1 Each dictionary in the list "icons" should contain a non-empty UTF8 string field "sizes".Understand this warning
+branded-by-selfie:1 Each dictionary in the list "icons" should contain a non-empty UTF8 string field "type".Understand this warning
+instrument.js:109 As of March 1st, 2025, google.maps.places.AutocompleteService is not available to new customers. Please use google.maps.places.AutocompleteSuggestion instead. At this time, google.maps.places.AutocompleteService is not scheduled to be discontinued, but google.maps.places.AutocompleteSuggestion is recommended over google.maps.places.AutocompleteService. While google.maps.places.AutocompleteService will continue to receive bug fixes for any major regressions, existing bugs in google.maps.places.AutocompleteService will not be addressed. At least 12 months notice will be given before support is discontinued. Please see https://developers.google.com/maps/legacy for additional details and https://developers.google.com/maps/documentation/javascript/places-migration-overview for the migration guide.
+(anonymous) @ instrument.js:109Understand this warning
+instrument.js:109 As of March 1st, 2025, google.maps.places.PlacesService is not available to new customers. Please use google.maps.places.Place instead. At this time, google.maps.places.PlacesService is not scheduled to be discontinued, but google.maps.places.Place is recommended over google.maps.places.PlacesService. While google.maps.places.PlacesService will continue to receive bug fixes for any major regressions, existing bugs in google.maps.places.PlacesService will not be addressed. At least 12 months notice will be given before support is discontinued. Please see https://developers.google.com/maps/legacy for additional details and https://developers.google.com/maps/documentation/javascript/places-migration-overview for the migration guide.
+(anonymous) @ instrument.js:109Understand this warning
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 4242 4242 4242 4242 
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 1
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 12
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 12 / 2
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 12 / 25
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 1
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 12
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 123
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: s
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: sandra@dibssocial.com
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 95173893
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: Sandra Aamodt
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: 95173893
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()Understand this error
+api.stripe.com/v1/payment_intents/pi_3RWfVsBCz0qlyrYN0s2dZ01c/confirm:1 
+            
+            
+           Failed to load resource: the server responded with a status of 400 ()

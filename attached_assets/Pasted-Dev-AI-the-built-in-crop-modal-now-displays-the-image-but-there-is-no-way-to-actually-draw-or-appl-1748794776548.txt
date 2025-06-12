@@ -1,0 +1,169 @@
+Dev AI, the built-in crop modal now displays the image, but there is no way to actually draw or apply a crop. We need a simple, interactive HTML5‐canvas solution that lets the user drag out a rectangle on the image and then “Apply Crop” to update the preview. Please follow these steps exactly:
+
+1. **Add a `<canvas>` element inside the crop modal**  
+   - Replace the static `<img>` tag in the modal with a `<canvas>` of the same dimensions as the uploaded image. For example:
+     ```jsx
+     {isCropModalOpen && (
+       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+         <div className="relative bg-white p-6">
+           <h2 className="text-2xl font-prata mb-4">Crop Image</h2>
+           <canvas 
+             id="cropCanvas"
+             width={cropCanvasWidth} 
+             height={cropCanvasHeight} 
+             className="border"
+           />
+           <div className="mt-4 flex space-x-4">
+             <button 
+               onClick={applyCrop} 
+               className="bg-black text-white px-6 py-2"
+             >
+               Apply Crop
+             </button>
+             <button 
+               onClick={() => setIsCropModalOpen(false)} 
+               className="bg-black text-white px-6 py-2"
+             >
+               Cancel
+             </button>
+           </div>
+         </div>
+       </div>
+     )}
+     ```
+   - Use state variables `cropCanvasWidth` and `cropCanvasHeight` to match the image’s natural dimensions (you can set these when the user uploads the image).
+
+2. **Set up a 2D rendering context and draw the original image onto the canvas**  
+   - In a `useEffect` hook that runs when `isCropModalOpen` is true, load the original image into the canvas:
+     ```js
+     useEffect(() => {
+       if (!isCropModalOpen || !originalImageSrc) return;
+       const img = new Image();
+       img.src = originalImageSrc; // e.g., a base64 data URL
+       img.onload = () => {
+         const canvas = document.getElementById("cropCanvas");
+         const ctx = canvas.getContext("2d");
+         // Resize canvas to image’s natural size if needed:
+         canvas.width = img.naturalWidth;
+         canvas.height = img.naturalHeight;
+         ctx.drawImage(img, 0, 0);
+         // Store the context for later use:
+         setCropCtx(ctx);
+       };
+     }, [isCropModalOpen, originalImageSrc]);
+     ```
+   - Create a state variable `const [cropCtx, setCropCtx] = useState(null);` to hold the 2D context.
+
+3. **Implement mouse‐drag to draw a rectangular selection overlay**  
+   - Track mouse events on the canvas:
+     ```js
+     const [isDragging, setIsDragging] = useState(false);
+     const [cropStart, setCropStart] = useState({ x: 0, y: 0 });
+     const [cropEnd, setCropEnd] = useState({ x: 0, y: 0 });
+
+     const handleMouseDown = (e) => {
+       const rect = e.target.getBoundingClientRect();
+       const x = e.clientX - rect.left;
+       const y = e.clientY - rect.top;
+       setCropStart({ x, y });
+       setCropEnd({ x, y });
+       setIsDragging(true);
+     };
+
+     const handleMouseMove = (e) => {
+       if (!isDragging) return;
+       const rect = e.target.getBoundingClientRect();
+       const x = e.clientX - rect.left;
+       const y = e.clientY - rect.top;
+       setCropEnd({ x, y });
+       // Draw overlay:
+       const canvas = document.getElementById("cropCanvas");
+       const ctx = canvas.getContext("2d");
+       // First, redraw the original image:
+       const img = new Image();
+       img.src = originalImageSrc;
+       img.onload = () => {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         ctx.drawImage(img, 0, 0);
+         // Draw semi-transparent dark overlay:
+         ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+         ctx.fillRect(0, 0, canvas.width, canvas.height);
+         // Compute selection rectangle:
+         const startX = cropStart.x;
+         const startY = cropStart.y;
+         const width = x - startX;
+         const height = y - startY;
+         // Clear the selected rectangle area:
+         ctx.clearRect(startX, startY, width, height);
+         // Draw a clear border around selection:
+         ctx.strokeStyle = "white";
+         ctx.lineWidth = 2;
+         ctx.strokeRect(startX, startY, width, height);
+       };
+     };
+
+     const handleMouseUp = () => {
+       setIsDragging(false);
+     };
+
+     // Attach these handlers to the <canvas>:
+     // <canvas id="cropCanvas" onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} … />
+     ```
+
+4. **Implement the “Apply Crop” function to extract the selected region**  
+   - In `applyCrop`, use the stored `cropStart` and `cropEnd` to compute the rectangle, create a temporary off‐screen canvas, draw only the cropped portion, then convert to a data URL:
+     ```js
+     const applyCrop = () => {
+       if (!cropCtx) return;
+       const { x: x1, y: y1 } = cropStart;
+       const { x: x2, y: y2 } = cropEnd;
+       const cropX = Math.min(x1, x2);
+       const cropY = Math.min(y1, y2);
+       const cropWidth = Math.abs(x2 - x1);
+       const cropHeight = Math.abs(y2 - y1);
+       if (cropWidth === 0 || cropHeight === 0) {
+         // No area selected; do nothing or show a warning.
+         return;
+       }
+       // Create temporary canvas to extract crop:
+       const tempCanvas = document.createElement("canvas");
+       const tempCtx = tempCanvas.getContext("2d");
+       tempCanvas.width = cropWidth;
+       tempCanvas.height = cropHeight;
+       // Draw only the selected portion from the main canvas:
+       tempCtx.drawImage(
+         document.getElementById("cropCanvas"),
+         cropX, cropY, cropWidth, cropHeight,
+         0, 0, cropWidth, cropHeight
+       );
+       // Convert to base64 data URL:
+       const croppedDataURL = tempCanvas.toDataURL("image/jpeg");
+       // Update the main preview image state:
+       setEditedImage(croppedDataURL);
+       setIsCropModalOpen(false);
+     };
+     ```
+
+5. **Ensure Undo/Reset works correctly**  
+   - Remove any existing reset logic tied to the old crop. Now, “Undo Crop” or “Reset All” should simply set `editedImage` back to the original image URL and reset `cropStart`/`cropEnd`:
+     ```js
+     const undoCrop = () => {
+       setEditedImage(originalImageSrc);
+       setCropStart({ x: 0, y: 0 });
+       setCropEnd({ x: 0, y: 0 });
+     };
+     ```
+
+6. **Adjust CSS so the modal is always visible and centered**  
+   - Verify the crop modal wrapper covers the entire screen (`fixed inset-0 flex items-center justify-center bg-black bg-opacity-75`) and that the inner white box has enough padding (`p-6`) and width (e.g. `w-11/12 md:w-3/4 lg:w-1/2`).
+   - Make sure `z-index` is sufficiently high (`z-50`) so the modal appears above all other elements.
+
+7. **Redeploy and test**  
+   - Click “Redeploy” in Replit.  
+   - Upload a selfie, click “Crop,” draw a rectangle by dragging on the canvas, then click “Apply Crop.”  
+   - Confirm:
+     - The selected portion replaces the main preview image (state `editedImage`).  
+     - You can click “Undo Crop” or “Reset All” to go back to the uncropped image.  
+     - If you click “Cancel,” the image remains unchanged.
+
+After verifying interactive cropping works correctly, we can move on to any remaining refinements in the Visuals tab.  

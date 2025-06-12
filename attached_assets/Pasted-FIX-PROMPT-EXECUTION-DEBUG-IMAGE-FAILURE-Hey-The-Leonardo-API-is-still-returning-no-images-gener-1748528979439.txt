@@ -1,0 +1,87 @@
+FIX PROMPT EXECUTION & DEBUG IMAGE FAILURE
+Hey! The Leonardo API is still returning "no images generated" despite using hardcoded prompts. Here’s what to do next to identify and fix it:
+
+✅ STEP 1: Test Leonardo API Call Manually in Isolation
+Please test this exact API call from the backend (or a temp file) using the Leonardo SDK or direct fetch:
+
+ts
+Kopier
+Rediger
+const response = await fetch("https://cloud.leonardo.ai/api/rest/v1/generations", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.LEONARDO_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    prompt: "Ultra-realistic portrait of a confident woman, wearing neutral glam makeup and a beige blazer, standing in soft natural light by a marble desk, Vogue editorial photography style, soft shadows, lifelike skin texture, Nikon DSLR style",
+    num_images: 1,
+    width: 512,
+    height: 768,
+    guidance_scale: 7,
+    modelId: "ac614f96-1082-45bf-bb90-00ce5bd4bf4d", // Lifelike Vision model ID (or your current)
+    presetStyle: "PHOTOREAL",
+    public: false
+  })
+});
+Then:
+
+ts
+Kopier
+Rediger
+const data = await response.json();
+console.log(data);
+✅ Confirm: Is it returning data.sdGenerationJob.generationId and images in data.generations?
+
+✅ STEP 2: Log Raw API Response
+Inside your leonardoAI.ts, log the full response from Leonardo when calling the image generation endpoint.
+
+ts
+Kopier
+Rediger
+console.log("Leonardo API raw response:", JSON.stringify(data, null, 2));
+We need to see:
+
+Is it returning a 200 but no image data?
+
+Is it failing silently on model/preset mismatch?
+
+Is the image file just not being saved to the gallery because of missing field?
+
+✅ STEP 3: Confirm Rendered Image URLs
+If image URLs are being returned from Leonardo, make sure you:
+
+Save them into your visual gallery DB.
+
+Display them properly inside VisualsCreator.tsx.
+
+Add a temp debug block like:
+
+ts
+Kopier
+Rediger
+if (!data.generations || data.generations.length === 0) {
+  throw new Error("Leonardo returned no images.");
+}
+✅ STEP 4: Optional — Fallback Prompt Test
+Try one more simple version for portrait testing:
+
+ts
+Kopier
+Rediger
+"photo of a woman smiling in soft daylight, white background, neutral makeup, DSLR style"
+Sometimes ultra-stylized prompts fail without clear explanation — this fallback is more stable.
+
+✅ STEP 5: Disable Selfie Conditioning Temporarily
+If using a base image upload (like a selfie), disable conditioning for this test only and try again with just the prompt.
+
+ts
+Kopier
+Rediger
+// Do not attach init_image or mask_image during testing
+Once that works → we re-enable image conditioning.
+
+✅ Once Working…
+I’ll give you the mapped dynamic prompt system next. For now: get 1 hardcoded image to render and show in the UI, and we’re gold.
+
+Let me know when that’s confirmed 🖤

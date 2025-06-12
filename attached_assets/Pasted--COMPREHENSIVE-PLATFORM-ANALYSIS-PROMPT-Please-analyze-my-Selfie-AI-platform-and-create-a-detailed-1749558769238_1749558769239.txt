@@ -1,0 +1,63 @@
+# COMPREHENSIVE PLATFORM ANALYSIS PROMPT
+
+Please analyze my Selfie AI platform and create a detailed technical report covering these areas:
+
+## 1. AI INTEGRATIONS ANALYSIS
+- **Sandra AI**: How is it implemented? Which files contain the Sandra AI logic? How does it connect to courses?
+- **Strategy Coach**: Implementation details and current functionality
+- **Pose Coach**: How it works and where the code lives
+- **Content Generator**: Current implementation status
+- Show me the exact file paths and key code snippets for each AI integration
+
+## 2. COURSE SYSTEM STRUCTURE
+- How are courses currently structured in the codebase?
+- What files handle course pages (Starter Kit, Branded by Selfie, VIP)?
+- How is course content uploaded and displayed?
+- What's the progress tracking system?
+- Are courses connected to AI assistants? How?
+
+## 3. PAYMENT & SUBSCRIPTION FLOW
+- How do the pricing tiers ($67, $397, VIP) connect to course access?
+- What handles Stripe payments and subscription management?
+- How does user tier verification work?
+- Show me the authentication and access control logic
+
+## 4. STUDIO TOOLS CONNECTIVITY
+- How do the Studio tools (Photo Vault, Feed Designer, etc.) connect to each other?
+- Are they sharing data between tools?
+- How do they connect to AI recommendations?
+- What's the file upload and management system?
+
+## 5. DATABASE & DATA FLOW
+- What's the database schema structure?
+- How does user data flow between components?
+- How are images/content stored and accessed?
+- What's the relationship between users, courses, and AI interactions?
+
+## 6. MISSING CONNECTIONS & ISSUES
+- What AI integrations are implemented but not properly connected?
+- Which course pages exist but lack content?
+- What API endpoints are defined but not working?
+- Any broken or incomplete features you can identify?
+
+## 7. REVENUE-CRITICAL GAPS
+- What's preventing users from purchasing and accessing courses?
+- Are there broken payment flows?
+- Missing course content upload functionality?
+- AI tools not properly gated by subscription tier?
+
+## 8. TECHNICAL ARCHITECTURE
+- Show me the main file structure (/client, /server organization)
+- Key configuration files (environment, database, API keys)
+- How frontend and backend communicate
+- Main dependencies and their purposes
+
+## OUTPUT FORMAT
+For each section, provide:
+1. **Current Status**: What's working vs. what's broken
+2. **File Locations**: Exact paths to relevant code
+3. **Code Snippets**: Key functions or components (first 20 lines)
+4. **Immediate Issues**: What needs fixing for revenue readiness
+5. **Integration Opportunities**: How to better connect existing features
+
+Focus on practical details that would help an external developer understand how to complete and connect all the features for a production-ready launch.

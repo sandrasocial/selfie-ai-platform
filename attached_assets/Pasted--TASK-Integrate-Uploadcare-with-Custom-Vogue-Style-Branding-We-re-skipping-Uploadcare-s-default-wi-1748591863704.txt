@@ -1,0 +1,114 @@
+ TASK: Integrate Uploadcare with Custom Vogue-Style Branding
+
+We’re skipping Uploadcare’s default widget UI and creating a clean, luxury-styled Upload button that opens the Uploadcare file dialog manually.
+
+✅ Step 1: Install Uploadcare Core Package
+bash
+Kopier
+Rediger
+npm install uploadcare-widget
+✅ Step 2: Create CustomUploadButton.tsx
+Create this file:
+
+tsx
+Kopier
+Rediger
+client/src/components/CustomUploadButton.tsx
+Paste this code:
+
+tsx
+Kopier
+Rediger
+import uploadcare from 'uploadcare-widget';
+import 'uploadcare-widget/uploadcare.lang.en.min.js';
+
+const CustomUploadButton = ({ onUpload }: { onUpload: (url: string) => void }) => {
+  const openUploader = () => {
+    uploadcare.openDialog(null, {
+      publicKey: 'YOUR_PUBLIC_UPLOADCARE_KEY', // Replace with real key
+    }).done(file => {
+      file.done(fileInfo => {
+        if (fileInfo?.cdnUrl) {
+          onUpload(fileInfo.cdnUrl);
+        }
+      });
+    });
+  };
+
+  return (
+    <button
+      onClick={openUploader}
+      className="rounded-2xl bg-black text-white px-6 py-3 text-sm tracking-wide uppercase shadow-md hover:bg-white hover:text-black border border-black transition duration-300"
+    >
+      Upload Your Photo
+    </button>
+  );
+};
+
+export default CustomUploadButton;
+📌 Replace 'YOUR_PUBLIC_UPLOADCARE_KEY' with the real key Sandra provides.
+
+✅ Step 3: Use the Component in a Page (e.g. /photo-upload)
+Create or update client/src/pages/PhotoUpload.tsx:
+
+tsx
+Kopier
+Rediger
+import CustomUploadButton from '@/components/CustomUploadButton';
+import { usePhotoLibrary } from '@/hooks/usePhotoLibrary';
+import { useAuth } from '@/hooks/useAuth'; // or wherever user ID comes from
+
+const PhotoUploadPage = () => {
+  const { addPhoto } = usePhotoLibrary();
+  const { user } = useAuth(); // Make sure user ID is available
+
+  const handleUpload = async (url: string) => {
+    await addPhoto({
+      image_url: url,
+      user_id: user.id,
+      category: 'selfie',
+      caption: '',
+    });
+  };
+
+  return (
+    <div className="p-6 max-w-xl mx-auto text-center">
+      <h1 className="text-2xl font-semibold mb-4">Upload a New Photo</h1>
+      <CustomUploadButton onUpload={handleUpload} />
+    </div>
+  );
+};
+
+export default PhotoUploadPage;
+✅ Step 4: Styling Matches Brand
+This button style uses:
+
+Rounded edges
+
+Black/white contrast
+
+Thin border
+
+Smooth transitions
+
+All caps tracking for that luxury feel 🖤
+
+✅ Step 5: Test Flow
+Visit /photo-upload
+
+Click the luxury-styled upload button
+
+Upload a photo
+
+Confirm it saves to the photo_library table with:
+
+image_url
+
+user_id
+
+category: "selfie"
+
+caption: ""
+
+✅ Confirm by checking Supabase → Table Editor → photo_library
+

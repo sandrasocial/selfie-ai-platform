@@ -1,0 +1,93 @@
+The backend validation is now working. AI responses are blocked if they are too short or contain banned phrases. However:
+
+✅ AI is generating full detailed phase paragraphs (confirmed in logs)
+
+❌ But the preview and PDF still show fallback placeholder text
+
+🔍 We suspect the frontend and PDF generator are not rendering the correct fields (phase_30, phase_60, phase_90)
+
+🛠 FIX STEPS — FRONTEND + PDF PAYLOAD + TEMPLATE
+STEP 1: ✅ Ensure AI Response Includes phase_30, phase_60, phase_90
+Double check in /server/workbookAI.ts that the final result passed to frontend looks like:
+
+ts
+Kopier
+Rediger
+{
+  phase_30: "Detailed paragraph here...",
+  phase_60: "Detailed paragraph here...",
+  phase_90: "Detailed paragraph here..."
+}
+NOTE: These should NOT be nested inside implementationPlan or any other field. They must be top-level fields in the payload sent to the frontend and PDF.
+
+STEP 2: ⚙️ Fix Frontend Preview Logic
+In /client/src/components/ModuleWorkbook.tsx:
+
+Replace any logic using implementationPlan or placeholder text like:
+
+tsx
+Kopier
+Rediger
+"Your personalized 30-60-90 day plan will be included in your workbook."
+With the actual fields:
+
+tsx
+Kopier
+Rediger
+<p><strong>First 30 Days:</strong> {phase_30}</p>
+<p><strong>Next 30 Days:</strong> {phase_60}</p>
+<p><strong>Final 30 Days:</strong> {phase_90}</p>
+Ensure fallback checks are removed, and phase_30, phase_60, phase_90 are displayed only if data is present.
+
+STEP 3: 🧾 Update PDFMonkey Payload
+In /server/pdfMonkeyGenerator.ts:
+
+Ensure you're sending:
+
+ts
+Kopier
+Rediger
+{
+  ...,
+  phase_30: result.phase_30,
+  phase_60: result.phase_60,
+  phase_90: result.phase_90
+}
+And the corresponding PDFMonkey template must use:
+
+liquid
+Kopier
+Rediger
+<h3>First 30 Days</h3>
+<p>{{phase_30}}</p>
+
+<h3>Next 30 Days</h3>
+<p>{{phase_60}}</p>
+
+<h3>Final 30 Days</h3>
+<p>{{phase_90}}</p>
+✅ This replaces any fallback block like {{implementationPlan}} or generic messages like “Your plan will be detailed here.”
+
+STEP 4: 🧪 Test Final Flow
+Go to Module One
+
+Fill in all 5 story questions
+
+Generate workbook
+
+Confirm preview now displays:
+
+txt
+Kopier
+Rediger
+First 30 Days: [REAL detailed paragraph from AI]
+Next 30 Days: [REAL detailed paragraph from AI]
+Final 30 Days: [REAL detailed paragraph from AI]
+Confirm the downloaded PDF also reflects these exact fields
+
+Check that no fallback sentence or placeholder text appears anywhere
+
+✅ Once Complete, Notify Sandra
+Once this is implemented, let Sandra know that the display logic is now pulling from live AI content and not using any fallback.
+
+This is the final fix to ensure her workbook system is truly personalized and high-converting. 🖤

@@ -1,0 +1,61 @@
+// 📍 SPRINT: VISUAL CREATOR REBUILD FOR SELFIE AI™
+
+// ✅ OBJECTIVE:
+// Phase out low-quality AI selfie generation and replace with:
+// 1. Professional Selfie Photo Editor (Sandra Preset Tool)
+// 2. Improved Feed Planner UX
+// 3. Carousel Post Creator
+
+// ------------------------------------------------------------
+
+// ✅ TASK 1: REMOVE / DISABLE AI SELFIE GENERATION
+- Remove selfie-conditioned image generation (Leonardo init_image based system)
+- Keep backend logic commented out for potential future reactivation
+- Hide or disable the "Future Self" tab in UI until new solution is implemented
+
+// ✅ TASK 2: IMPLEMENT SELFIE PHOTO EDITOR (Presets Tool)
+// UI:
+- New tab: "Photo Editor"
+- Components: Upload Selfie, Apply Preset (dropdown), Save or Add to Feed Planner
+
+// Functionality:
+- Allow user to upload selfie
+- Show live preview with selected preset
+- Use API (Pixlr API, Fotor API, or similar) to apply branded presets (Sandra Preset 1, 2, 3...)
+- Output high-resolution edited image
+
+// NOTE: Let Sandra provide preset visual examples
+
+// ✅ TASK 3: EXPAND FEED PLANNER FUNCTIONALITY
+// UI:
+- Add new tab inside Visual Creator: "Feed Planner"
+- Layout: 3x3 Instagram-style grid
+- New options:
+  - Upload custom photo
+  - Use photo from gallery
+  - Drag + drop to reorder
+  - Add text overlay to image (cover hook, eg. carousel cover or reel cover)
+
+// Backend:
+- Store user-generated grid arrangement
+- Each item: image_url, optional text_overlay, position index
+
+// ✅ TASK 4: ADD CAROUSEL POST CREATOR
+// UI:
+- New tab or button in Feed Planner: "Create Carousel"
+- Upload up to 10 images OR select from gallery
+- Add text overlays per slide
+- Export or Save to Feed
+
+// Backend:
+- Store carousel sets (carousel_id, slide_urls[], overlay_texts[])
+- Allow export as downloadable post set
+
+// ------------------------------------------------------------
+
+// ✅ FINAL NOTE:
+Make sure all new visual tools (Photo Editor, Feed Planner, Carousel Creator) use the same image storage system and display full-size images in high-res format.
+Ensure consistent branded UI and image proportions (1:1 or 4:5 for IG aesthetics).
+
+// 🔄 NEXT CHECKPOINT:
+After these are built, Sandra will test with her real images and presets. Once approved, we'll look at relaunching advanced AI-generated visuals using reference images or fine-tuned models.

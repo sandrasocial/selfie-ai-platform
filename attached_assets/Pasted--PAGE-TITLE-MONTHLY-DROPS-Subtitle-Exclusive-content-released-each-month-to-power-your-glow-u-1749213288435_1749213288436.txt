@@ -1,0 +1,115 @@
+🖥️ PAGE TITLE
+“MONTHLY DROPS”
+Subtitle: “Exclusive content released each month to power your glow-up.”
+
+Use Cormorant Garamond, center-aligned, lux serif layout. White on black or black on white depending on your dashboard theme.
+
+🧱 LAYOUT STRUCTURE
+🔝 Top Hero Block
+Section Label: JUNE DROP (updates dynamically)
+
+Drop Title: Mirror & Message
+
+Description: “This month’s drop is all about visibility rituals, brand voice clarity, and camera confidence.”
+
+Background: muted editorial image or aesthetic gradient
+Layout: wide, clean, centered headline + left-aligned description block
+CTA: “Unlock This Month” or “Explore Drop”
+
+🗂️ CONTENT GRID / SECTION
+Use vertical grid layout on desktop.
+Use stackable accordion OR horizontal swipe cards on mobile.
+
+🖼️ INDIVIDUAL DROP CARD
+Each card should feel like a magazine cover meets tool kit.
+
+CARD ELEMENTS:
+
+Element	Description
+📌 Title	Top left or centered — large serif (e.g., “Visual Confidence Templates”)
+🔖 Type Badge	Small uppercase tag: Template, Audio, Mini-Course, AI Tool
+📝 Short Desc	1–2 line description in Neue Einstellung
+📅 Drip Lock	If availableFrom > today, card appears blurred with lock icon + text: “Coming [Date]”
+🔓 Unlocked	CTA: “Open” or “Download” — appear on hover
+🔒 Locked	CTA: “Unlock with Plan” (or “Coming Soon”)
+
+Visual Cues:
+
+Locked = blurred image, grayscale card, lock icon at top right
+
+Unlocked = sharp color photo or layout, hover glow
+
+Hover States:
+
+css
+Kopier
+Rediger
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+🧩 FILTER TABS (Optional)
+Allow users to filter drops by content type:
+
+Templates
+
+Audio Pep Talks
+
+Mini-Courses
+
+AI Scripts
+
+These appear as clean border buttons (unstyled tabs, uppercase):
+
+html
+Kopier
+Rediger
+<button class="uppercase text-xs border px-3 py-2">Templates</button>
+🔄 UX BEHAVIOR FLOW
+User enters /dashboard or /drops
+
+Hero shows current month’s theme
+
+Scroll down to view individual Drop Cards
+
+If unlocked: can click → modal or file opens/downloads
+
+If locked: shows overlay with upgrade or unlock CTA
+
+“Coming Soon” drops appear blurred with calendar icon or tooltip
+
+On mobile, the same cards become vertical stackable blocks with swipeable options
+
+💾 DATA & API INTEGRATION
+For devs — each Drop object should contain:
+
+ts
+Kopier
+Rediger
+type DropItem = {
+  id: string
+  title: string
+  type: 'Template' | 'Audio' | 'Course' | 'AI Script'
+  description: string
+  availableFrom: Date
+  fileUrl: string
+  locked: boolean // or computed from `availableFrom`
+}
+🧠 DEVELOPER NOTES
+Use dynamic month rendering: format(new Date(), "MMMM yyyy")
+
+Handle locked logic via availableFrom and userAccess
+
+All cards must support fallback preview image
+
+Ensure download/open buttons check for authentication
+
+Use reusable DropCard component with props for lock, hover, mobile
+
+✅ BONUS IDEAS
+✨ Add “Featured Drop” block at top (editor’s pick)
+
+🧠 Let Sandra AI recommend a drop based on quiz or activity
+
+🧺 Let user “Save to My Tools” (optional)
+

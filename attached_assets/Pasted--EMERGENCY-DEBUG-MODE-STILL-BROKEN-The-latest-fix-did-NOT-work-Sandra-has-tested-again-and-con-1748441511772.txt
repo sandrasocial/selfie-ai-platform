@@ -1,0 +1,68 @@
+🚨 EMERGENCY DEBUG MODE — STILL BROKEN
+
+The latest fix did NOT work. Sandra has tested again and confirms:
+
+- phase30, phase60, phase90 are still null
+- Preview and PDF still show: “Your personalized 30-60-90 day implementation plan will be detailed here”
+- Her name (“Sandra”) is still not used
+- The AI response only includes a title and personalizedStrategy
+
+🧠 WHAT THIS MEANS:
+- The AI **prompt** is still not requesting the correct field structure
+- OR the AI **response parsing** is skipping/stripping the phase fields
+- OR the **final response** to frontend is overwriting them with null
+
+---
+
+✅ STEP 1: Rewrite the AI Prompt Like This:
+```ts
+const prompt = `
+Create a full JSON workbook for a woman named Sandra, who teaches other women how to rebuild their confidence and personal brand after heartbreak.
+
+Return JSON with this exact structure:
+
+{
+  "title": "...",
+  "personalizedStrategy": "...",
+  "phase30": "During your first month, you'll focus on...",
+  "phase60": "In your second month, you'll work on...",
+  "phase90": "By your third month, you'll be positioned to..."
+}
+
+Each phase field must be 3-4 sentences long, specific, strategic, and emotionally motivating. Speak in Sandra’s voice (bold, personal, motivational).
+
+Use her name, and speak directly to the user like this:
+"During your first month, Sandra recommends you..."
+
+DO NOT OMIT or RENAME these fields.
+`
+✅ STEP 2: Inject Console Logs in server/workbookAI.ts:
+
+ts
+Kopier
+Rediger
+console.log("🌟 AI RAW RESPONSE:", rawResponse);
+console.log("✅ Parsed Phase30:", parsed.phase30);
+console.log("✅ Parsed Phase60:", parsed.phase60);
+console.log("✅ Parsed Phase90:", parsed.phase90);
+✅ STEP 3: Protect Final API Output in routes.ts
+Before sending to frontend, run a last-minute check:
+
+ts
+Kopier
+Rediger
+if (!workbook.phase30 || !workbook.phase60 || !workbook.phase90) {
+  console.warn("⚠️ Missing phase content — injecting fallback.");
+  workbook.phase30 = fallbackPhase30;
+  workbook.phase60 = fallbackPhase60;
+  workbook.phase90 = fallbackPhase90;
+}
+✅ FINAL TEST:
+
+Generate a new workbook in Module One.
+
+Open console → Check logs for each phase.
+
+Confirm preview shows detailed phase paragraphs.
+
+Download PDF → verify same content shows.

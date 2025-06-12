@@ -1,0 +1,129 @@
+export const VIBE_THEMES = [
+  {
+    id: "pink",
+    name: "Pink",
+    imageUrls: [
+      "https://i.postimg.cc/1VnnfrtR/IMG-6722.jpg",
+      "https://i.postimg.cc/FH9ZqHxN/IMG-6730.jpg",
+      "https://i.postimg.cc/DwVRWhTR/IMG-6735.jpg",
+      "https://i.postimg.cc/W1n7sqwF/IMG-6737.jpg",
+      "https://i.postimg.cc/6QbJQFhT/IMG-6740.jpg",
+      "https://i.postimg.cc/cHw8ffrh/IMG-6729.jpg",
+      "https://i.postimg.cc/BQsLxLCp/IMG-6745.jpg"
+    ],
+    presetPalette: ["#FBE6EB", "#FFD6E8", "#E6C8DC", "#D3A0B8", "#171719"],
+    presetFonts: ["Playfair Display", "Inter"]
+  },
+  {
+    id: "cream",
+    name: "Cream",
+    imageUrls: [
+      "https://i.postimg.cc/NjWwNZFM/IMG-6750.jpg",
+      "https://i.postimg.cc/J0CmFgJz/IMG-6752.jpg",
+      "https://i.postimg.cc/7h3bHhHd/IMG-6757.jpg",
+      "https://i.postimg.cc/KYNtLKMK/IMG-6761.jpg",
+      "https://i.postimg.cc/wvWRydkr/IMG-6766.jpg",
+      "https://i.postimg.cc/T2LkR5w6/IMG-6754.jpg"
+    ],
+    presetPalette: ["#FAF8F2", "#E7E2D8", "#CFCAC1", "#A9A094", "#4C4B4B"],
+    presetFonts: ["Cormorant Garamond", "Lato"]
+  },
+  {
+    id: "beige",
+    name: "Beige",
+    imageUrls: [
+      "https://i.postimg.cc/dtkbPPNM/IMG-6774.jpg",
+      "https://i.postimg.cc/BQWxJHtP/IMG-6781.jpg",
+      "https://i.postimg.cc/bvwnnqQf/IMG-6788.jpg",
+      "https://i.postimg.cc/j2Z0Xp5z/IMG-6782.jpg",
+      "https://i.postimg.cc/FHJztMXY/IMG-6789.jpg",
+      "https://i.postimg.cc/vZNBWxkS/IMG-6779.jpg"
+    ],
+    presetPalette: ["#E9E1D0", "#D4C4AD", "#B4A087", "#7A6852", "#171719"],
+    presetFonts: ["Lora", "Roboto"]
+  },
+  {
+    id: "costal",
+    name: "Costal",
+    imageUrls: [
+      "https://i.postimg.cc/ZnwHRyZz/IMG-6800.jpg",
+      "https://i.postimg.cc/d0hcxvtH/IMG-6805.jpg",
+      "https://i.postimg.cc/wTQQJpqH/IMG-6810.jpg",
+      "https://i.postimg.cc/q7nQ2rdk/IMG-6811.jpg",
+      "https://i.postimg.cc/wBPk2N3T/IMG-6813.jpg",
+      "https://i.postimg.cc/VNqj4fQn/IMG-6818.jpg"
+    ],
+    presetPalette: ["#E7F1F5", "#BFDDE7", "#94B8C9", "#4F6E79", "#1A1A1A"],
+    presetFonts: ["DM Serif Display", "Noto Sans"]
+  },
+  {
+    id: "energy-healing",
+    name: "Energy & Healing",
+    imageUrls: [
+      "https://i.postimg.cc/NFpqJpJZ/IMG-6825.jpg",
+      "https://i.postimg.cc/FzLtkNc4/IMG-6829.jpg",
+      "https://i.postimg.cc/0NsHjcYn/IMG-6834.jpg",
+      "https://i.postimg.cc/KYdpNc41/IMG-6838.jpg",
+      "https://i.postimg.cc/6pBhF6kW/IMG-6842.jpg",
+      "https://i.postimg.cc/SRRS3s2G/IMG-6844.jpg"
+    ],
+    presetPalette: ["#F2E9FB", "#C9B8E5", "#A58BD6", "#634E9C", "#2D2647"],
+    presetFonts: ["Spectral", "Source Sans Pro"]
+  },
+  {
+    id: "golden-hour",
+    name: "Golden Hour",
+    imageUrls: [
+      "https://i.postimg.cc/HsWS3mNc/IMG-6850.jpg",
+      "https://i.postimg.cc/hPHdpbnm/IMG-6855.jpg",
+      "https://i.postimg.cc/0NMzBMbg/IMG-6858.jpg",
+      "https://i.postimg.cc/wv3sVzY5/IMG-6861.jpg",
+      "https://i.postimg.cc/SNdqx7BQ/IMG-6863.jpg",
+      "https://i.postimg.cc/xCc4z8pm/IMG-6865.jpg"
+    ],
+    presetPalette: ["#FFE5B4", "#FFD4A3", "#F9B26E", "#F28B28", "#171719"],
+    presetFonts: ["Libre Baskerville", "Work Sans"]
+  },
+  {
+    id: "health-wellness",
+    name: "Health & Wellness",
+    imageUrls: [
+      "https://i.postimg.cc/5tKt44dj/IMG-6871.jpg",
+      "https://i.postimg.cc/yxRsFgMJ/IMG-6873.jpg",
+      "https://i.postimg.cc/3NRgzPpg/IMG-6878.jpg",
+      "https://i.postimg.cc/9fbqWsyT/IMG-6880.jpg",
+      "https://i.postimg.cc/tCx2DC4q/IMG-6885.jpg",
+      "https://i.postimg.cc/FHZ31bPb/IMG-6889.jpg"
+    ],
+    presetPalette: ["#DAF0E3", "#C1E4D2", "#A0D4BF", "#71BFA5", "#1B4332"],
+    presetFonts: ["Merriweather", "Open Sans"]
+  },
+  {
+    id: "moody-modern",
+    name: "Moody & Modern",
+    imageUrls: [
+      "https://i.postimg.cc/90BfgznL/IMG-6892.jpg",
+      "https://i.postimg.cc/VN3c5FQ5/IMG-6895.jpg",
+      "https://i.postimg.cc/8C0dF2xz/IMG-6899.jpg",
+      "https://i.postimg.cc/KcXW92PJ/IMG-6901.jpg",
+      "https://i.postimg.cc/Dy7XZPQc/IMG-6903.jpg",
+      "https://i.postimg.cc/BbhFxQzF/IMG-6905.jpg"
+    ],
+    presetPalette: ["#1C1C1C", "#3C3C3C", "#606060", "#B5B5B3", "#F1F1F1"],
+    presetFonts: ["Space Grotesk", "Cormorant Garamond"]
+  },
+  {
+    id: "minimalistic",
+    name: "Minimalistic",
+    imageUrls: [
+      "https://i.postimg.cc/wxK7kxZ3/IMG-6910.jpg",
+      "https://i.postimg.cc/qMY9pZbL/IMG-6912.jpg",
+      "https://i.postimg.cc/4NMhK7dD/IMG-6915.jpg",
+      "https://i.postimg.cc/gkwSBrLx/IMG-6920.jpg",
+      "https://i.postimg.cc/zv6GjzqB/IMG-6922.jpg",
+      "https://i.postimg.cc/PfwSTcny/IMG-6924.jpg"
+    ],
+    presetPalette: ["#FFFFFF", "#F8F8F8", "#CCCCCC", "#999999", "#1E1E1E"],
+    presetFonts: ["DM Sans", "Lora"]
+  }
+];

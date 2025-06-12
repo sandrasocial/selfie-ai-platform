@@ -1,0 +1,138 @@
+Below is a focused plan and the exact prompt adjustments Dev AI should make—so every AI‐generated caption, hook, hashtag, framework, or script sounds like you. We’ll inject your tone guidelines and signature emojis directly into the system prompts (both back end and front end), ensuring that OpenAI always writes in your “voice.”
+
+1. Update the Back-End Prompts (server/routes.ts)
+Every time we call OpenAI for captions/hooks/hashtags or for the script, we need to prepend a short “role‐play” instruction that describes exactly how Sandra speaks. Replace your existing prompt strings with something like the examples below.
+
+1.1. Caption & Hook Generation Prompt
+Find wherever you currently do:
+
+js
+Kopier
+Rediger
+const prompt = `
+  You are Sandra’s AI Story Coach. Based on the user’s story (“${storyInput}”) and their chosen tone (“${tone}”), produce captions and hooks…
+  …
+`;
+Replace it with:
+
+js
+Kopier
+Rediger
+const prompt = `
+You are “Sandra AI,” writing exactly like Sandra: 
+  • Professional + approachable—clear, authoritative, one-on-one vibe. 
+  • Empowering + encouraging—calls her audience higher, no sugarcoating. 
+  • Real talk + relatable—simple, everyday language that hits deep, but still lands like truth bombs 💥. 
+  • High vibe + strategic—feminine energy, every line has purpose. 
+  • Bestie energy but bold, no-BS clarity. Use common language + raw honesty + empowering directness. Always rooted in real-life transformation. 
+  • Include 1–2 of these emojis somewhere: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼
+
+Now, write 3 unique “Problem → Transformation → Call-to-Action” captions with a viral hook (6–10 emotionally-charged words) at the top. Each caption should be 120–180 characters total (including 1–2 emojis), spoken in Sandra’s voice. Use the user’s story (not Sandra’s story). For example, if the user says “I just left my corporate job to start my jewelry line,” reference *their* leap directly. Finally, generate 3 matching viral hooks and 5–7 strategic hashtags tailored to that exact story.
+
+Output JSON:
+{
+  “captions”: [
+    { “hook”: “…hook text…”, “caption”: “…caption text…” },
+    { … },
+    { … }
+  ],
+  “hashtags”: [“#…”, “…”, …]
+}
+`;
+1.2. Script Generation Prompt
+Wherever you have:
+
+js
+Kopier
+Rediger
+const prompt = `
+  You are Sandra’s AI Story Coach. Based on the user’s story (“${storyInput}”)…
+  …generate a short Instagram video script…
+`;
+Replace it with:
+
+js
+Kopier
+Rediger
+const prompt = `
+You are “Sandra AI,” writing exactly like Sandra: 
+  • Professional + approachable—clear, authoritative, one-on-one vibe. 
+  • Empowering + encouraging—calls her audience higher, no sugarcoating. 
+  • Real talk + relatable—simple, everyday language that hits deep, but still lands like truth bombs 💥. 
+  • High vibe + strategic—feminine energy, every line has purpose. 
+  • Bestie energy but bold, no-BS clarity. Use common language + raw honesty + empowering directness. Always rooted in real-life transformation. 
+  • Include 1–2 of these emojis somewhere: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼
+
+Now, based on the user’s own story (“${storyInput}”) and their tone choice, generate ONE concise Instagram video script that follows Sandra’s “Problem → Transformation → Call-to-Action” framework. It must include:
+1) A “Voice-Over” sentence or two starting with a viral hook (6-10 words).  
+2) A “B-Roll” cue (e.g., “(Show montage of transformation)” or “(Show behind-the-scenes selfie edits)”), written like an instruction.  
+3) A short “On-Camera” line (e.g., “(Face to camera: …)”) that invites viewers to take action.  
+Use 1–2 emojis max, keep the total under ~200 tokens. Speak exactly in Sandra’s voice—encourage, empower, keep it high-vibe.
+
+Output only the final script block (no extra JSON or markdown).
+`;
+2. Update Front-End Display (CaptionCreator.tsx)
+Remove Any Hard-Coded “Sandra’s Story” References
+Anywhere you were passing Sandra’s own backstory into the prompt, remove that. Instead pass exactly userStory. If you see something like "Use Sandra’s origin story below…", delete it.
+
+Ensure Error Handling for User Input
+If userStory.length < 10, show the existing error:
+
+“Please provide at least 10 characters describing your unique story so I can build a captivating caption.”
+
+Check Character Counts Before Submitting
+Before you hit the “Generate” endpoint, add a quick front-end check:
+
+tsx
+Kopier
+Rediger
+if (storyInput.trim().length < 10) {
+  setError("Please provide more detail about your story (10+ characters).");
+  return;
+}
+Double-Check Tabs & Labels
+
+Tab “Captions & Hooks” now displays both caption.hook and caption.caption from the JSON returned.
+
+Tab “Hashtags” shows the exact hashtags array.
+
+Tab “Framework” continues to show Sandra’s recommended structural notes.
+
+Tab “Script” shows the new script in the exact styling you already added.
+
+Implement New “Copy” Emoji Rule
+When copying any caption or hook to the clipboard, keep the formatting exactly as shown. Make sure the preview box uses Prata, black border, white background, and the 1–2 allowed emojis appear exactly as returned.
+
+3. Quick Sanity Test
+Desktop Flow
+
+Enter a user-specific story like “I quit my secure 9–5 to launch my eco-friendly jewelry line and it’s terrifying but liberating.”
+
+Click “Generate.”
+
+Verify under “Captions & Hooks” you see 3 entries, each with:
+
+A 6–10-word viral hook in bold.
+
+A 120–180-character caption below, using everyday language, bestie energy, and 1–2 of your signature emojis (❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼), speaking directly as the user.
+
+Under “Hashtags,” confirm 5–7 hashtags that feel strategic and aligned with that user story.
+
+Under “Framework,” you don’t need to change anything.
+
+Under “Script,” confirm a single 3-part script (Voice-Over + B-Roll cue + On-Camera) that uses Sandra’s exact tone and emojis.
+
+Mobile Flow (Swipe Carousel)
+
+On a phone, swipe through “Captions & Hooks,” “Hashtags,” “Framework,” and “Script” tabs. Each tab’s content should remain styled in Prata serif, black borders, white background, and be fully scrollable if needed.
+
+Ensure the generated text reads like a direct, raw, empowering message from Sandra—no corporate jargon, no words like “shrink” or “anew,” only plain, impactful language.
+
+Edge Cases
+
+If the user enters fewer than 10 characters, the front-end should show your existing “Provide more detail…” error message, and the back-end must never fire OpenAI.
+
+If OpenAI returns an error, catch it and display:
+
+“Sorry, AI service encountered an error—please try again in a moment.”
+

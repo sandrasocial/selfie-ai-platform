@@ -1,0 +1,194 @@
+The Selfie Starter Kit course page is live, but the following refinements are required to bring it to completion.
+
+
+🖼️ TASK 1: Implement Aesthetic Collection Images
+Each aesthetic style card within Module 5 should show the correct set of 6 preview images, already structured in the JSX.
+Please insert these images into the correct aesthetic card collections:
+
+🎨 PINK
+https://i.postimg.cc/QtnSw23T/1.png
+
+
+https://i.postimg.cc/c1t4jf7K/102.png
+
+
+https://i.postimg.cc/CKtpH6Qc/117.png
+
+
+https://i.postimg.cc/SKnwsfxC/126.png
+
+
+https://i.postimg.cc/bwwXXhX6/125.png
+
+
+https://i.postimg.cc/wjGGSRQv/134.png
+
+
+
+☁️ CREAM
+https://i.postimg.cc/ryRY7Nht/10.png
+
+
+https://i.postimg.cc/zvWNBZ8s/110.png
+
+
+https://i.postimg.cc/t4zXWjWy/105.png
+
+
+https://i.postimg.cc/Dfs31h3D/121.png
+
+
+https://i.postimg.cc/YCRXQnST/15.png
+
+
+https://i.postimg.cc/s2t02Bx2/137.png
+
+
+
+🏜 BEIGE
+https://i.postimg.cc/VNCRLn6H/1.png
+
+
+https://i.postimg.cc/WbY6GXqH/10.png
+
+
+https://i.postimg.cc/d1QLSczm/34.png
+
+
+https://i.postimg.cc/W3skLkJZ/24.png
+
+
+https://i.postimg.cc/QMhtHrxG/42.png
+
+
+https://i.postimg.cc/WzHFkYYm/25.png
+
+
+
+🌊 COASTAL
+https://i.postimg.cc/tC1JZ53k/103.png
+
+
+https://i.postimg.cc/Zqj4DBP0/119.png
+
+
+https://i.postimg.cc/wMn6cCXV/113.png
+
+
+https://i.postimg.cc/wvTT6cxh/110.png
+
+
+https://i.postimg.cc/52SXbtqW/128.png
+
+
+https://i.postimg.cc/zXmvhhx1/132.png
+
+
+
+🧘‍♀️ ENERGY & HEALING
+https://i.postimg.cc/MTjrNHg1/127161.png https://i.postimg.cc/6p5bwYDW/a-a-bur-A-close-up-of-jasmine-petals-each-with-its-own-unique-a03a9998-01de-41e8-acd3-041b9403e5ac-0.png https://i.postimg.cc/wjpysr6z/xelanft_resting_minimalistic_setting_no_face_seen_bright_natu_a1b2aefd-03ce-4137-8f43-74bed0e9f354_3.png https://i.postimg.cc/Dz520jzx/xelanft_getting_a_massage_minimalistic_setting_no_face_seen_b_5c32c84d-9a8e-4f7f-bdfd-8f283256f5a4_3.png https://i.postimg.cc/Dwrfky3k/xelanft_cup_of_herbal_tea_bright_natural_studio_lighting_holi_4d574084-2b9c-4956-aa89-68fa0f0b3d28_2.png https://i.postimg.cc/Pf751RQc/xelanft_Close_up_of_the_hand_and_sleeve_on_a_white_robe_a_per_2d2abd97-f224-47f6-aba7-5119c1a8713c_3.png 
+
+
+
+☀️ GOLDEN HOUR
+https://i.postimg.cc/Kz4g8yJc/12.png
+
+
+https://i.postimg.cc/zG12Mqkg/18.png
+
+
+https://i.postimg.cc/j5kPHjLJ/2.png
+
+
+https://i.postimg.cc/CK7jK707/3.png
+
+
+https://i.postimg.cc/MKsX3Gws/57.png
+
+
+https://i.postimg.cc/hGmjGbdw/60.png
+
+
+
+💚 HEALTH + WELLNESS
+https://i.postimg.cc/RFsK7LgR/xelanft-bowl-of-fresh-fruits-minimalistic-setting-no-face-see-1e953559-47d3-4f55-8898-f9ab6cd0cf93-0.png https://i.postimg.cc/XNBkfT0B/xelanft_holding_a_healing_stone_minimalistic_setting_no_face__eda9bbb8-1c02-48ac-b63f-ba1466a3c137_0.png https://i.postimg.cc/W1TmPzq0/xelanft_lemon_water_minimalistic_setting_bright_natural_studi_be04fe14-63de-4481-b34c-bbe4846efe44_1.png https://i.postimg.cc/Ls7Zh85C/xelanft_meditating_in_a_peaceful_calm_environment_at_home_no__b0c0d870-d35d-4c78-a548-67a397f9fbe1_1.png https://i.postimg.cc/qM06NYBT/xelanft_minimalistic_yoga_studio_faceless_bright_natural_stud_c6fd42dc-86e8-40b5-96de-9481069e21b5_2.png https://i.postimg.cc/Y28Mxyfk/xelanft_pilates_minimalistic_setting_faceless_no_face_seen_br_a15027b6-246b-4b19-9e2f-3892ab7d5c18_0.png 
+
+🖤 MOODY & MODERN
+https://i.postimg.cc/SRz1B39j/100.png
+
+
+https://i.postimg.cc/pVh2VdY5/103.png
+
+
+https://i.postimg.cc/PrnktQ50/112.png
+
+
+https://i.postimg.cc/zfc94nQt/116.png
+
+
+https://i.postimg.cc/1znFrS1g/43.png
+
+
+https://i.postimg.cc/WpMMysFg/39.png
+
+
+
+⚪ MINIMALISTIC
+https://i.postimg.cc/02VLGyr8/1.png
+
+
+https://i.postimg.cc/QCHzNRZp/111.png
+
+
+https://i.postimg.cc/fLhXRX45/176.png
+
+
+https://i.postimg.cc/WzWXZt8C/19.png
+
+
+https://i.postimg.cc/KcqNJk7s/30.png
+
+
+https://i.postimg.cc/2y6xCrYw/27.png
+
+
+
+🖼️ TASK 2: Add Background Images to Layout Sections
+Set the following background card or section images based on provided screenshots and references:
+https://i.postimg.cc/NfrbPGj8/1.png
+
+
+https://i.postimg.cc/y8TZd2N3/197.png
+
+
+https://i.postimg.cc/q792Ky29/38.png
+
+
+https://i.postimg.cc/s1FPRSgY/5.png
+
+
+These likely relate to inspiration quote cards, section transitions, or hero overlays.
+
+📌 Final Notes
+Do not alter layout, card size, or UI styles
+
+
+If an image URL fails to load, add a placeholder or comment for manual fix
+
+
+All visual display logic must match original component behavior
+
+
+
+✅ Completion Report
+At the end, confirm:
+
+
+All aesthetic cards show correct 6 images
+
+
+All section/card background images loaded
+
+
+No layout, spacing, or design has been changed
+

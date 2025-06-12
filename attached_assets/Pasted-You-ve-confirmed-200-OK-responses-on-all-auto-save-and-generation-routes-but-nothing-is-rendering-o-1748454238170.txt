@@ -1,0 +1,82 @@
+You’ve confirmed 200 OK responses on all auto-save and generation routes, but nothing is rendering or logging in the UI. We need to confirm that React state is being updated, and values are correctly bound to inputs and preview. Implement this NOW:
+
+✅ CRITICAL FIX CHECKLIST
+✅ 1. Console Log Saved Answers on Page Load
+Inside ModuleTwo.tsx:
+
+tsx
+Kopier
+Rediger
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await fetch('/api/module2-answers');
+      const data = await res.json();
+      console.log("✅ Fetched saved answers:", data); // THIS MUST APPEAR IN CONSOLE
+      setFormData(data); // <-- this must update the form
+    } catch (err) {
+      console.error("❌ Failed to fetch saved answers", err);
+    }
+  };
+  fetchAnswers();
+}, []);
+✅ Confirm it logs when the page loads
+✅ Confirm setFormData(data) is being called
+
+✅ 2. Bind Inputs to formData
+Every input should look like:
+
+tsx
+Kopier
+Rediger
+<input
+  name="beliefStatement"
+  value={formData.beliefStatement || ""}
+  onChange={handleChange}
+/>
+If you’re not doing this, the form will never reflect saved data.
+
+✅ 3. Log Workbook Result
+Make sure this block exists:
+
+tsx
+Kopier
+Rediger
+const handleGenerate = async () => {
+  try {
+    const res = await fetch('/api/module2-workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    console.log("✅ Generated Preview:", data); // MUST APPEAR ON GENERATE
+    setPreviewData(data); // This powers the preview below
+  } catch (err) {
+    console.error("❌ Workbook generation failed:", err);
+  }
+};
+✅ Log must show up on click
+✅ previewData must update
+
+✅ 4. Render Preview to Screen
+Below the form, this must be present:
+
+tsx
+Kopier
+Rediger
+{previewData && (
+  <div className="preview-box">
+    <h3>Your POV: {previewData.pov}</h3>
+    <p>Content Pillars: {previewData.pillars?.join(', ')}</p>
+    <p>30-Day: {previewData.plan?.day30}</p>
+    <p>60-Day: {previewData.plan?.day60}</p>
+    <p>90-Day: {previewData.plan?.day90}</p>
+  </div>
+)}
+If previewData is never shown, either:
+
+setPreviewData(data) is never called
+
+The returned data is null or undefined
+

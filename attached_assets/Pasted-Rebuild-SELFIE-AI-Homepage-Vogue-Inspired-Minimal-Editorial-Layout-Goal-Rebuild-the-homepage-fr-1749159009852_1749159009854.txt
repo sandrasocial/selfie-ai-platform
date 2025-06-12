@@ -1,0 +1,147 @@
+Rebuild SELFIE AI™ Homepage (Vogue-Inspired, Minimal Editorial Layout)
+Goal: Rebuild the homepage from scratch following this exact UX/UI brief. It should feel like a luxury editorial magazine meets personal brand studio. Clean, minimal, scroll-based storytelling. All overlay text in white or black only. No emojis or icons. No round corners. Think Vogue x Chanel meets digital empowerment.
+
+1. 🌌 Global Layout Rules
+Backgrounds: White or #171719 (Luxury Black)
+
+Typography:
+
+Headline: Cormorant Garamond, serif (use italics on all quotes + H2)
+
+Body + nav + CTAs: Neue Einstellung, sans-serif
+
+Font Sizes (Desktop):
+
+H1: 64px / 400
+
+H2: 36px italic
+
+Paragraph: 18px
+
+Button: 14px uppercase, 0.5px spacing
+
+Buttons: Transparent with sharp black or white border (depending on background), all-caps, no icons
+
+All Cards: Flat, no shadow, scale-up on hover
+
+Image Filters: Use grayscale or desaturated tone for subtlety—but do not make all B&W
+
+2. 🔝 Sticky Header
+Transparent on scroll over hero
+
+Solid black after scroll
+
+Nav text: White, 14px, Neue Einstellung
+
+No icons or emoji
+
+Add login/account button on far right
+
+Logo on left: SS monogram + “SANDRA.” written in Cormorant Garamond
+
+3. 🖼 Hero Section (Full-Bleed)
+Image: https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png (grayscale)
+
+Overlay copy (centered):
+
+H1: Turn Your Selfies Into…
+
+H2 italic: Strategic Brand Assets
+
+Subtext: The most powerful branding tool is already in your hand—your phone.
+
+2 CTA buttons (side-by-side, outlined):
+
+“START YOUR JOURNEY”
+
+“VIEW PLANS”
+
+4. 📊 Proof Section: “Transformation”
+Background: #171719
+
+Headline (centered): Transformation
+
+Subtext italic: See the power of strategic personal branding
+
+Grid layout:
+
+Left: “90 DAYS”
+
+Center: “120K FOLLOWERS”
+
+Right: “1.7M REACH”
+
+Below: Before/After Image Grid
+
+Before: https://i.postimg.cc/XNt6zt4j/1.png (add muted color filter, reduce saturation 40%)
+
+After: https://i.postimg.cc/d05zmx5K/2.png (showcase editorial aesthetic)
+
+5. 💁🏻‍♀️ About Sandra Section (Centered Grid)
+Layout: 3 columns (text – image – quote)
+
+Middle image: https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png
+
+Left:
+
+H2 italic: Hi, I’m Sandra.
+
+Paragraph:
+Personal branding mentor. Single mom of 3.
+Building my dream life from rock bottom—and helping women do the same.
+
+Right:
+
+Quote italic:
+“Every selfie tells a story. Let’s make yours unforgettable.”
+– Sandra
+
+6. 🛠 Platform Tools Section (Feature Cards)
+Grid of 4 horizontal cards with hover animation (scale + dark overlay)
+
+Each card has: title, paragraph, CTA
+
+Titles: Cormorant Garamond
+
+Body: Neue Einstellung
+
+Use flatlay background images:
+
+Card 1: AI Studio – https://i.postimg.cc/PxvRkfVQ/story-Image1.png
+
+Card 2: Template Library – https://i.postimg.cc/wxc1QX0g/3.png
+
+Card 3: Sandra AI Chat – https://i.postimg.cc/KY664Mz6/8.png
+
+Card 4: Strategy Workbooks – https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png
+
+7. 💎 Offer Ladder (Freebie → Kit → Branded → VIP)
+Section title: Your Empire Pathway
+
+4 side-by-side cards (clean black/white/gray boxes)
+
+Freebie: Show Your Face™ – link to /freebie/selfie-guide
+
+Selfie Starter Kit – link to /products/starter-kit
+
+Branded by Selfie™ – link to /products/branded-by-selfie
+
+Empire Builder VIP – link to /vip/apply
+
+Use desaturated photos as card backgrounds
+
+Use purchase status if available (badge: "OWNED")
+
+8. 🗣 Testimonials Block
+Title: Women Finding Their Voice
+
+Subtitle: Real stories from women reclaiming their power
+
+Grid layout of 6 testimonial cards (no borders)
+
+Pull quote + first name or title
+
+Use screenshots if needed (provided via images)
+
+Use editorial serif for quotes and modern sans for names
+

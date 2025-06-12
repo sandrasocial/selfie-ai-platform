@@ -1,0 +1,554 @@
+import React, { useState } from 'react';
+import { useLocation } from 'wouter';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
+
+interface FormData {
+  brandMission: string;
+  idealAudience: string;
+  brandValues: string;
+  keyPhrases: string;
+  hashtags: string;
+  visualAesthetic: string;
+  contentFocus: string[];
+  toneVoice: string;
+  industry: string;
+  experienceLevel: string;
+  mainGoals: string;
+}
+
+const BrandHubOnboarding = () => {
+  const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState<FormData>({
+    brandMission: '',
+    idealAudience: '',
+    brandValues: '',
+    keyPhrases: '',
+    hashtags: '',
+    visualAesthetic: '',
+    contentFocus: [],
+    toneVoice: '',
+    industry: '',
+    experienceLevel: '',
+    mainGoals: ''
+  });
+
+  const totalSteps = 3;
+
+  const completeBrandProfile = useMutation({
+    mutationFn: async (profileData: FormData) => {
+      const response = await fetch('/api/onboarding/brand-hub', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profileData }),
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to complete profile');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/me-with-profile'] });
+      queryClient.invalidateQueries({ queryKey: ['brand-profile'] });
+      setLocation('/dashboard');
+    }
+  });
+
+  const visualAestheticOptions = [
+    { value: 'Minimalistic & Clean', desc: 'Clean lines, white space, simple elegance' },
+    { value: 'Moody & Modern', desc: 'Dark tones, dramatic lighting, sophisticated' },
+    { value: 'Bright & Energetic', desc: 'Bold colors, high energy, vibrant vibes' },
+    { value: 'Luxury Editorial', desc: 'High-end, magazine-style, polished' },
+    { value: 'Warm & Approachable', desc: 'Cozy tones, friendly, inviting' },
+    { value: 'Bold & Dramatic', desc: 'Statement pieces, high contrast, powerful' }
+  ];
+
+  const contentFocusOptions = [
+    { value: 'Personal Stories', desc: 'Behind the scenes, life moments' },
+    { value: 'Educational Content', desc: 'Teaching, tips, how-to content' },
+    { value: 'Luxury Lifestyle', desc: 'High-end experiences, aspirational' },
+    { value: 'Business Strategy', desc: 'Entrepreneurship, business tips' },
+    { value: 'Fashion & Beauty', desc: 'Style, beauty, fashion content' },
+    { value: 'Motivation & Mindset', desc: 'Inspirational, empowerment content' }
+  ];
+
+  const toneVoiceOptions = [
+    { value: 'Warm & Friendly', desc: 'Approachable bestie energy' },
+    { value: 'Bold & Confident', desc: 'Powerful, assertive, commanding' },
+    { value: 'Real Talk & Honest', desc: 'Authentic, no-filter, genuine' },
+    { value: 'Luxury & Sophisticated', desc: 'Refined, elevated, premium' },
+    { value: 'Playful & Fun', desc: 'Light-hearted, energetic, vibrant' },
+    { value: 'Inspiring & Uplifting', desc: 'Motivational, empowering, positive' }
+  ];
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleCheckboxChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: (prev[field] as string[]).includes(value)
+        ? (prev[field] as string[]).filter(item => item !== value)
+        : [...(prev[field] as string[]), value]
+    }));
+  };
+
+  const nextStep = () => {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSubmit = () => {
+    completeBrandProfile.mutate(formData);
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 
+                className="text-4xl font-light mb-4"
+                style={{ fontFamily: 'Cormorant Garamond, serif', color: '#171719' }}
+              >
+                Your Brand Foundation
+              </h2>
+              <p 
+                className="text-lg"
+                style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+              >
+                Tell me about your mission and who you're here to serve
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What's your brand mission? What are you here to do?
+                </label>
+                <textarea
+                  value={formData.brandMission}
+                  onChange={(e) => handleInputChange('brandMission', e.target.value)}
+                  placeholder="I help ambitious women turn their passion into profit by..."
+                  className="w-full p-4 border resize-none h-32 focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  Who's your ideal audience? Paint me a picture.
+                </label>
+                <textarea
+                  value={formData.idealAudience}
+                  onChange={(e) => handleInputChange('idealAudience', e.target.value)}
+                  placeholder="Women in their 30s who are ready to level up their career and aren't afraid to invest in themselves..."
+                  className="w-full p-4 border resize-none h-32 focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What industry or niche are you in?
+                </label>
+                <input
+                  type="text"
+                  value={formData.industry}
+                  onChange={(e) => handleInputChange('industry', e.target.value)}
+                  placeholder="Coaching, beauty, fashion, wellness, business..."
+                  className="w-full p-4 border focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 
+                className="text-4xl font-light mb-4"
+                style={{ fontFamily: 'Cormorant Garamond, serif', color: '#171719' }}
+              >
+                Your Visual Identity
+              </h2>
+              <p 
+                className="text-lg"
+                style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+              >
+                Define your aesthetic and content style
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-4"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What visual aesthetic feels most like you?
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {visualAestheticOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => handleInputChange('visualAesthetic', option.value)}
+                      className={`p-4 border text-left transition-all hover:border-black ${
+                        formData.visualAesthetic === option.value
+                          ? 'border-black bg-gray-50'
+                          : 'border-gray-300'
+                      }`}
+                    >
+                      <div>
+                        <div 
+                          className="font-medium mb-1"
+                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.value}
+                        </div>
+                        <div 
+                          className="text-sm"
+                          style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.desc}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-4"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What type of content do you love creating? (Select all that apply)
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {contentFocusOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => handleCheckboxChange('contentFocus', option.value)}
+                      className={`p-4 border text-left transition-all flex items-center justify-between hover:border-black ${
+                        formData.contentFocus.includes(option.value)
+                          ? 'border-black bg-gray-50'
+                          : 'border-gray-300'
+                      }`}
+                    >
+                      <div>
+                        <div 
+                          className="font-medium mb-1"
+                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.value}
+                        </div>
+                        <div 
+                          className="text-sm"
+                          style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.desc}
+                        </div>
+                      </div>
+                      {formData.contentFocus.includes(option.value) && (
+                        <div className="w-4 h-4 border-2 border-black bg-black"></div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 
+                className="text-4xl font-light mb-4"
+                style={{ fontFamily: 'Cormorant Garamond, serif', color: '#171719' }}
+              >
+                Your Voice & Goals
+              </h2>
+              <p 
+                className="text-lg"
+                style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+              >
+                How you want to sound and what you want to achieve
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-4"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What's your natural tone and voice?
+                </label>
+                <div className="space-y-3">
+                  {toneVoiceOptions.map((option) => (
+                    <label
+                      key={option.value}
+                      className="flex items-center p-4 border cursor-pointer hover:bg-gray-50 transition-colors"
+                      style={{ borderColor: '#B5B5B3' }}
+                    >
+                      <input
+                        type="radio"
+                        name="toneVoice"
+                        value={option.value}
+                        checked={formData.toneVoice === option.value}
+                        onChange={(e) => handleInputChange('toneVoice', e.target.value)}
+                        className="mr-4"
+                      />
+                      <div>
+                        <div 
+                          className="font-medium"
+                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.value}
+                        </div>
+                        <div 
+                          className="text-sm"
+                          style={{ color: '#4C4B4B', fontFamily: 'Neue Einstellung, sans-serif' }}
+                        >
+                          {option.desc}
+                        </div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  Key phrases or words that represent your brand
+                </label>
+                <input
+                  type="text"
+                  value={formData.keyPhrases}
+                  onChange={(e) => handleInputChange('keyPhrases', e.target.value)}
+                  placeholder="Elevate, authentic, luxury, real talk, empowerment..."
+                  className="w-full p-4 border focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  Your go-to hashtags (separate with commas)
+                </label>
+                <input
+                  type="text"
+                  value={formData.hashtags}
+                  onChange={(e) => handleInputChange('hashtags', e.target.value)}
+                  placeholder="#entrepreneur, #luxurylifestyle, #personalbrand, #womenempowerment"
+                  className="w-full p-4 border focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label 
+                  className="block text-sm font-medium mb-3"
+                  style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+                >
+                  What are your main goals right now?
+                </label>
+                <textarea
+                  value={formData.mainGoals}
+                  onChange={(e) => handleInputChange('mainGoals', e.target.value)}
+                  placeholder="I want to grow my following, launch my business, create consistent content..."
+                  className="w-full p-4 border resize-none h-24 focus:outline-none focus:border-black transition-colors"
+                  style={{ 
+                    borderColor: '#B5B5B3',
+                    fontFamily: 'Neue Einstellung, sans-serif'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#F1F1F1' }}>
+      {/* Progress Bar */}
+      <div className="w-full h-1" style={{ backgroundColor: '#B5B5B3' }}>
+        <div
+          className="h-1 transition-all duration-300"
+          style={{ 
+            width: `${(currentStep / totalSteps) * 100}%`,
+            backgroundColor: '#171719'
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        {renderStep()}
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center mt-16">
+          <button
+            onClick={prevStep}
+            disabled={currentStep === 1}
+            className={`px-8 py-3 border bg-transparent font-medium tracking-wide transition-colors ${
+              currentStep === 1
+                ? 'opacity-50 cursor-not-allowed border-gray-300'
+                : 'border-black text-black hover:bg-black hover:text-white'
+            }`}
+            style={{ 
+              fontFamily: 'Neue Einstellung, sans-serif',
+              letterSpacing: '0.5px'
+            }}
+          >
+            PREVIOUS
+          </button>
+
+          <div className="flex space-x-2">
+            {Array.from({ length: totalSteps }).map((_, index) => (
+              <div
+                key={index}
+                className="w-3 h-3"
+                style={{ 
+                  backgroundColor: index < currentStep ? '#171719' : '#B5B5B3'
+                }}
+              />
+            ))}
+          </div>
+
+          {currentStep < totalSteps ? (
+            <button
+              onClick={nextStep}
+              className="px-8 py-3 border border-black bg-transparent text-black font-medium tracking-wide hover:bg-black hover:text-white transition-colors flex items-center"
+              style={{ 
+                fontFamily: 'Neue Einstellung, sans-serif',
+                letterSpacing: '0.5px'
+              }}
+            >
+              NEXT
+              <span className="ml-2">→</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              disabled={completeBrandProfile.isPending}
+              className="px-8 py-3 border border-black bg-black text-white font-medium tracking-wide hover:bg-gray-800 transition-colors flex items-center disabled:opacity-50"
+              style={{ 
+                fontFamily: 'Neue Einstellung, sans-serif',
+                letterSpacing: '0.5px'
+              }}
+            >
+              {completeBrandProfile.isPending ? (
+                <>
+                  <div className="animate-spin h-4 w-4 border-b-2 border-white mr-2"></div>
+                  ACTIVATING AI...
+                </>
+              ) : (
+                'ACTIVATE AI BRAND HUB'
+              )}
+            </button>
+          )}
+        </div>
+
+        {/* Benefits Preview */}
+        <div className="mt-12 p-6 border-l-4 border-black" style={{ backgroundColor: 'white' }}>
+          <h4 
+            className="font-medium mb-3"
+            style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#171719' }}
+          >
+            What happens after you complete this?
+          </h4>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-black mr-3"></div>
+              <span 
+                className="text-sm"
+                style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#4C4B4B' }}
+              >
+                Sandra AI knows your goals & audience
+              </span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-black mr-3"></div>
+              <span 
+                className="text-sm"
+                style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#4C4B4B' }}
+              >
+                Content suggestions match your vibe
+              </span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-black mr-3"></div>
+              <span 
+                className="text-sm"
+                style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#4C4B4B' }}
+              >
+                Workbooks tailored to your industry
+              </span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-black mr-3"></div>
+              <span 
+                className="text-sm"
+                style={{ fontFamily: 'Neue Einstellung, sans-serif', color: '#4C4B4B' }}
+              >
+                Everything feels like you wrote it
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BrandHubOnboarding;

@@ -1,0 +1,62 @@
+Hi Dev AI 👋
+
+Before we go live, I want to run a full system check using the SELFIE AI™ Pre-Launch QA Checklist. Please help me go through each of the following steps — one at a time — and verify that everything is working as expected:
+
+---
+
+✅ 1. AUTHENTICATION (Supabase Magic Link)
+- Test login and logout flow with new email
+- Confirm header updates in real time
+- Check that magic links send and expire properly
+- Confirm logout clears all state + redirects
+
+✅ 2. DATABASE SCHEMA
+- Validate that all 4 main tables exist and work:
+  - users
+  - workbook_answers
+  - photo_library
+  - subscription_status
+- Check UUIDs, foreign keys, and RLS permissions
+- Verify data is saved and retrieved per user securely
+
+✅ 3. PHOTO LIBRARY UPLOAD
+- Upload a real photo using Uploadcare
+- Confirm it shows in the photo_library table with correct user_id, image_url, and tags
+- Confirm it renders in the frontend with correct styling
+
+✅ 4. WORKBOOK SYSTEM (PDFMonkey)
+- Fill out a Module 1 or 2 form
+- Confirm the workbook is generated with correct content
+- Check the PDF matches the brand template (Prata font, luxury white space)
+- Confirm the file is saved in Supabase + URL works
+
+✅ 5. EMAIL DELIVERY (Zapier)
+- Trigger the Zap with real user data
+- Confirm that hello@sselfie.ai sends an email with:
+  - Correct To: email
+  - Dynamic name and pdf_url
+  - Clean design and correct formatting
+- Confirm email is received
+
+✅ 6. DOMAIN + GOOGLE WORKSPACE
+- Confirm sselfie.ai is connected with correct DNS records
+- Test inbox + sending from hello@sselfie.ai
+- Confirm SPF, DKIM, and MX settings pass verification
+- Test sending to/from Gmail inbox with your name
+
+✅ 7. FRONTEND UI/UX
+- Confirm all pages are styled in Vogue aesthetic
+- Navigation works (Selfie Blueprint, AI Studio, Templates, Sandra AI, etc.)
+- Remove old login buttons and test state logic
+- Confirm everything works on desktop + mobile
+
+✅ 8. REPLICATE (Image Tools)
+- Confirm API keys are working
+- Test face enhancement, background removal, and brand visual conversion endpoints
+- Confirm output is returned and can be displayed/downloaded
+
+---
+
+Please begin with **#1 AUTHENTICATION**, confirm it’s working, and then move on to the next section.
+
+Let’s test everything before launch 🚀

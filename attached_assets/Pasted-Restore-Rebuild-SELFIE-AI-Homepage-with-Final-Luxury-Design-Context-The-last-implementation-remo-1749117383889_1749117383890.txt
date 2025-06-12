@@ -1,0 +1,168 @@
+Restore + Rebuild SELFIE AI™ Homepage with Final Luxury Design
+Context:
+The last implementation removed custom homepage work. Please fully replace the homepage with the updated SELFIE AI™ layout based on the official SELFIE AI™ DESIGN SYSTEM MANUAL (June 5, 2025) and visual references.
+
+✅ TASK LIST
+1. 🌐 GLOBAL STYLING (Apply across entire app)
+Color Palette:
+
+Background: #F1F1F1
+
+Accent Gray: #B5B5B3
+
+Text Gray: #4C4B4B
+
+Overlay/Black: #171719
+
+Fonts:
+
+Headings: Cormorant Garamond
+
+Body: Inter Light
+
+Import via Google Fonts and apply globally
+
+Global Rules:
+
+All overlay text on images/cards: white #F1F1F1
+
+Remove all icons, emojis, and visual clutter
+
+Navigation and Footer: solid black background, white links
+
+Add “Log In” link to the top-right nav
+
+Buttons:
+
+Solid = black bg / white text
+
+Outline = white border / white text / transparent bg
+
+Hover = invert color
+
+2. 🏠 HOMEPAGE STRUCTURE (Use official design system structure)
+Hero Section (Template 1)
+Full-bleed background image: (use https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg or black placeholder)
+
+Headline:
+
+markdown
+Kopier
+Rediger
+Turn Your Selfies Into  
+*Strategic Brand Assets*
+CTA Buttons:
+
+START YOUR JOURNEY (solid black)
+
+VIEW PLANS (outline white)
+
+Mobile: Ensure text doesn’t cover face — reposition using media queries
+
+About Section (Template 2)
+3-column layout:
+
+Left:
+
+markdown
+Kopier
+Rediger
+Hi, I’m Sandra.  
+Personal branding mentor. Single mom of 3.  
+Building my dream life from rock bottom—and teaching women to do the same.
+Center: placeholder image = solid black box, centered text: ADD IMAGE
+
+Right: quote block
+“Every selfie tells a story. Let’s make yours unforgettable.”
+Photographer, Educator, Canada
+Living, Entrepreneur & Mamma
+
+Transformation Section (Template 3)
+2 grid columns: BEFORE | AFTER
+
+Each image has white overlay text:
+
+markdown
+Kopier
+Rediger
+90  
+Days  
+120K  
+Followers  
+1.7M  
+Reach
+Right side also includes:
+Looking Forward
+From broken to unbreakable
+
+Feature Cards (Template 4)
+4 cards: AI Studio, Template Library, Sandra AI, Strategy Workbooks
+
+Each:
+
+Title: Cormorant Garamond
+
+Body: Inter Light
+
+Background: white, thin border
+
+Hover: slight zoom-in OR underline animation
+
+Overlay text: white
+
+Pricing (Template 5)
+3 columns: Free, Pro, VIP
+
+No icons
+
+Use proper spacing and typography
+
+Buttons follow button rules (no icons, hover invert)
+
+Footer (Template 6)
+Black background
+
+All text white
+
+3 column layout:
+
+Left = Email input (gray bg, black text)
+
+Center = Nav links
+
+Right = Social (inline text links, all caps)
+
+Bottom bar: copyright + logo if applicable
+
+3. 📱 MOBILE RULES
+Reposition hero text to avoid overlapping the face
+
+Button stacks: center aligned
+
+Cards, pricing: vertically stacked, well spaced
+
+Nav menu: show logo + wordmark + hamburger only (no icons)
+
+Ensure hover/zoom works on tap
+
+4. 🔄 OPTIONAL CLEANUP
+Remove all placeholder “ICON” or unused grid blocks
+
+Replace image cards with black boxes (ADD IMAGE) if real images are not yet provided
+
+Once the rebuild is complete, generate a SELFIE AI™ DESIGN SYSTEM DOC in Markdown format (for future reference) including:
+
+Color palette
+
+Typography rules
+
+Layout templates
+
+Hover states
+
+Mobile rules
+
+Button styles
+
+Placeholders
+

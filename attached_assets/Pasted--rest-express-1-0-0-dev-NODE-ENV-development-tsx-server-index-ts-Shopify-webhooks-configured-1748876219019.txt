@@ -1,0 +1,81 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+🔗 Shopify webhooks configured successfully
+2:53:17 PM [express] Server listening on port 5000!
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+🔍 GET-PROFILE REQUEST - User ID: 1
+🔍 RETRIEVING USER PROFILE - User ID: 1
+📊 Raw user data from database: {
+  id: 1,
+  email: 'sandrajonna@gmail.com',
+  name: null,
+  avatarUrl: null,
+  plan: 'pro',
+  stripeCustomerId: null,
+  stripeSubscriptionId: null,
+  createdAt: 2025-05-25T22:16:55.511Z,
+  updatedAt: 2025-06-02T14:45:52.819Z
+}
+📊 Profile data field: undefined
+✅ Returning user with profile: {
+  id: 1,
+  email: 'sandrajonna@gmail.com',
+  name: null,
+  avatarUrl: null,
+  plan: 'pro',
+  stripeCustomerId: null,
+  stripeSubscriptionId: null,
+  createdAt: 2025-05-25T22:16:55.511Z,
+  updatedAt: 2025-06-02T14:45:52.819Z
+}
+📊 Retrieved user: {
+  id: 1,
+  email: 'sandrajonna@gmail.com',
+  name: null,
+  avatarUrl: null,
+  plan: 'pro',
+  stripeCustomerId: null,
+  stripeSubscriptionId: null,
+  createdAt: 2025-05-25T22:16:55.511Z,
+  updatedAt: 2025-06-02T14:45:52.819Z
+}
+📊 User profileData: undefined
+❌ No profile found for user: 1
+   - User exists: true
+   - ProfileData exists: false
+2:54:13 PM [express] GET /api/get-profile 404 in 407ms :: {"message":"No profile found"}
+
+🔍 SAVE-PROFILE REQUEST DEBUG:
+Method: POST
+URL: /
+Headers: {
+  host: 'e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev',
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+  'content-length': '1124',
+  accept: '*/*',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'nb-NO,nb;q=0.9,no;q=0.8,nn;q=0.7,en-US;q=0.6,en;q=0.5',
+  'content-type': 'application/json',
+  cookie: 'connect.sid=s%3AytIG1fcx7u9peiJc-TQsO4MbXonDtLJC.2LgIHkOsJdC0o6BPUgkukogE4eE3ryHB13ecG6D6ZSA; selfie_auth=s%3AuuQBCMy2zwlS1iYQcqtgqncayVRqYWns.4tKP4jBUsNBhNsnnCCGOGDz8ls5aHqvEa1Vwn6Prtkk; selfie_session=s%3AXsKDwby_8r8bMOG8gtXq2ZW_SgL8VJcF.R5Oj4iFk5rqOrojhQ%2BZcNhX%2BzmF2QiYyVtSk2LVifrc',
+  origin: 'https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev',
+  referer: 'https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/templates',
+  'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"macOS"',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-storage-access': 'active',
+  'x-forwarded-for': '89.10.244.82, 10.83.10.39',
+  'x-forwarded-proto': 'https',
+  'x-replit-user-bio': '',
+  'x-replit-user-id': '',
+  'x-replit-user-name': '',
+  'x-replit-user-profile-image': '',
+  'x-replit-user-roles': '',
+  'x-replit-user-teams': '',
+  'x-replit-user-url': ''

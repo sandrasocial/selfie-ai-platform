@@ -1,0 +1,376 @@
+Below are the exact file changes (copy/paste) you must make. Do not modify anything else.
+
+A. Server: Create a brand-new /api/generate-microstory endpoint
+File: server/routes.ts
+
+Find the existing /api/generate-captions route. We will leave it intact as a backup but create a new route at the bottom of that file.
+
+Append (at the very end of server/routes.ts), exactly the following block.
+
+This block:
+
+Requires userStory ≥ 20 chars
+
+Calls OpenAI’s GPT-4 Turbo
+
+Returns a JSON array of three post objects, each with fields:
+hook, microStory, takeaway, cta, hashtags
+
+Enforces per-post char limits and hashtag count
+
+Logs errors to the console for debugging
+
+js
+Kopier
+Rediger
+// -----------------------------------------------
+// NEW ROUTE: Generate 3-Post Micro-Story Sequence
+// -----------------------------------------------
+
+import { Configuration, OpenAIApi } from "openai";
+const openai = new OpenAIApi(new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+}));
+
+router.post("/api/generate-microstory", async (req, res) => {
+  try {
+    const userStory = (req.body.userStory || "").trim();
+    if (userStory.length < 20) {
+      return res.status(400).json({
+        error: "Please share at least 20 meaningful characters about your experience.",
+      });
+    }
+
+    // Build the prompt to return exactly JSON array of 3 posts
+    const prompt = `
+You are Sandra AI, a business mentor and content coach for ambitious women. 
+Use her “3-Act Micro-Story Sequence” framework to create three separate Instagram posts. 
+Each post must include: 
+  1. "hook": A 5–8 word attention-grabber in Sandra’s voice (bold, bestie-style). 
+  2. "microStory": A 30–50 word snippet describing the Before or Struggle, Shift moment, or Victory (use simple, everyday language). 
+  3. "takeaway": A 15–20 word lesson or key insight phrased like Sandra would say (“Let’s be real—…”). 
+  4. "cta": A 5–10 word Call-to-Action (“Share below if you relate!”). 
+  5. "hashtags": Array of 3–5 on-brand hashtags relevant to the story. 
+Over the three posts, follow this mini narrative: 
+  • Post 1: The Struggle & Epiphany  
+  • Post 2: The Turnaround Moment  
+  • Post 3: The Victory & Next Step  
+Use only Sandra’s signature emojis: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼 (no more than 2 emojis per post). 
+Ensure each "microStory" + "hook" + "takeaway" + "cta" combined is between 80 and 120 characters. 
+Return EXACTLY this JSON structure, with no explanation text: 
+[
+  {
+    "hook": "...",
+    "microStory": "...",
+    "takeaway": "...",
+    "cta": "...",
+    "hashtags": ["#yourbrand", "#empowerment", "#newbeginning"]
+  },
+  {
+    "hook": "...",
+    "microStory": "...",
+    "takeaway": "...",
+    "cta": "...",
+    "hashtags": ["#beforeandafter", "#mindsetshift", "#growthmindset"]
+  },
+  {
+    "hook": "...",
+    "microStory": "...",
+    "takeaway": "...",
+    "cta": "...",
+    "hashtags": ["#womeninbiz", "#takeaction", "#selfieempire"]
+  }
+]
+`;
+
+    const response = await openai.createChatCompletion({
+      model: "gpt-4-turbo",
+      messages: [
+        { role: "system", content: "You are expert at writing Instagram micro-stories in Sandra’s voice." },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.8,
+      max_tokens: 600,
+    });
+
+    const text = response.data.choices[0].message.content;
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (err) {
+      console.error("🔴 GPT-4 JSON parse error:", err, "\nRaw content:", text);
+      return res.status(500).json({ error: "AI returned malformed JSON. Please try again." });
+    }
+
+    // Validate we got exactly 3 posts
+    if (!Array.isArray(parsed) || parsed.length !== 3) {
+      console.error("❌ Unexpected JSON shape:", parsed);
+      return res.status(500).json({ error: "AI did not return the expected 3 posts." });
+    }
+
+    // Validate each post’s fields and lengths
+    for (let i = 0; i < 3; i++) {
+      const post = parsed[i];
+      if (
+        typeof post.hook !== "string" ||
+        typeof post.microStory !== "string" ||
+        typeof post.takeaway !== "string" ||
+        typeof post.cta !== "string" ||
+        !Array.isArray(post.hashtags)
+      ) {
+        console.error("❌ Missing fields in post", i, post);
+        return res.status(500).json({ error: "AI output missing required fields." });
+      }
+      // Combined length check
+      const combined = `${post.hook} ${post.microStory} ${post.takeaway} ${post.cta}`.trim();
+      if (combined.length < 80 || combined.length > 120) {
+        console.error(`❌ Post ${i} length invalid: ${combined.length}`, combined);
+        return res.status(500).json({ error: `Post ${i + 1} is too short or too long. Try again.` });
+      }
+      // Hashtag count check
+      if (post.hashtags.length < 3 || post.hashtags.length > 5) {
+        console.error(`❌ Post ${i} hashtag count invalid: ${post.hashtags.length}`, post.hashtags);
+        return res.status(500).json({ error: `Post ${i + 1} must have 3–5 hashtags.` });
+      }
+    }
+
+    return res.json({ posts: parsed });
+  } catch (err) {
+    console.error("🔴 /api/generate-microstory error:", err);
+    return res.status(500).json({ error: "AI service error. Please try again later." });
+  }
+});
+Important:
+
+Do not delete or alter the existing /api/generate-captions route. We are simply adding this new route at the bottom.
+
+Do not modify any other lines in this file—only insert the above block exactly as shown.
+
+Make sure OPENAI_API_KEY is set in Replit’s Secrets.
+
+B. Frontend: Create a new MicroStoryCreator.tsx component and hook it to /studio/captions
+File: client/src/components/strategy/MicroStoryCreator.tsx (new file)
+
+Create a brand-new file at exactly this path. Paste in the full content below. It will:
+
+Show a “Your Story” textarea (required ≥ 20 chars).
+
+Show a “Generate Story Arc” button.
+
+Call /api/generate-microstory (use fetch or react-query).
+
+Display exactly 3 post cards, each with Hook / MicroStory / Takeaway / CTA / Hashtags.
+
+Keep Sandra’s Prata fonts, black/white minimal Vogue styling, and copy-to-clipboard buttons.
+
+tsx
+Kopier
+Rediger
+// client/src/components/strategy/MicroStoryCreator.tsx
+
+import React, { useState } from "react";
+
+type Post = {
+  hook: string;
+  microStory: string;
+  takeaway: string;
+  cta: string;
+  hashtags: string[];
+};
+
+export const MicroStoryCreator: React.FC = () => {
+  const [userStory, setUserStory] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  async function handleGenerate() {
+    setError(null);
+    if (!userStory.trim() || userStory.trim().length < 20) {
+      setError("Please share at least 20 characters about your experience.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/generate-microstory", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userStory }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error || "An unknown error occurred. Try again.");
+        setLoading(false);
+        return;
+      }
+      setPosts(json.posts);
+    } catch (err: any) {
+      setError("Network error. Try again soon.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // Optionally: show a small “Copied!” toast
+    } catch {
+      // Fallback or ignore
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto p-4">
+      <h2 className="text-3xl font-prata mb-4">Caption Creator</h2>
+      <textarea
+        className="w-full border border-gray-300 p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-black"
+        rows={4}
+        placeholder="Share your story (e.g. “I quit my 9-to-5 at 42 to build a handmade jewelry line, terrified but driven…”)."
+        value={userStory}
+        onChange={(e) => setUserStory(e.target.value)}
+      />
+      {error && (
+        <div className="bg-red-100 text-red-700 p-2 mb-2 rounded">{error}</div>
+      )}
+      <button
+        onClick={handleGenerate}
+        disabled={loading}
+        className="bg-black text-white px-6 py-3 font-bold mb-6 hover:bg-gray-800 disabled:opacity-50"
+      >
+        {loading ? "Generating…" : "Generate Story Arc"}
+      </button>
+      {posts.length > 0 && (
+        <div className="space-y-8">
+          {posts.map((post, idx) => (
+            <div
+              key={idx}
+              className="border border-gray-200 p-4 rounded-lg shadow-sm"
+            >
+              <div className="mb-2">
+                <span className="font-semibold">Hook:</span>{" "}
+                {post.hook}
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold">Story:</span>{" "}
+                {post.microStory}
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold">Takeaway:</span>{" "}
+                {post.takeaway}
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold">CTA:</span>{" "}
+                {post.cta}
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold">Hashtags:</span>{" "}
+                <span className="text-gray-700">
+                  {post.hashtags.join(" ")}
+                </span>
+              </div>
+              <button
+                onClick={() =>
+                  copyToClipboard(
+                    `${post.hook} ${post.microStory} ${post.takeaway} ${post.cta} ${post.hashtags.join(
+                      " "
+                    )}`
+                  )
+                }
+                className="mt-2 bg-gray-800 text-white px-4 py-2 text-sm hover:bg-gray-700"
+              >
+                Copy Full Post
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+Important styling notes:
+• Uses the same Prata font (you already have it globally).
+• The text-area, buttons, and card borders follow existing black/white minimal Vogue styling.
+• Do not adjust global CSS—just paste this code exactly.
+
+C. Frontend: Register this component at /studio/captions
+Open client/src/pages/studio/CaptionsStudio.tsx.
+
+Replace its entire contents with exactly:
+
+tsx
+Kopier
+Rediger
+// client/src/pages/studio/CaptionsStudio.tsx
+
+import React from "react";
+import { MicroStoryCreator } from "../../components/strategy/MicroStoryCreator";
+
+const CaptionsStudio: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-5xl mx-auto">
+        <nav className="py-6">
+          <a href="/studio" className="text-gray-700 hover:underline">
+            ← Back to AI Studio
+          </a>
+        </nav>
+        <MicroStoryCreator />
+      </div>
+    </div>
+  );
+};
+
+export default CaptionsStudio;
+Ensure the route is already defined in client/src/App.tsx as:
+
+tsx
+Kopier
+Rediger
+// ... inside your `<Routes>` block:
+<Route path="/studio/captions" element={<CaptionsStudio />} />
+If it’s missing, insert it exactly.
+
+Do not alter any other page, layout, or import.
+
+3. Final Checklist & Testing
+Replit Secrets:
+
+OPENAI_API_KEY must be set.
+
+Rebuild & Deploy your Replit project.
+
+Open your browser to /studio/captions.
+
+In the “Share Your Story” textarea, type at least 20 meaningful characters (e.g., “I just left my corporate job at 42 to launch my handmade jewelry line—totally terrified but can’t wait to empower women at every age.”).
+
+Click Generate Story Arc.
+
+Verify all three post cards appear, each showing:
+
+Hook (5–8 words)
+
+MicroStory (30–50 words)
+
+Takeaway (15–20 words)
+
+CTA (5–10 words)
+
+Hashtags (3–5)
+
+Emojis (exactly 1–2 from Sandra’s set, in the correct places)
+
+Check total length for each post’s combined text (should be 80–120 characters). If any post fails, you should see a clear “too short/too long” error and be able to adjust input.
+
+Use the Copy Full Post button under each card to ensure it copies exactly “hook + microStory + takeaway + cta + hashtags” (no extra whitespace or line breaks).
+
+Error Cases:
+
+If userStory < 20 chars, you get “Please share at least 20 meaningful characters…”
+
+If the AI returns invalid JSON or missing fields, you see “AI returned malformed JSON…”
+
+If any post’s combined length is out of range, you see “Post X is too short or too long. Try again.”
+
+Once all these pass, the new 3-post “Micro-Story Sequence” Caption Creator is locked in. This will deliver a bold, multi-day narrative in Sandra’s exact voice, so your members will say, “Wow—this feels like Sandra writing directly to me!”
+

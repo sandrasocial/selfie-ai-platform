@@ -1,0 +1,152 @@
+Title: Implement Dynamic PDFMonkey PDF Generation for Branded Templates
+User Language Preference: English
+Interface Style: Editorial, elegant, UX-locked (do not alter styles)
+Templates: PDFMonkey (IDs pre-created by user)
+
+🔧 TASK DESCRIPTION
+Please integrate support for generating personalized PDF documents for users using PDFMonkey. The templates are already styled and hosted in PDFMonkey — your job is to:
+
+1. Use the following Template IDs:
+Name	Template ID
+Brand Blueprint	48780153-6E0D-4695-920F-968888304D90
+Caption Strategy Guide	25FB2EEB-6366-49D5-82A0-98553DCF4C60
+AI Editing Routine	9CC35B05-3616-4EB8-898E-8C15E46A9F05
+Design Like a CEO	6724E507-38D0-4C4C-8C2D-CEC891968D73
+
+These should be called based on user input or route — e.g., /api/generate-pdf/:type where :type is one of "blueprint", "caption", "editing", "design".
+
+🔒 Secrets & API Integration
+PDFMonkey API Key is already installed in Replit Secrets as:
+
+bash
+Kopier
+Rediger
+PDFMONKEY_API_KEY
+Use Axios or Fetch to call:
+
+bash
+Kopier
+Rediger
+POST https://api.pdfmonkey.io/api/v1/documents
+Headers:
+
+json
+Kopier
+Rediger
+{
+  "Authorization": "Bearer ${PDFMONKEY_API_KEY}",
+  "Content-Type": "application/json"
+}
+Body format:
+
+json
+Kopier
+Rediger
+{
+  "document": {
+    "document_template_id": "<template-id>",
+    "payload": { ...mappedData },
+    "name": "Generated PDF for {{user.name}}"
+  }
+}
+🧠 Payload Structures
+Each document type has a unique payload structure:
+
+A. "blueprint" → Brand Blueprint Template:
+Uses user’s saved branding data (req.session.userId) from database:
+
+ts
+Kopier
+Rediger
+{
+  brand: {
+    why,
+    audience_demographic,
+    audience_desire,
+    audience_outcome,
+    voice,
+    fonts,
+    colors,
+    mood,
+    bio,
+    pillar_one,
+    pillar_two,
+    pillar_three
+  }
+}
+B. "caption" → Caption Strategy Guide:
+ts
+Kopier
+Rediger
+{
+  user: { name },
+  brand: { voice },
+  captions: {
+    hook, story, cta, hashtags,
+    angle_1, angle_2, angle_3
+  }
+}
+C. "editing" → AI Editing Routine:
+ts
+Kopier
+Rediger
+{
+  user: { name },
+  routine: {
+    software, presets, steps,
+    before_image_url, after_image_url,
+    tip_1, tip_2, tip_3
+  }
+}
+D. "design" → Design Like a CEO:
+ts
+Kopier
+Rediger
+{
+  user: { name },
+  design: {
+    mood_words,
+    reference_brands,
+    fonts,
+    logo_link,
+    color_palette,
+    image_notes,
+    layout_notes,
+    typography_notes,
+    quote
+  }
+}
+✅ Server Route Setup
+Create a unified POST route:
+
+bash
+Kopier
+Rediger
+POST /api/generate-pdf/:type
+Validate session
+
+Retrieve required user data from DB
+
+Select correct template_id
+
+Send payload to PDFMonkey
+
+Store or return download_url from the PDFMonkey response
+
+✅ Return Structure
+Send back:
+
+ts
+Kopier
+Rediger
+{
+  success: true,
+  downloadUrl: "https://pdfmonkey.io/docs/..."
+}
+⚠️ DO NOT:
+Change UX or styling of templates
+
+Inject or alter frontend PDF design logic
+
+Skip validation for userId or allow unauthenticated use
+

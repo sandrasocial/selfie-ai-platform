@@ -1,0 +1,55 @@
+Hey Queen 👑, I just uploaded the latest client.zip, server.zip, and the “SELFIE AI Audit & Implementation Checklist.csv.” Here’s exactly what I need you to do in this chat—step by step:
+
+Unzip & Load the Codebase
+• Unzip both client.zip and server.zip into the proper folders so you have the full React/TypeScript frontend and Node/Express backend files.
+• Verify you can run npm install and start both client and server without errors before making any changes.
+
+Load the Checklist
+• Open “SELFIE AI Audit & Implementation Checklist.csv” and treat each row as a discrete task: delete, refactor, move, or add files.
+• Follow the rows in CSV order—don’t skip or reorganize. Each row specifies exactly which file to update, which code to remove or insert, and where to place new components.
+
+Execute Each Task in Order
+For every row in the CSV:
+
+Locate the exact file path (e.g., client/client/src/components/Studios/VisualsStudio.tsx).
+
+Delete or refactor code exactly as the “Action” column instructs.
+
+If it says “Add new file,” create the folder and component/route with the exact code snippet referenced in the checklist.
+
+If it says “Register route,” update server/routes.ts accordingly.
+
+Maintain Sandra’s direct, bestie‐style voice in any UI copy you adjust.
+
+Run Lint & Tests After Each Batch
+• After completing each logical section (e.g., Content Generation Engine refactor, Starter Kit module, PRO features, etc.), run:
+
+arduino
+Kopier
+Rediger
+# In /client
+npm run lint
+npm run test
+
+# In /server
+npm run lint
+npm run test
+• Fix any errors that arise before moving on.
+
+Verify Functionality Before Moving On
+• After each major feature is implemented (e.g., Story Arc Builder, Starter Kit workbooks, Visual Studio fixes), launch the app locally and click through that feature to make sure it works as intended.
+• For any step that requires API keys or secrets (OpenAI, Supabase, Stripe, etc.), confirm environment variables are set (they should already exist in the Replit project). If something is missing or fails, pause and ask for clarification.
+
+Ask Questions If Anything Is Unclear
+• If a row refers to “apply Sandra’s tone” or “use formatWithSandraTone helper,” and you can’t find that helper or it’s not implemented yet, let me know before proceeding.
+• If any file path in the CSV doesn’t match what you see, flag it so I can correct it.
+
+Document Changes in CHANGELOG.md
+• After each section is fully implemented and verified, append a short “Added/Changed/Fixed” bullet to CHANGELOG.md at project root, matching the examples in the checklist.
+
+Finish When All Rows Are ✔️
+• Once you’ve processed every row in “SELFIE AI Audit & Implementation Checklist.csv,” confirm: “All tasks completed, app is refactored per new plan, ready for final QA.”
+
+Let’s do this in order—no jumping ahead. If you hit any blockers or questions, ask right away so we keep momentum. Ready to slay? 🚀🖤
+
+—Sandra (via AI)

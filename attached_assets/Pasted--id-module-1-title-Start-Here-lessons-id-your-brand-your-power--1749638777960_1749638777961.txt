@@ -1,0 +1,104 @@
+{
+  id: 'module-1',
+  title: 'Start Here',
+  lessons: [
+    {
+      id: 'your-brand-your-power',
+      title: 'Your Brand, Your Power',
+      description: `This Starter Kit isn’t just a bundle of tools — it’s your first step into a more magnetic version of you. A version that shows up online with clarity, confidence, and camera-ready energy.`,
+      type: 'video',
+      duration: '6 min',
+      videoUrl: 'https://player.vimeo.com/video/1091863622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+      content: `
+        <div className="space-y-12">
+
+          {/* Welcome Copy */}
+          <div className="text-center text-[#4C4B4B] max-w-3xl mx-auto text-lg leading-relaxed font-light">
+            <p>Welcome, gorgeous. You’re not here to play small anymore.</p>
+            <p className="mt-4">
+              This Starter Kit isn’t just a bundle of tools — it’s your first step into a more magnetic version of you.<br />
+              A version that shows up online with clarity, confidence, and camera-ready energy.
+            </p>
+            <p className="mt-4">
+              You don’t need more noise.<br />
+              You need a system.<br />
+              So let’s simplify and elevate — together.
+            </p>
+          </div>
+
+          {/* Presets Download Section */}
+          <div>
+            <h3 className="text-center text-[#171719] font-['Cormorant_Garamond'] text-3xl mb-6">Tap to Access Your Presets</h3>
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {[
+                { title: 'Light & Airy', file: '/downloads/presets/light-airy.zip' },
+                { title: 'Dark & Moody', file: '/downloads/presets/dark-moody.zip' },
+                { title: 'Scandinavian Urban', file: '/downloads/presets/scandinavian-urban.zip' }
+              ].map((preset, i) => (
+                <a 
+                  key={i} 
+                  href={preset.file} 
+                  className="block bg-[#F1F1F1] px-6 py-8 text-center font-medium text-[#171719] tracking-wide uppercase hover:bg-[#E8E8E8] transition"
+                  download
+                >
+                  {preset.title}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Reflection Prompt with AI Quote Generator */}
+          <div className="bg-[#F1F1F1] px-8 py-12 text-center max-w-3xl mx-auto">
+            <h4 className="font-['Cormorant_Garamond'] text-2xl text-[#171719] mb-4">
+              What’s been holding you back from showing up fully online?
+            </h4>
+            <button
+              onClick={() => generateAIQuote('your-brand-your-power')}
+              className="mt-4 px-6 py-3 text-sm uppercase tracking-wider bg-[#171719] text-white hover:bg-[#2A2A2A]"
+            >
+              Generate Your Affirmation
+            </button>
+
+            {/* Affirmation Card Preview */}
+            <div className="mt-10 relative w-full max-w-md mx-auto aspect-[4/5] bg-black">
+              <img
+                src="https://i.postimg.cc/4ypPywML/21.png"
+                alt="Affirmation Background"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                id="quote-output"
+                className="absolute inset-0 flex items-center justify-center p-6 text-white text-lg font-light text-center leading-relaxed z-10"
+              >
+                {/* AI-generated quote injected here */}
+              </div>
+            </div>
+          </div>
+
+          {/* Checklist Section */}
+          <div className="bg-white max-w-xl mx-auto mt-16">
+            <h4 className="text-center font-['Cormorant_Garamond'] text-2xl text-[#171719] mb-6">
+              Quick Checklist Before Moving On
+            </h4>
+            <ul className="space-y-4 text-[#4C4B4B] font-light text-base pl-4">
+              <li><input type="checkbox" className="mr-3" />Watched the intro video</li>
+              <li><input type="checkbox" className="mr-3" />Ready to install your presets</li>
+              <li><input type="checkbox" className="mr-3" />Feeling grounded in your why</li>
+            </ul>
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-center mt-16">
+            <button
+              onClick={goToNextLesson}
+              className="bg-[#171719] text-white px-12 py-4 text-sm uppercase tracking-wider hover:bg-[#2A2A2A] transition"
+            >
+              Next: Define Your Signature Style →
+            </button>
+          </div>
+
+        </div>
+      `
+    }
+  ]
+}

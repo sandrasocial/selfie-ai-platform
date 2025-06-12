@@ -1,0 +1,182 @@
+**SELFIE AI™ DASHBOARD DESIGN MANUAL**
+
+---
+
+### 📊 PROJECT OVERVIEW
+
+This design manual covers the **Member Dashboard** for SELFIE AI™ — a personalized brand-building HQ inspired by editorial luxury brands like Tom Ford, Vogue, and Chanel. The dashboard blends minimalism, emotional depth, and strategic functionality to guide users through their empowerment journey.
+
+---
+
+## ✨ VISUAL SYSTEM
+
+**Typography:**
+
+* Headings: `Cormorant Garamond` (serif, elegant, editorial)
+* Body/UI: `Neue Einstellung` (clean sans-serif)
+
+**Color Palette:**
+
+* Luxury Black: `#171719`
+* Soft White: `#F1F1F1`
+* Warm Gray: `#B5B5B3`
+* Graphite: `#4C4B4B`
+
+**Style Rules:**
+
+* All corners = 0px (sharp)
+* Buttons = uppercase, thin border only, thinner font
+* Hover effects = soft scale + drop shadow
+* Background imagery = NO grayscale if using branded photos; instead apply `rgba(0, 0, 0, 0.3)` overlay
+* Offer Cards = Luxury editorial photos with toned styling
+* Tool Icons = Thin, transparent white line icons (modern, minimal)
+
+**Global Components:**
+
+* Header: Already implemented (transparent on hero, solid on scroll)
+* Footer: Consistent across all pages (white text, no icons)
+
+---
+
+## 🔄 USER STATE BEHAVIOR
+
+User access is based on purchased products:
+
+```ts
+const [userPurchases, setUserPurchases] = useState({
+  starterKit: false,
+  brandedBySelfie: false,
+  vipAccess: false
+});
+```
+
+This logic should be updated later with real purchase validation.
+
+---
+
+## 🌌 DASHBOARD LAYOUT STRUCTURE
+
+### 1. **Hero Welcome Block**
+
+* Background: `https://i.postimg.cc/fLSsQQth/IMG-6384-jpg.jpg`
+* Overlay:
+
+  * `H1`: Welcome back, \[UserName]. Your empire starts here.
+  * Subtext: Choose your path. Build your power.
+  * Buttons:
+
+    * Style: Thin, outlined, no fill, 2px border, thin uppercase text
+    * “START WHERE YOU LEFT OFF”
+    * “SEE ALL TOOLS”
+
+### 2. **Offer Ladder Cards**
+
+Updated visual backgrounds:
+
+```ts
+offerLadderCards = [
+  { id: 'freebie', bgImage: 'https://i.postimg.cc/dQ5q8mbb/22.png' },
+  { id: 'starter-kit', bgImage: 'https://i.postimg.cc/bwYKyKCW/122.png' },
+  { id: 'branded', bgImage: 'https://i.postimg.cc/nhDpf8Xx/35.png' },
+  { id: 'vip', bgImage: 'https://i.postimg.cc/bYB7yCcw/128.png' }
+]
+```
+
+Style each card with:
+
+* Rich photo, no grayscale
+* Overlay: `rgba(0,0,0,0.3)` for contrast
+* Title + subtitle
+* CTA: Based on user access
+* Status badge: Owned, Locked
+
+### 3. **Progress Tracker**
+
+* Keep as-is, consistent with branding
+* Dot + check flow remains elegant
+
+### 4. **Sandra Says Block**
+
+* Background image: `https://i.postimg.cc/d0MV1PLq/IMG-8465-jpg.jpg`
+* Overlay text:
+
+  * "Sandra Says..."
+  * "Your brand is your mirror. Make it magnetic."
+* CTA buttons: Minimal sharp outline buttons with same style as hero
+
+### 5. **Your Tools Hub**
+
+* 6 Feature Cards:
+
+  * Sandra AI Chat
+  * Selfie Uploader
+  * Caption Generator
+  * Strategy Workbooks
+  * Content Calendar
+  * Pose Coach
+
+🔁 **Updated Icon Style:**
+
+* Use thin-line white transparent icons
+* Remove current bulky Lucide icons
+* Align icons left, small padding inside card block
+
+### 6. **Weekly Planner Widget**
+
+* Grid 7 cards (Mon-Sun)
+* Background should subtly use aesthetic image (low opacity background like `https://i.postimg.cc/Xqq62mRT/48.png`)
+* Optional: Add mood icon in top corner (sun/moon/star for morning/night/inspo)
+
+### 7. **Footer Offer Ladder Strip**
+
+* Replace gray background with deep black
+* Update dot logic:
+
+  * Filled white = owned
+  * Outlined white = open
+  * Outlined gray = locked
+  * VIP = crown
+
+---
+
+## 🧱 AESTHETIC DASHBOARD WIDGET IDEAS
+
+Add small luxury-inspired widgets below "Your Tools" or beside the planner:
+
+**1. Moodboard Preview**
+
+* Title: “This Week’s Vibe”
+* Pulls 3–4 flatlay images from:
+
+  * `https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png`
+  * `https://i.postimg.cc/PxvRkfVQ/story-Image1.png`
+
+**2. Daily Motivation Card**
+
+* Random quote from Sandra's voice
+* Overlay on aesthetic image block (sharp border)
+
+**3. AI Activity Stats**
+
+* “You’ve generated 4 captions, uploaded 6 photos this week.”
+* Clean badge-style layout with checkmark icons
+
+---
+
+## ⚖️ DEV INSTRUCTIONS (REPLIT ASSISTANT)
+
+1. Update hero image and button style per new visual system
+2. Use full-color editorial images for cards with `rgba(0,0,0,0.3)` overlay for legibility
+3. Replace all tool icons with transparent thin-line white versions
+4. Add 2 aesthetic widgets below tools:
+
+   * Moodboard (3 mini cards)
+   * Daily Quote block (styled like a designer card)
+5. Recheck mobile scaling and card layout spacing
+6. Preserve existing logic (userPurchases, fallback username = Queen)
+
+---
+
+This updated version brings luxury, emotion, and polish to the dashboard while preserving clarity and function.
+
+Ready to proceed to the next page when you are. ✨

@@ -1,0 +1,108 @@
+Redesign Dashboard.tsx to reflect a luxury digital control panel for Sandra’s SELFIE AI™ platform. Think high-end fashion dashboard meets productivity suite. This is the first page users land on — it must feel powerful, personal, and premium.
+
+🎯 OVERALL DESIGN INTENT
+Sharp, clean, minimal layout with high contrast
+
+Black, white, and grayscale palette ONLY — no beige
+
+Editorial typography + soft animations
+
+Clear section spacing for clarity and visual breathing room
+
+🖥️ PAGE STRUCTURE
+1. Hero Section (Full Width Top Banner)
+Background: Black & white editorial portrait of Sandra (placeholder OK)
+
+Overlay:
+
+Headline (Prata, 48px, tight tracking):
+"Welcome Back, [UserName] 👑"
+
+Subheadline (Helvetica Neue, 20px):
+"Let’s build your brand, one bold move at a time."
+
+CTA:
+
+Button: “GO TO YOUR WORKSPACE” (black w/ white text, 0px border radius)
+
+2. Daily Action Stack (3 Column Grid)
+Section Title: "Today's Power Moves"
+
+Grid layout with sharp editorial cards
+
+Each card includes:
+
+Icon placeholder (style: outlined, small)
+
+Task name: e.g. "Upload your selfie", "Generate your caption", "Plan your week"
+
+Mini CTA: "Do it now →"
+
+Hover effect: darken slightly + lift (transform: translateY(-2px))
+
+3. Quote Block
+Centered across full width
+
+Quote:
+
+"Power is the new pretty."
+
+Font: Prata Italic
+
+Accent line underneath (2px solid #b5b5b3, 64px wide, centered)
+
+4. My Tools Overview
+Grid layout with 4 luxury feature cards:
+
+AI Studio
+
+Sandra AI Chat
+
+Content Calendar
+
+Strategy Workbooks
+
+Layout: 2-column grid on desktop, stacked on mobile
+
+Each card:
+
+B&W image background (use placeholder)
+
+White text overlay with Prata headers
+
+Hover effect: dark overlay fade + “Open Tool →” CTA revealed
+
+5. Recent Activity Feed (Optional)
+Section Title: "Your Recent Wins"
+
+White background block with gray borders
+
+Timeline-style list:
+
+Example:
+
+“You uploaded 3 new selfies”
+
+“Your 30-day content plan is ready”
+
+“Sandra AI generated 5 new hooks”
+
+6. Footer CTA
+Black bar with centered callout:
+"Need help? Message Sandra AI or Book a Power Session"
+
+Button: "ASK SANDRA AI" and "BOOK SESSION" side-by-side
+
+📱 MOBILE RESPONSIVE RULES
+Stack all sections vertically
+
+Use 16px padding and 32px section gaps
+
+All cards full-width with tight vertical spacing
+
+Quote block reduced to 28px text
+
+📸 IMAGE PLACEHOLDER URL
+Use: https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg
+→ Crop dynamically for hero background and feature cards until final uploads are ready
+

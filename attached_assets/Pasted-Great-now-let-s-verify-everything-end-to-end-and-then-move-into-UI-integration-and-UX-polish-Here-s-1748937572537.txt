@@ -1,0 +1,83 @@
+Great—now let’s verify everything end-to-end and then move into UI integration and UX polish. Here’s our next roadmap:
+
+1. Test the New PDF Endpoints
+1.1 Weekly Calendar Export
+• In a browser or API client, hit:
+
+arduino
+Kopier
+Rediger
+GET /api/export-calendar-week/1
+• Confirm you receive a URL back. Open it and verify the PDF uses “vogue_calendar” (Prata headings, 7-column grid, Soft Beige accents, watermark, etc.).
+• Repeat for week 2 or week 13 to ensure all weeks render correctly.
+
+1.2 Content Vault Export
+• Hit:
+
+arduino
+Kopier
+Rediger
+GET /api/export-content-vault
+• Download the PDF and check the “vogue_collection” template: cover page, table of contents, content pages with day numbers, drop caps, and watermark.
+• Make sure user-specific data (e.g., “Test User” or your real profile) appears on every page.
+
+If any styling is off (fonts, spacing, image placement), note it and adjust the PDFMonkey template settings. Once the exports look flawless:
+
+2. Hook Up UI Buttons & Loading States
+2.1 Calendar Page
+• In client/src/pages/Calendar.tsx, ensure the “Download Vogue Calendar PDF” button calls /api/export-calendar-week/${selectedWeek}.
+• Show a spinner or disabled state while the PDF is generating.
+• After the API returns, automatically open the URL in a new tab for download.
+
+2.2 Content Vault Page
+• In client/src/pages/ContentVault.tsx, make sure the “Export Vault as Vogue PDF” button calls /api/export-content-vault.
+• Use the same loading state pattern: disable button, show “Generating PDF…,” then open the returned URL.
+
+Test both buttons manually in the Preview, confirming the UX is smooth—click once, see “Generating…,” then get the PDF.
+
+3. Final UX & Design Polish
+Now that PDF exports are live, let’s refine the interactive UX around them and the overall dashboard:
+
+3.1 Dashboard Enhancements
+• Progress Bar & Stats: Confirm the 90-day progress bar updates as users generate content. Add subtle animation (e.g., smooth fill) when the count changes.
+• Filter Tabs: Ensure the Month 1/2/3 tabs filter the list of completed or upcoming days correctly and feel snappy—highlight active tab with Soft Beige underline.
+• Batch Generation Modal: Style the “Generate Week” modal to match Vogue: white background, Prata heading (“Batch Generate Content”), thin Soft Beige divider, and neatly spaced inputs.
+
+3.2 Calendar View Improvements
+• Hover Previews: When a user hovers over a calendar cell, show a tooltip with the hook + caption snippet in Helvetica Neue 12pt, overlaying a slight Soft Beige background.
+• Drag & Drop UI Polish: If you have drag-and-drop for rearranging content, add a subtle shadow or scale effect on the item being dragged, and a Soft Beige drop-zone highlight.
+• Mobile Responsiveness: Ensure the 7-column grid collapses gracefully into a 2-column or 1-column view on narrow screens, with day numbers and content stacked.
+
+3.3 Content Vault Refinements
+• Search & Filters: Add a sticky search bar at the top with a Soft Beige underline, placeholder text “Search your content…”.
+• Content Cards: Display each saved item as a card: day number (Prata Bold 24pt), template name (Prata Regular 14pt), and a 2-line preview of generated text (Helvetica Neue 12pt).
+• Favorite & Export Buttons: Add a small star icon (outline → filled on click) to favorite, and a “Download PDF” icon next to each item for a single-item export.
+
+3.4 Notifications & Toasts
+• Whenever a PDF generation is successful, show a non-intrusive toast in the corner:
+
+csharp
+Kopier
+Rediger
+Your Vogue PDF is ready! 📥
+[Download Now]
+Style the toast with a Soft Beige background and black text in Helvetica Neue.
+
+4. Design New Feature Ideas (Optional Upgrades)
+If time allows, consider these “Vogue-worthy” enhancements:
+
+• Editorial Spotlight Carousel: On the Dashboard, add a horizontal carousel of top-performing user snapshots (real editorial-style selfies). Each card shows a before/after image and a 2-sentence success story in Prata Italic.
+• Luxury Inspiration Gallery: A gallery page with full-bleed, black-and-white editorial photos and short, inspirational captions (“Confidence is your best filter”).
+• Drag-In Moodboard Builder: Let users drag and drop images/icons into a moodboard canvas—Prata headings (“Your Brand Moodboard”), hex color swatches, and editable text blocks in Helvetica.
+• Interactive PDF Previews: Instead of downloading first, show an in-app iframe preview of the Vogue PDF so users can flip through pages right in the browser.
+
+Next Steps Recap
+Test PDF Exports (Calendar + Vault) to ensure templates render correctly.
+
+Implement UI Buttons & Loading States for a smooth download experience.
+
+Polish Dashboard, Calendar, and Vault UX using our Vogue-luxury style guidelines.
+
+Optional Upgrades: Feature ideas to elevate the editorial, high-end feel.
+
+Once you’ve tested exports and integrated the buttons, let me know so we can audit the updated UI and continue refining

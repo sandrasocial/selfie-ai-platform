@@ -1,0 +1,89 @@
+URGENT FIX: Data Still Not Rendering or Prefilling
+🛑 Backend is working (200 OK), but answers are not displaying after refresh, and preview is not showing even after workbook generation.
+
+👉 Here's what to check and fix immediately:
+
+✅ STEP 1: PREFILL CHECK
+PROBLEM: GET /api/module2-answers is returning 200 OK, but the data is not shown in the form.
+
+FIX: Inside ModuleTwo.tsx, add a console log right after the fetch to confirm what’s being returned:
+
+tsx
+Kopier
+Rediger
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await fetch('/api/module2-answers');
+      const data = await res.json();
+      console.log("Fetched Answers:", data); // 🔍 LOG THIS
+      if (data) setFormData(data); // Ensure form state is being set
+    } catch (err) {
+      console.error('Error fetching saved answers:', err);
+    }
+  };
+  fetchAnswers();
+}, []);
+✅ Confirm:
+
+setFormData() is being called with actual data
+
+Input fields are actually bound to formData.[fieldName]
+
+✅ STEP 2: INPUT FIELDS MUST BE CONTROLLED
+Make sure each input uses:
+
+tsx
+Kopier
+Rediger
+value={formData.fieldName || ""}
+onChange={handleChange}
+If not, the values won’t update from the loaded state.
+
+✅ STEP 3: GENERATION PREVIEW DISPLAY
+PROBLEM: You’re calling /api/module2-workbook, but the results are not being rendered.
+
+FIX: After workbook is fetched, log the response and update previewData:
+
+tsx
+Kopier
+Rediger
+const handleGenerate = async () => {
+  try {
+    const res = await fetch('/api/module2-workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    console.log("Generated Preview:", data); // 🧠 Must log this
+    setPreviewData(data); // ⬅️ Make sure this is being used in UI
+  } catch (err) {
+    console.error("Workbook generation failed:", err);
+  }
+};
+✅ Confirm:
+
+setPreviewData(data) is being used
+
+You have a render section like:
+
+tsx
+Kopier
+Rediger
+{previewData && (
+  <div>
+    <h2>Your Message Blueprint</h2>
+    <p>{previewData.pov}</p>
+    <p>{previewData.pillars?.join(", ")}</p>
+    <p>{previewData.plan?.day30}</p>
+  </div>
+)}
+✅ FINAL TEST FLOW (MUST PASS):
+Type in any field → confirm POST /api/module2-save-answers logs fire every 800ms ✅
+
+Refresh → form fields show same values from before ✅
+
+Click generate → preview data appears below the form ✅
+
+If any of the above don’t happen, that’s the problem. Fix the React state bindings and render logic immediately.

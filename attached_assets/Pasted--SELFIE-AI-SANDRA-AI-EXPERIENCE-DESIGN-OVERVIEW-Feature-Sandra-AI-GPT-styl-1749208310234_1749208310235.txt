@@ -1,0 +1,123 @@
+**SELFIE AI™ - SANDRA AI EXPERIENCE DESIGN**
+
+---
+
+### 🔍 OVERVIEW
+
+**Feature:** Sandra AI (GPT-style brand mentor)
+**Goal:** Deliver strategic brand-building prompts, emotional support, and real-time visibility coaching inside a luxurious editorial chat interface.
+**Audience:** Women rebuilding identity and brand visibility after burnout, heartbreak, or life transition.
+
+---
+
+## 🌟 CORE EXPERIENCE
+
+**Sandra AI Chat Page Layout**
+
+1. **Hero Header (Full-bleed Visual)**
+
+   * Image: [https://i.postimg.cc/wxc1QX0g/3.png](https://i.postimg.cc/wxc1QX0g/3.png)
+   * Label (small, uppercase): `SANDRA AI`
+   * Headline: `Your Personal Brand Mentor, On Demand.`
+   * Subtext: `Ask anything, anytime. Sandra’s here to help you heal, create, and grow.`
+   * Button: `START A NEW CONVERSATION`
+
+2. **Chat Interface (Full Width)**
+
+   * Left:
+
+     * Past conversations history (editable titles)
+     * Quick filters: Daily Prompt, Brand Story, Content Help, Confidence Boost
+   * Right:
+
+     * Main conversation thread
+     * Input area with “Send” button styled as outlined square
+     * Signature AI typing animation: "Sandra is thinking..."
+     * Font: Neue Einstellung (chat input), Cormorant Garamond (Sandra responses, large callouts)
+
+3. **Sandra Tone & Voice Engine**
+
+   * Emotional tone: Empowering, strategic, personal-bestie
+   * Sample language:
+
+     * “Let’s rewrite that caption to make it magnetic.”
+     * “Here’s a mindset shift I’d love you to try.”
+     * “You’re in the Branded stage. Here’s how we unlock VIP-level impact.”
+
+4. **Prompt System (Modular Feed)**
+
+   * Title: `Sandra’s Suggestions`
+   * Dynamic content blocks (scrollable or carousel):
+
+     * 🔄 "Generate a reel script for your story."
+     * 🔹 "What’s your vibe today? Let's turn it into visual content."
+     * 🔜 "Need a boost? Here’s a powerful quote to post with a mirror selfie."
+
+---
+
+## ⚖️ TOOL INTEGRATIONS
+
+1. **Offer Ladder Awareness**
+
+   * Sandra responds based on current stage:
+
+     * “You’ve completed the Kit. Ready to elevate into Branded by Selfie?”
+     * “VIP is your next level. Let me show you how to apply.”
+
+2. **Planner Hook**
+
+   * Sandra can:
+
+     * Add hooks to calendar
+     * Generate new week plans
+     * Recommend post types based on progress
+
+3. **Product Suggestions**
+
+   * Based on inquiry:
+
+     * “Want my lighting setup?” → Link to Selfie Starter Kit
+     * “Let’s clarify your niche.” → Branded by Selfie module preview
+
+4. **Floating Widget Button** (Optional Global Feature)
+
+   * Icon: Subtle outline chat bubble
+   * Text: `Ask Sandra`
+   * Behavior: Expands to mini chat thread or redirects to Sandra AI full page
+
+---
+
+## 🚀 STYLE & UI NOTES
+
+* **Color Palette:**
+
+  * Chat background: `#171719`
+  * Bubbles: Sandra (white text on black), User (black text on soft white)
+  * CTA highlights: `#B5B5B3` hover and borders
+
+* **Typography:**
+
+  * Header: Cormorant Garamond (serif, large)
+  * Body: Neue Einstellung (sans-serif, light)
+
+* **Microinteractions:**
+
+  * Typing dots for Sandra
+  * Soft fade-in of chat blocks
+  * Card hover glow on prompts
+
+---
+
+## 📖 DEV INSTRUCTIONS
+
+* Endpoint: `/sandra-ai`
+* Auto-load user state (name, offer stage, past chats)
+* Render prompt cards dynamically from API or static file
+* Ensure mobile experience mirrors luxury feel (no crammed UI)
+* Load avatar or initials for user and Sandra
+* Apply visual consistency with Dashboard (same font, borders, buttons)
+* Optional: Save convo summaries in user profile
+
+---
+
+**NEXT:** Sandra AI onboarding script or welcome sequence.

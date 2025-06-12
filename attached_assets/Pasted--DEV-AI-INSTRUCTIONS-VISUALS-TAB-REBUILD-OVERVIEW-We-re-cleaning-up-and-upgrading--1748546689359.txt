@@ -1,0 +1,79 @@
+**DEV AI INSTRUCTIONS — VISUALS TAB REBUILD**
+
+---
+
+### ✅ OVERVIEW:
+We're cleaning up and upgrading the current "Visuals" tab in AI Studio to reflect Sandra's new brand direction.
+
+This new layout will keep the **Lifestyle Image Generator** and the **Photo Editor with Luxury Presets**, while removing the **Future Self AI Generator** for now.
+
+We’re prioritizing realism, polish, and simplicity.
+
+---
+
+### 🔨 ACTION STEPS FOR DEV AI:
+
+#### 1. **Remove the Old Visuals Tab Structure**
+- Delete all current components related to:
+  - Future Self generator logic
+  - Unused preset packs or filters
+  - Broken calendar save display and 3-tab toggle structure
+
+---
+
+#### 2. **Keep and Upgrade the “Professional Photo Editor” Section**
+
+✅ **Keep existing image upload logic**
+✅ **Preserve current Filerobot integration**
+
+🛠️ **Update the following:**
+- Add only these presets:
+  - Scandinavian Light #2 – Soft glow with gentle contrast
+  - Scandinavian Dark #4 – Moody cinematic look
+  - Scandinavian Dark #5 – Elegant dark tones
+  - Nordic Urban #4 – Street photography style
+  - Nordic Urban #5 – Modern urban aesthetic
+  - Selfie Glow Up #1 – Perfect selfie enhancement
+  - Selfie Glow Up #3 – Radiant portrait finish
+
+- Add a new “AI Enhance” button that applies a polished clarity/contrast base layer
+- Remove any other presets from UI and logic
+
+📝 On preset click → apply preset visually to uploaded photo
+💾 On save → return edited image to user for download or export to feed planner
+
+---
+
+#### 3. **Refine the AI Lifestyle Generator**
+
+🎯 This feature stays active — we are **NOT removing it**.
+
+🛠️ Next improvements:
+- Ensure prompts return realistic, high-end stock imagery
+- No human faces (only faceless, hands, or full-body silhouettes if necessary)
+- Categories should include:
+  - Workspace
+  - Flatlay / Desk
+  - Accessories
+  - Coffee moments
+  - Interiors / Mood scenes
+
+🔄 Prompt examples:
+> “Minimalist marble desk with latte and sunglasses in soft natural light”
+> “Flatlay of gold jewelry and perfume on white linen with neutral tones”
+
+---
+
+#### 4. **Move Feed Planner + Calendar to Dashboard (or separate page)**
+
+✅ Remove grid and calendar features from Visuals tab
+✅ These tools will be moved to the Dashboard for clarity
+✅ All generated + uploaded images should be saved with proper tags (for Feed Planner use later)
+
+📅 We'll build the full Instagram Grid Planner separately in the next phase
+
+---
+
+🎯 Simple, luxurious, and brand-aligned.
+
+Sandra will provide the preset thumbnails and prompt copy.

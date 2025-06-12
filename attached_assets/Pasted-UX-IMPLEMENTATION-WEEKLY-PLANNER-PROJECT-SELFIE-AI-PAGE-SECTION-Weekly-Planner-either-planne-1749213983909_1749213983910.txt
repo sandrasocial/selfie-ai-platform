@@ -1,0 +1,90 @@
+UX IMPLEMENTATION – WEEKLY PLANNER)
+PROJECT: SELFIE AI™
+PAGE/SECTION: Weekly Planner (either /planner or within Dashboard)
+
+TASK: Implement the full visual experience for the Weekly Planner as described in the UX specification provided below.
+
+⚠️ DO NOT add or connect any backend logic. No API wiring, database interaction, or server code. This is a front-end/UX implementation only.
+
+✅ DESIGN & LAYOUT TO IMPLEMENT
+🖥️ PAGE TITLE:
+
+"THIS WEEK’S CONTENT"
+
+Subtitle: "Your brand is built in the moments you choose to show up."
+
+Fonts:
+
+Title: Cormorant Garamond, 36–48px
+
+Subtitle: Neue Einstellung, 18px, soft gray
+
+Optional section label: WEEKLY PLANNER (uppercase, small)
+
+🔲 GRID STRUCTURE:
+7 columns for Mon–Sun (desktop/tablet)
+
+Each column = vertical day card
+
+Each Card Includes:
+Element	Behavior
+Day Label	"MON", "TUE", etc. in uppercase Neue Einstellung
+Dot Indicator	Black dot if task exists, Gray dot if none
+Hover Preview	Show task preview (fade-in or tooltip)
+Click	Open modal or inline editor to edit task, add new, or mark complete
+AI Tag	If created by Sandra, show ✨ Suggested by Sandra AI
+Today's Highlight	Soft vertical glow effect on today’s card
+
+🧠 INTERACTION MODALS:
+On click:
+
+Edit task
+
+Toggle completed (adds checkmark/faded style)
+
+Optional: emoji or color tags
+
+Modal layout: soft border, editorial white space
+
+📱 MOBILE RESPONSIVENESS:
+Stack cards vertically
+
+Tap = expand accordion
+
+Swipe to scroll between weeks (optional, placeholder only)
+
+🎯 CTA ZONE (Below Grid):
+Manage Calendar button (styled, uppercase, outlined)
+
+Sandra’s Suggestion button:
+
+When clicked, will call a future backend endpoint
+
+Shows as floating sticky note box: “Record a reel answering a DM question”
+
+🎨 STYLE GUIDE:
+Fonts: Cormorant Garamond (headers), Neue Einstellung (body)
+
+Colors:
+
+Text: Black on white or inverse depending on theme
+
+Dot indicators: #171719 and #B5B5B3
+
+Buttons:
+
+Border: 2px solid #171719
+
+Text-transform: uppercase
+
+Padding: 14px 28px
+
+Hover/Glow Animation on cards:
+
+css
+Kopier
+Rediger
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}

@@ -1,0 +1,34 @@
+📍 ISSUE:
+The AI-generated content displays correctly in the preview inside the builder, but **the downloaded PDF** (via PDFMonkey) still shows outdated or placeholder content. The live app download isn’t syncing with the real workbook content.
+
+🎯 GOAL:
+Ensure that the PDF download matches the preview — fully personalized, with Sandra’s voice, name, and complete 30-60-90 strategy content visible.
+
+✅ TASKS TO FIX:
+
+1. **Sync Preview ↔ PDFMonkey Template:**
+   - Verify that the final `workbook.phase30`, `phase60`, `phase90`, and `strategySummary` fields used in the preview are also passed **to the PDFMonkey payload**.
+   - Confirm that `pdfMonkeyGenerator.ts` is referencing the updated fields and not an old fallback or static template.
+
+2. **PDFMonkey Template Fix:**
+   - Open the current active template inside PDFMonkey.
+   - Check that dynamic fields like `{{phase30}}`, `{{phase60}}`, `{{strategySummary}}`, and `{{userName}}` are correctly mapped and styled.
+   - Replace any placeholder text like “Your personalized 30-60-90 day plan will go here” with the actual injected field values.
+
+3. **Inject Sandra’s Voice + Name:**
+   - Ensure `userName` is passed into the PDFMonkey payload and rendered inside key sections (especially 30-60-90 plan and summary).
+   - Confirm the same AI-generated content used in the preview is used in the PDF.
+
+4. **Force Full Data Pass:**
+   - In `routes.ts`, enforce the return of the **latest workbook state** including all filled fields when calling PDFMonkey.
+   - Add logging to confirm the payload sent to PDFMonkey includes:
+     - `title`, `strategySummary`, `phase30`, `phase60`, `phase90`, `userName`
+
+5. **Final QA Plan:**
+   - Regenerate a test workbook inside the live app.
+   - Download the PDF.
+   - Confirm it matches the preview content line-for-line, includes Sandra’s name, and uses the correct tone.
+
+📌 BONUS: Include a timestamp or hidden field in the PDF to confirm it’s the latest generated version.
+
+Once complete, this will ensure your workbook downloads reflect the **exact same rich content** as the in-app preview — giving your users a luxury, high-value takeaway that actually sounds like Sandra.

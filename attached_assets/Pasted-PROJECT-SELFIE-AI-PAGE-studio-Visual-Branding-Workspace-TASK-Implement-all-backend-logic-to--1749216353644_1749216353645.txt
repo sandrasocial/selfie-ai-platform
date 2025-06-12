@@ -1,0 +1,106 @@
+PROJECT: SELFIE AI™
+PAGE: /studio (Visual Branding Workspace)
+
+TASK: Implement all backend logic to support the Studio interface.
+
+⚠️ DO NOT touch or modify any frontend or styling. The entire UX is already implemented. This is backend logic, database, and API work only.
+
+✅ 1. Supabase: Upload Table
+Create a table uploads:
+
+ts
+Kopier
+Rediger
+type Upload = {
+  id: string
+  userId: string
+  fileUrl: string
+  createdAt: Date
+  tags: string[] // freeform or selected
+  mood: string // e.g., "Confident", "Raw", "Luxe"
+  intent: string // e.g., "About Page", "Instagram", etc.
+  isBrandAsset: boolean
+}
+✅ 2. API Endpoints
+➤ POST /api/uploads
+Upload image and metadata
+
+Accept:
+
+ts
+Kopier
+Rediger
+{
+  fileUrl: string,
+  tags?: string[],
+  mood?: string,
+  intent?: string,
+  isBrandAsset?: boolean
+}
+Store file + metadata for user
+
+➤ GET /api/uploads
+Return all uploaded images by current user
+
+Include metadata and sort by createdAt descending
+
+➤ PUT /api/uploads/:id
+Edit tags, mood, intent, isBrandAsset for a photo
+
+➤ DELETE /api/uploads/:id
+Delete image + metadata
+
+✅ 3. Auto-Tagging API
+➤ POST /api/image-meta
+Accept image URL or ID
+
+Analyze image (basic ML or placeholder logic) to return:
+
+ts
+Kopier
+Rediger
+{
+  mood: "Luxe",
+  lighting: "Soft",
+  tone: "Warm"
+}
+Use any prebuilt image tagging or dummy model — just stub logic for now
+
+✅ 4. Feed Designer (Grid Planner)
+➤ Supabase Table: feed_layout
+ts
+Kopier
+Rediger
+type FeedItem = {
+  id: string
+  userId: string
+  uploadId: string
+  position: number
+  contentType: "Reel" | "Quote" | "Selfie" | "Other"
+  addedToCalendar: boolean
+  savedAsDraft: boolean
+}
+➤ POST /api/feed-layout
+Save or update feed planner layout
+
+Accept array of feed items (drag-to-sort)
+
+➤ GET /api/feed-layout
+Return current layout for user
+
+Ordered by position
+
+✅ 5. Calendar Integration
+Use existing /api/calendar to:
+
+Save any image marked “Add to Calendar”
+
+Link image ID and task string (e.g., “Post this image to IG with quote X”)
+
+✅ 6. Auth & File Security
+All endpoints must require auth
+
+Validate ownership before editing/deleting
+
+Signed URLs or authenticated media access if needed
+

@@ -1,0 +1,157 @@
+import React, { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+
+export default function Pricing() {
+  const { toast } = useToast();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const userResponse = await fetch("/api/me", {
+          credentials: "include",
+        });
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setUser(userData);
+        }
+      } catch (error) {
+        console.log("User not authenticated");
+      }
+    };
+    loadUserData();
+  }, []);
+
+  const subscribeMutation = useMutation({
+    mutationFn: async (priceId) => {
+      const response = await fetch("/api/create-subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId }),
+      });
+      if (!response.ok) throw new Error("Subscription failed");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      if (data.url) window.location.href = data.url;
+      else toast({ title: "Error", description: "No checkout URL.", variant: "destructive" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const handleSubscribe = (priceId) => {
+    if (priceId === "coaching") return (window.location.href = "/apply");
+    if (!user) return (window.location.href = "/login");
+    subscribeMutation.mutate(priceId);
+  };
+
+  const plans = [
+    {
+      name: "Free",
+      price: "$0",
+      period: "forever",
+      description: "For getting started with your selfie journey.",
+      features: [
+        "2 photo edits/mo",
+        "1 caption generation/mo",
+        "Basic pose tips",
+        "3 Sandra messages/mo",
+        "Access to community",
+      ],
+      buttonText: "Get Started Free",
+      priceId: null,
+    },
+    {
+      name: "SELFIE PRO",
+      price: "$47",
+      period: "per month",
+      description: "Founding Member Launch: Full feature access at locked-in rate.",
+      features: [
+        "Unlimited photo editing",
+        "Unlimited caption + hook AI",
+        "Unlimited pose coaching",
+        "Unlimited Sandra chat",
+        "Instagram strategy support",
+        "Priority assistance",
+        "Advanced AI tools",
+      ],
+      buttonText: "Start Now",
+      priceId: "pro",
+    },
+    {
+      name: "EMPIRE BUILDER VIP",
+      price: "Apply",
+      period: "exclusive access",
+      description: "Sandra builds your entire brand empire with you.",
+      features: [
+        "Funnels + landing pages built",
+        "Automation setup (emails, ManyChat, upsells)",
+        "Digital product creation",
+        "Weekly 1:1 strategy calls",
+        "Access to Sandra's template hub",
+        "Custom brand assets",
+        "Revenue scaling systems",
+        "Direct WhatsApp access",
+      ],
+      buttonText: "Apply Now",
+      priceId: "coaching",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Header user={user} />
+
+      {/* Hero */}
+      <section className="text-center py-24 bg-black text-white px-6">
+        <h1 className="font-['Cormorant Garamond'] text-5xl md:text-6xl uppercase mb-4 tracking-wide">
+          Choose Your Personal Branding Journey
+        </h1>
+        <p className="font-['Neue Einstellung'] max-w-2xl mx-auto text-lg text-gray-300">
+          Join thousands of women transforming their confidence and launching their dream brand with SELFIE AI™
+        </p>
+      </section>
+
+      {/* Pricing Cards */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+          {plans.map((plan, index) => (
+            <Card key={index} className="border border-black p-6 hover:scale-[1.01] transition-transform">
+              <CardHeader className="text-center">
+                <CardTitle className="font-['Cormorant Garamond'] text-3xl uppercase mb-4">
+                  {plan.name}
+                </CardTitle>
+                <div className="text-xl text-black mb-2 font-['Neue Einstellung']">
+                  {plan.price} <span className="text-sm font-normal">/{plan.period}</span>
+                </div>
+                <p className="text-sm text-gray-600 font-['Neue Einstellung']">{plan.description}</p>
+              </CardHeader>
+              <CardContent>
+                <ul className="my-6 space-y-3">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="text-sm text-gray-800 font-['Neue Einstellung']">{feature}</li>
+                  ))}
+                </ul>
+                <Button
+                  onClick={() => handleSubscribe(plan.priceId)}
+                  className="w-full uppercase rounded-none bg-black text-white hover:bg-neutral-800 font-['Neue Einstellung'] py-3"
+                >
+                  {plan.buttonText}
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

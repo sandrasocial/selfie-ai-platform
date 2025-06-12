@@ -1,0 +1,80 @@
+🔁 1. Enable Auto-Save for Form Responses
+Issue: The 5-question story form is not saving user inputs. User has to retype responses every session.
+
+Fix Required:
+
+Implement auto-save to localStorage (or backend session storage) as the user types.
+
+On page load, check for existing responses and auto-fill the form.
+
+Save each response under a unique key per module and question, e.g.:
+
+ts
+Kopier
+Rediger
+localStorage.setItem(`module1-question1`, userResponse)
+Optional: Persist to backend for long-term save tied to user account.
+
+🔍 2. Fix Preview Page: Use Actual User Data + Generated Content
+Issue: The preview still shows fallback text like “Hey girl” and “Beautiful”, and does not show the 30-60-90 day plan.
+
+Fix Required:
+
+Replace all fallback values with real dynamic variables pulled from:
+
+Authenticated user (/api/me)
+
+Latest generated workbook content
+
+Show actual:
+
+user_name from session
+
+personalizedStrategy response
+
+action_items, insights, and structured phase_30, phase_60, phase_90 data
+
+If preview is displayed before generation, add message:
+“Complete the 5 questions and generate your workbook to preview your personalized strategy.”
+
+📄 3. Include 30-60-90 Plan in Both Preview and Final PDF
+Issue: The 30-60-90 day implementation plan only shows a placeholder message. The real structured content does not appear.
+
+Fix Required:
+
+Make sure the cleaned Anthropic/AI response includes a phases object or raw strings for:
+
+phase_30, phase_60, phase_90
+
+Display this structured content:
+
+md
+Kopier
+Rediger
+**First 30 Days**: [Actual phase_30 content]
+**Next 30 Days**: [Actual phase_60 content]
+**Final 30 Days**: [Actual phase_90 content]
+Map these strings both in:
+
+The preview interface
+
+The PDFMonkey payload for template rendering
+
+✅ Acceptance Criteria
+A full test must confirm:
+
+Form saves inputs across sessions
+
+Preview page updates with:
+
+User’s real name
+
+Clean personalized copy
+
+Full 30-60-90 plan content
+
+PDF download matches the preview exactly
+
+When this is done, we’ll be ready to mark Module One Workbook System as “✅ FULLY COMPLETE”.
+
+Let me know when it’s ready to test again 🖤

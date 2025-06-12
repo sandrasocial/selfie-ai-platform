@@ -1,0 +1,102 @@
+<!-- LESSON PAGE TEMPLATE -->
+<div class="lesson-container">
+  <!-- Hero Section with Video -->
+  <section class="lesson-hero">
+    <div class="video-wrapper">
+      <!-- Placeholder for video -->
+      <div class="video-placeholder">
+        <img src="/placeholder-video.jpg" alt="Video thumbnail">
+        <button class="play-button">▶</button>
+      </div>
+      
+      <!-- Video Progress Bar -->
+      <div class="video-progress">
+        <div class="progress-bar"></div>
+        <span class="time-remaining">-03:44</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson Content Section -->
+  <section class="lesson-content">
+    <div class="content-wrapper">
+      <!-- Lesson Header -->
+      <header class="lesson-header">
+        <span class="module-indicator">MODULE 1: CONFIDENCE</span>
+        <h1 class="lesson-title">Your CEO Era Awakening</h1>
+        <p class="lesson-subtitle">Step into your power, one decision at a time.</p>
+      </header>
+
+      <!-- Key Takeaways -->
+      <div class="key-takeaways">
+        <h3>What You'll Master:</h3>
+        <ul class="takeaway-list">
+          <li>✓ Download your CEO Fast Start Checklist</li>
+          <li>✓ Take your first CEO Selfie</li>
+          <li>✓ Activate your inner confidence</li>
+        </ul>
+      </div>
+
+      <!-- AI Tool Integration -->
+      <div class="ai-tools-section">
+        <h3>Your AI-Powered Tools:</h3>
+        <div class="tools-grid">
+          <div class="ai-tool-card">
+            <icon>🤖</icon>
+            <h4>Confidence Coach AI</h4>
+            <p>Get personalized affirmations</p>
+            <button class="tool-cta">Activate</button>
+          </div>
+          <div class="ai-tool-card">
+            <icon>📸</icon>
+            <h4>Selfie Analyzer</h4>
+            <p>Real-time feedback on your photos</p>
+            <button class="tool-cta">Launch</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Workbook -->
+      <div class="workbook-section">
+        <h3>Your Digital Workbook</h3>
+        <div class="workbook-embed">
+          <!-- AI-generated workbook goes here -->
+        </div>
+      </div>
+
+      <!-- Action Steps -->
+      <div class="action-section">
+        <h3>Take Action Now:</h3>
+        <div class="action-items">
+          <label class="action-item">
+            <input type="checkbox" />
+            <span>Complete your confidence assessment</span>
+          </label>
+          <label class="action-item">
+            <input type="checkbox" />
+            <span>Upload your first CEO selfie</span>
+          </label>
+          <label class="action-item">
+            <input type="checkbox" />
+            <span>Share in the community</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <nav class="lesson-navigation">
+    <button class="nav-prev">← Previous</button>
+    <div class="progress-indicator">
+      <span>Lesson 1 of 4</span>
+      <div class="progress-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+    <button class="nav-next">Next Lesson →</button>
+  </nav>
+</div>

@@ -1,0 +1,81 @@
+Project Name:
+SELFIE AI™ Platform
+
+Objective:
+Integrate the full Selfie Starter Kit™ course page into the platform, using the complete React component code provided (from SelfieStarterKit.jsx). Ensure all course logic functions correctly, including progress tracking, video playback, and workbook generation, without altering any design, layout, or UI styles.
+
+🚨 Important Instructions
+⚠️ Do NOT change any layout, CSS, spacing, typography, or visual elements in the course page.
+
+✅ Your role is to connect and activate the following logic only:
+
+Course progress tracking via PostgreSQL
+
+User-specific completion states
+
+AI-generated workbooks
+
+Secure access logic (tier-based: Starter)
+
+Data persistence (e.g. notes, selected aesthetic, completed lessons)
+
+If any additional UI hooks or components are required to fully connect logic, list them at the end under Frontend To-Do List without implementing them directly.
+
+🔧 Implementation Checklist
+1. 🔗 Course Page Integration
+Place SelfieStarterKit.jsx under the correct route (likely client/src/pages/courses/StarterKitCourse.tsx)
+
+Wire up navigation and route registration without modifying visual elements.
+
+2. 🧠 Logic Binding
+Connect completion logic (markComplete) to the backend starterKitProgress table:
+
+Track completed lessons per user
+
+Update progress percentage
+
+Ensure lesson/module data is persisted across sessions
+
+3. 📦 AI Workbook Generation
+Ensure generateWorkbook() connects to the backend route that invokes AI-powered PDF or JSON generation (likely /api/generate/workbook)
+
+Pass correct templateId and title
+
+Handle success/failure via toast messages only
+
+4. 🔒 Access Control
+Confirm this course page is only accessible to users with the STARTER or higher tier
+
+Redirect unauthorized users or show tier upgrade CTA (logic only)
+
+5. 📊 Analytics Sync
+Ensure session usage and progress data are stored in:
+
+courseProgress table
+
+visualStudioSessions (if applicable to design module)
+
+6. 💾 Persisted Notes & User Inputs
+If users input notes (e.g. setNotes), connect this to backend persistence
+
+Store per user and per lesson if not already set up
+
+📂 Source File Provided:
+Full React file: SelfieStarterKit.jsx
+(Uploaded as STARTE KIT UX .txt, complete and styled)
+
+📋 Frontend To-Do List (For Owner)
+If any components are missing or needed visually, list them here only:
+
+❗(Agent will fill in this section after logic integration)
+
+🧪 Final Validation
+Manually test: video playback, progress saving, AI workbooks, module toggles
+
+Ensure production version uses real video links and valid AI keys
+
+Verify starter tier access logic is enforced properly
+
+🎯 Goal:
+Make the Selfie Starter Kit™ page fully functional in production without changing any UI design, using the uploaded component code as-is.
+

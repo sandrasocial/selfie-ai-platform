@@ -1,0 +1,85 @@
+🚨 DO NOT MARK THE PLATFORM AS COMPLETE YET. The following tasks are still pending:
+
+🧼 DESIGN FIXES – VOGUE-STYLE CLEANUP
+Remove ALL remaining colored accents:
+
+Replace pink, gold, and dark brown elements with:
+
+#FFFFFF (white background)
+
+#000000 (black text/buttons)
+
+Optional: #666666 (muted neutral for secondary text only)
+
+Typography:
+
+Headings = Prata serif
+
+Body text = Inter sans-serif
+
+Buttons:
+
+Square or slightly soft-rounded
+
+High-contrast:
+
+White text on black buttons
+
+Black text on white buttons (with black border)
+
+Use same hover style across platform (simple scale or underline, no color shifts)
+
+Cards + Layout:
+
+Use subtle shadows, clean white background, and consistent spacing
+
+No more bubble icons or rounded soft pink elements
+
+Fix all broken sections still showing old styles (see uploaded screenshots):
+
+“Empire Builder VIP” still shows gold
+
+“I Teach” section still uses pink icons/text
+
+Pink hover effects on some menu links—remove or replace with black/gray
+
+📸 IMAGE POLICY
+Do NOT replace or overwrite homepage or personal brand images.
+
+Lock all homepage image elements
+
+If uploading module visuals, use a new folder and reference by public URL (just like the logo/profile photo is handled)
+
+Confirm all photos for content modules are uploaded through external links only (hosted on CDN or image folder)
+
+🔒 SELFIE BLUEPRINT MODULE LOCK
+Only Module 1 is ready. Lock Modules 2–5:
+
+If user clicks on them, display a coming soon card or modal:
+
+“This module will unlock soon. Keep building inside Module 1 while we work behind the scenes.”
+
+Prevent 404s by blocking access to /module2, /module3, etc.
+
+✅ LANDING PAGE NAVIGATION BUGS
+Fix Header + Login Issues:
+
+Make sure login state is persistent across all pages
+
+If user is logged in on homepage, other pages should not show “Log in”
+
+Add header navigation to /blueprint and any missing pages
+
+Fix Broken Routes:
+
+Clicking “Module 2” loads “Module 3” — fix routing logic
+
+Sandra AI link returns 404 — fix route or create dedicated /sandra page
+
+✅ When these are complete, provide:
+
+Screenshot proof of each fix (especially style changes)
+
+Confirmation that all visual overrides are removed
+
+Confirmation that module access and routing are now correct

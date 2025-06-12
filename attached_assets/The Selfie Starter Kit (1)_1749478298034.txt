@@ -1,0 +1,87 @@
+﻿import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, PlayCircle } from "lucide-react";
+
+
+export default function ModuleTwo() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      {/* Hero Section */}
+      <section className="relative w-full h-[80vh] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('https://i.postimg.cc/XJ5LHY2R/IMG-0407-jpg.jpg')" }}>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="relative z-10 text-center px-4 max-w-3xl">
+          <h1 className="text-white text-5xl font-light tracking-wide leading-tight font-serif">
+            Confidence in a Click
+          </h1>
+          <p className="text-white italic text-xl mt-4 font-sans">
+            Make your content glow without the guesswork.
+          </p>
+        </div>
+      </section>
+
+
+      {/* Lesson Title */}
+      <section className="py-16 px-6 max-w-5xl mx-auto">
+        <div className="text-center">
+          <h2 className="text-4xl font-serif text-[#171719] mb-2">Lesson 2: The Signature Selfie Edit</h2>
+          <p className="text-lg font-sans text-[#4C4B4B] italic">
+            Polished. Powerful. Luxurious—straight from your phone.
+          </p>
+        </div>
+      </section>
+
+
+      {/* Video Embed + Downloadable Workbook */}
+      <section className="bg-white py-12 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+          <div className="rounded overflow-hidden shadow-lg aspect-video">
+            {/* Placeholder for embedded video */}
+            <div className="w-full h-full bg-[#B5B5B3] flex items-center justify-center">
+              <PlayCircle className="w-12 h-12 text-white" />
+            </div>
+          </div>
+
+
+          <div className="flex flex-col justify-center">
+            <h3 className="text-2xl font-serif text-[#171719] mb-4">
+              Personalized Editing Workbook
+            </h3>
+            <p className="text-base text-[#4C4B4B] mb-6">
+              Unlock your custom AI-generated routine to make editing simple and high-end.
+            </p>
+            <Button variant="outline" className="uppercase border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white">
+              <Download className="w-4 h-4 mr-2" /> Download Workbook
+            </Button>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Workflow Section */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-white border border-[#B5B5B3]">
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl font-serif text-[#171719]">
+                Your Exact Workflow
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-8 text-[#4C4B4B] text-base font-sans leading-relaxed">
+              <ol className="list-decimal list-inside">
+                <li>Import your Selfie Glow Up Presets into Lightroom Mobile.</li>
+                <li>Edit and adjust using natural contrast, brightness, and warmth.</li>
+                <li>Preview your before/after for a confidence boost.</li>
+                <li>Try the iPhone-only edit settings if you're on the go.</li>
+                <li>Practice batch editing with Copy & Paste settings for consistency.</li>
+              </ol>
+              <blockquote className="italic border-l-4 border-[#171719] pl-4">
+                “Hold your finger on the photo to see the before/after. That glow-up hits different when you can feel the shift.”
+              </blockquote>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
+}

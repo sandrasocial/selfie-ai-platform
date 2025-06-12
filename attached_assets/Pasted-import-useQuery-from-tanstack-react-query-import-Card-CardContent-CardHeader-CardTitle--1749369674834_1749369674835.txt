@@ -1,0 +1,89 @@
+import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
+import type { Workbook } from "@shared/schema";
+
+export default function MyWorkbooks() {
+  const { data: workbooks, isLoading } = useQuery<Workbook[]>({
+    queryKey: ["/api/workbooks"],
+  });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <div className="max-w-4xl mx-auto px-6 py-24 text-center">
+          <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm font-['Neue Einstellung'] text-black tracking-wide">Loading your workbooks...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-6 py-20">
+        <div className="mb-16">
+          <Link href="/blueprint">
+            <Button variant="ghost" size="sm" className="text-black px-0 font-['Neue Einstellung'] uppercase tracking-wide rounded-none border-none">
+              Back to Course
+            </Button>
+          </Link>
+        </div>
+
+        <div className="mb-12">
+          <h1 className="text-5xl font-['Cormorant Garamond'] text-black mb-4">My Workbooks</h1>
+          <p className="text-base text-gray-700 font-['Neue Einstellung']">Your AI-generated frameworks live here—ready when you are.</p>
+        </div>
+
+        {!workbooks || workbooks.length === 0 ? (
+          <Card className="bg-gray-50 border border-gray-200">
+            <CardContent className="py-16 px-6 text-center">
+              <h3 className="text-xl font-['Cormorant Garamond'] text-black mb-2">No Workbooks Yet</h3>
+              <p className="text-gray-700 text-base font-['Neue Einstellung'] mb-6">
+                Start your first strategy to unlock your transformation.
+              </p>
+              <Link href="/blueprint">
+                <Button className="bg-black text-white rounded-none px-6 py-3 font-['Neue Einstellung'] uppercase tracking-wide">
+                  Start Creating
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-6">
+            {workbooks.map((workbook) => (
+              <Link
+                key={workbook.id}
+                href={`/blueprint?module=${workbook.moduleId}&workbook=${workbook.id}`}
+              >
+                <Card className="border-l-2 border-black hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
+                  <CardHeader>
+                    <div>
+                      <CardTitle className="text-black font-['Cormorant Garamond'] text-2xl mb-2">
+                        {workbook.title}
+                      </CardTitle>
+                      <p className="text-sm text-gray-600 font-['Neue Einstellung']">
+                        {workbook.moduleTitle} • Generated {new Date(workbook.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-800 text-base font-['Neue Einstellung'] leading-relaxed line-clamp-3">
+                      {typeof workbook.personalizedStrategy === "string"
+                        ? workbook.personalizedStrategy.substring(0, 200) + "..."
+                        : "Your personalized framework mastery plan"}
+                    </p>
+                    <div className="mt-4 text-sm text-black font-['Neue Einstellung'] uppercase tracking-wide">
+                      View Workbook →
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

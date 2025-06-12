@@ -1,0 +1,70 @@
+🚨 SYSTEM-WIDE FIX REQUEST – PLEASE READ IN FULL:
+
+The workbook generation still does NOT reflect Sandra's correct branded design, structured content, or saved answers. Here's a full breakdown of what MUST be fixed immediately:
+
+–––––––––––––––––––––––––––––––
+🔥 1. STOP PRE-GENERATING WORKBOOK BEFORE INPUTS
+–––––––––––––––––––––––––––––––
+→ DO NOT auto-generate a workbook on module load.
+→ The workbook should ONLY generate after the user completes the 5-question story form and clicks “Generate My Workbook.”
+
+✏️ Save the 5 story answers as the user types (auto-save to local storage or session).
+✏️ Pre-fill saved answers on page reload to prevent user retyping every time.
+
+–––––––––––––––––––––––––––––––
+🧠 2. FIX FORM FLOW INCONSISTENCY
+–––––––––––––––––––––––––––––––
+→ The user sees **4 questions in Module One** then lands on **5 different questions before generating**.
+✅ Use ONLY the 5 questions shown on the story-based workbook screen.
+
+If both screens are needed:
+- Combine them into 1 experience
+- Or link the story question page properly with saved answers from the first 4 questions
+
+–––––––––––––––––––––––––––––––
+🎨 3. PREVIEW PAGE = WRONG DESIGN + CONTENT
+–––––––––––––––––––––––––––––––
+✅ Update preview screen after “Generate My Workbook” click:
+- Remove "Beautiful, let's get real..." text
+- Remove all old "AI Framework" language
+- Match the actual SELFIE AI™ luxury PDF tone
+- Display updated content with proper spacing for: strategy, action items, insights, and 30-60-90 plan
+- Use clean line breaks and bullet points — not one chunk
+
+–––––––––––––––––––––––––––––––
+📄 4. FIX PDF DOWNLOAD CONTENT + TEMPLATE INTEGRATION
+–––––––––––––––––––––––––––––––
+✅ Make sure all the following variables are correctly MAPPED and passed to the PDFMonkey template:
+
+- `user_name`
+- `headline`, `subheadline`
+- `story_intro`
+- `action_item_1` to `action_item_7`
+- `insight_1` to `insight_5`
+- `phase_30`, `phase_60`, `phase_90`
+
+🛠️ Ensure these values are sent as clean strings (NOT objects or JSON blobs).
+💡 The `30-60-90` plan should display in bullet point format inside the final PDF — not show up as missing or empty.
+
+–––––––––––––––––––––––––––––––
+💎 5. CONFIRM THE RIGHT TEMPLATE IS USED
+–––––––––––––––––––––––––––––––
+Template ID: `033D8C37-41F0-473B-917A-0C78E25471A2`
+→ Do NOT fallback to old templates
+→ Do NOT default to generic layouts
+
+–––––––––––––––––––––––––––––––
+📌 BONUS: FILE NAMING FIX
+–––––––––––––––––––––––––––––––
+✅ Filename should be: `{{user_name}}_SELFIE_Workbook.pdf` with dashes or underscores
+→ Not `Beautiful` or generic names
+
+–––––––––––––––––––––––––––––––
+✅ TEST PLAN:
+1. Answer the story questions
+2. Click “Generate My Workbook”
+3. Preview page must show updated content (new tone + structure)
+4. PDF must use correct template, spacing, and include 30-60-90 section
+5. No old fallback copy, raw JSON, or broken format
+
+⚠️ Until ALL of the above work 100%, do NOT mark this phase as complete.

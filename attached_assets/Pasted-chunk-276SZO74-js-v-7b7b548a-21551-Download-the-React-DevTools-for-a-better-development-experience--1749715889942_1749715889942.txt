@@ -1,0 +1,63 @@
+chunk-276SZO74.js?v=7b7b548a:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+supabaseClient.ts:10 🔧 Creating Supabase client instance
+api/me:1 
+            
+            
+           Failed to load resource: the server responded with a status of 401 (Unauthorized)Understand this error
+contentScript.bundle.js:4785 Event target tag: INPUT
+contentScript.bundle.js:4785 Current value: sandra@dibssocial.com
+contentScript.bundle.js:4785 Current shortcuts: Array(0)
+contentScript.bundle.js:4785 Data received in content script: Array(0)
+SupabaseAuth.tsx:34 🔗 Sending magic link via Supabase native auth for: sandra@dibssocial.com
+SupabaseAuth.tsx:38 🔄 Direct Supabase signInWithOtp config: Object
+zlslzllzejdhyfczcumv.supabase.co/auth/v1/otp?redirect_to=https%3A%2F%2Fe66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev%2Fsupabase-auth%2Fcallback:1 
+            
+            
+           Failed to load resource: the server responded with a status of 500 ()Understand this error
+SupabaseAuth.tsx:53 ❌ SUPABASE MAGIC LINK 500 ERROR - COMPLETE DIAGNOSIS:
+handleSignIn @ SupabaseAuth.tsx:53Understand this error
+SupabaseAuth.tsx:54 ================================================
+handleSignIn @ SupabaseAuth.tsx:54Understand this error
+SupabaseAuth.tsx:55 Error object: AuthApiError: Error sending magic link email
+    at handleError2 (@supabase_supabase-js.js?v=7b7b548a:4524:9)
+    at async _handleRequest2 (@supabase_supabase-js.js?v=7b7b548a:4565:5)
+    at async _request (@supabase_supabase-js.js?v=7b7b548a:4549:16)
+    at async SupabaseAuthClient.signInWithOtp (@supabase_supabase-js.js?v=7b7b548a:5469:27)
+    at async handleSignIn (SupabaseAuth.tsx:45:31)
+handleSignIn @ SupabaseAuth.tsx:55Understand this error
+SupabaseAuth.tsx:56 Error message: Error sending magic link email
+handleSignIn @ SupabaseAuth.tsx:56Understand this error
+SupabaseAuth.tsx:57 Error status: 500
+handleSignIn @ SupabaseAuth.tsx:57Understand this error
+SupabaseAuth.tsx:58 Error name: AuthApiError
+handleSignIn @ SupabaseAuth.tsx:58Understand this error
+SupabaseAuth.tsx:59 Error code: unexpected_failure
+handleSignIn @ SupabaseAuth.tsx:59Understand this error
+SupabaseAuth.tsx:60 Error details: No details
+handleSignIn @ SupabaseAuth.tsx:60Understand this error
+SupabaseAuth.tsx:61 Full error JSON: {
+  "__isAuthError": true,
+  "name": "AuthApiError",
+  "status": 500,
+  "code": "unexpected_failure"
+}
+handleSignIn @ SupabaseAuth.tsx:61Understand this error
+SupabaseAuth.tsx:64 Supabase URL: https://zlslzllzejdhyfczcumv.supabase.co
+handleSignIn @ SupabaseAuth.tsx:64Understand this error
+SupabaseAuth.tsx:65 Has Anon Key: true
+handleSignIn @ SupabaseAuth.tsx:65Understand this error
+SupabaseAuth.tsx:66 Redirect URL: https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/supabase-auth/callback
+handleSignIn @ SupabaseAuth.tsx:66Understand this error
+SupabaseAuth.tsx:67 Email: sandra@dibssocial.com
+handleSignIn @ SupabaseAuth.tsx:67Understand this error
+SupabaseAuth.tsx:68 Timestamp: 2025-06-12T08:10:16.517Z
+handleSignIn @ SupabaseAuth.tsx:68Understand this error
+SupabaseAuth.tsx:75 Error stack: AuthApiError: Error sending magic link email
+    at handleError2 (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@supabase_supabase-js.js?v=7b7b548a:4524:9)
+    at async _handleRequest2 (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@supabase_supabase-js.js?v=7b7b548a:4565:5)
+    at async _request (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@supabase_supabase-js.js?v=7b7b548a:4549:16)
+    at async SupabaseAuthClient.signInWithOtp (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@supabase_supabase-js.js?v=7b7b548a:5469:27)
+    at async handleSignIn (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/src/pages/SupabaseAuth.tsx:54:31)
+handleSignIn @ SupabaseAuth.tsx:75Understand this error
+SupabaseAuth.tsx:103 ❌ Magic link error: Error: Supabase 500 Error: Error sending magic link email
+    at handleSignIn (SupabaseAuth.tsx:86:17)

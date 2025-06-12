@@ -1,0 +1,64 @@
+import React from 'react';
+import { Link } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useQuery } from "@tanstack/react-query";
+
+export default function ChatStudio() {
+  const { data: user } = useQuery({
+    queryKey: ["/api/me"],
+    retry: false,
+  });
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      <Header user={user} />
+      
+      {/* Studio Navigation */}
+      <section className="w-full py-4 px-4 border-b border-[#E5E5E5] sticky top-0 bg-white z-40">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <Link 
+            href="/studio" 
+            className="text-[#171719] text-sm uppercase tracking-wide hover:underline" 
+            style={{ fontFamily: 'Neue Einstellung' }}
+          >
+            ← Back to AI Studio
+          </Link>
+
+          <nav 
+            className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-wide" 
+            style={{ fontFamily: 'Neue Einstellung' }}
+          >
+            <Link href="/studio/visuals" className="text-gray-600 hover:text-black hover:underline">Visuals</Link>
+            <Link href="/studio/captions" className="text-gray-600 hover:text-black hover:underline">Captions</Link>
+            <Link href="/studio/pose" className="text-gray-600 hover:text-black hover:underline">Pose Coach</Link>
+            <Link href="/studio/strategy" className="text-gray-600 hover:text-black hover:underline">Strategy</Link>
+            <Link href="/studio/chat" className="text-black border-b-2 border-black pb-1">Chat with Sandra</Link>
+          </nav>
+        </div>
+      </section>
+
+      {/* Chat Tool */}
+      <section className="w-full py-24 px-4 bg-[#F1F1F1]">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border border-[#171719] px-12 py-20 text-center shadow-md">
+            <h3 
+              className="text-3xl mb-6 uppercase tracking-wide text-[#171719]" 
+              style={{ fontFamily: 'Cormorant Garamond' }}
+            >
+              Chat with Sandra AI
+            </h3>
+            <p 
+              className="text-base text-[#4C4B4B] max-w-xl mx-auto leading-relaxed" 
+              style={{ fontFamily: 'Neue Einstellung', fontWeight: 300 }}
+            >
+              This feature is currently in development. Soon, you’ll be able to chat directly with Sandra AI for support with personal branding, content planning, and confidence coaching—all from inside your SELFIE Studio.
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      <Footer />
+    </div>
+  );
+}

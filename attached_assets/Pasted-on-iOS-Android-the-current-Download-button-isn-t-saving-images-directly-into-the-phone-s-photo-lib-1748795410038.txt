@@ -1,0 +1,60 @@
+on iOS/Android the current “Download” button isn’t saving images directly into the phone’s photo library. Please update the download flow to work correctly on mobile:
+
+Generate a Blob from the Edited Image
+
+After all adjustments/filters are applied, convert the final canvas or image element into a Blob (e.g. canvas.toBlob(...)).
+
+Create a Blob URL via URL.createObjectURL(blob).
+
+Use a Mobile-Friendly Download Strategy
+
+Instead of relying solely on the download attribute (which iOS Safari often ignores), detect if the user is on a mobile browser (/iPhone|iPad|Android/.test(navigator.userAgent)).
+
+If on mobile, open the Blob URL in a new browser tab/window (window.open(blobUrl)) so that the user can long-press the image and choose “Save Image” to their Camera Roll.
+
+If on desktop, still use an <a> tag with href=blobUrl and download="selfie.png" so the file downloads automatically.
+
+Update the “Download” Button Handler
+
+Modify the existing handleDownload() or equivalent function in VisualStudioEditor.tsx:
+
+js
+Kopier
+Rediger
+const handleDownload = () => {
+  // 1. Create Blob from canvas
+  canvasRef.current.toBlob((blob) => {
+    const blobUrl = URL.createObjectURL(blob);
+    const isMobile = /iPhone|iPad|Android/.test(navigator.userAgent);
+    if (isMobile) {
+      window.open(blobUrl, '_blank');
+    } else {
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = 'selfie.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    }
+  }, 'image/png');
+};
+Ensure canvasRef refers to the canvas displaying the final, filtered image. If you’re using an <img> element instead, you can convert it to a canvas first or use fetch(imgSrc).then(r => r.blob()).
+
+Adjust UI & Messaging
+
+On mobile, after calling window.open(blobUrl), display a temporary toast (“Tap and hold the image to save to your Photos”).
+
+Ensure the “Download” button remains the same size and styling—just swaps behavior under the hood.
+
+Test on Real Devices
+
+Deploy and open the Visuals page on an iPhone/Android.
+
+Upload an image, apply filters, then tap “Download.” Confirm a new tab opens with only the final image displayed.
+
+Long-press the image to “Save to Camera Roll” on iOS or “Download image” on Android.
+
+On desktop, confirm “Download” triggers an automatic file download named selfie.png.
+
+Once these changes are implemented, mobile users should be able to save images to their Photos/Camera Roll by long-pressing the image opened in the new tab. Let me know when this is corrected so I can test on my iPhone

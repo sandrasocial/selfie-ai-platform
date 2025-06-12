@@ -1,0 +1,421 @@
+import React, { useState } from 'react';
+import { ChevronRight, Check } from 'lucide-react';
+
+const BrandOnboardingForm = ({ onComplete, userId }) => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    brandMission: '',
+    idealAudience: '',
+    brandValues: '',
+    keyPhrases: '',
+    hashtags: '',
+    visualAesthetic: '',
+    contentFocus: [],
+    toneVoice: '',
+    industry: '',
+    experienceLevel: '',
+    mainGoals: ''
+  });
+
+  const totalSteps = 4;
+
+  const visualAestheticOptions = [
+    'Minimalistic & Clean',
+    'Moody & Modern',
+    'Bright & Energetic',
+    'Luxury Editorial',
+    'Warm & Approachable',
+    'Bold & Dramatic',
+    'Soft & Feminine',
+    'Industrial & Edgy'
+  ];
+
+  const contentFocusOptions = [
+    'Video Content',
+    'Photography',
+    'Storytelling',
+    'Educational Content',
+    'Behind the Scenes',
+    'Product Showcases',
+    'Lifestyle Content',
+    'Motivational Posts'
+  ];
+
+  const toneVoiceOptions = [
+    'Warm & Friendly',
+    'Bold & Confident',
+    'Real Talk & Honest',
+    'Professional & Polished',
+    'Playful & Fun',
+    'Inspiring & Uplifting'
+  ];
+
+  const experienceLevelOptions = [
+    'Just Starting Out',
+    'Building My Presence',
+    'Growing My Following',
+    'Established Creator',
+    'Business Owner'
+  ];
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleCheckboxChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].includes(value)
+        ? prev[field].filter(item => item !== value)
+        : [...prev[field], value]
+    }));
+  };
+
+  const nextStep = () => {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/user-profiles', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          ...formData
+        }),
+      });
+
+      if (response.ok) {
+        onComplete();
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Let's Build Your Brand Foundation
+              </h2>
+              <p className="text-lg text-gray-600">
+                Tell me about your mission and who you're here to serve
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  What's your brand mission? What are you here to do?
+                </label>
+                <textarea
+                  value={formData.brandMission}
+                  onChange={(e) => handleInputChange('brandMission', e.target.value)}
+                  placeholder="I help ambitious women turn their passion into profit by..."
+                  className="w-full p-4 border border-gray-300 rounded-none resize-none h-32 focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Who's your ideal audience? Paint me a picture.
+                </label>
+                <textarea
+                  value={formData.idealAudience}
+                  onChange={(e) => handleInputChange('idealAudience', e.target.value)}
+                  placeholder="Women in their 30s who are ready to level up their career and aren't afraid to invest in themselves..."
+                  className="w-full p-4 border border-gray-300 rounded-none resize-none h-32 focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  What are your core values? What do you stand for?
+                </label>
+                <textarea
+                  value={formData.brandValues}
+                  onChange={(e) => handleInputChange('brandValues', e.target.value)}
+                  placeholder="Authenticity, empowerment, growth, luxury, realness..."
+                  className="w-full p-4 border border-gray-300 rounded-none resize-none h-24 focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Your Visual Identity
+              </h2>
+              <p className="text-lg text-gray-600">
+                Let's define your aesthetic and content style
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <label className="block text-sm font-medium mb-4">
+                  What visual aesthetic feels most like *you*?
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {visualAestheticOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleInputChange('visualAesthetic', option)}
+                      className={`p-4 border text-left transition-all ${
+                        formData.visualAesthetic === option
+                          ? 'border-black bg-gray-50'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-4">
+                  What type of content do you love creating? (Select all that apply)
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {contentFocusOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleCheckboxChange('contentFocus', option)}
+                      className={`p-4 border text-left transition-all flex items-center justify-between ${
+                        formData.contentFocus.includes(option)
+                          ? 'border-black bg-gray-50'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      <span>{option}</span>
+                      {formData.contentFocus.includes(option) && (
+                        <Check size={18} className="text-black" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Your Voice & Vibe
+              </h2>
+              <p className="text-lg text-gray-600">
+                How do you want to show up and speak to your people?
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <label className="block text-sm font-medium mb-4">
+                  What's your natural tone and voice?
+                </label>
+                <div className="space-y-3">
+                  {toneVoiceOptions.map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center p-4 border cursor-pointer hover:bg-gray-50 transition-colors"
+                    >
+                      <input
+                        type="radio"
+                        name="toneVoice"
+                        value={option}
+                        checked={formData.toneVoice === option}
+                        onChange={(e) => handleInputChange('toneVoice', e.target.value)}
+                        className="mr-4"
+                      />
+                      <span>{option}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Key phrases or words that represent your brand
+                </label>
+                <input
+                  type="text"
+                  value={formData.keyPhrases}
+                  onChange={(e) => handleInputChange('keyPhrases', e.target.value)}
+                  placeholder="Elevate, authentic, luxury, real talk, empowerment..."
+                  className="w-full p-4 border border-gray-300 rounded-none focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Your go-to hashtags (separate with commas)
+                </label>
+                <input
+                  type="text"
+                  value={formData.hashtags}
+                  onChange={(e) => handleInputChange('hashtags', e.target.value)}
+                  placeholder="#entrepreneur, #luxurylifestyle, #personalbrand, #womenempowerment..."
+                  className="w-full p-4 border border-gray-300 rounded-none focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+                Almost There
+              </h2>
+              <p className="text-lg text-gray-600">
+                Last few details to personalize your experience
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  What industry are you in?
+                </label>
+                <input
+                  type="text"
+                  value={formData.industry}
+                  onChange={(e) => handleInputChange('industry', e.target.value)}
+                  placeholder="Coaching, beauty, fashion, wellness, business..."
+                  className="w-full p-4 border border-gray-300 rounded-none focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-4">
+                  Where are you in your journey?
+                </label>
+                <div className="space-y-3">
+                  {experienceLevelOptions.map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center p-4 border cursor-pointer hover:bg-gray-50 transition-colors"
+                    >
+                      <input
+                        type="radio"
+                        name="experienceLevel"
+                        value={option}
+                        checked={formData.experienceLevel === option}
+                        onChange={(e) => handleInputChange('experienceLevel', e.target.value)}
+                        className="mr-4"
+                      />
+                      <span>{option}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  What are your main goals right now?
+                </label>
+                <textarea
+                  value={formData.mainGoals}
+                  onChange={(e) => handleInputChange('mainGoals', e.target.value)}
+                  placeholder="I want to grow my following, launch my business, create consistent content..."
+                  className="w-full p-4 border border-gray-300 rounded-none resize-none h-24 focus:outline-none focus:border-black transition-colors"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Progress Bar */}
+      <div className="w-full bg-gray-200 h-1">
+        <div
+          className="bg-black h-1 transition-all duration-300"
+          style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        {renderStep()}
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center mt-16">
+          <button
+            onClick={prevStep}
+            disabled={currentStep === 1}
+            className={`px-8 py-3 border border-black bg-transparent text-black font-medium tracking-wide transition-colors ${
+              currentStep === 1
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-black hover:text-white'
+            }`}
+          >
+            PREVIOUS
+          </button>
+
+          <div className="flex space-x-2">
+            {Array.from({ length: totalSteps }).map((_, index) => (
+              <div
+                key={index}
+                className={`w-3 h-3 rounded-full ${
+                  index < currentStep ? 'bg-black' : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
+
+          {currentStep < totalSteps ? (
+            <button
+              onClick={nextStep}
+              className="px-8 py-3 border border-black bg-transparent text-black font-medium tracking-wide hover:bg-black hover:text-white transition-colors flex items-center"
+            >
+              NEXT
+              <ChevronRight size={18} className="ml-2" />
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="px-8 py-3 border border-black bg-black text-white font-medium tracking-wide hover:bg-gray-800 transition-colors"
+            >
+              COMPLETE SETUP
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BrandOnboardingForm;

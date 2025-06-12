@@ -1,0 +1,47 @@
+the caption prompt is still pulling from Sandra’s story. We need to replace every hard-coded reference to Sandra’s journey with the user’s own “Selfie Context” input. Follow these exact steps:
+
+txt
+Kopier
+Rediger
+// BEGIN PROMPT
+In client/src/components/CaptionCreator/CaptionCreator.tsx (or wherever the prompt is built):
+
+1. **Remove any hard-coded “Sandra’s story” text**  
+   - Search for strings like “Sandra’s personal journey” or similar. Delete those entire sections.
+
+2. **Use the user’s input instead**  
+   - Locate the variable that holds the user’s textarea input (e.g., `selfieContext`).  
+   - In the function that builds the AI prompt (e.g., `buildCaptionPrompt()`), replace any reference to Sandra’s story with `${selfieContext}`.  
+   - For example, change:
+     ```js
+     const prompt = 
+       "Using Sandra’s story: “I was 39, sleeping on a couch…,” craft a caption…";
+     ```
+     to:
+     ```js
+     const prompt = 
+       `Using this user-provided context: “${selfieContext}”, craft a caption that…`;
+     ```
+
+3. **Ensure the final prompt template reads** (sample structure):
+You are an expert social copywriter. The user’s photo context is:
+"${selfieContext}"
+
+Write three Instagram captions (max 150 characters each) that:
+• Sound like the user (conversational, everyday language).
+• Include 1–2 emojis (no more).
+• Are authentic and relevant to their story.
+Return as JSON: [ { "caption": "…" }, { "caption": "…" }, { "caption": "…" } ]
+
+pgsql
+Kopier
+Rediger
+
+4. **Remove any leftover variables or functions related to Sandra’s story** so the only content in the prompt is `${selfieContext}`.
+
+5. **Keep using OpenAI’s completion call** exactly as before; just swap out the prompt string.
+
+6. **Run tests**: Enter a completely new context (e.g., “My dog just moved to Iceland and I’m starting my freelance business from a cabin”). Generate captions and verify none mention Sandra—only the user’s context.
+
+After making these edits, deploy and test again to confirm captions now truly reflect each user’s input rather than Sandra’s story.  
+// END PROMPT

@@ -1,0 +1,61 @@
+Step 2 Adjustments: Update Route and Navigation for “Content Vault”
+
+Currently, the page’s H1 reads “Content Vault,” but the URL is still `/templates`, and any links pointing to `/content-vault` return 404. Let’s fix that:
+
+---
+
+## 1. Rename the Page File to ContentVault.tsx
+
+1. In `client/src/pages/`, **rename** `Templates.tsx` → `ContentVault.tsx`.  
+   - This will change the Next.js (or React Router) route from `/templates` to `/content-vault`.  
+   - Remove or archive any old `ContentVault.tsx` file if it still exists, to avoid duplicates.
+
+2. Update the imports and references inside the app:  
+   - In `App.tsx` (or wherever your routes are defined), change any `<Route path="/templates" component={Templates} />` to `<Route path="/content-vault" component={ContentVault} />`.  
+   - If using Next.js, no `App.tsx` change is needed—Next’s file-based routing will pick up `/content-vault` automatically once the file is renamed.
+
+3. Within `ContentVault.tsx`, **update any internal links** or breadcrumbs that read `/templates` to now use `/content-vault` (e.g., `<Link to="/templates">` → `<Link to="/content-vault">`).
+
+---
+
+## 2. Update Navigation Links
+
+1. In your main navigation component (e.g., `NavBar.tsx` or similar), find any links pointing to `/templates` or `/content-vault`:
+   - Change `<Link to="/templates">Content Vault</Link>` to `<Link to="/content-vault">Content Vault</Link>`.  
+   - Remove any old links that point to the (now-deleted) `ContentVault.tsx` file if they still exist.
+
+2. In `Dashboard.tsx` (or sidebar), locate any buttons or nav items pointing to `/templates`:
+   ```jsx
+   <button onClick={() => navigate('/templates')}>Content Vault</button>
+→ change to:
+
+jsx
+Kopier
+Rediger
+<button onClick={() => navigate('/content-vault')}>Content Vault</button>
+Double-check all occurrences of /templates in the codebase (including menu items, footer, and in-code URL strings) and update them to /content-vault.
+
+3. Verify the New Route and Links
+Redeploy or restart the Repl to ensure your renaming takes effect.
+
+In your browser, navigate to https://<your-project-url>/content-vault.
+
+Confirm the page loads and the <h1> reads “Content Vault.”
+
+Ensure all “Generate,” “Save to Vault,” and “Save to Calendar” buttons still work (they should be in the same file—only the filename/URL changed).
+
+Click the “Content Vault” link in the nav or dashboard:
+
+It should no longer 404—they should arrive at /content-vault.
+
+If you previously bookmarked /templates, you can set up a quick redirect:
+
+In server/routes.ts (Express) or in Next’s next.config.js (rewrite), add a redirect from /templates → /content-vault. For example, in Express:
+
+ts
+Kopier
+Rediger
+router.get('/templates', (_req, res) => {
+  return res.redirect(301, '/content-vault');
+});
+This is optional but prevents old links from breaking.

@@ -1,0 +1,131 @@
+Add Module 1 — Start Here
+
+📁 Context: We are working inside the existing StarterKitCourse.jsx file, within the STARTER_KIT_COURSE data structure and LessonContent rendering system.
+🧱 Objective: Create Module 1 with 1 lesson titled "Your Brand, Your Power", containing video, styled text, download cards, reflection prompt with AI quote generation, and a minimalist checklist.
+🧬 Design Standards:
+
+Typography: Cormorant Garamond (headlines), Inter Light (body)
+
+Colors: #171719, #4C4B4B, #F1F1F1
+
+Style: No gradients, no icons/emojis, flat layout, editorial-inspired
+
+Button: uppercase, black bg, white text; hover: inverted
+
+✅ TASKS TO IMPLEMENT:
+
+🔹 Step 1: Add Module & Lesson
+In starterKitCourseData.ts or wherever STARTER_KIT_COURSE is defined, insert this module as the first entry:
+
+ts
+Kopier
+{
+  id: 'start-here',
+  title: 'Start Here',
+  lessons: [
+    {
+      id: 'your-brand-power',
+      title: 'Your Brand, Your Power',
+      type: 'video',
+      duration: '4 min',
+      videoUrl: 'https://player.vimeo.com/video/1091863622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+      description: 'Step into your glow era with a clear, confident foundation.',
+      content: `Welcome, gorgeous. You’re not here to play small anymore.\n\nThis Starter Kit isn’t just a bundle of tools — it’s your first step into a more magnetic version of you.\nA version that shows up online with clarity, confidence, and camera-ready energy.\n\nYou don’t need more noise. You need a system. So let’s simplify and elevate — together.`,
+      resources: {
+        presets: [
+          { title: 'Light & Airy', file: '/downloads/presets/light.zip' },
+          { title: 'Dark & Moody', file: '/downloads/presets/dark.zip' },
+          { title: 'Scandinavian Urban', file: '/downloads/presets/urban.zip' },
+        ],
+        checklist: [
+          'Watched the intro video',
+          'Ready to install your presets',
+          'Feeling grounded in your why',
+        ],
+        reflection: {
+          question: 'What’s been holding you back from showing up fully online?',
+          backgroundImage: 'https://i.postimg.cc/4ypPywML/21.png',
+          aiTask: 'affirmation-quote-generator'
+        },
+      }
+    }
+  ]
+}
+🔹 Step 2: Update LessonContent Rendering
+Within the <LessonContent /> component, detect if the current lesson is "your-brand-power" and render the following custom blocks under the video area:
+
+📸 Presets Section
+jsx
+Kopier
+<section className="py-12 bg-white border-t border-[#F1F1F1]">
+  <div className="max-w-4xl mx-auto px-8">
+    <h2 className="text-3xl font-['Cormorant_Garamond'] text-[#171719] mb-8 text-center">
+      Tap to Access Your Presets
+    </h2>
+    <div className="grid md:grid-cols-3 gap-6">
+      {lesson.resources.presets.map((preset) => (
+        <a
+          key={preset.title}
+          href={preset.file}
+          download
+          className="block border border-[#B5B5B3] text-[#171719] text-center py-6 hover:bg-[#F1F1F1]"
+        >
+          {preset.title}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+💬 Reflection Prompt with AI
+jsx
+Kopier
+<section className="py-12 bg-[#F1F1F1] border-t border-[#B5B5B3]">
+  <div className="max-w-3xl mx-auto px-8 text-center">
+    <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#171719] mb-6 italic">
+      What’s been holding you back from showing up fully online?
+    </h3>
+    <Button
+      className="bg-[#171719] text-white hover:bg-[#2A2A2A] border-0 px-10 py-3 uppercase text-sm tracking-wide"
+      onClick={() => {
+        // Trigger AI quote overlay using image background
+        window?.generateAffirmationCard?.({
+          imageUrl: lesson.resources.reflection.backgroundImage,
+          type: 'affirmation',
+          prompt: lesson.resources.reflection.question,
+        });
+      }}
+    >
+      Generate Affirmation Quote
+    </Button>
+  </div>
+</section>
+✅ Checklist Section
+jsx
+Kopier
+<section className="py-12 bg-white border-t border-[#F1F1F1]">
+  <div className="max-w-3xl mx-auto px-8">
+    <h3 className="text-xl font-['Cormorant_Garamond'] text-[#171719] mb-6">
+      Quick Checklist Before Moving On
+    </h3>
+    <ul className="space-y-4">
+      {lesson.resources.checklist.map((item, index) => (
+        <li key={index} className="flex items-center gap-3">
+          <CheckCircle className="w-5 h-5 text-[#171719]" />
+          <span className="text-[#4C4B4B] text-base">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+🚀 CTA Button
+jsx
+Kopier
+<section className="py-16 bg-[#F1F1F1] text-center">
+  <Button
+    size="lg"
+    className="bg-[#171719] text-white hover:bg-[#2A2A2A] border-0 px-12 py-4 uppercase tracking-wider"
+    onClick={goToNextLesson}
+  >
+    Next: Define Your Signature Style →
+  </Button>
+</section>

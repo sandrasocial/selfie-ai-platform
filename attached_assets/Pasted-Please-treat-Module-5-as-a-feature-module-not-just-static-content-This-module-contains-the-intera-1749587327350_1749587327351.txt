@@ -1,0 +1,89 @@
+Please treat Module 5 as a feature module — not just static content. This module contains the interactive Aesthetic Builder we’ve started building. Here's what needs to happen:
+
+✅ Phase 1: User Selects Vibe → AI Generates Aesthetic
+When the user selects a vibe (e.g. "Bold Femme", "Neutral Luxury"):
+
+Frontend sends a POST to /api/ai/visual-strategy with the vibe ID.
+
+Backend returns:
+
+ts
+Kopier
+{
+  images: [array of curated image URLs],
+  palette: [array of HEX colors],
+  fonts: [Google Font names],
+  keywords: [string[]],
+  strategy: string
+}
+Display a layout grid with:
+
+6–9 image cards (styled like an IG grid)
+
+A color palette strip (swatches or tags)
+
+Font names shown in their actual typeface
+
+A short AI-generated visual strategy statement
+
+3–5 brand keywords
+
+⚠️ The curated image links come from our pre-sorted library (use placeholder postimg.cc links for now).
+
+✅ Phase 2: Make It Interactive + Editable
+Once the aesthetic is generated:
+
+Allow drag-and-drop (React Beautiful DnD or similar) to rearrange images
+
+Add file upload support to replace images in the grid
+
+Let the user:
+
+Regenerate color palette or captions via AI
+
+Edit keywords or strategy
+
+Preview changes live
+
+Provide two export options:
+
+Download as a PDF brand board (PDFMonkey or pdf-lib)
+
+Export as a grid preview image for social media
+
+🧠 AI Prompt Example (used for backend generation)
+vbnet
+Kopier
+Prompt:
+Create a brand aesthetic for a digital creator with a 'Bold Femme' vibe. Use the selected images to inspire:
+- 3 brand keywords
+- a short visual strategy statement
+- a suggested color palette in HEX
+- 2 Google fonts that match the aesthetic
+
+Images:
+[Array of 6 image URLs]
+🔧 Dev Notes
+You can wire the /api/ai/visual-strategy endpoint now, or mock the response for frontend integration.
+
+Store or cache user-generated versions locally or in the user session.
+
+Use Tailwind + shadcn/ui for styling.
+
+Fonts: use @next/font/google or standard CSS includes for previewing Google fonts in-browser.
+
+✅ Final Goal
+Build Module 5 as a fully interactive aesthetic builder, using the luxury Branded By Selfie layout, but with:
+
+Real user input
+
+AI-generated visual brand assets
+
+Editable interface
+
+Export functionality
+
+This module is a cornerstone of the Starter Kit experience.
+
+Let me know if you need the vibe list, image collections, or sample API responses!
+

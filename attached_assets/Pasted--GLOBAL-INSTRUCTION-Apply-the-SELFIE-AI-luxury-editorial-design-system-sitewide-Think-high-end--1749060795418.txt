@@ -1,0 +1,134 @@
+🧠 GLOBAL INSTRUCTION:
+Apply the SELFIE AI™ luxury editorial design system sitewide. Think high-end magazine meets personal transformation platform. Every page should feel cinematic, confident, and professionally art-directed.
+
+🔁 SHARED SYSTEM-WIDE UPGRADES (Apply to All Pages):
+✅ Typography
+Headlines: Prata, 400 weight, -1% letter spacing
+
+Body text: Helvetica Neue, 300 weight, 16px, 1.6 line-height
+
+All caps removed from headings unless intentional
+
+✅ Color Palette (Replace all beige and soft pastels)
+Use this neutral editorial palette:
+
+Off White: #F1F1F1
+
+Light Gray: #b5b5b3
+
+Medium Gray: #4c4b4b
+
+Rich Black: #171719
+
+No beige or muted pinks. This is a luxury grayscale brand.
+
+✅ Buttons
+Primary: Black background, white text. Sharp corners.
+
+Secondary: Transparent w/ black border. Editorial hover transitions.
+
+Add hover: scale(1.02) and subtle beige drop shadow on both.
+
+✅ Image Styling
+All sections should use full-bleed or column-aligned editorial images
+
+Add placeholders for any sections still awaiting image uploads:
+Use background-color: #b5b5b3 and centered text "IMAGE COMING SOON" in Prata font.
+
+🔧 INDIVIDUAL PAGE UPDATES
+🏠 Home.tsx
+✅ Already updated hero layout — now apply to the rest:
+
+Alternate background sections: #F1F1F1 → #171719 → #F1F1F1
+
+Add fadeInUp scroll animation on all info blocks
+
+Add editorial dividers (2px solid #b5b5b3, 64px width)
+
+Fix hover + text animation on info cards below pricing
+
+📸 Studio.tsx
+Title: "The AI Studio" in Prata with tight spacing
+
+Section blocks should alternate: image left → text right, then flip
+
+Add hover scale effect on each feature card (caption creator, pose tips, etc.)
+
+Replace soft card shadows with sharp drop shadows (rgba(0,0,0,0.15))
+
+🧠 SandraAI.tsx
+Hero section: White background with a quote header
+"Your Future Self is Just One Bold Post Away"
+
+Chat box: Keep black/white layout, but make message bubbles serif/sans mix
+
+Add B&W photo placeholder to left of chat ("Upload mentor image here")
+
+Add subtle pulsing “AI is thinking…” animation during response load
+
+📆 Calendar.tsx
+Black background, white content
+
+Switch to editorial grid layout: Left column = quote | Right column = calendar
+
+Add serif headline: "Create with rhythm, not random"
+
+Use #4c4b4b overlay hover effect on content blocks
+
+🗂 ContentVault.tsx
+3-column card layout
+
+On hover: scale + soft beige glow (border-bottom only)
+
+“Saved” text should be in Prata, italicized, slightly transparent
+
+Each section divider = #b5b5b3 bar with headline overlay
+
+🧾 Templates.tsx
+2-column layout: image on left, template description on right
+
+Add hover reveal effect: image slides up slightly, text shifts right
+
+Text block background = #F1F1F1 with border-left: 4px solid #4c4b4b
+
+CTA at bottom: "View All 30 Days →" button in black
+
+💸 Pricing.tsx
+Pricing cards: Use bold "01", "02", "03" at the top left corner of each
+
+Background: #F1F1F1, with each card alternating slightly with #b5b5b3 overlay
+
+Add hover: transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1)
+
+“Apply Now” button = black with Prata font, uppercase, tight spacing
+
+📥 Footer.tsx
+Background: #171719
+
+Columns:
+
+Left: Logo + brand statement
+
+Middle: Navigation
+
+Right: Connect + Follow
+
+Add thin #4c4b4b divider above footer
+
+Newsletter form:
+
+White input on black
+
+Button = black w/ white border + hover glow
+
+📱 MOBILE
+Sticky header must be transparent w/ drop shadow on scroll
+
+Stack all content vertically with proper spacing
+
+Reduce headline sizes (max 36px)
+
+Make all buttons 100% width with 16px top/bottom padding
+
+Fix hero image scaling: face should be above the fold on mobile
+

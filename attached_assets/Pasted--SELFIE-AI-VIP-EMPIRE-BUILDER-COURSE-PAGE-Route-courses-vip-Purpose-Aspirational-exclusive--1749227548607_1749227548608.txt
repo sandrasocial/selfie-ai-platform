@@ -1,0 +1,84 @@
+👑 SELFIE AI™ — VIP EMPIRE BUILDER COURSE PAGE
+Route: /courses/vip
+Purpose: Aspirational, exclusive, and actionable experience for high-tier users or applicants.
+Target: Women entering elite mentorship after completing Kit + Branded.
+
+1️⃣ HERO SECTION
+Element	Specs
+Background Image	https://i.postimg.cc/4dBPJ9Cj/95.png (full-bleed, luxury editorial)
+Title	VIP Empire Builder (Cormorant Garamond, 64px, uppercase, black)
+Subheadline	Private mentorship. Powerful strategy. Your digital legacy begins here. (Inter Light, 20px, soft black #4C4B4B)
+Conditional CTA Button	
+
+User has access: Enter Your VIP Portal (outline style, black border, 0 radius)
+
+User is pending: Application Pending (grayed out, disabled state)
+
+User is browsing: Apply Now → links to /vip/apply
+| Button Style | Minimalist — no background, uppercase, Neue Einstellung font |
+
+2️⃣ PROGRAM EXPERIENCE OVERVIEW
+Layout	Vertical scroll section or luxe horizontal slider
+Headline	Your Empire Building Journey (Cormorant Garamond, 36px italic)
+Subtext	1–2 sentences about mentorship being built around confidence, clarity, content, and monetization
+Stages	4 Cards:
+
+Welcome Week – Brand foundations + clarity call
+
+Visibility Strategy – Voxer week + AI brand blueprint
+
+Monetization Moves – Offer building, strategy call
+
+Empire Review – Audit, next-step planning
+| Each Card Includes | Icon (optional minimalist symbol), title, short paragraph, “In Progress” or “Complete” label |
+| Design | Use clean white or soft beige background, outlined boxes, Cormorant Garamond for stage titles |
+
+3️⃣ ACCESS LOGIC (Core UX Behavior)
+Access Level	Behavior
+Accepted	See full curriculum, CTA = Enter Your VIP Portal, progress UI enabled
+Applied / Pending	Curriculum is blurred with overlay, badge = Application Pending, CTA = disabled
+Locked / Not Applied	See teaser content only, CTA = Apply Now, program preview blocks available
+
+Detect access using /api/ladder-progress and /api/subscription.
+
+4️⃣ PROGRESS TRACKER (Visible only if user has access)
+Design Style	Thin horizontal bar or step circles
+Modules	4 stages, show % or “Stage 2 of 4”
+Below Bar	Optional milestone tags (e.g., “Clarity Call Completed”)
+UX Detail	Update on lesson complete, or manual toggle with “Mark Complete” buttons
+Optional	Add note-taking section below each module (like Branded)
+
+5️⃣ STICKY CTA FOOTER
+Behavior	Appears when scrolling past Hero
+Accepted: Resume Your VIP Journey (shows last completed stage)	
+Pending: Application Under Review (gray, no link)	
+Not Applied: Apply for VIP Access (links to /vip/apply)	
+Design: Thin border-only, always uppercase Neue Einstellung, max 90% width on mobile	
+
+6️⃣ OPTIONAL OVERLAYS + SANDRA AI SUPPORT
+Floating “Ask Sandra” button: opens Sandra AI chat with preloaded VIP intent (“What should I focus on this week?”)
+
+Optional voice-note replies in future iterations
+
+7️⃣ MOBILE UX
+Element	Behavior
+Hero image	Responsive crop, CTA stacked below
+Modules	Collapse each into accordion cards
+Sticky CTA	Bottom-fixed, thin with border, responsive to tap
+Stage overview	Swipeable horizontal cards or vertical stack
+
+8️⃣ DEV HOOKS + LOGIC
+Element	Backend Connection
+Access control	/api/ladder-progress + vipAccess boolean
+Stage tracking	/api/vip-progress (optional endpoint)
+Notes	/api/notes (per module, user-scoped)
+CTA behavior	Conditioned on access + application state
+Application link	/vip/apply
+
+9️⃣ STYLE SYSTEM (Matches SELFIE AI™)
+Element	Spec
+Font	Headlines: Cormorant Garamond, UI: Neue Einstellung / Inter Light
+Colors	BG: #F1F1F1, Text: #171719, Gray Text: #4C4B4B, Border: #171719 (1px)
+Buttons	Border-only, transparent, no icon, uppercase, no shadow
+Layout	Editorial spacing: 80px sections, 32px inner padding
+

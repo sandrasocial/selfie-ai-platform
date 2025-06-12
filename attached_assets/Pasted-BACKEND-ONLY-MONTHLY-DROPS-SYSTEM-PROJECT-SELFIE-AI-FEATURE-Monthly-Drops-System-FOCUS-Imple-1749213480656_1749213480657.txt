@@ -1,0 +1,110 @@
+BACKEND ONLY – MONTHLY DROPS SYSTEM)
+PROJECT: SELFIE AI™
+FEATURE: Monthly Drops System
+
+FOCUS: Implement backend logic, database storage, user access control, and file delivery.
+
+⚠️ DO NOT modify any layout, CSS, or frontend UI. The design is complete and live. Backend only.
+
+✅ 1. Monthly Drop Data Structure
+Create a Supabase table monthly_drops with the following schema:
+
+ts
+Kopier
+Rediger
+type DropItem = {
+  id: string
+  title: string
+  type: 'Template' | 'Audio' | 'Course' | 'AI Script'
+  description: string
+  availableFrom: Date
+  fileUrl: string
+  isFeatured: boolean
+}
+✅ 2. API Endpoint – Fetch Drops
+Create an authenticated endpoint: /api/drops
+
+Return all drops, sorted by availableFrom descending.
+
+Add computed field locked:
+
+ts
+Kopier
+Rediger
+locked = availableFrom > currentDate OR userAccess === false
+Response format:
+
+ts
+Kopier
+Rediger
+{
+  id,
+  title,
+  type,
+  description,
+  fileUrl,
+  availableFrom,
+  isFeatured,
+  locked: boolean
+}
+✅ 3. Admin Upload Endpoint (for content manager use)
+Create secure POST endpoint: /api/drops/upload
+
+Accept payload with:
+
+title
+
+description
+
+fileUrl
+
+availableFrom
+
+type
+
+isFeatured
+
+Restrict access to admin role via Supabase auth or middleware.
+
+✅ 4. User Access Logic
+Check access via:
+
+Active membership (/api/subscription)
+
+or product-based access from /api/purchases
+
+Users without active access must receive locked: true status.
+
+✅ 5. File Protection Logic
+Ensure only unlocked drops can be downloaded or opened:
+
+Protect file links using signed URLs or access-token system
+
+Secure file downloads via gated endpoint (e.g., /api/drops/:id/download)
+
+✅ 6. Optional: Drip Unlock System
+Support logic for staged weekly unlock:
+
+Calculate unlock window based on availableFrom + 7 * week structure
+
+Return partial unlocks if dripEnabled: true
+
+Can be added as a feature flag in the monthly_drops table.
+
+✅ 7. Optional: Sandra AI Recommendation Hook
+Prepare endpoint /api/sandra/recommend-drop
+
+Return most relevant drop based on current ladder stage (from /api/ladder-progress)
+
+Use drop type preference or keyword if passed via query
+
+✅ REMINDERS:
+
+Use real-time date comparisons for availableFrom
+
+Respect locked state on all fetches
+
+Use Supabase for data storage
+
+Stripe and ladder access already live — reuse that logic
+

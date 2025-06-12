@@ -1,0 +1,111 @@
+import React from 'react';
+import { Link } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+
+export default function AutoTagger() {
+  const { data: user } = useQuery({
+    queryKey: ["/api/me"],
+    retry: false,
+  });
+
+  const taggedImages = [
+    {
+      id: 1,
+      image: "https://i.postimg.cc/HLN6LDSj/15.png",
+      mood: ["Confident", "Natural"],
+      lighting: ["Golden Hour", "Soft"],
+      tone: ["Warm", "Professional"]
+    },
+    {
+      id: 2,
+      image: "https://i.postimg.cc/Bbn4rXK7/3.png",
+      mood: ["Playful", "Bright"],
+      lighting: ["Natural Light", "High Key"],
+      tone: ["Cool", "Fresh"]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      <Header user={user} />
+
+      {/* Hero Section */}
+      <section className="text-center py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h1
+            className="text-6xl font-normal tracking-wide mb-6"
+            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+          >
+            Auto Tagger
+          </h1>
+          <p
+            className="text-lg max-w-xl mx-auto text-[#4C4B4B]"
+            style={{ fontFamily: 'Neue Einstellung, sans-serif', fontWeight: 300 }}
+          >
+            AI-powered mood, tone, and lighting analysis for your selfies.
+          </p>
+        </div>
+      </section>
+
+      {/* Upload Section */}
+      <section className="px-4 pb-20">
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-white border border-[#171719] p-12 text-center">
+            <h2 className="text-2xl mb-4 uppercase tracking-wide" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Upload for AI Analysis</h2>
+            <p className="mb-6" style={{ fontFamily: 'Neue Einstellung, sans-serif', fontWeight: 300 }}>
+              Drop your selfie below and let our AI analyze its vibe instantly.
+            </p>
+            <Button className="uppercase border border-[#171719] text-[#171719] bg-transparent hover:bg-[#171719] hover:text-white" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+              Analyze Photo
+            </Button>
+          </Card>
+        </div>
+      </section>
+
+      {/* Tagged Images */}
+      <section className="px-4 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl mb-12" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Recently Tagged</h2>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {taggedImages.map((item) => (
+              <Card key={item.id} className="bg-white border border-[#F1F1F1] overflow-hidden">
+                <div className="aspect-[4/3]">
+                  <img
+                    src={item.image}
+                    alt="Tagged"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardContent className="p-6 space-y-4">
+                  {["Mood", "Lighting", "Tone"].map((category, i) => (
+                    <div key={category}>
+                      <h4 className="uppercase mb-2 text-sm tracking-wide" style={{ fontFamily: 'Neue Einstellung, sans-serif', fontWeight: 500 }}>{category}</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {(item as any)[category.toLowerCase()].map((tag: string, index: number) => (
+                          <span
+                            key={index}
+                            className="text-xs px-3 py-1 border border-[#B5B5B3]"
+                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

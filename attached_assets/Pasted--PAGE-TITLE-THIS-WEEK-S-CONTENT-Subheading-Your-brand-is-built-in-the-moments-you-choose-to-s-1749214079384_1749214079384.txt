@@ -1,0 +1,145 @@
+🖥️ PAGE TITLE
+“THIS WEEK’S CONTENT”
+Subheading: “Your brand is built in the moments you choose to show up.”
+
+Font:
+
+Header: Cormorant Garamond, 36–48px
+
+Subheading: Neue Einstellung, 18px, soft gray
+
+Use uppercase WEEKLY PLANNER as a small section label if needed
+
+🧱 LAYOUT STRUCTURE
+🔹 GRID DESIGN
+7 columns for Mon–Sun (desktop/tablet)
+
+Each column = vertical day card
+
+Card Size: Equal width with 2–3:4 ratio for height
+
+Spacing: Large padding, sharp outlines (0px radius)
+
+Each card includes:
+
+Element	Detail
+Day	"MON", "TUE", etc. in all caps (Neue Einstellung)
+Dot Indicator	- Black dot = task exists
+
+markdown
+Kopier
+Rediger
+                     - **Gray dot** = empty |
+| Hover Preview | Shows task preview (tooltip or fade-in text) |
+| Click | Opens modal or in-place editor to:
+
+Edit task
+
+Mark complete (adds checkmark or faded styling)
+
+Add new task |
+| Created By Sandra | Show a sparkle ✨ tag or a label that says: "Suggested by Sandra AI" (optional) |
+
+🖤 BONUS: Animate a soft vertical glow on today's card
+🖤 Drag-to-Reschedule: Optional — click + drag a task to another day (or implement later)
+
+📱 MOBILE VERSION
+Stack cards vertically
+
+Each day = tappable card (accordion style)
+
+Show only 2–3 lines of preview text
+
+Swipe to navigate to previous/next week (optional)
+
+🧠 INTERACTION + MODAL
+Modal Actions (on click)
+View full task
+
+Edit text
+
+Toggle completed ✅
+
+Add emoji or color tag (optional for later)
+
+Mark “Created by Sandra” if suggested by AI
+
+🔘 CTA ZONE
+Bottom of the planner should include:
+
+MANAGE CALENDAR button → full scheduler (upcoming)
+
+“SANDRA’S SUGGESTION” quick-add button
+→ When clicked, calls an API for Sandra AI to suggest 1–3 actions for this week.
+
+Button Styling:
+
+css
+Kopier
+Rediger
+font: Neue Einstellung;
+border: 2px solid #171719;
+text-transform: uppercase;
+padding: 14px 28px;
+background: transparent;
+letter-spacing: 0.5px;
+🧩 LUXURY DESIGN ENHANCEMENTS
+🪞 Aesthetic Widgets (Optional):
+Weekly Mood Quote
+Top-right above the planner grid
+→ “Visibility creates clarity. Take the first step.”
+
+Sandra Suggests…
+Floating mini box on the side, like a sticky note:
+→ “Record a reel answering a DM question.”
+
+Daily Ritual Tracker (Optional)
+Small icons under each card: 📸 🧠 ✍️
+Let users tap if they:
+
+Took a selfie
+
+Posted
+
+Reflected or journaled
+
+🧬 DATA LOGIC (DEVELOPER SECTION)
+Each task block =
+
+ts
+Kopier
+Rediger
+type PlannerItem = {
+  id: string
+  userId: string
+  date: string // YYYY-MM-DD
+  task: string
+  createdBy: "user" | "sandraAI"
+  completed: boolean
+}
+Tasks shown by:
+
+Mapping over current week's date range
+
+Filtering for user tasks in that date range
+
+Grouping per day
+
+Rendering:
+
+Black dot = task present
+
+Gray dot = none
+
+Tooltip = task string
+
+Label = if createdBy === "sandraAI"
+
+🎯 SUMMARY
+Element	Purpose
+🗓 7-Day Grid	Visibility schedule with status tracking
+Hover/Click	Real-time preview and editing
+Sandra Suggestion	AI-powered plan generator
+Minimalist Style	Editorial + empowering
+Mobile	Stack layout with tap-to-edit
+Data Format	Already compliant with PlannerItem

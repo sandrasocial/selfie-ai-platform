@@ -1,0 +1,68 @@
+The workbook preview and final PDF are still showing fallback summary phrases instead of the full, AI-generated 3–4 sentence implementation plans. Despite updating the AI prompt, the system continues to output:
+
+phase_30: "Story foundation & authentic voice clarity"
+
+phase_60: "Content consistency & voice refinement"
+
+phase_90: "Strategic growth & becoming the go-to expert"
+
+These are NOT the expected full-paragraph versions and are currently appearing in both the preview and downloaded PDF.
+
+✅ FIX REQUIREMENTS:
+AI PROMPT FIX (server/workbookAI.ts):
+
+Update the system prompt to explicitly require that each phase returns a full paragraph (min 50+ characters) with 2–3 specific, actionable steps for the user to take.
+
+Example format:
+
+arduino
+Kopier
+Rediger
+"First 30 Days: Begin by documenting your story, highlight key moments of your transformation, and define a new content structure that aligns with your audience's emotional needs..."
+Do not allow phrases like "Story foundation" or "Content clarity." These must be full, guided implementation steps.
+
+VALIDATION (server/workbookAI.ts):
+
+Add a content length check after AI returns the data.
+
+If any phase is under 50 characters, abort and show an error:
+"Phase content too short. AI returned fallback summary. Please regenerate."
+
+Log the actual content to console.log("AI-generated phase_30", phase_30) etc.
+
+PREVIEW DISPLAY FIX (client/src/components/ModuleWorkbook.tsx):
+
+Ensure the preview section correctly renders the actual phase_30, phase_60, and phase_90 content pulled from the AI payload, not the fallback summary.
+
+Fix any logic still pulling from old implementationPlan or hardcoded data.
+
+PDF PAYLOAD FIX (server/pdfMonkeyGenerator.ts):
+
+Ensure the payload sent to PDFMonkey uses the exact same phase_30, phase_60, phase_90 strings used in the preview.
+
+Remove any hardcoded fallback content or generic summaries.
+
+Log payload sent to PDFMonkey:
+console.log("PDF Payload:", payload)
+
+FORM FLOW FIX (client/src/components/ModuleWorkbook.tsx):
+
+Prevent the PDF from generating the moment the user clicks “Generate My Workbook.”
+
+Allow users to review and edit their 5 answers after auto-save, before clicking a final confirm button to trigger workbook generation.
+
+Add a confirm modal or button:
+“Your answers have been saved. Ready to generate your personalized workbook?”
+
+🔍 POST-FIX TESTING CHECKLIST:
+After implementation, verify the following:
+
+✅ Phase sections in preview and PDF show full detailed implementation plans (not summaries).
+
+✅ AI logs show paragraph-length responses for each phase.
+
+✅ User can see and edit their 5 answers before generation.
+
+✅ No fallback summaries appear anywhere.
+
+Let me know once deployed and I’ll retest! 🖤

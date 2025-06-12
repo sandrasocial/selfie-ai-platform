@@ -1,0 +1,120 @@
+👩‍💻 UPDATED PROMPT FOR DEV AI
+Editorial Layout + Placeholder-Ready Pages
+
+We are now implementing the luxury editorial layout system across the entire SELFIE AI™ platform. Please update all views with:
+
+The new neutral color palette (see previous)
+
+Global editorial spacing & typography (Prata + Helvetica Neue)
+
+Full image slot placeholders to allow Sandra to upload real assets later
+
+📸 PLACEHOLDER SYSTEM INSTRUCTIONS:
+All image areas should be implemented using uploadable placeholder slots:
+
+Component	Placeholder Name	Size Recommendation
+Hero Image	heroImagePlaceholder	1600x900 (16:9)
+Dashboard Grid	dashboardCardImage1 – dashboardCardImage6	Square (800x800) or Portrait (3:4)
+Vault Preview	vaultItemImage1 – vaultItemImageN	800x1000
+Presets Cover	presetCoverImage	1200x800
+Sandra Portrait	sandraChatPortrait	600x600 (circle or square)
+PDF Cover	pdfCoverImage	2480x3508 (A4 full-page)
+
+Use default gray-100 or #F1F1F1 backgrounds with soft dashed border (2px dashed #B5B5B3) and centered text like:
+
+yaml
+Kopier
+Rediger
+[ Upload Image Placeholder ]
+Suggested size: 1600 x 900
+All placeholder <img> tags must be dynamic:
+
+html
+Kopier
+Rediger
+<img src={imageSrc || '/placeholder.jpg'} alt="Hero Image" className="..." />
+🧱 COMPONENT RULES TO APPLY
+1. Hero Section (all major pages)
+tsx
+Kopier
+Rediger
+<section className="hero">
+  <div className="hero-image">
+    <img src={heroImagePlaceholder} alt="Hero" />
+    <div className="overlay-text">
+      <h1 className="prata">Your Selfie Is the Start of Your Empire</h1>
+      <p className="subhead">Start showing up. Start building your future.</p>
+    </div>
+  </div>
+</section>
+2. Card Grids
+Each image card (dashboard, vault, templates) must support:
+
+image
+
+headline overlay (e.g., FOCUS, GLOW, MONDAY MOOD)
+
+Optional sub-caption
+
+Hover: scale up + beige shadow glow
+
+tsx
+Kopier
+Rediger
+<div className="editorial-card">
+  <img src={cardImagePlaceholder} />
+  <div className="overlay-text prata">FOCUS</div>
+</div>
+3. Sandra AI Chat
+Sidebar or intro section should use:
+
+tsx
+Kopier
+Rediger
+<img src={sandraChatPortrait || '/sandra-placeholder.jpg'} className="profile" />
+🖼 PLACEHOLDER COMPONENT TEMPLATE (Reusable)
+tsx
+Kopier
+Rediger
+const ImagePlaceholder = ({ label, width, height }) => (
+  <div
+    style={{
+      backgroundColor: '#F1F1F1',
+      width: width || '100%',
+      height: height || '400px',
+      border: '2px dashed #B5B5B3',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'Helvetica Neue',
+      fontSize: '14px',
+      color: '#4C4B4B',
+    }}
+  >
+    Upload {label}
+  </div>
+);
+🧾 Pages to Enable Uploadable Placeholders:
+/home
+
+/dashboard
+
+/presets
+
+/ai-studio
+
+/vault
+
+/pricing
+
+/calendar
+
+/templates
+
+/workbooks
+
+/login and /signup (hero banners)
+
+/sandra-ai (profile image)
+
+Once all placeholders are live, I’ll help Sandra upload and style each one for full editorial impact. Let me know when the system is ready and we’ll move to Phase 2: carousel editorials, moodboard grid builder, and quote animations.

@@ -1,0 +1,110 @@
+🖤 REFINEMENT RECOMMENDATIONS
+1. Typography:
+Needs more hierarchy + finesse.
+
+✅ Prata + Helvetica combo is working.
+⚠️ But headers feel default-sized. Too flat.
+
+Upgrade:
+
+H1: Prata, 48–60px, tight letter spacing -1%, uppercase or title case.
+
+Subheads: Helvetica Neue Light, 24px, 300 weight, 1.4 line-height.
+
+Body: 16px max, gray tone #4C4B4B — never full black.
+
+Quote lines: Italic Prata, center aligned, spaced out.
+
+📝 Use size contrast and spacing like a magazine layout. Not just H1, H2, P. Make each line feel styled.
+
+2. Imagery Layout:
+Your current layout is clean, but it still feels boxy.
+
+Upgrade:
+
+Use overlapping layers: let text sit partly on images with semi-transparent black/white overlays (like in your inspiration grid).
+
+Add editorial full-bleed hero sections with floating captions.
+
+Use asymmetry. Don’t center everything — offset text and images for visual rhythm.
+
+Use subtle hover zoom-ins on every photo card with beige glow filter.
+
+📌 Your “before and after” grid? Gorgeous. Just soften gridlines and add an editorial caption under it like a fashion ad.
+
+3. Color Application:
+✅ Palette is on point
+⚠️ Execution could be more intentional.
+
+Upgrade:
+
+Add soft beige underlines, dividers, or background sections (right now it’s very white-heavy)
+
+Apply #B5B5B3 accent lines under quotes or sections
+
+Use #171719 sparingly—right now it dominates too many CTAs/buttons. Use it where you want gravitas.
+
+4. Buttons + Interactions:
+Currently look SaaS-y. Not editorial.
+
+Upgrade:
+
+Make primary buttons thinner + wider → more elegant
+
+Font: All caps, 14px, letter-spacing 2%
+
+Padding: 10px 32px
+
+Add animated beige underline on hover instead of full color swap
+
+Use ghost buttons (thin black borders) with white background for calm actions
+
+5. Footer + Quote Section:
+Your quote is beautiful, but too subtle.
+
+Upgrade:
+
+Center it in a beige block (use #F5E6DC lightly)
+
+Use Prata Italic, 24px, spaced out
+
+Add a small “editorial divider” under it (like a soft logo or line)
+
+6. Section Spacing:
+Spacing is solid but slightly too techy.
+
+Upgrade:
+
+Add 80px+ between major blocks
+
+Always have at least 64px breathing room top/bottom
+
+Use narrow 1-column intro text like a magazine intro paragraph
+
+7. Missing Luxury Touches:
+Here’s what will truly bring it into Chanel/Vogue territory:
+
+✅ Add:
+
+Scroll-triggered fadeInUp animations (text and cards)
+
+Full-bleed quote section mid-page: “I didn’t find power in perfection—I found it in showing up.”
+
+Magazine-style numbered headlines: 01. The Studio | 02. Templates | 03. Vault
+
+Hero overlays: text ON photo with slight blur backdrop (backdrop-filter)
+
+Optional: light beige background texture (like paper or linen) at 5% opacity for luxury depth
+
+🎯 Prioritized Action Steps:
+Typography hierarchy upgrade across all sections
+
+Edit homepage hero + section overlays to feel like a Vogue spread
+
+Soften cards + add image hover scale/glow + quote styling
+
+Introduce asymmetry + overlap in image/text placement
+
+Add luxury-style button class to replace generic SaaS CTAs
+
+Global: beige dividers, quote bars, alternating background blocks

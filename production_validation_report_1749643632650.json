@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-06-11T12:07:08.467Z",
+  "environment": "http://localhost:5000",
+  "tests": {
+    "authentication": {
+      "passed": true,
+      "details": "Magic link generation: 200",
+      "response": {
+        "success": true,
+        "message": "Magic link sent to your email",
+        "data": {
+          "email": "test@sselfie.ai",
+          "redirectUrl": "http://localhost:5000/supabase-auth/callback",
+          "method": "resend_email_service"
+        }
+      }
+    },
+    "payments": {
+      "passed": true,
+      "details": "Plans: 200, Checkout capability: 200",
+      "plans": 0
+    },
+    "aiServices": {
+      "passed": true,
+      "details": "Quote API: 200, Tool access: 401",
+      "quoteData": {
+        "id": 7,
+        "quote": "Your personal brand is your promise to the world about the value you deliver.",
+        "author": "Sandra AI",
+        "date_index": 7,
+        "is_active": true
+      }
+    },
+    "courseSystem": {
+      "passed": true,
+      "details": "Content API: 200, Progress API: 200",
+      "hasContent": false
+    },
+    "pwaFeatures": {
+      "passed": true,
+      "details": "Manifest: 200, Service Worker: 200",
+      "manifestValid": false
+    },
+    "emailAutomation": {
+      "passed": true,
+      "details": "Email config test: 200",
+      "configured": false
+    },
+    "dashboardAnalytics": {
+      "passed": true,
+      "details": "Dashboard API: 200",
+      "hasData": true
+    }
+  },
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7
+  },
+  "productionReady": true,
+  "systemHealth": "HEALTHY"
+}

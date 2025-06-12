@@ -1,0 +1,75 @@
+🔥 URGENT FIX IN SERVER RESPONSE FLOW
+✅ We’ve confirmed:
+
+The frontend is working
+
+The backend route is reached
+
+The Anthropic AI call fails silently
+
+The fallback response logic is triggered
+
+BUT — no valid JSON is sent back to the frontend
+
+🔍 ROOT CAUSE (LIKELY):
+Your fallback logic is building a valid fallback object but it’s never reaching res.json() or res.send() properly.
+
+You need to:
+
+Wrap the fallback content in res.status(200).json({ ... })
+
+Ensure no HTML/undefined errors sneak in
+
+Log and return the fallback properly
+
+✅ COPY-PASTE PATCH TO FIX
+Here’s a code-safe way to deliver fallback content no matter what:
+
+ts
+Kopier
+Rediger
+try {
+  const aiResponse = await callAnthropicAPI(inputs);
+  
+  if (!aiResponse || !aiResponse.content) {
+    throw new Error("AI response empty");
+  }
+
+  return res.status(200).json({
+    title: "Your Story-Based Positioning Blueprint",
+    content: aiResponse.content, // AI-generated content
+  });
+} catch (err) {
+  console.error("AI failed, using fallback. Error:", err.message);
+
+  return res.status(200).json({
+    title: "Your Story-Based Positioning Blueprint",
+    fallback: true,
+    content: [
+      {
+        heading: "Step 1: Own Your Rock Bottom",
+        text: "Your past isn’t something to hide—it’s the key to building an authentic brand. Share that moment you hit the wall, and how it cracked you open."
+      },
+      {
+        heading: "Step 2: What Made You Shift?",
+        text: "This is your power moment. It tells people who you are and why you’re here. What woke you up?"
+      },
+      {
+        heading: "Step 3: Advice for Your Past Self",
+        text: "This is where you connect. Speak to her like she’s still scrolling. That voice becomes your brand tone."
+      },
+      {
+        heading: "Step 4: Your Emotional Brand Goal",
+        text: "How do you want women to *feel* after they see you online? Safe? Inspired? Activated? That feeling becomes your strategy."
+      },
+      {
+        heading: "Now What?",
+        text: "Use this story to shape your content. Your transformation is your positioning. You’re not a niche—you’re a movement."
+      }
+    ]
+  });
+}
+🛠 BONUS TIP:
+If you’re using express-async-handler, make sure you're not missing return after res.status().json() — otherwise the function continues and hits default routes or errors.
+
+Once this is fixed, I’m confident the workbook will generate like magic 💄✨ Let me know when it’s pushed and we’ll test again!

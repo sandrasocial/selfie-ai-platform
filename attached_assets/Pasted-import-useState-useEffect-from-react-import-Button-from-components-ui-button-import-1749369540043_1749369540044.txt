@@ -1,0 +1,149 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Link } from "wouter";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+
+function debounce(func: Function, wait: number) {
+  let timeout: NodeJS.Timeout;
+  return function executedFunction(...args: any[]) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+export default function ModuleTwo() {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    knownFor: "",
+    reputation: "",
+    strongOpinion: ""
+  });
+  const [generatedWorkbook, setGeneratedWorkbook] = useState<any>(null);
+  const [showWorkbook, setShowWorkbook] = useState(false);
+
+  const saveAnswers = async (answers: any) => {
+    try {
+      await fetch('/api/module2-save-answers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(answers),
+      });
+    } catch (error) {
+      console.error('Auto-save failed:', error);
+    }
+  };
+
+  const debouncedSave = debounce((answers: any) => saveAnswers(answers), 800);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
+    debouncedSave(updated);
+  };
+
+  useEffect(() => {
+    try {
+      const savedAnswers = localStorage.getItem('module2-answers');
+      if (savedAnswers) {
+        const data = JSON.parse(savedAnswers);
+        setFormData(data);
+      }
+    } catch (err) {
+      console.error("Error loading from localStorage:", err);
+    }
+  }, []);
+
+  const generateWorkbookMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const response = await fetch("/api/module2-workbook", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      if (data && typeof data === 'object') {
+        setGeneratedWorkbook(data);
+        setShowWorkbook(true);
+        toast({
+          title: "Magnetic Message Blueprint Ready",
+          description: "Your personalized content strategy has been generated.",
+        });
+      } else {
+        toast({
+          title: "Generation Error",
+          description: "Invalid response format received.",
+          variant: "destructive",
+        });
+      }
+    },
+    onError: () => {
+      toast({
+        title: "Generation Failed",
+        description: "Please try again or check your responses.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!formData.knownFor.trim() || !formData.reputation.trim() || !formData.strongOpinion.trim()) {
+      toast({
+        title: "Please Complete All Fields",
+        description: "All three questions need responses to generate your blueprint.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    generateWorkbookMutation.mutate(formData);
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/blueprint" className="text-sm font-['Neue Einstellung'] tracking-wide uppercase">
+            Back to Blueprint
+          </Link>
+        </div>
+      </div>
+
+      <div className="pt-24 pb-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-sm font-['Neue Einstellung'] uppercase tracking-widest text-gray-400 mb-4">
+            The SELFIE BLUEPRINT
+          </div>
+          <h1 className="text-6xl font-normal font-['Cormorant Garamond'] text-black mb-4">
+            MODULE 2
+          </h1>
+          <h2 className="text-2xl font-['Cormorant Garamond'] text-black mb-8">
+            Content That Makes People Feel You
+          </h2>
+          <p className="text-lg font-['Neue Einstellung'] text-gray-700 max-w-2xl mx-auto leading-relaxed">
+            This module is about making sure your content actually sounds like you — not a copy-paste version of what everyone else is saying.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-6 pb-24">
+        <Card className="mb-12 border-none bg-gray-50">
+          <CardContent className="p-8">
+            <p className="text-lg text-gray-800 leading-relaxed mb-6 font-['Neue Einstellung']">
+              It’s time to stop waiting for inspiration and start building content that builds your brand on

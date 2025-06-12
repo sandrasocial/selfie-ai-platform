@@ -1,0 +1,90 @@
+📱 MOBILE VERSION — LUXURY UX RULES
+✅ 1. Typography Scaling (Don’t Shrink, Reflow)
+H1 (Prata): 28–32px on mobile, still bold and spaced out
+
+Body (Helvetica Neue): 15–16px, no lighter than #4C4B4B
+
+Buttons: 14px uppercase, always centered and tappable (min width: 48px)
+
+👉 Don’t reduce size too much—reduce padding instead so your fonts still feel premium.
+
+🖼 2. Hero Section
+Full-screen image, vertically cropped and centered
+
+Keep headline stacked (line break after each phrase) with max drama:
+
+pgsql
+Kopier
+Rediger
+Your Selfie  
+Is the Start  
+of Your Empire
+Buttons stack vertically:
+[ Start Your Journey ]
+[ View Plans → ]
+
+Overlay gradient (if used): vertical rgba(0,0,0,0.4) → transparent
+
+🔘 3. Navigation Bar
+Collapse into hamburger menu with animated full-screen overlay
+
+Use slide-in nav drawer (left or bottom) with large touchable links:
+
+Dashboard
+
+Studio
+
+Sandra AI
+
+Calendar
+
+Content
+
+Templates
+
+Pricing
+
+Keep logo visible at top (centered), with spacing below
+
+📦 4. Cards & Content Blocks
+Stack content vertically with editorial spacing
+
+Cards = 100% width, margin-bottom: 32px
+
+Maintain hover animations on tap (like a soft shadow bounce)
+
+css
+Kopier
+Rediger
+.card:active {
+  transform: scale(0.99);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+🖤 5. Image Grids (Before/After, Template Previews, etc.)
+Switch from 3-column to 1 or 2-column stacked layout
+
+Add swipeable carousel for side-scroll content (like presets, templates, etc.)
+
+Keep border spacing and clean gutters—no cramped grids
+
+🎯 6. Call-To-Actions
+Always centered and thumb-friendly
+
+CTA buttons should span ~80–90% width
+
+Use icon (📸 or →) only if it enhances clarity, never clutter
+
+🧼 7. Reduce Visual Clutter
+Remove icons that don't serve UX clarity
+
+Collapse stats (like 120K followers, $1M goal) into clean horizontal scroll OR stack with dividers
+
+🔒 8. Sticky Footer Option (optional)
+If helpful for conversions:
+
+html
+Kopier
+Rediger
+[ Start Your Journey ] | [ Sandra AI ]
+Styled in dark mode, sticky at the bottom when user scrolls.
+

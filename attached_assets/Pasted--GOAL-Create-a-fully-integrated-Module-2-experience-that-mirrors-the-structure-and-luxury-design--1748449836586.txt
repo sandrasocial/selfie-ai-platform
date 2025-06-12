@@ -1,0 +1,71 @@
+🎯 GOAL:
+Create a fully integrated Module 2 experience that mirrors the structure and luxury design of Module 1, but with content, prompts, and workbook output tailored to opinion-based content creation.
+
+✅ STEP 1: ADD TOP IMAGE PLACEHOLDER
+Add a luxury-style image banner at the top of the Module 2 page, just like in Module 1.
+
+Use same container style: full width, soft drop shadow, and rounded corners.
+
+Placeholder image filename: module2-banner.jpg (I'll replace it manually later).
+
+✅ STEP 2: REPLACE JOURNAL CARD WITH AI FORM
+Replace the current “Your Core Message Reflection” journal card with a 3-question form-based input card.
+
+Form Card Styling:
+
+Clean white card with light gray outline
+
+Elegant serif header (Prata)
+
+3 input fields with styled textarea (rounded corners, 300px min height)
+
+Submit button: Generate My Magnetic Message Blueprint 🖤
+
+Form Questions:
+
+What do you want to be known for?
+(What is the one bold belief or opinion that defines your content?)
+
+What do you want people to say about your content when you're not around?
+(What's your vibe, your message, your unique edge?)
+
+What's a strong opinion you have about your niche or industry?
+(Say it in your own words—this is your brand point of view.)
+
+✅ STEP 3: CONNECT TO NEW PDF GENERATOR
+Trigger the AI + PDF generation system exactly like Module 1, but route to a new Module 2 PDF template.
+
+Requirements:
+
+Use same white/black luxury layout system
+
+Header: Your Magnetic Messaging Blueprint
+
+Subtitle: Crafting Opinion-Based Content That Positions You As The Expert
+
+PDF Output Should Include:
+
+A 30-day opinion-based content prompt calendar (based on their responses)
+
+Personalized messaging pillars based on their core belief
+
+Their unique "Content POV Statement" based on answers
+
+5 Magnetic Opinion Content Hooks to reuse in Reels
+
+A custom framework:
+
+"From Thought to Authority™" Map
+
+A 30-60-90 Day Posting Plan to become known for their message
+
+✅ FINAL TOUCHES:
+Ensure user’s answers are saved on submit
+
+PDF preview available in-page like Module 1
+
+“Download Your Workbook” button styled the same (black with white text, rounded)
+
+Mobile responsive, clean spacing, padding between all sections
+
+Let me know when this is live so I can help you QA and customize the workbook response content 🖤

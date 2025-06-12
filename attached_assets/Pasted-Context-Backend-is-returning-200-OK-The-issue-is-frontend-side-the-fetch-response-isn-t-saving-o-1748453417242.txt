@@ -1,0 +1,111 @@
+Context: Backend is returning 200 OK. The issue is frontend-side — the fetch response isn’t saving or rendering correctly.
+
+✅ GOAL:
+Persist form inputs in real-time (auto-save to /api/module2-save-answers)
+
+On reload, prefill saved answers from /api/module2-answers
+
+Generate preview using /api/module2-workbook and display the result in the UI
+
+Ensure preview renders even after refresh
+
+🔁 STEP 1: AUTO-SAVE ON INPUT CHANGE
+Update the input fields to trigger a debounce-based auto-save:
+
+tsx
+Kopier
+Rediger
+// Add this in ModuleTwo.tsx
+import { useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
+
+const saveAnswers = async (answers: any) => {
+  try {
+    await fetch('/api/module2-save-answers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(answers),
+    });
+  } catch (error) {
+    console.error('Auto-save failed:', error);
+  }
+};
+
+const debouncedSave = debounce(saveAnswers, 800);
+Then update your form fields like:
+
+tsx
+Kopier
+Rediger
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
+  const updated = { ...formData, [name]: value };
+  setFormData(updated);
+  debouncedSave(updated);
+};
+🧠 STEP 2: PREFILL SAVED ANSWERS ON LOAD
+Add this inside a useEffect() hook:
+
+tsx
+Kopier
+Rediger
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await fetch('/api/module2-answers');
+      const data = await res.json();
+      if (data) setFormData(data); // Prefill form
+    } catch (err) {
+      console.error('Failed to load saved answers:', err);
+    }
+  };
+  fetchAnswers();
+}, []);
+🧾 STEP 3: GENERATE & RENDER WORKBOOK PREVIEW
+Trigger generation on button click:
+
+tsx
+Kopier
+Rediger
+const handleGenerate = async () => {
+  try {
+    const res = await fetch('/api/module2-workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+    setPreviewData(data); // This should contain the POV, content pillars, 30-60-90 strategy
+  } catch (err) {
+    console.error('Workbook generation failed:', err);
+  }
+};
+Then render the preview section:
+
+tsx
+Kopier
+Rediger
+{previewData && (
+  <div className="preview-box">
+    <h2>Your Magnetic Message 🖤</h2>
+    <p><strong>POV Statement:</strong> {previewData.pov}</p>
+    <p><strong>Content Pillars:</strong> {previewData.pillars.join(', ')}</p>
+    <p><strong>30-60-90 Plan:</strong></p>
+    <ul>
+      <li>30 Days: {previewData.plan.day30}</li>
+      <li>60 Days: {previewData.plan.day60}</li>
+      <li>90 Days: {previewData.plan.day90}</li>
+    </ul>
+  </div>
+)}
+🔄 FINAL CHECKLIST FOR DEV AI:
+ Inputs trigger debouncedSave ✅
+
+ Data is prefilled from /api/module2-answers ✅
+
+ POST /api/module2-workbook sends latest formData ✅
+
+ Response renders full preview in setPreviewData ✅
+
+ Logs show no 401s or parsing errors ✅

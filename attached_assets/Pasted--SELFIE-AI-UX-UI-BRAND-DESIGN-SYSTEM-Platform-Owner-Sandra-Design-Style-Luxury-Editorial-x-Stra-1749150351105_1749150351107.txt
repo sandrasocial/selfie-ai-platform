@@ -1,0 +1,344 @@
+
+
+SELFIE AI™ UX/UI BRAND DESIGN SYSTEM
+Platform Owner: Sandra
+ Design Style: Luxury Editorial x Strategic Empowerment
+ Primary Mission: Help women turn selfies into personal brand assets and build their digital empire.
+
+
+
+
+
+✨ BRAND IDENTITY OVERVIEW
+BRAND NAME OPTIONS
+SANDRA (Primary name)
+
+
+SELFIE (Product name)
+
+
+SELFIE AI™ (Platform name)
+
+
+Sandra by SELFIE AI™ (Combo lockup)
+
+
+LOGO SYSTEM
+Primary Logos:
+
+
+Sandra logotype (Black + White) Black: https://i.postimg.cc/3wY4yNh9/1.png White: https://i.postimg.cc/L5YndZk4/2.png 
+
+
+
+Selfie logotype (Black + White) Black: https://i.postimg.cc/26JSx8ss/5.png White: https://i.postimg.cc/66yccW2Y/6.png 
+
+
+
+Secondary Logos:
+
+
+SS monogram (Black + White) Black: https://i.postimg.cc/65NtYqMK/Black-transperent-logo.png White: https://i.postimg.cc/L88db1fc/White-transperent-logo.png 
+
+
+
+Tertiary Use:
+
+
+Full lockup w/ tagline: Turn Your Selfies Into Brand Assets
+ Black: https://i.postimg.cc/rpfGG3qB/3.png White: https://i.postimg.cc/mD0H8GJ5/4.png 
+
+🖋 TYPOGRAPHY
+Headline Font:
+Cormorant Garamond
+
+
+Elegant serif
+
+
+Used for: H1, H2, overlays, quote pulls, section titles
+
+
+Body Font:
+Neue Einstellung
+
+
+Clean, modern sans-serif
+
+
+Used for: Paragraphs, descriptions, CTAs, nav
+
+
+Font Sizes (Desktop Baseline)
+H1: 64px / weight 400
+
+
+H2: 36px italic
+
+
+Paragraph: 16–18px
+
+
+Button: 14px UPPERCASE / 0.5px letter spacing
+
+
+
+🌈 COLOR PALETTE
+NEUTRAL ELEVATED PALETTE
+Soft White: #F1F1F1
+
+
+Warm Gray: #B5B5B3
+
+
+Deep Graphite: #4C4B4B
+
+
+Luxury Black: #171719
+
+
+Application:
+Background: White or Luxury Black
+
+
+Headers/Footer/Nav: Luxury Black
+
+
+Text Overlay: Always white
+
+
+Cards: White or #F1F1F1 base
+
+
+Buttons: Transparent background with sharp black border + white or black text
+
+
+
+📅 HOMEPAGE STRUCTURE (StoryBrand-Based)
+Header (Sticky)
+
+
+Transparent on hero, solid black on scroll
+
+
+Font: Neue Einstellung, 14px, white
+
+
+No icons or emojis
+
+
+Add login/account on far right
+
+
+Hero Section
+
+
+Full-bleed B&W image of Sandra Image: https://i.postimg.cc/JnzLVfJ7/Heroimagehomaepage.png 
+
+
+H1: "Turn Your Selfies Into..."
+
+
+H2 italic: "Strategic Brand Assets"
+
+
+Subtext: white, 16px Neue Einstellung
+
+
+Buttons: Transparent with sharp black outline, white or black text, uppercase, no icons
+
+
+Proof Block
+
+
+White overlay text on image:
+
+
+90 Days
+
+
+120K Followers
+
+
+1.7M monthly Reach
+
+
+About Sandra Block
+
+
+Layout: Image + copy (see Kayla Skye inspo)
+
+
+Overlay headline: From broken to unbreakable
+
+
+Text: Pull from personal story, 1 paragraph
+
+
+Placeholder image with black background + white overlay text: [Upload Your Image]
+
+
+Platform Benefits
+
+
+4 Feature Cards:
+
+
+AI Studio
+
+
+Template Library
+
+
+Sandra AI Chat
+
+
+Strategy Workbooks
+
+
+Animation: Scale on hover, subtle shadow
+
+
+Titles: Cormorant Garamond
+
+
+Paragraphs: Neue Einstellung
+
+
+Layout: Clean white or soft neutral
+
+
+Pricing Section
+
+
+3-column layout
+
+
+Background: White
+
+
+Buttons: Transparent with black border, text only, all caps, no icons
+
+
+Testimonials (Coming Soon)
+
+
+Footer
+
+
+Solid black
+
+
+Text: Neue Einstellung, white, no underline
+
+
+Add email subscription with white background, transparent button with black border
+
+
+
+🌐 GLOBAL DESIGN SYSTEM
+Every page must include a full-bleed hero image with H1 overlay (and subheading or CTA if needed)
+
+
+All overlay text: white only
+
+
+Headers, footers, nav: Consistent layout & styling site-wide
+
+
+Nav menu: Transparent background, white text, visible on all pages
+
+
+Nav should include login/account link (far right)
+
+
+All nav and CTAs: Neue Einstellung
+
+
+Buttons: Transparent w/ sharp black border, all caps, hover = underline + darken
+
+
+Hover states on cards: soft scale + fade shadow
+
+
+Image placeholders: black w/ white overlay text "[Upload Your Image]"
+
+
+Remove all icons and emojis globally
+
+
+Font system: Cormorant Garamond (titles), Neue Einstellung (body)
+
+
+
+🗣 VOICE & STYLE GUIDE
+Tone: Bold, empowering, bestie-style direct. Luxury + real talk.
+Headline Style (H1 + H2)
+Speak in power statements or transformational outcomes:
+
+
+"Your Selfie is the Start of Your Empire"
+
+
+"Strategic Brand Assets Start Here"
+
+
+"Turn Content into Currency"
+
+
+About / Story Blocks
+Format:
+
+
+Hook → Real moment → Shift → Empowerment
+
+
+Use everyday, emotionally honest language
+
+
+2–4 sentences max
+
+
+Product Descriptions / Feature Cards
+Style: Informative, benefit-led
+
+
+Start with what it does (clarity first)
+
+
+End with how it helps her show up / grow / create
+
+
+CTAs
+Language:
+
+
+“Start Your Journey”
+
+
+“View Plans”
+
+
+“Create With Me”
+
+
+“Explore Tools”
+
+
+
+✅ NEXT: DASHBOARD PAGE
+Will include:
+Welcome message
+
+
+Visual metrics block
+
+
+Feature quick links
+
+
+Daily quote or affirmation
+
+
+(Coming next.)
+

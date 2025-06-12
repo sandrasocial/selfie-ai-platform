@@ -1,0 +1,169 @@
+import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
+import { Button } from '@/components/ui/button';
+
+const products = {
+  'starter-kit': {
+    name: 'Selfie Starter Kit',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Selfie Starter Kit",
+    courseAccess: {
+      title: 'Access Your Course',
+      description: 'Start your transformation with expert video lessons and downloadable resources',
+      courseUrl: '/course/starter-kit'
+    },
+    upsell: {
+      title: 'Ready to Take Your Brand to the Next Level?',
+      description: 'Transform your entire personal brand with our complete program',
+      productName: 'Branded By Selfie™',
+      productUrl: '/products/branded-by-selfie',
+      price: 397
+    }
+  },
+  'branded-by-selfie': {
+    name: 'Branded by Selfie™',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased Branded by Selfie™",
+    courseAccess: {
+      title: 'Enter Your Premium Course',
+      description: 'Access all lessons across Confidence, Clarity, and Content modules',
+      courseUrl: '/course/branded-by-selfie'
+    }
+  },
+  'branded': {
+    name: 'Branded by Selfie™',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased Branded by Selfie™",
+    courseAccess: {
+      title: 'Enter Your Premium Course',
+      description: 'Access all lessons across Confidence, Clarity, and Content modules',
+      courseUrl: '/course/branded-by-selfie'
+    }
+  },
+  'preset-bare': {
+    name: 'Bare Bundle Presets',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Bare Bundle Presets",
+    downloads: [
+      { name: 'Bare Bundle Presets (.dng)', url: '/downloads/bare-bundle.zip' },
+      { name: 'Installation Tutorial', url: '/downloads/preset-tutorial.pdf' }
+    ],
+    upsell: {
+      title: 'Want Content to Match Your New Aesthetic?',
+      description: 'Get the templates and strategies to create scroll-stopping content',
+      productName: 'The Selfie Starter Kit',
+      productUrl: '/products/starter-kit',
+      price: 47
+    }
+  },
+  'preset-glow': {
+    name: 'Glow Bundle Presets',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Glow Bundle Presets",
+    downloads: [
+      { name: 'Glow Bundle Presets (.dng)', url: '/downloads/glow-bundle.zip' },
+      { name: 'Installation Tutorial', url: '/downloads/preset-tutorial.pdf' }
+    ],
+    upsell: {
+      title: 'Want Content to Match Your New Aesthetic?',
+      description: 'Get the templates and strategies to create scroll-stopping content',
+      productName: 'The Selfie Starter Kit',
+      productUrl: '/products/starter-kit',
+      price: 47
+    }
+  },
+  'preset-skin': {
+    name: 'Skin Bundle Presets',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Skin Bundle Presets",
+    downloads: [
+      { name: 'Skin Bundle Presets (.dng)', url: '/downloads/skin-bundle.zip' },
+      { name: 'Installation Tutorial', url: '/downloads/preset-tutorial.pdf' }
+    ],
+    upsell: {
+      title: 'Want Content to Match Your New Aesthetic?',
+      description: 'Get the templates and strategies to create scroll-stopping content',
+      productName: 'The Selfie Starter Kit',
+      productUrl: '/products/starter-kit',
+      price: 47
+    }
+  },
+  'preset-selfie-glow': {
+    name: 'Selfie Glow-Up Bundle',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Selfie Glow-Up Bundle",
+    downloads: [
+      { name: 'Selfie Glow-Up Presets (.dng)', url: '/downloads/selfie-glow-bundle.zip' },
+      { name: 'Bonus Editing Guide', url: '/downloads/editing-guide.pdf' },
+      { name: 'Installation Tutorial', url: '/downloads/preset-tutorial.pdf' }
+    ],
+    upsell: {
+      title: 'Want Content to Match Your New Aesthetic?',
+      description: 'Get the templates and strategies to create scroll-stopping content',
+      productName: 'The Selfie Starter Kit',
+      productUrl: '/products/starter-kit',
+      price: 47
+    }
+  },
+  'preset-bundle-all': {
+    name: 'Complete Preset Collection',
+    welcomeTitle: "You're In!",
+    description: "You've successfully purchased the Complete Preset Collection",
+    downloads: [
+      { name: 'Complete Preset Collection (.dng)', url: '/downloads/complete-collection.zip' },
+      { name: 'All Bonus Guides', url: '/downloads/all-guides.zip' },
+      { name: 'Installation Tutorial', url: '/downloads/preset-tutorial.pdf' }
+    ],
+    upsell: {
+      title: 'Ready to Start Your AI Journey?',
+      description: 'Join thousands using AI-powered content creation',
+      productName: 'Free SELFIE AI Account',
+      productUrl: '/signup',
+      price: 0
+    }
+  }
+};
+
+export default function ThankYouPage() {
+  const [location] = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const productId = location.split('/thank-you/')[1];
+  const product = products[productId as keyof typeof products];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-normal mb-4 text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>Thank You!</h1>
+          <p className="text-[#4C4B4B] font-light">Your purchase has been confirmed.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[#171719] border-t-transparent animate-spin mx-auto mb-4" />
+          <p className="text-lg text-[#171719] font-light">Preparing your access...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      {/* Content Rendered Here */}
+    </div>
+  );
+}

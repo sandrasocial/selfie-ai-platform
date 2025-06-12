@@ -1,0 +1,216 @@
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+
+export default function Checkout() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    billingAddress: '',
+    city: '',
+    zipCode: ''
+  });
+
+  const { data: user } = useQuery({
+    queryKey: ["/api/me"],
+    retry: false,
+  });
+
+  const { toast } = useToast();
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Checkout Initiated",
+      description: "Redirecting to secure payment processing...",
+    });
+    setTimeout(() => {
+      window.location.href = '/thank-you';
+    }, 2000);
+  };
+
+  return (
+    <>
+      <Header user={user} />
+      <main className="px-6 py-20 max-w-6xl mx-auto bg-[#F1F1F1]">
+        <div className="text-center mb-16">
+          <h1 className="text-[64px] font-[400] font-['Cormorant Garamond'] text-[#171719] leading-tight">
+            Complete Your Order
+          </h1>
+          <p className="italic text-[18px] text-[#4C4B4B] mt-4">
+            Join SELFIE PRO and elevate your content empire.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Order Summary */}
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-[36px] italic font-['Cormorant Garamond'] text-[#171719]">
+                Order Summary
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 mt-6">
+              <div className="flex justify-between items-start border border-[#B5B5B3] p-4">
+                <div>
+                  <h3 className="text-base font-semibold text-[#171719]">SELFIE PRO</h3>
+                  <p className="text-sm text-[#4C4B4B] mt-1">Monthly subscription</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-base font-semibold text-[#171719]">$47.00</div>
+                  <div className="text-sm text-[#4C4B4B] mt-1">per month</div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-[#B5B5B3]">
+                <div className="flex justify-between items-center text-[18px] font-medium text-[#171719]">
+                  <span>Total</span>
+                  <span>$47.00/month</span>
+                </div>
+              </div>
+
+              <div className="mt-8 space-y-2">
+                <h4 className="text-base font-semibold text-[#171719]">What’s Included</h4>
+                <ul className="text-sm text-[#4C4B4B] list-disc list-inside space-y-1 pl-2">
+                  <li>Unlimited AI content generation</li>
+                  <li>Access to all templates</li>
+                  <li>Sandra AI coaching chat</li>
+                  <li>Weekly strategy sessions</li>
+                  <li>Priority support</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Payment Form */}
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-[36px] italic font-['Cormorant Garamond'] text-[#171719]">
+                Payment Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="mt-6">
+              <form onSubmit={handleSubmit} className="space-y-6 text-[#171719]">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="border border-[#B5B5B3] bg-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="border border-[#B5B5B3] bg-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="cardNumber">Card Number</Label>
+                  <Input
+                    id="cardNumber"
+                    value={formData.cardNumber}
+                    onChange={(e) => handleInputChange('cardNumber', e.target.value)}
+                    className="border border-[#B5B5B3] bg-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="expiryDate">Expiry Date</Label>
+                    <Input
+                      id="expiryDate"
+                      value={formData.expiryDate}
+                      onChange={(e) => handleInputChange('expiryDate', e.target.value)}
+                      className="border border-[#B5B5B3] bg-transparent"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="cvv">CVV</Label>
+                    <Input
+                      id="cvv"
+                      value={formData.cvv}
+                      onChange={(e) => handleInputChange('cvv', e.target.value)}
+                      className="border border-[#B5B5B3] bg-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="billingAddress">Billing Address</Label>
+                  <Input
+                    id="billingAddress"
+                    value={formData.billingAddress}
+                    onChange={(e) => handleInputChange('billingAddress', e.target.value)}
+                    className="border border-[#B5B5B3] bg-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="city">City</Label>
+                    <Input
+                      id="city"
+                      value={formData.city}
+                      onChange={(e) => handleInputChange('city', e.target.value)}
+                      className="border border-[#B5B5B3] bg-transparent"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="zipCode">ZIP Code</Label>
+                    <Input
+                      id="zipCode"
+                      value={formData.zipCode}
+                      onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                      className="border border-[#B5B5B3] bg-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-black text-white uppercase tracking-[0.5px] text-[14px] py-3 mt-8"
+                >
+                  Complete Purchase – $47/month
+                </Button>
+
+                <p className="text-center text-xs italic text-[#4C4B4B] mt-6">
+                  Powered by Stripe. Your info is secure.
+                </p>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}

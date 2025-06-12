@@ -1,0 +1,701 @@
+import React from "react";
+
+export default function ModuleOneWelcome() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] text-[#171719] font-sans">
+      {/* HERO SECTION */}
+      <section className="relative px-6 py-24 lg:py-32 text-center bg-cover bg-center" style={{ backgroundImage: 'url(https://i.postimg.cc/1tzsLtw0/IMG-2827.jpg)' }}>
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h1 className="text-5xl lg:text-6xl font-light font-serif text-white mb-6">Welcome to Your Glow Era</h1>
+          <p className="text-xl font-light text-white italic">It’s not just about content. It’s about becoming visible again—to yourself and the world.</p>
+        </div>
+      </section>
+
+      {/* MODULE OVERVIEW */}
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <div className="mb-16 text-center">
+          <h2 className="text-3xl font-serif font-light mb-4">Start Here – Your Brand, Your Power</h2>
+          <p className="text-lg text-[#4C4B4B] max-w-2xl mx-auto">
+            You’re not here to play small. This Starter Kit isn’t just tools—it’s the start of a magnetic version of you.
+            Show up online with clarity, confidence, and camera-ready energy.
+          </p>
+        </div>
+
+        <div className="space-y-16">
+          {/* Step 1 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">📸 Step 1: Install Your Signature Presets</h3>
+            <p className="text-[#4C4B4B] mb-4">Light. Urban. Dark. These mobile filters unlock your vibe—not perfection.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Access Presets</button>
+          </div>
+
+          {/* Step 2 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">💄 Step 2: Master Your Editing Routine</h3>
+            <p className="text-[#4C4B4B] mb-4">Watch how I use CapCut, Lightroom & iPhone tools to create scroll-stopping content.</p>
+            <div className="flex gap-4 flex-wrap">
+              <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Watch Masterclass</button>
+              <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Generate Workbook</button>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">✍️ Step 3: Define Your Brand Voice</h3>
+            <p className="text-[#4C4B4B] mb-4">Your fonts. Your tone. Your expression. Let’s shape your brand’s aesthetic and message.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Open Branding Doc</button>
+          </div>
+
+          {/* Step 4 */}
+          <div className="border-t border-[#B5B5B3] pt-12">
+            <h3 className="text-2xl font-serif font-light mb-2">🧠 Step 4: Start Telling Your Story</h3>
+            <p className="text-[#4C4B4B] mb-4">Learn how to write posts that feel real, get noticed, and convert without sounding salesy.</p>
+            <button className="uppercase text-sm border border-[#171719] px-6 py-2 tracking-wide hover:bg-[#171719] hover:text-white transition-all">Launch Caption Guide</button>
+          </div>
+        </div>
+      </section>
+
+      {/* REFLECTION BLOCK */}
+      <section className="bg-white py-20 px-6 border-t border-[#E5E5E5]">
+        <div className="max-w-3xl mx-auto text-center">
+          <h4 className="text-2xl font-serif font-light mb-6">🧠 Reflection Prompt</h4>
+          <p className="text-[#4C4B4B] italic mb-6">
+            “What’s been holding you back from showing up fully online?”
+          </p>
+          <p className="text-[#4C4B4B]">Write it down. Say it out loud. Then get ready to let it go.</p>
+        </div>
+      </section>
+
+      {/* CHECKLIST SECTION */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-2xl mx-auto">
+          <h4 className="text-xl font-serif font-light mb-6">✅ Quick Checklist Before Moving On</h4>
+          <ul className="list-disc list-inside space-y-3 text-[#4C4B4B]">
+            <li>Watched the welcome video</li>
+            <li>Downloaded your presets</li>
+            <li>Ready to dive into your first AI-generated workbook</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+
+
+
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, PlayCircle } from "lucide-react";
+
+export default function ModuleTwo() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      {/* Hero Section */}
+      <section className="relative w-full h-[80vh] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('https://i.postimg.cc/XJ5LHY2R/IMG-0407-jpg.jpg')" }}>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="relative z-10 text-center px-4 max-w-3xl">
+          <h1 className="text-white text-5xl font-light tracking-wide leading-tight font-serif">
+            Confidence in a Click
+          </h1>
+          <p className="text-white italic text-xl mt-4 font-sans">
+            Make your content glow without the guesswork.
+          </p>
+        </div>
+      </section>
+
+      {/* Lesson Title */}
+      <section className="py-16 px-6 max-w-5xl mx-auto">
+        <div className="text-center">
+          <h2 className="text-4xl font-serif text-[#171719] mb-2">Lesson 2: The Signature Selfie Edit</h2>
+          <p className="text-lg font-sans text-[#4C4B4B] italic">
+            Polished. Powerful. Luxurious—straight from your phone.
+          </p>
+        </div>
+      </section>
+
+      {/* Video Embed + Downloadable Workbook */}
+      <section className="bg-white py-12 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+          <div className="rounded overflow-hidden shadow-lg aspect-video">
+            {/* Placeholder for embedded video */}
+            <div className="w-full h-full bg-[#B5B5B3] flex items-center justify-center">
+              <PlayCircle className="w-12 h-12 text-white" />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <h3 className="text-2xl font-serif text-[#171719] mb-4">
+              Personalized Editing Workbook
+            </h3>
+            <p className="text-base text-[#4C4B4B] mb-6">
+              Unlock your custom AI-generated routine to make editing simple and high-end.
+            </p>
+            <Button variant="outline" className="uppercase border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white">
+              <Download className="w-4 h-4 mr-2" /> Download Workbook
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-white border border-[#B5B5B3]">
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl font-serif text-[#171719]">
+                Your Exact Workflow
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-8 text-[#4C4B4B] text-base font-sans leading-relaxed">
+              <ol className="list-decimal list-inside">
+                <li>Import your Selfie Glow Up Presets into Lightroom Mobile.</li>
+                <li>Edit and adjust using natural contrast, brightness, and warmth.</li>
+                <li>Preview your before/after for a confidence boost.</li>
+                <li>Try the iPhone-only edit settings if you're on the go.</li>
+                <li>Practice batch editing with Copy & Paste settings for consistency.</li>
+              </ol>
+              <blockquote className="italic border-l-4 border-[#171719] pl-4">
+                “Hold your finger on the photo to see the before/after. That glow-up hits different when you can feel the shift.”
+              </blockquote>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+export default function Module3VideoMagic() {
+  return (
+    <div className="bg-[#F1F1F1] text-[#171719] min-h-screen font-sans">
+      {/* Hero Section */}
+      <section className="w-full py-24 px-6 bg-black text-white text-center">
+        <h1 className="text-6xl font-light font-serif mb-4">Video Magic – Branded & Crisp</h1>
+        <p className="italic text-lg max-w-2xl mx-auto">Create Reels that feel like a Vogue campaign—no camera crew required.</p>
+      </section>
+
+      {/* Lesson Container */}
+      <section className="max-w-5xl mx-auto py-20 px-4 space-y-16">
+        {/* Lesson 4 */}
+        <div>
+          <h2 className="text-4xl font-serif italic mb-4">Lesson 4: Create Scroll-Stopping Reels</h2>
+          <p className="text-lg leading-relaxed mb-6">Ever seen those dreamy, cinematic Reels and thought, “How do they make it look so effortless?” Here’s the truth: it’s not the gear. It’s the settings—and the energy.</p>
+          <div className="aspect-video bg-gray-300 mb-6 rounded-lg"></div>
+          <ul className="space-y-3 pl-6 list-disc">
+            <li><strong>Film Like a CEO:</strong> iPhone settings → 4K, 30fps. Clean background. Natural light. Eye-level lens.</li>
+            <li><strong>CapCut Edit Flow:</strong> Trim intros, Adjust with Contrast +4, Sharpen +26, Clarity +14, Vignette +10, Export in 4K.</li>
+            <li><strong>Optional:</strong> Upload final to Lightroom Mobile (Premium) to apply your branded preset.</li>
+          </ul>
+          <div className="mt-6">
+            <a href="#" className="uppercase border border-black px-6 py-3 font-medium tracking-wide hover:bg-black hover:text-white transition-all">Generate Your Video Edit Guide</a>
+          </div>
+        </div>
+
+        {/* Lesson 5 */}
+        <div>
+          <h2 className="text-4xl font-serif italic mb-4">Lesson 5: Pro Trick – Video Presets in Lightroom</h2>
+          <p className="text-lg leading-relaxed mb-6">Want your Reels to match your photo aesthetic? Lightroom Mobile’s paid version lets you apply presets to video for that editorial, branded glow.</p>
+          <div className="aspect-video bg-gray-300 mb-6 rounded-lg"></div>
+          <ul className="space-y-3 pl-6 list-decimal">
+            <li>Open Lightroom Mobile (Premium)</li>
+            <li>Import your exported CapCut video</li>
+            <li>Apply preset + adjust</li>
+            <li>Export and save</li>
+          </ul>
+          <div className="mt-6">
+            <a href="#" className="uppercase border border-black px-6 py-3 font-medium tracking-wide hover:bg-black hover:text-white transition-all">Build Your Preset Strategy Guide</a>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-[#171719] text-white text-center py-20">
+        <h3 className="text-3xl font-serif italic mb-4">CEO Energy Only</h3>
+        <p className="max-w-xl mx-auto text-lg leading-relaxed mb-6">This isn’t about filters. It’s about frequency. Post your Reel using your new branded flow and tag @ssasocial—I’ll be reposting my faves 🖤</p>
+        <a href="#" className="uppercase border border-white px-6 py-3 font-medium tracking-wide hover:bg-white hover:text-black transition-all">Next: Design Your Brand Look</a>
+      </section>
+    </div>
+  );
+}
+
+
+<!-- MODULE 4: Build Your Brand Look -->
+<section class="module-wrapper bg-[#F1F1F1] py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Header Block -->
+    <div class="text-center mb-20">
+      <h2 class="text-[48px] italic font-serif text-[#171719] leading-tight">Design Your Brand Look</h2>
+      <p class="text-[18px] font-sans text-[#4C4B4B] mt-4 max-w-2xl mx-auto">Your brand deserves a signature style. Let’s define your aesthetic, your mood, and your visual voice—so every piece of content feels aligned and elevated.</p>
+      <div class="luxury-divider mt-8 mb-12 h-[2px] w-[120px] bg-[#4C4B4B] mx-auto"></div>
+    </div>
+
+    <!-- Lesson Overview -->
+    <div class="mb-16">
+      <h3 class="text-[32px] font-serif text-[#171719] mb-6">🖥️ What You’ll Create</h3>
+      <p class="text-[16px] text-[#4C4B4B] font-sans leading-relaxed">
+        In this lesson, you'll generate a personalized branding workbook using AI. It’s called your <strong>Design Like a CEO™ Blueprint</strong>—your visual playbook for future content.
+      </p>
+      <ul class="list-disc pl-6 mt-4 text-[#4C4B4B]">
+        <li>Your color palette</li>
+        <li>Your font pairings</li>
+        <li>Your brand’s mood + tone</li>
+        <li>Aesthetic style (clean, glam, minimal...)</li>
+      </ul>
+    </div>
+
+    <!-- CTA Block -->
+    <div class="text-center py-10 bg-white border border-[#B5B5B3] rounded-xl shadow-md">
+      <h4 class="text-[28px] font-serif italic text-[#171719] mb-2">📘 Build Your Brand Blueprint</h4>
+      <p class="text-[16px] font-sans text-[#4C4B4B] mb-6">Answer a few creative prompts—AI will design your brand identity guide instantly.</p>
+      <button class="uppercase text-sm font-sans tracking-wider border border-black px-8 py-3 hover:underline">Launch AI Builder</button>
+    </div>
+
+    <!-- Journal Prompt -->
+    <div class="mt-16">
+      <h4 class="text-[24px] font-serif text-[#171719] mb-4">✍️ Journal Prompt</h4>
+      <blockquote class="italic text-[#4C4B4B] text-[16px] border-l-[4px] border-[#171719] pl-4">
+        "If your brand was a woman walking into a room… what would she be wearing? What kind of energy would she bring?"
+      </blockquote>
+    </div>
+
+    <!-- Practice Challenge -->
+    <div class="mt-20 bg-[#171719] text-white p-10 rounded-xl">
+      <h4 class="text-[24px] font-serif italic mb-4">📌 Creative Challenge</h4>
+      <p class="text-[16px] font-sans leading-relaxed">
+        Screenshot your mood board or brand palette. Post it in your story with:
+        <br/><br/><em>“Building a brand that feels like me. The CEO era is here.”</em>
+        <br/><br/>Tag @ssasocial so I can celebrate your vibe 🖤
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+export default function ModuleFive() {
+  return (
+    <div className="bg-[#F1F1F1] text-[#171719] font-['Neue Einstellung']">
+      {/* Hero Section */}
+      <section className="py-24 px-6 text-center">
+        <h1 className="text-5xl font-light tracking-wide font-['Cormorant Garamond'] italic mb-4">
+          MODULE 5: Captions That Convert
+        </h1>
+        <p className="max-w-3xl mx-auto text-lg">
+          Visuals stop the scroll—but your words build the connection.
+          In this module, we’ll unlock the storytelling that moves people to take action.
+        </p>
+      </section>
+
+      {/* Lesson Title */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-light font-['Cormorant Garamond'] italic mb-8">
+            Lesson 7: Write Like a Vibe
+          </h2>
+
+          {/* Overview */}
+          <p className="text-lg leading-relaxed mb-8">
+            Visuals stop the scroll.
+            But your words? They sell the story. They turn followers into buyers—without sounding salesy.
+            This lesson helps you write captions that feel like a voice note to your best friend.
+          </p>
+
+          <div className="border-t border-[#B5B5B3] pt-10">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              📚 What You’ll Get
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Your AI-powered Caption Strategy Guide</li>
+              <li>Signature story themes</li>
+              <li>Magnetic hook formulas</li>
+              <li>3 ready-to-use captions based on your story</li>
+            </ul>
+          </div>
+
+          {/* Download */}
+          <div className="mt-12">
+            <a
+              href="#"
+              className="inline-block border border-[#171719] text-[#171719] uppercase tracking-wide px-6 py-3 hover:bg-[#171719] hover:text-white transition"
+            >
+              📘 Generate Your Caption Strategy Guide
+            </a>
+          </div>
+
+          {/* How it works */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              💬 How It Works
+            </h3>
+            <p className="mb-4">
+              You’ll answer a few questions about your story, tone, and niche.
+              SELFIE AI™ will craft:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Your brand’s writing style</li>
+              <li>Your content pillars</li>
+              <li>Caption hooks that sound like you</li>
+            </ul>
+          </div>
+
+          {/* Practice Prompt */}
+          <div className="mt-16 border-t border-[#B5B5B3] pt-10">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              ✍️ Practice Prompt
+            </h3>
+            <p>
+              Write one caption starting with:
+              <br />
+              <span className="italic text-xl block my-4">
+                “This is for the girl I used to be…”
+              </span>
+              Let it flow. Don’t edit. Then post it.
+            </p>
+          </div>
+
+          {/* Sandra Tip */}
+          <div className="mt-16 italic text-[#4C4B4B] text-lg">
+            “Think of your captions like a voice note to your best friend.
+            Just tell the truth. Make her feel seen. Invite her into something bigger.”
+          </div>
+
+          {/* Post Challenge */}
+          <div className="mt-20">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              📌 Post Challenge
+            </h3>
+            <p className="mb-4">
+              Write a post using one of your AI-generated hooks.
+              End it with:
+              <br />
+              <span className="italic block mt-4">
+                “If this hit home, DM me ‘READY’ and I’ll send you something special.”
+              </span>
+              Tag @ssasocial and I’ll hype you up 🖤
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Download, Sparkles } from "lucide-react";
+
+export default function Module6() {
+  return (
+    <div className="bg-[#F1F1F1] min-h-screen text-[#171719] font-sans">
+      {/* Hero */}
+      <section className="py-24 px-6 text-center bg-white">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="font-serif text-5xl leading-tight mb-6 italic">
+            Design Like You Mean It
+          </h1>
+          <p className="text-lg text-[#4C4B4B] font-light">
+            You’re not just building a brand. You’re curating an experience.
+            And this final lesson gives your visual identity the clarity, elegance,
+            and structure it deserves—using AI.
+          </p>
+        </div>
+      </section>
+
+      {/* Workbook Generation CTA */}
+      <section className="bg-[#F1F1F1] py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <Sparkles className="w-10 h-10 text-[#4C4B4B] mx-auto mb-4" />
+          <h2 className="text-3xl font-serif mb-4">
+            Build Your Visual Identity Guide
+          </h2>
+          <p className="text-[#4C4B4B] font-light max-w-2xl mx-auto mb-6">
+            You’ll answer a few prompts, and SELFIE AI™ will generate a
+            high-end PDF containing your custom color palette, font pairings,
+            brand aesthetic, layout tips, and example assets.
+          </p>
+          <Button className="uppercase border border-black rounded-none px-8 py-3 hover:underline hover:bg-transparent text-black bg-white">
+            Generate Your Guide
+          </Button>
+        </div>
+      </section>
+
+      {/* Preview Block */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="font-serif text-2xl mb-4">
+              What You'll Get Inside:
+            </h3>
+            <ul className="text-[#4C4B4B] font-light leading-loose">
+              <li>• Your curated color palette</li>
+              <li>• Font pairings for titles and body</li>
+              <li>• Your moodboard aesthetic + style keywords</li>
+              <li>• Brand layout tips (spacing, rhythm)</li>
+              <li>• Visual examples to emulate</li>
+            </ul>
+          </div>
+          <div>
+            <img
+              src="https://i.postimg.cc/D08QL2F7/visualguide-mockup.jpg"
+              alt="Workbook preview"
+              className="w-full shadow-lg border border-[#B5B5B3]"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Prompt + Practice */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h4 className="font-serif text-xl italic mb-4">
+            Creative Journal Prompt
+          </h4>
+          <p className="text-[#4C4B4B] font-light mb-6">
+            “If your brand was a woman walking into the room… What would she be wearing? What kind of energy would she bring? What would people feel when they see her?”
+          </p>
+          <p className="italic text-sm text-[#4C4B4B]">
+            Let this vision guide your aesthetic direction.
+          </p>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="bg-white py-20 px-6 text-center">
+        <div className="max-w-xl mx-auto">
+          <h4 className="font-serif text-2xl mb-4">
+            Creative Challenge
+          </h4>
+          <p className="text-[#4C4B4B] font-light mb-6">
+            Once your guide is ready: Create one branded graphic using your new visual direction.
+            Post it with the caption: <br />
+            <span className="italic">“This is the beginning of something bigger. CEO energy only.”</span>
+          </p>
+          <p className="text-sm text-[#4C4B4B]">
+            Tag @ssasocial so Sandra can feature your glow-up 🖤
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+<section class="bg-[#F1F1F1] py-24 px-6 md:px-12">
+  <div class="max-w-5xl mx-auto text-center mb-16">
+    <h2 class="text-4xl md:text-6xl font-light font-['Cormorant Garamond'] text-[#171719] leading-tight">
+      Captions That Convert
+    </h2>
+    <p class="mt-6 text-lg md:text-xl font-['Neue Einstellung'] text-[#4C4B4B] max-w-3xl mx-auto">
+      Your words are magnetic. This lesson helps you write captions that sound like you — and sell without the cringe.
+    </p>
+  </div>
+
+  <!-- AI-Powered Caption Guide -->
+  <div class="bg-white p-10 border border-[#171719] mb-20">
+    <h3 class="text-2xl font-['Cormorant Garamond'] text-[#171719] mb-4">
+      Download Your AI Caption Guide
+    </h3>
+    <p class="text-[#4C4B4B] text-base mb-6 font-['Neue Einstellung'] leading-relaxed">
+      Get a personalized workbook with your story arcs, magnetic hooks, and ready-to-post captions based on your brand tone.
+    </p>
+    <a href="#" class="inline-block uppercase border border-[#171719] text-[#171719] px-6 py-3 text-sm tracking-wide font-['Neue Einstellung'] hover:bg-[#171719] hover:text-white transition">
+      Generate My Caption Guide
+    </a>
+  </div>
+
+  <!-- Lesson Breakdown -->
+  <div class="grid md:grid-cols-2 gap-16 mb-24">
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        What You’ll Learn
+      </h4>
+      <ul class="list-disc pl-6 text-[#4C4B4B] space-y-2 font-['Neue Einstellung']">
+        <li>Craft your signature story themes</li>
+        <li>Write like you speak — with ease</li>
+        <li>Generate high-converting captions with AI</li>
+        <li>Create a repeatable writing system</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        Practice Prompt
+      </h4>
+      <p class="text-[#4C4B4B] text-base font-['Neue Einstellung'] leading-relaxed">
+        Start your next post with this line:<br />
+        <span class="italic block mt-4 text-lg text-[#171719]">“This is for the girl I used to be…”</span><br />
+        Let it flow. Be raw. Then post it. Your truth is magnetic.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sandra Tip -->
+  <div class="bg-[#171719] text-white py-12 px-8 md:px-16 text-center mb-20">
+    <h4 class="text-2xl font-['Cormorant Garamond'] italic mb-4">Sandra’s Copy Tip</h4>
+    <p class="text-base font-['Neue Einstellung'] max-w-2xl mx-auto">
+      “Think of your captions like a voice note to your best friend. Don’t overthink it. Just tell the truth, make her feel seen, and invite her into something bigger.”
+    </p>
+  </div>
+
+  <!-- CTA Block -->
+  <div class="text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-4">Final Challenge</h4>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung'] mb-6">
+      Post using one of your new AI-generated hooks and end with:
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-[#171719] text-lg max-w-xl mx-auto mb-6">
+      “If this hit home, DM me ‘READY’ and I’ll send you something special.”
+    </blockquote>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung']">
+      Tag <strong>@ssasocial</strong> — and Sandra will hype it up on stories.
+    </p>
+  </div>
+</section>
+
+
+<section class="bg-[#F1F1F1] py-24 px-6 md:px-12">
+  <!-- Header -->
+  <div class="max-w-5xl mx-auto text-center mb-16">
+    <h2 class="text-4xl md:text-6xl font-light font-['Cormorant Garamond'] text-[#171719] leading-tight">
+      Design Like You Mean It
+    </h2>
+    <p class="mt-6 text-lg md:text-xl font-['Neue Einstellung'] text-[#4C4B4B] max-w-3xl mx-auto">
+      Your brand isn't just seen — it's felt. In this final module, we define your visual world through AI-powered elegance.
+    </p>
+  </div>
+
+  <!-- Visual Identity Workbook -->
+  <div class="bg-white p-10 border border-[#171719] mb-20">
+    <h3 class="text-2xl font-['Cormorant Garamond'] text-[#171719] mb-4">
+      Create Your Visual Identity Guide
+    </h3>
+    <p class="text-[#4C4B4B] text-base mb-6 font-['Neue Einstellung'] leading-relaxed">
+      Generate a fully customized branding PDF — your fonts, color palette, layout tips, and visual moodboard in one aesthetic blueprint.
+    </p>
+    <a href="#" class="inline-block uppercase border border-[#171719] text-[#171719] px-6 py-3 text-sm tracking-wide font-['Neue Einstellung'] hover:bg-[#171719] hover:text-white transition">
+      Build My Identity Guide
+    </a>
+  </div>
+
+  <!-- Why This Matters -->
+  <div class="grid md:grid-cols-2 gap-16 mb-24">
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        Why It Matters
+      </h4>
+      <p class="text-[#4C4B4B] text-base font-['Neue Einstellung'] leading-relaxed">
+        Consistency builds trust. A clear, editorial visual identity ensures your content looks and feels like you — every time.
+        From reels to freebies, this is your foundation for high-end brand expression.
+      </p>
+    </div>
+    <div>
+      <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-3">
+        What’s Inside Your Guide
+      </h4>
+      <ul class="list-disc pl-6 text-[#4C4B4B] space-y-2 font-['Neue Einstellung']">
+        <li>Your brand color palette</li>
+        <li>Font pairings</li>
+        <li>Spacing & layout structure</li>
+        <li>Moodboard tone + aesthetic</li>
+        <li>Brand style examples</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Sandra Quote -->
+  <div class="bg-[#171719] text-white py-12 px-8 md:px-16 text-center mb-20">
+    <h4 class="text-2xl font-['Cormorant Garamond'] italic mb-4">Sandra’s Design Reminder</h4>
+    <p class="text-base font-['Neue Einstellung'] max-w-2xl mx-auto">
+      “If your grid doesn’t feel like you, it’s not your brand yet. Let’s fix that.”
+    </p>
+  </div>
+
+  <!-- Practice Challenge -->
+  <div class="text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] text-[#171719] mb-4">Creative Challenge</h4>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung'] mb-6">
+      Use your new brand guide to design one custom Canva or Figma post that reflects your moodboard.
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-[#171719] text-lg max-w-xl mx-auto mb-6">
+      “This is the beginning of something bigger. CEO energy only.”
+    </blockquote>
+    <p class="text-[#4C4B4B] font-['Neue Einstellung']">
+      Post it + tag <strong>@ssasocial</strong> — and let your next-level brand be seen.
+    </p>
+  </div>
+</section>
+
+
+<section class="bg-[#171719] text-white py-24 px-6 md:px-12">
+  <div class="max-w-5xl mx-auto text-center">
+    <!-- Final Hero -->
+    <h2 class="text-5xl md:text-6xl font-light font-['Cormorant Garamond'] mb-6 leading-tight">
+      You Did That.
+      <br class="hidden md:block" />
+      And You’re Just Getting Started.
+    </h2>
+    <p class="text-lg md:text-xl font-['Neue Einstellung'] text-[#B5B5B3] max-w-3xl mx-auto mt-6 leading-relaxed">
+      You didn’t just download a kit. You showed up, you got clear, you took aligned action. And that energy?
+      That’s what builds a brand.
+    </p>
+  </div>
+
+  <!-- Message Block -->
+  <div class="mt-20 max-w-4xl mx-auto bg-white text-[#171719] py-12 px-8 md:px-16">
+    <h3 class="text-2xl font-['Cormorant Garamond'] italic text-center mb-6">
+      A Message from Sandra
+    </h3>
+    <p class="text-base font-['Neue Einstellung'] leading-relaxed space-y-4">
+      <span class="block mb-4">
+        This wasn’t just about filters or photos. It was about reclaiming your voice—and making sure it’s seen.
+      </span>
+      <span class="block mb-4">
+        You now have a branded identity, an editing routine, a caption system, and a more confident YOU behind the content.
+      </span>
+      <span class="block mb-4">
+        This platform will keep growing with you. But today, pause and own it:
+      </span>
+      <span class="block font-semibold text-lg mt-6 text-center uppercase tracking-wider">
+        You are the brand now.
+      </span>
+    </p>
+  </div>
+
+  <!-- CTA Card -->
+  <div class="mt-24 max-w-4xl mx-auto text-center">
+    <h4 class="text-3xl font-['Cormorant Garamond'] mb-4">
+      Ready to Build Your Empire?
+    </h4>
+    <p class="text-base font-['Neue Einstellung'] text-[#B5B5B3] mb-8">
+      If you’re ready to go deeper—into visibility, monetization, and next-level offers...
+    </p>
+    <a href="/branded-by-selfie" class="inline-block uppercase bg-white text-[#171719] font-['Neue Einstellung'] tracking-wide px-8 py-4 hover:bg-[#F1F1F1] transition">
+      Explore Branded by Selfie™
+    </a>
+  </div>
+
+  <!-- Final Challenge -->
+  <div class="mt-20 max-w-4xl mx-auto text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] mb-4">
+      Final Challenge
+    </h4>
+    <p class="text-base font-['Neue Einstellung'] text-[#B5B5B3] mb-4">
+      Post a power selfie using your favorite preset. Use one of your AI-generated captions.
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-lg max-w-xl mx-auto mb-6">
+      “This time, I’m not shrinking. I’m building something that reflects me. The era of Selfie CEO begins now.”
+    </blockquote>
+    <p class="text-[#B5B5B3] font-['Neue Einstellung']">
+      Tag <strong>@ssasocial</strong> and I’ll repost as many as I can 🖤
+    </p>
+  </div>
+</section>
+
+
+

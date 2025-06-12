@@ -1,0 +1,25 @@
+
+chunk-276SZO74.js?v=a7b75323:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+
+ Chrome is moving towards a new experience that allows users to choose to browse without third-party cookies.
+Calendar.tsx:37 Uncaught ReferenceError: Cannot access 'hasAccess' before initialization
+    at Calendar (Calendar.tsx:37:16)
+Calendar.tsx:37 Uncaught ReferenceError: Cannot access 'hasAccess' before initialization
+    at Calendar (Calendar.tsx:37:16)
+chunk-276SZO74.js?v=a7b75323:14032 The above error occurred in the <Calendar> component:
+
+    at Calendar (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/src/pages/Calendar.tsx:32:26)
+    at ProtectedRoute (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.dev/src/components/ProtectedRoute.tsx:23:34)
+    at component
+    at Route (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.de…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=a7b75323:323:16)
+    at Switch (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.de…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=a7b75323:379:17)
+    at Router
+    at Provider (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.de…unner/workspace/node_modules/.vite/deps/chunk-3RXG37ZK.js?v=a7b75323:38:15)
+    at TooltipProvider (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.de…rkspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=a7b75323:65:5)
+    at QueryClientProvider (https://e66164a2-da57-44dd-b547-d568975ef6ce-00-udvs2kaik919.worf.replit.de…rkspace/node_modules/.vite/deps/@tanstack_react-query.js?v=a7b75323:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+chunk-276SZO74.js?v=a7b75323:9129 Uncaught ReferenceError: Cannot access 'hasAccess' before initialization
+    at Calendar (Calendar.tsx:37:16)

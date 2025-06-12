@@ -1,0 +1,79 @@
+import { useEffect, useRef, useState } from 'react';
+import Player from '@vimeo/player';
+
+const IntroHeroVideo = () => {
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [player, setPlayer] = useState<any>(null);
+
+  useEffect(() => {
+    if (iframeRef.current && !player) {
+      const newPlayer = new Player(iframeRef.current);
+      newPlayer.on('play', () => setIsPlaying(true));
+      newPlayer.on('ended', () => setIsPlaying(false));
+      setPlayer(newPlayer);
+    }
+  }, [iframeRef.current]);
+
+  const handleReplay = () => {
+    if (player) {
+      player.setCurrentTime(0).then(() => {
+        player.play();
+      });
+    }
+  };
+
+  return (
+    <section className="relative w-full h-screen bg-black overflow-hidden">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <iframe
+          ref={iframeRef}
+          src="https://player.vimeo.com/video/1091785973?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&loop=0&muted=0&controls=0&transparent=0"
+          className="w-full h-full"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+          allowFullScreen
+          frameBorder="0"
+          title="Welcome To Selfie Starter Kit"
+        />
+      </div>
+
+      {/* Overlay Content */}
+      <div
+        className={`absolute inset-0 z-10 flex items-center justify-center px-6 transition-opacity duration-1000 ${
+          isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
+        <div className="text-center max-w-3xl">
+          <h1 className="text-white text-[64px] font-['Cormorant_Garamond'] font-normal leading-[1.1] mb-6">
+            Welcome to the Selfie Starter Kit™
+          </h1>
+          <p className="text-white text-xl font-light mb-8">
+            Press play and let’s begin your glow era.
+          </p>
+          <button
+            onClick={() => {
+              const target = document.getElementById('course-start');
+              target?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="bg-white text-[#171719] uppercase tracking-wider text-sm px-10 py-4 hover:bg-[#F1F1F1] transition"
+          >
+            Start the Course
+          </button>
+        </div>
+      </div>
+
+      {/* Replay Button */}
+      {!isPlaying && (
+        <button
+          onClick={handleReplay}
+          className="absolute bottom-6 right-6 text-sm text-white/70 hover:text-white tracking-wide font-light uppercase"
+        >
+          Watch intro again
+        </button>
+      )}
+    </section>
+  );
+};
+
+export default IntroHeroVideo;

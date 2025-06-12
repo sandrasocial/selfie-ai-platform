@@ -1,0 +1,58 @@
+Section,Action,File/Details
+Audit Files,"List all files/modules related to Caption Creator, Script Generator, and Visual Studio",Frontend: client/client/src/components/Studios/ChatStudio.tsx; client/client/src/components/Studios/CaptionsStudio.tsx; client/client/src/components/Studios/VisualsStudio.tsx; client/client/src/components/Studios/StrategyStudio.tsx. Search for script references under components/Studios.
+Audit Files,"Mark which should be deleted, refactored, or kept",Delete: client/client/src/components/Studios/CaptionsStudio.tsx and its backend prompts in server/contentPrompts.ts; client/client/src/components/Studios/StrategyStudio.tsx. Refactor: client/client/src/components/Studios/VisualsStudio.tsx and client/client/src/components/Studios/ChatStudio.tsx (extract & relocate). Keep: client/client/src/components/Studios/FilterLibrary.tsx; client/client/src/components/Studios/PoseCoach.tsx; server/sandraAI.ts; server/poseCoachAI.ts.
+Audit Files,Identify where PoseCoach.tsx and ChatStudio.tsx currently reside; plan relocation,Current: client/client/src/components/Studios/PoseCoach.tsx; client/client/src/components/Studios/ChatStudio.tsx. New: move to client/client/src/pages/PoseCoach/index.tsx and client/client/src/pages/SandraAI/index.tsx. Update routes in client/client/src/App.tsx.
+Immediate Fixes,Fix swipe gesture logic in Visual Studio (mobile),"Modify client/client/src/components/Studios/VisualsStudio.tsx: update touch handlers, add stopPropagation to preset button taps, ensure swipe works correctly."
+Immediate Fixes,Fix 'Save Edited Photo' bug: edited image isn’t saved,"Modify client/client/src/components/Studios/VisualsStudio.tsx: ensure handleSaveImage() uses stageRef.current.toDataURL() after filters, remove canvas reset logic, test saving edited image."
+Content Generation Engine Refactor,Remove old 'Becoming HER' 6-step prompt logic; replace with 3-step 'Story Arc',Frontend: delete client/client/src/components/Studios/CaptionsStudio.tsx; remove references in VisualsStudio. Backend: delete 6-step templates in server/contentPrompts.ts; create server/storyArcAI.ts with generateStoryArc function.
+Content Generation Engine Refactor,Enforce 20+ character validation on story input,"Modify client/client/src/components/Studios/VisualsStudio.tsx: add length check in handler, show error if <20 characters."
+Content Generation Engine Refactor,Fine-tune AI prompts for Sandra’s voice + emojis,Backend: create server/utils/promptFormatter.ts with formatWithSandraTone; wrap prompts in server/storyArcAI.ts and server/sandraAI.ts.
+Subpage Reorganization,Move PoseCoach.tsx into its own page and update routes,Move from client/client/src/components/Studios/PoseCoach.tsx to client/client/src/pages/PoseCoach/index.tsx; update import and route in client/client/src/App.tsx.
+Subpage Reorganization,Move ChatStudio.tsx into its own page,Move from client/client/src/components/Studios/ChatStudio.tsx to client/client/src/pages/SandraAI/index.tsx; update import and route in client/client/src/App.tsx.
+Starter & Pro Experiences,Build StarterKit module with 3 AI workbooks,"Create client/client/src/modules/StarterKit/ with StarterKit.tsx, workbooks/StoryPromptsWorkbook.tsx, CaptionFormulaWorkbook.tsx, ConfidenceExercisesWorkbook.tsx. Backend: server/workbookAI.ts with generateStoryPrompts, generateCaptionFormulas, generateConfidenceExercises; routes in server/routes.ts."
+Starter & Pro Experiences,Lock StarterKit behind login,Wrap route for /starter-kit in auth check in client/client/src/App.tsx.
+Starter & Pro Experiences,Create BrandedLab module structure,"Create client/client/src/modules/BrandedLab/ with BrandedLab.tsx, BrandPlanWorkbook.tsx, BrandAssetsGenerator.tsx. Backend: server/branding.ts with generateBrandPlan, generateBrandAssets; routes in server/routes.ts."
+Starter & Pro Experiences,Implement BrandPlanWorkbook UI,client/client/src/modules/BrandedLab/BrandPlanWorkbook.tsx; calls /api/branding/generateBrandPlan.
+Starter & Pro Experiences,Build BrandAssetsGenerator,client/client/src/modules/BrandedLab/BrandAssetsGenerator.tsx; calls /api/branding/generateBrandAssets.
+SELFIE PRO Membership,Create MonthlyWorkbook component,client/client/src/modules/Pro/Workbooks/MonthlyWorkbook.tsx; calls /api/proWorkbooks/getCurrentWorkbook and /api/proWorkbooks/markTaskDone.
+SELFIE PRO Membership,Build backend for proWorkbooks,"server/workbookAI.ts: getCurrentWorkbook, markTaskDone functions; routes in server/routes.ts."
+SELFIE PRO Membership,Create VoiceCheckIn component,client/client/src/components/Pro/VoiceCheckIn.tsx; calls /api/voiceChat/transcribe.
+SELFIE PRO Membership,Build backend for voice transcription and micro-prompt,server/sandraChatAI.ts with transcribeRoute; uses speechToText helper and OpenAI; route in server/routes.ts.
+SELFIE PRO Membership,Create SisterCircle component,"client/client/src/modules/Pro/SisterCircle/SisterCircle.tsx; calls /api/pods/getPodForUser, /api/pods/getMessages, /api/pods/sendMessage."
+SELFIE PRO Membership,Build backend for pods,"server/pods.ts with getPodForUser, getMessages, sendMessage; routes in server/routes.ts."
+SELFIE PRO Membership,Create ContentHacks component,client/client/src/modules/Pro/ContentHacks/ContentHacks.tsx; calls /api/contentHacks/getWeeklyScript.
+SELFIE PRO Membership,Build backend for contentHacks,server/contentHacks.ts with getWeeklyScript; route in server/routes.ts.
+Core Tools & Dashboard,Create ContentStarter component,client/client/src/components/ContentStarter/ContentStarter.tsx; calls /api/contentStarter/generate.
+Core Tools & Dashboard,Build backend for contentStarter,server/contentStarter.ts with generateStarter; route in server/routes.ts.
+Core Tools & Dashboard,Refactor VisualsStudio to add presets & 'Enhance My Glow',"client/client/src/components/Studios/VisualsStudio.tsx: add preset buttons, applyPreset and applyGlowFilter functions."
+Core Tools & Dashboard,Create PostScheduler component,client/client/src/components/PostScheduler/PostScheduler.tsx; uses react-datepicker; calls /api/social/schedulePost and /api/social/getSuggestions.
+Core Tools & Dashboard,Build backend for social scheduling & suggestions,server/social.ts with schedulePost and getSuggestions; cron job in server/cron/socialPublisher.ts.
+Core Tools & Dashboard,Create ConfidenceTracker component,client/client/src/components/ConfidenceTracker/ConfidenceTracker.tsx; uses react-chartjs-2; calls /api/confidence/logFeeling and /api/confidence/getWeekly.
+Core Tools & Dashboard,Build backend for confidence tracking,server/confidence.ts with logFeeling and getWeekly; routes in server/routes.ts.
+Core Tools & Dashboard,Create StoryArcBuilder component,client/client/src/components/StoryArcBuilder/StoryArcBuilder.tsx; calls /api/storyArc/generate.
+Core Tools & Dashboard,Build backend for storyArc,server/storyArcAI.ts with generateStoryArc; route in server/routes.ts.
+Core Tools & Dashboard,Create Dashboard page,"client/client/src/pages/Dashboard.tsx; calls /api/dashboardMetrics/getConfidenceScore, getActionStreak, hasCompletedStarterKit."
+Core Tools & Dashboard,Build backend for dashboardMetrics,"server/dashboardMetrics.ts with getConfidenceScore, getActionStreak, hasCompletedStarterKit; routes in server/routes.ts."
+Premium Add-ons,Create BrandKitGenerator component,client/client/src/components/BrandKitGenerator/BrandKitGenerator.tsx; calls /api/branding/generateBrandAssets.
+Premium Add-ons,Build backend for branding assets,server/branding.ts with generateBrandAssets; route in server/routes.ts.
+Premium Add-ons,Create ResourceLibrary component,client/client/src/modules/ResourceLibrary/ResourceLibrary.tsx; uses Algolia; calls /api/resources/getTop5.
+Premium Add-ons,Build backend for resources,server/resources.ts with getTop5Resources; route in server/routes.ts.
+Premium Add-ons,Schedule cron for Automated Brand Kit Refresh,server/cron/brandRefresh.ts with job to refresh and email; import in server/index.ts.
+Premium Add-ons,Create MiniCourses modules,"client/client/src/modules/MiniCourses/... (e.g., CraftSignatureOffer/Module1.tsx, Quiz.tsx)."
+Premium Add-ons,Build backend for quiz,server/quiz.ts with getQuestions and submitAnswer; route in server/routes.ts.
+Premium Add-ons,Create SwipeVault component,client/client/src/components/SwipeVault/SwipeVault.tsx; calls /api/swipeVault/getScripts.
+Premium Add-ons,Build backend for swipeVault,server/swipeVault.ts with getScripts; route in server/routes.ts.
+Premium Add-ons,Schedule cron for Monthly Brand Audit Digest,"server/cron/auditDigest.ts with calculateTopWins, generateQuickFix, pickNewResources; import in server/index.ts."
+Premium Add-ons,Schedule cron for Spotlight Success,server/cron/spotlightSuccess.ts with generateSpotlightStory; import in server/index.ts.
+Premium Add-ons,Create BrandThermometer component,client/client/src/components/BrandThermometer/BrandThermometer.tsx; calls /api/brandQA/generateActionSteps.
+Premium Add-ons,Build backend for brandQA,server/brandQA.ts with generateActionSteps; route in server/routes.ts.
+Integrations,Setup Social Posting & Analytics,Frontend: PostScheduler.tsx; Backend: server/social.ts; cron: server/cron/socialPublisher.ts.
+Integrations,Setup Cloudinary & Mux,"Frontend: VisualsStudio.tsx (Cloudinary widget), MiniCourses modules (MuxPlayer). Backend: server/storage.ts, server/muxRoutes.ts."
+Integrations,Setup Advanced Image & AR Filters,Frontend: VisualsStudio.tsx with Banuba/YouCam SDK; install React Banuba package. Backend: none.
+Integrations,Setup Sentiment Analysis,Backend: server/sentiment.ts with Google NL client; integrate in server/sandraChatAI.ts.
+Integrations,Setup Voice & Speech Processing,"Backend: server/speechToText.ts (Google STT), server/sandraChatAI.ts; Twilio SMS in server/smsNudge.ts."
+Integrations,Setup Email Marketing & Automations,Backend: server/email/workflows.ts (Mailchimp); Zapier/Make webhook in server/webhooks.ts.
+Integrations,Setup Push Notifications & Real-Time Chat,"Frontend: OneSignal init in client/index.tsx; SisterCircle real-time via Pusher. Backend: server/notifications.ts, server/routes for Pusher."
+Integrations,"Setup Payments & Subscriptions (PayPal, Paddle, Chargebee)",Frontend: Pricing.tsx PayPal/Paddle scripts. Backend: server/paymentHandlers.ts with PayPal integration.
+Integrations,Setup Search Engine (Algolia),Frontend: algolia.js and ResourceLibrary component. Backend: syncResourceToAlgolia in server/resources.ts.
+Integrations,Setup Calendar & Event Integrations,Frontend: PostScheduler Add to Calendar; CoachingApplication.tsx Calendly iframe. Backend: server/calendar.ts with Google Calendar API.

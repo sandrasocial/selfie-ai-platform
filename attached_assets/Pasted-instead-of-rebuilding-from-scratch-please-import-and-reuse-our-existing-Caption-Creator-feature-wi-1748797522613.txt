@@ -1,0 +1,172 @@
+instead of rebuilding from scratch, please import and reuse our existing Caption Creator feature (with all its prompts, logic, and “Story”-based structure) into the new /studio/captions subpage. Follow these steps exactly:
+
+1. Identify & Import the Existing Caption Components
+Locate where the current Caption Creator lives (e.g., client/src/components/CaptionCreator/ or wherever you originally built it). It likely includes:
+
+A main CaptionCreator component (with the prompt logic, API calls, and “Generate” button).
+
+Any sub‐components (e.g., HooksGenerator, FrameworkGenerator, etc.).
+
+Relevant CSS or style files.
+
+Import those exact components into client/src/pages/studio/CaptionsStudio.tsx (the new page you created). For example:
+
+tsx
+Kopier
+Rediger
+import CaptionCreator from '../../components/CaptionCreator/CaptionCreator';
+import HookGenerator from '../../components/CaptionCreator/HookGenerator';
+// …and any other sub‐components in use.
+Remove any code you added yesterday that re‐implements a brand‐new caption generator. We want to preserve our original prompt structure, story‐based inputs, and output formatting exactly as we built it.
+
+2. Embed the Existing CaptionCreator Into the New Page Layout
+In CaptionsStudio.tsx, replace your newly written “fake” caption logic with a container for the real components. Structure it like this:
+
+tsx
+Kopier
+Rediger
+<div className="studio-page">
+  <header className="studio-header">
+    <Link to="/studio">← Back to AI Studio</Link>
+    <h1 className="studio-title">Caption Creator</h1>
+    <p className="studio-subtitle">
+      Generate on-brand, authentic captions that convert followers into clients.
+    </p>
+  </header>
+
+  <main className="studio-content">
+    {/* Desktop layout */}
+    <div className="desktop-layout">
+      <section className="caption-controls">
+        {/* Embed the exact existing controls: */}
+        <CaptionCreator /* pass any props if needed */ />
+      </section>
+      <section className="caption-preview">
+        {/* If our existing CaptionCreator already includes its own live preview, just render it here.
+            Otherwise, render the existing `CaptionPreview` component,
+            or props passed from CaptionCreator to preview. */}
+        {/* e.g.: <CaptionPreview data={captionData} /> */}
+      </section>
+    </div>
+
+    {/* Mobile carousel layout (only for <768px) */}
+    <div className="mobile-carousel">
+      {/* Slide 1: caption-controls slide */}
+      <div className="mobile-slide controls-slide">
+        <CaptionCreator /* same props */ />
+      </div>
+
+      {/* Slide 2: caption-preview slide */}
+      <div className="mobile-slide preview-slide">
+        {/* Use existing preview logic/component: */}
+        {/* e.g.: <CaptionPreview data={captionData} /> */}
+      </div>
+    </div>
+  </main>
+</div>
+Remove any “dummy” <input> or <textarea> blocks you wrote yesterday—our existing CaptionCreator already handles all inputs, tone switches, and generation logic. We only need to drop the pre‐built component into this layout.
+
+3. Adjust Styling to Match Vogue/Luxury Theme
+Font & Colors
+
+Ensure CaptionCreator and its child components use Prata serif font. If they currently use a different font, override with a class (e.g., .caption-creator * { font-family: 'Prata', serif; }).
+
+All buttons and toggles inside CaptionCreator should have a solid black background with white uppercase text, 4px border‐radius, and gentle hover transitions.
+
+Text areas and dropdowns should have a 1px charcoal border, white background, and Prata 16px text.
+
+Any error or warning messages inside CaptionCreator should appear in soft gray or gold accent.
+
+Two‐Column Desktop Layout
+
+.desktop-layout { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+
+Left column (.caption-controls): full‐width of its grid column.
+
+Right column (.caption-preview): same width, ensuring preview text or card panels appear in a framed container with a 1px black border and subtle drop shadow.
+
+Maintain consistent 16px padding inside each section.
+
+Mobile Carousel
+
+Below 768px, hide the two‐column .desktop-layout and show .mobile-carousel instead.
+
+Use react-swipeable (or your existing swipe library) to allow swiping between the “Controls” and “Preview” slides.
+
+Each slide: width: 100%, padding: 0 12px, vertical spacing: 16px.
+
+Keep the “Back to AI Studio” header pinned at the top. Directly below it, always show a toggle pill group (Original/With Hashtags) pinned below the header, so users can switch preview modes on any slide.
+
+The caption controls and preview should never require scrolling to see both—users swipe left to view the preview.
+
+Copy Button & Preview Styling
+
+When rendering the generated caption, wrap it in a white “card” with 1px black border, 16px padding, and black Prata 18px text.
+
+If the user toggles “With Hashtags,” display hashtags in gray italic Prata 16px beneath the caption.
+
+Under the preview card, include a “Copy to Clipboard” icon (24px black icon inside a 40×40px black circle; on hover, circle background→charcoal).
+
+If the user re‐generates captions, the preview area should update automatically.
+
+4. Verify Data Flow & Props
+Props: If CaptionCreator requires props (e.g., user profile, API token, or callbacks), pass them exactly as before.
+
+Example:
+
+tsx
+Kopier
+Rediger
+<CaptionCreator
+  user={currentUser}
+  onGenerate={(captions) => setGeneratedCaptions(captions)}
+/>
+State Sharing: If the existing CaptionCreator holds its own internal state, you do not need to lift state up. Just render it in the controls column. If it separated inputs vs. preview (e.g., CaptionInputForm + CaptionPreview), pass the same state objects so that the preview slide shows the correct content.
+
+5. Remove Duplicate or Conflicting Code
+Delete any functions, hooks, or JSX you wrote yesterday in CaptionsStudio.tsx that attempt to regenerate captions. We want only the original, tested logic.
+
+Confirm no conflicting CSS (like “.caption-creator-dummy”) remains. We only want the real CaptionCreator styles.
+
+6. Testing Checklist
+Desktop (≥1024px)
+
+“Back to AI Studio” header pinned. Title + subtitle appear.
+
+Left column: existing CaptionCreator controls—text inputs, tone selector, “Generate Caption” button—are styled in Vogue‐luxury theme.
+
+After generation, three caption cards appear as before (with our original structure).
+
+Right column: live preview toggles between “Original” / “With Hashtags.” Generated text shows inside a styled card.
+
+“Copy to Clipboard” button works exactly as before.
+
+Hover, focus, and keyboard navigation behave correctly.
+
+Tablet (768px ≤ width < 1024px)
+
+Layout remains two‐column with narrower gutters.
+
+No horizontal scroll: both columns visible.
+
+Mobile (<768px)
+
+Two‐column layout hides, replaced by swipeable .mobile-carousel.
+
+Slide 1: shows the existing CaptionCreator controls only—no preview.
+
+Swipe left to Slide 2: shows the generated caption preview (Original/With Hashtags toggle pinned at top).
+
+Tapping “Generate” on Slide 1 automatically advances to Slide 2.
+
+Swipe gestures feel smooth.
+
+“Copy” button visible and works.
+
+Edge Cases
+
+If no caption is generated (fresh page), Slide 2 shows placeholder text: “Generate a caption to preview here.”
+
+If API call errors, show the error message from the existing CaptionCreator (e.g., “Oops, try again”).
+
+Please rebuild only by embedding our existing CaptionCreator logic—do not reimplement prompts or generation code. Once you finish, push the changes and send a new preview link so I can test across devices. Thank you!

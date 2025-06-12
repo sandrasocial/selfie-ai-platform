@@ -1,0 +1,65 @@
+📍 Project: Selfie Starter Kit
+🧩 Context: We are working exclusively inside the existing StarterKitCourse.jsx file. Do not create a new component or structure. This is part of a luxury editorial-style course interface.
+🎯 Goal: Add a new Hero Intro Video section above the existing <section className="course-hero ..."> block. The new section must match the design system and should not break existing functionality or layout.
+
+✅ Action:
+
+Insert the following JSX block directly above the course-hero section in the file.
+
+Do not modify the structure of StarterKitCourse.jsx.
+
+Confirm that scrolling behavior (scrollIntoView) for the CTA works without conflicts.
+
+📎 Design Guidelines Recap:
+
+Typography:
+   - Headline: Cormorant Garamond (64px)
+   - Body: Inter Light (16–18px)
+
+Colors:
+   - Background: #F1F1F1
+   - Text: #171719 / #4C4B4B
+   - No gradients or rounded corners
+
+Style: Clean, luxury, editorial; full-bleed layout
+
+🧩 JSX Block to Insert:
+
+jsx
+Kopier
+{/* Hero Intro Video – Welcome Section */}
+<section className="relative w-full h-screen overflow-hidden bg-black">
+  {/* Vimeo Video */}
+  <div className="absolute inset-0 z-0">
+    <iframe
+      src="https://player.vimeo.com/video/1091785973?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&background=1"
+      frameBorder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+      allowFullScreen
+      className="w-full h-full"
+      title="Welcome To Selfie Starter Kit"
+    />
+  </div>
+
+  {/* Overlay Content */}
+  <div className="absolute inset-0 z-10 bg-black/30 flex items-center justify-center px-6">
+    <div className="text-center max-w-3xl">
+      <h1 className="text-white text-6xl md:text-[64px] font-['Cormorant_Garamond'] font-normal leading-tight mb-6">
+        Welcome to the Selfie Starter Kit™
+      </h1>
+      <p className="text-white text-xl md:text-2xl font-light mb-8">
+        Press play and let’s begin your glow era.
+      </p>
+      <Button
+        size="lg"
+        className="bg-white text-[#171719] border-0 px-10 py-4 text-sm uppercase tracking-wider hover:bg-[#F1F1F1]"
+        onClick={() => {
+          const target = document.getElementById("course-start");
+          target?.scrollIntoView({ behavior: "smooth" });
+        }}
+      >
+        Start the Course
+      </Button>
+    </div>
+  </div>
+</section>

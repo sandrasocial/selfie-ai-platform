@@ -1,0 +1,115 @@
+﻿export default function ModuleFive() {
+  return (
+    <div className="bg-[#F1F1F1] text-[#171719] font-['Neue Einstellung']">
+      {/* Hero Section */}
+      <section className="py-24 px-6 text-center">
+        <h1 className="text-5xl font-light tracking-wide font-['Cormorant Garamond'] italic mb-4">
+          MODULE 5: Captions That Convert
+        </h1>
+        <p className="max-w-3xl mx-auto text-lg">
+          Visuals stop the scroll—but your words build the connection.
+          In this module, we’ll unlock the storytelling that moves people to take action.
+        </p>
+      </section>
+
+
+      {/* Lesson Title */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-light font-['Cormorant Garamond'] italic mb-8">
+            Lesson 7: Write Like a Vibe
+          </h2>
+
+
+          {/* Overview */}
+          <p className="text-lg leading-relaxed mb-8">
+            Visuals stop the scroll.
+            But your words? They sell the story. They turn followers into buyers—without sounding salesy.
+            This lesson helps you write captions that feel like a voice note to your best friend.
+          </p>
+
+
+          <div className="border-t border-[#B5B5B3] pt-10">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              📚 What You’ll Get
+            </h3>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Your AI-powered Caption Strategy Guide</li>
+              <li>Signature story themes</li>
+              <li>Magnetic hook formulas</li>
+              <li>3 ready-to-use captions based on your story</li>
+            </ul>
+          </div>
+
+
+          {/* Download */}
+          <div className="mt-12">
+            <a
+              href="#"
+              className="inline-block border border-[#171719] text-[#171719] uppercase tracking-wide px-6 py-3 hover:bg-[#171719] hover:text-white transition"
+            >
+              📘 Generate Your Caption Strategy Guide
+            </a>
+          </div>
+
+
+          {/* How it works */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              💬 How It Works
+            </h3>
+            <p className="mb-4">
+              You’ll answer a few questions about your story, tone, and niche.
+              SELFIE AI™ will craft:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Your brand’s writing style</li>
+              <li>Your content pillars</li>
+              <li>Caption hooks that sound like you</li>
+            </ul>
+          </div>
+
+
+          {/* Practice Prompt */}
+          <div className="mt-16 border-t border-[#B5B5B3] pt-10">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              ✍️ Practice Prompt
+            </h3>
+            <p>
+              Write one caption starting with:
+              <br />
+              <span className="italic text-xl block my-4">
+                “This is for the girl I used to be…”
+              </span>
+              Let it flow. Don’t edit. Then post it.
+            </p>
+          </div>
+
+
+          {/* Sandra Tip */}
+          <div className="mt-16 italic text-[#4C4B4B] text-lg">
+            “Think of your captions like a voice note to your best friend.
+            Just tell the truth. Make her feel seen. Invite her into something bigger.”
+          </div>
+
+
+          {/* Post Challenge */}
+          <div className="mt-20">
+            <h3 className="text-2xl font-semibold font-['Cormorant Garamond'] mb-4">
+              📌 Post Challenge
+            </h3>
+            <p className="mb-4">
+              Write a post using one of your AI-generated hooks.
+              End it with:
+              <br />
+              <span className="italic block mt-4">
+                “If this hit home, DM me ‘READY’ and I’ll send you something special.”
+              </span>
+              Tag @ssasocial and I’ll hype you up 🖤
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

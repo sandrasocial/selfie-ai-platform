@@ -1,0 +1,33 @@
+RGENT: PDF DESIGN + LAYOUT ISSUE – TEMPLATE STRUCTURE NOT BEING USED
+
+The current downloaded PDF is not using my branded luxury PDFMonkey template (ID: 033D8C37-41F0-473B-917A-0C78E25471A2). Content is showing up in unstyled blocks, with no section spacing, no hierarchy, and the final section displays raw JSON instead of rendered text.
+
+✅ FIX INSTRUCTIONS:
+
+Ensure the content sent to PDFMonkey is properly mapped to the correct variables in my luxury template. Double-check that:
+
+user_name, headline, subheadline, story_intro, action_items[], insights[], phases[30|60|90], etc. are all named exactly as expected in the PDFMonkey template variables.
+
+Final JSON-based implementation plan is being parsed and rendered as readable text, not left as raw JSON.
+
+Fix layout and spacing in the generated PDF:
+
+Each section (Story Intro, Action Steps, Key Insights, 30-60-90 Plan) needs proper margin, padding, and section headers.
+
+Use line breaks, bold headers, and spacing to make the content legible and luxurious.
+
+Check that the template design uses my approved brand spacing and structure. If not, adjust the variable injection to match layout expectations (example: bullet points, title-case headers, paragraph spacing).
+
+📄 If the content is not being inserted into the actual PDFMonkey branded template, it means the data is not being linked to the right fields.
+
+Check the PDFMonkey dashboard for template variable names and verify those match the payload.
+
+Make sure we’re using document.generations with the luxury template ID, not a default layout.
+
+🔧 Optional: If previewing this layout before PDF download isn’t feasible, that’s fine. But the downloaded PDF must match the branded layout.
+
+🧪 Test by inserting a known sample (use my "bathroom floor moment" paragraph) and confirm it renders cleanly, with spacing, styled headers, and no raw code in the 30-60-90 section.
+
+🖤 GOAL: The downloaded PDF must reflect a designed, spaced, luxury branded workbook — not a debug output. Layout should be clean, scrollable, and ready to deliver to users.
+
+Let me know when it's ready to test again. We're nearly there — this is the final design fix 🔥🖤

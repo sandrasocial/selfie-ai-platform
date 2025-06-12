@@ -1,0 +1,70 @@
+I want to build a web-based platform called SELFIE AI™ – the first AI Selfie Assistant for women building their personal brand.
+
+The app allows users to upload a selfie and get an instant content kit powered by AI. Please use the following tech stack:
+
+⚙️ Tech Stack:
+Frontend: React 18 + Vite + Tailwind CSS
+
+Backend: Node.js + Express
+
+Database: PostgreSQL using Drizzle ORM
+
+AI: OpenAI GPT-4 API for content generation
+
+PDF Generator: Use pdf-lib or similar to create downloadable branded post previews
+
+Payments: Stripe – Free plan (3 uploads/month) and Pro plan ($19/month)
+
+🔑 User Flow:
+User uploads a selfie (image upload component)
+
+User selects a mood from dropdown: Confident, Soft, Radiant, Emotional, Boss Mode
+
+Click “Generate Content” button
+
+Backend sends selfie + mood to OpenAI GPT and returns:
+
+3 unique Instagram captions (bold, confident, feminine tone)
+
+A recommended format: Post, Carousel, Reel, Story
+
+3 personalized affirmations based on mood
+
+A set of relevant hashtags
+
+Display the result in a clean preview card
+
+Add button to:
+
+Download PDF with selfie + captions + affirmations + format (styled in black/white/brown with Prata font)
+
+or Save to Content Vault (for logged-in users)
+
+💸 Payments & Auth:
+Use Stripe for payments:
+
+Free users: 3 uploads/month
+
+Pro users: Unlimited uploads + download feature + vault access
+
+Use secure login (email/password, session-based or JWT)
+
+🎨 Design Requirements:
+Aesthetic: clean, white background, black text, accent color #3C3A35 (rich brown)
+
+Font: Prata for headings, Inter or Open Sans for body text
+
+Layout: mobile-first, centered content, soft shadow buttons, rounded corners
+
+Add placeholder for logo at top
+
+📁 Code Structure:
+/client: React frontend
+
+/server: Node/Express backend
+
+/routes: API routes for /generate, /upload, /download, /auth, /stripe
+
+.env: Include OPENAI_API_KEY, STRIPE_SECRET_KEY, DATABASE_URL
+
+Scaffold everything with clear comments so I can customize with my team. Focus on getting the selfie upload → AI response → preview → download working first.

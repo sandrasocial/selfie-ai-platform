@@ -1,0 +1,77 @@
+Your Custom Frameworks
+{
+"name": "The Divorce Wisdom Tension Sandwich",
+"description": "Your unique framework for turning your personal experience into powerful teaching moments",
+"steps": [
+"TENSION OPENER: 'I left my husband while still in love with him - the opposite of what everyone expects in a divorce story.'",
+"VALIDATION: 'Like you, I felt trapped between the perfect image and my messy reality.'",
+"PATTERN DISRUPTION: 'But what if staying in love wasn't enough? What if the bravest choice was leaving despite the love?'",
+"YOUR INSIGHT: 'This taught me that the most powerful connections come from showing up authentically messy, not perfectly polished.'",
+"AUDIENCE APPLICATION: 'Your unfiltered story isn't just acceptable - it's your greatest marketing asset.'"
+],
+"implementationNotes": "Use this structure for any story about your divorce or single motherhood journey. The key is maintaining the tension between conventional wisdom (perfect appearance) and your contrarian stance (messy authenticity). This framework gives you a repeatable way to turn personal stories into business lessons."
+}
+
+{
+"name": "The Messy Authenticity Belief Ladder",
+"description": "A framework to shift your audience's mindset from perfectionism to empowered authenticity",
+"steps": [
+"BOTTOM RUNG: 'I need to be perfect before I start posting on Instagram' (current limiting belief)",
+"RUNG 2: 'Some successful people actually started without having it all figured out'",
+"RUNG 3: 'My messy journey might actually be relatable to others in my situation'",
+"RUNG 4: 'Being authentic about my struggles could be a strength, not a weakness'",
+"RUNG 5: 'Showing up messy and scared makes me more trustworthy than appearing perfect'",
+"TOP RUNG: 'My willingness to be imperfect is exactly what makes me magnetic to my ideal clients'"
+],
+"implementationNotes": "For each rung of the ladder, create specific content that provides evidence supporting that belief. Start with content addressing the bottom rung (acknowledging the perfectionism trap) and gradually move up. This gives your audience a path to follow from where they are to where they need to be."
+}
+
+{
+"name": "The Single Mom Success Reframing Method",
+"description": "Transform your 'starting as a heartbroken single mom' story into a powerful brand differentiator",
+"steps": [
+"CONVENTIONAL NARRATIVE: Identify the expected story (struggle, hardship, eventual triumph)",
+"FLIP THE SCRIPT: Position heartbreak as a business advantage ('My heartbreak removed my filter and fear')",
+"EVIDENCE COLLECTION: List 3-5 specific business insights that came directly from your divorce experience",
+"AUDIENCE CONNECTION: Link your journey to their fears about showing up imperfectly",
+"CALL TO COURAGE: Challenge them to embrace their own 'messy start' with a specific next action"
+],
+"implementationNotes": "Use this framework to consistently position what others might see as a disadvantage (divorce, heartbreak, single motherhood) as your secret business superpower. This creates a distinctive angle that separates you from coaches with more conventional journeys."
+}
+
+30-60-90 Day Implementation Plan
+{
+"30days": {
+"focus": "Story Foundation & Contrarian Positioning",
+"keyTasks": [
+"Develop 5 cornerstone content pieces using the Divorce Wisdom Tension Sandwich framework that establish your contrarian stance",
+"Create a content calendar specifically themed around 'Posting Messy & Scared' with at least 3 posts per week",
+"Film a mini-series documenting specific moments in your single mom journey that directly challenge perfectionism",
+"Audit your entire Instagram feed and remove/archive content that contradicts your new authentic positioning",
+"Develop a lead magnet workbook called 'The Imperfect Start Guide' that helps women begin without waiting for perfection"
+],
+"outcomes": "By day 30, you'll have a clearly established contrarian position in your market and your audience will begin associating you with the 'post messy and scared' philosophy"
+},
+"60days": {
+"focus": "Audience Belief Transformation & Framework Development",
+"keyTasks": [
+"Launch a weekly Instagram Live series walking through each rung of the Messy Authenticity Belief Ladder",
+"Create a Reels series documenting real-time 'messy posting' moments and the results they generated",
+"Develop 3 client case studies showing how embracing imperfection accelerated their results",
+"Build out your signature coaching framework that incorporates authenticity as a core pillar",
+"Begin tracking engagement metrics to identify which aspects of your story resonate most"
+],
+"outcomes": "By day 60, you'll have concrete evidence showing how your contrarian positioning is shifting your audience's beliefs about perfectionism and authenticity"
+},
+"90days": {
+"focus": "Scaling Your Contrarian Brand & Offer Alignment",
+"keyTasks": [
+"Package your signature frameworks into a cohesive coaching offer that explicitly celebrates messy action",
+"Create a 'Divorce Wisdom' content series that repurposes your best-performing personal stories into business lessons",
+"Launch a challenge or workshop specifically designed around taking imperfect action",
+"Develop strategic partnerships with complementary brands that share your authenticity values",
+"Refine your audience targeting to specifically attract women who resonate with your contrarian stance"
+],
+"outcomes": "By day 90, you'll have transformed your personal story into a distinctive brand position with aligned offers and content systems that consistently attract your ideal clients"
+}
+}

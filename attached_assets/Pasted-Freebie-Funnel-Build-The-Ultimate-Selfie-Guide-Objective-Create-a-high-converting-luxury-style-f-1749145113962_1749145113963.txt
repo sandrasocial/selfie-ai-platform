@@ -1,0 +1,102 @@
+Freebie Funnel Build – The Ultimate Selfie Guide
+Objective: Create a high-converting, luxury-style freebie landing page and mini-guide experience for The Ultimate Selfie Guide using the SELFIE AI™ design system.
+
+📄 FREEBIE LANDING PAGE
+Route: /freebie/selfie-guide
+
+🎯 GOAL:
+Capture emails for The Ultimate Selfie Guide and funnel leads into the email automation and optional upsell.
+
+✅ DESIGN DETAILS:
+Hero Section
+
+Background image: https://i.postimg.cc/XJ5LHY2R/IMG-0407-jpg.jpg
+
+Tagline (large H1):
+
+“Your camera roll is about to glow up.”
+
+Subheadline:
+
+Everything you need to start taking confident, content-ready selfies—today.
+
+CTA Button:
+
+GET THE FREE GUIDE →
+Style: white bordered sharp square button, hover invert
+
+What You'll Learn Section
+Three hover cards (hover: underline or zoom-in):
+
+📸 Lighting like a pro—even on a budget
+
+🤳 Pose confidently in every frame
+
+🧠 Mindset shift to feel magnetic on camera
+
+(Use no emojis in UI—text only. Just added here for copy clarity.)
+
+Social Proof Section
+
+Heading: Used by 20,000+ women building personal brands with confidence
+
+Display flat-lay mirror selfies in 3-column grid with minimal frame
+
+Email Capture Form
+
+Use custom form field (name + email)
+
+On submit: trigger Supabase DB write + send to Flodesk via Zapier (agent task)
+
+Success message:
+
+Check your inbox. Your glow-up starts now ✨
+
+📘 MINI-GUIDE PAGE EXPERIENCE
+Route: /guide/selfie-ultimate
+
+Purpose: Elevate the freebie from a boring PDF into a sleek web experience.
+
+✅ DESIGN STRUCTURE:
+Each section = Scroll-based chapter block:
+
+Intro
+
+“Welcome to The Ultimate Selfie Guide”
+
+Flat black section with white centered serif heading
+
+Lighting
+
+Quick win tips (3 bullets)
+
+Tip example block (flat background box with serif font)
+
+Posing
+
+Swipeable horizontal card block (on mobile: stack)
+
+Editing
+
+2-column grid: before/after placeholder with black border
+
+Free Preset Teaser
+
+Section:
+
+🎁 “Want my glow filter?”
+CTA Button:
+GET THE $27 PRESET PACK
+
+✅ BRAND STYLING
+Cormorant Garamond (headings)
+
+Inter Light (body)
+
+No icons or emojis in UI
+
+Button: sharp square frame (white on black bg / black on light bg)
+
+Text overlays always white
+
+Backgrounds: F1F1F1, 171719, B5B5B3, 4C4B4

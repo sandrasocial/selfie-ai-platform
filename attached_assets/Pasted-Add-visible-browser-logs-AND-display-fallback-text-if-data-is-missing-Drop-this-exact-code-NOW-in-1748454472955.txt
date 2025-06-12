@@ -1,0 +1,80 @@
+Add visible browser logs AND display fallback text if data is missing
+👇 Drop this exact code NOW into ModuleTwo.tsx so you can visually confirm what’s happening — even if the API returns nothing.
+
+✅ LOG FETCHED ANSWERS
+Replace your fetchAnswers() with:
+
+tsx
+Kopier
+Rediger
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await fetch('/api/module2-answers');
+      if (!res.ok) {
+        console.error("❌ Response not OK:", res.status);
+        return;
+      }
+      const data = await res.json();
+      console.log("✅ Fetched saved answers:", data);
+
+      if (!data || Object.keys(data).length === 0) {
+        alert("⚠️ No saved answers found.");
+      }
+
+      setFormData(data);
+    } catch (err) {
+      console.error("❌ Error fetching saved answers:", err);
+    }
+  };
+  fetchAnswers();
+}, []);
+✅ LOG AND RENDER PREVIEW
+Update your handleGenerate() like this:
+
+tsx
+Kopier
+Rediger
+const handleGenerate = async () => {
+  try {
+    const res = await fetch('/api/module2-workbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (!res.ok) {
+      console.error("❌ Workbook request failed:", res.status);
+      return;
+    }
+
+    const data = await res.json();
+    console.log("✅ Generated Preview:", data);
+
+    if (!data || !data.pov) {
+      alert("⚠️ Preview data is empty. Check server response.");
+    }
+
+    setPreviewData(data);
+  } catch (err) {
+    console.error("❌ Workbook generation error:", err);
+  }
+};
+✅ RENDER SOMETHING (EVEN IF DATA FAILS)
+In your JSX:
+
+tsx
+Kopier
+Rediger
+{previewData ? (
+  <div className="preview-box">
+    <h3>Your POV: {previewData.pov || "⚠️ Missing POV"}</h3>
+    <p>Content Pillars: {previewData.pillars?.join(', ') || "⚠️ No pillars"}</p>
+    <p>30-Day Plan: {previewData.plan?.day30 || "⚠️ Missing"}</p>
+  </div>
+) : (
+  <p className="text-gray-500 italic">⚠️ Preview not generated yet.</p>
+)}
+🧪 Ask Dev AI:
+“What shows up in the browser console when I refresh and when I click generate? Copy/paste the logs here.”
+

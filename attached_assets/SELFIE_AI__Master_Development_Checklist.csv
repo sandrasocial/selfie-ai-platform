@@ -1,0 +1,27 @@
+Category,Action
+Audit Files,"List all files/modules related to Caption Creator, Script Generator, Visual Studio"
+Audit Files,"Mark which should be deleted, refactored, or kept"
+Audit Files,Identify Pose Coach and Chat with Sandra file locations
+Immediate Fixes,Fix Visual Studio swipe gesture logic for mobile
+Immediate Fixes,Fix Visual Studio 'save edited photo' bug
+Immediate Fixes,Add Coming Soon placeholder for broken AI features
+Phase 1 - Core Studio & Auth,"Cut Caption Creator and Script Generator, or rebuild simplified versions"
+Phase 1 - Core Studio & Auth,Verify and configure Google OAuth DNS in Supabase
+Phase 1 - Core Studio & Auth,QA Supabase session logic and profile data persistence
+Phase 2 - Content Engine & Starter Kit,Replace 'Becoming HER' with 3-step AI Story Arc component
+Phase 2 - Content Engine & Starter Kit,Add input validation for 20+ character minimum
+Phase 2 - Content Engine & Starter Kit,"Create 3 AI Workbooks for Selfie Starter Kit module (Story, Captions, Confidence)"
+Phase 2 - Content Engine & Starter Kit,Add AI output testing and tone tuning for Sandra’s voice
+Phase 3 - SELFIE PRO Features,Build Monthly AI Workbook Drop system
+Phase 3 - SELFIE PRO Features,Create Voice Note Check-in tool (with transcription and AI response)
+Phase 3 - SELFIE PRO Features,Develop Sister Circle Chat with prompt engine
+Phase 3 - SELFIE PRO Features,Launch Content-to-Cash Swipe Generator
+Phase 4 - Premium Add-Ons,Create Personalized Brand Kit Generator (5 Qs → AI Kit)
+Phase 4 - Premium Add-Ons,Launch Elite Resource Library (with smart tags & filter system)
+Phase 4 - Premium Add-Ons,"Implement Monthly Brand Audit Digest (Top Wins, Fixes, Resources)"
+Phase 4 - Premium Add-Ons,Build Spotlight Success Page with auto-share integration
+Phase 4 - Premium Add-Ons,Add Q&A Brand Thermometer + Micro Modules
+Testing & Deployment,QA each feature per branch using test plan
+Testing & Deployment,Run `npm run lint` and `npm run test` after each feature
+Testing & Deployment,"Track all merges and changes in a CHANGELOG.md with date, feature, status"
+Testing & Deployment,Ensure GitHub branch per feature (e.g. feat/story-arc-builder)

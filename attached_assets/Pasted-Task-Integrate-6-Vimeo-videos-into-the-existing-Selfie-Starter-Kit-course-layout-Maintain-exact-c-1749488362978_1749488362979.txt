@@ -1,0 +1,64 @@
+Task: Integrate 6 Vimeo videos into the existing Selfie Starter Kit™ course layout. Maintain exact current spacing, fonts, colors, and editorial styling. No rounded corners. Remove all previous video placeholders and any references to Tevello.
+
+📹 Video Placement Instructions:
+🔓 Intro Section (Before Module 1)
+Video URL: https://vimeo.com/1091785973
+
+Place above Module 1 inside the Starter Kit index page or dashboard
+
+Heading: Welcome to the Kit
+
+Subtext: A 2-minute invitation to step into your glow era
+
+Style: full-width embedded Vimeo video (16:9 ratio, responsive)
+
+📁 Module 1: Step Into the Glow Era
+Video URL: https://vimeo.com/1091863622
+
+Embed directly inside Module 1, replacing any placeholder
+
+No overlay icons. No emojis.
+
+Maintain white spacing and typography: Cormorant Garamond for headline, Neue Einstellung for body
+
+🎨 Module 2: Signature Selfie Style
+Video 1: https://vimeo.com/1091863084 – Applying Your Presets
+
+Video 2: https://vimeo.com/1091863103 – Editing in iPhone Camera App
+
+Stack both videos vertically with matching spacing
+
+Add subheadings for each video, serif style
+
+Remove any unused workbook buttons if not needed
+
+📱 Module 3: Smart Edits With Apps
+Video 1: https://vimeo.com/1091863129 – Editing with Hypic
+
+Video 2: https://vimeo.com/1091863154 – CapCut for Luxe Video
+
+Stack both videos inside the module layout
+
+Keep all existing workbook/AI generator buttons intact
+
+Make sure styling remains mobile-first
+
+🧠 Module 4: Hands-Free Like a CEO
+Video URL: https://vimeo.com/1091865311 – Gesture Shortcut for iPhone
+
+Replace placeholder and heading block
+
+Below the video, keep the journal prompt and practice CTA
+
+✂️ Cleanup Instructions:
+Remove ALL emojis across the entire Starter Kit course
+
+Remove any unused video placeholders
+
+Do not modify layout spacing, font sizes, or button styles
+
+Maintain full branding consistency with the original Selfie Starter Kit™ blueprint
+
+🖥️ Final Reminder:
+Do not alter any existing design elements — only update the videos, clean out the old placeholders, and ensure layout fidelity remains pixel-perfect. Course structure, typography, and spacing must match original UX specs.
+

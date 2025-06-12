@@ -1,0 +1,158 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+
+interface ChatMessage {
+  id: string;
+  message: string;
+  isUser: boolean;
+  timestamp: Date;
+  category?: string;
+}
+
+interface SandraChatProps {
+  user?: any;
+}
+
+export default function SandraChat({ user }: SandraChatProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    const saved = localStorage.getItem(`sandra_chat_${user?.id || 'guest'}`);
+    if (saved) {
+      try {
+        return JSON.parse(saved).map((msg: any) => ({ ...msg, timestamp: new Date(msg.timestamp) }));
+      } catch {
+        localStorage.removeItem(`sandra_chat_${user?.id || 'guest'}`);
+      }
+    }
+    return [{
+      id: '1',
+      message: "Hey gorgeous! I'm so glad you're here. Think of me as your personal hype woman and life coach rolled into one. Whether you need help with confidence, business moves, relationships, or just want to chat about life - I'm here for you.\n\nWhat's on your heart today?",
+      isUser: false,
+      timestamp: new Date()
+    }];
+  });
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState<string>('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+
+  const topics = ['Confidence', 'Business', 'Relationships', 'Mindset', 'Beauty', 'Health', 'Motherhood', 'Divorce'];
+
+  const chatMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const res = await fetch("/api/chat-sandra", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error();
+      return res.json();
+    },
+    onSuccess: (data) => {
+      const bot: ChatMessage = {
+        id: Date.now().toString(),
+        message: data.response,
+        isUser: false,
+        timestamp: new Date(),
+        category: data.category,
+      };
+      setMessages(prev => {
+        const updated = [...prev, bot];
+        localStorage.setItem(`sandra_chat_${user?.id || 'guest'}`, JSON.stringify(updated));
+        return updated;
+      });
+    },
+    onError: () => {
+      toast({ title: "Connection Issue", description: "Sandra had trouble responding.", variant: "destructive" });
+    },
+  });
+
+  const sendMessage = () => {
+    if (!currentMessage.trim()) return;
+    const msg: ChatMessage = {
+      id: Date.now().toString(),
+      message: currentMessage,
+      isUser: true,
+      timestamp: new Date(),
+    };
+    setMessages(prev => {
+      const updated = [...prev, msg];
+      localStorage.setItem(`sandra_chat_${user?.id || 'guest'}`, JSON.stringify(updated));
+      return updated;
+    });
+    chatMutation.mutate({ message: currentMessage, category: selectedTopic || undefined, conversationHistory: [...messages, msg].slice(-5) });
+    setCurrentMessage('');
+    setSelectedTopic('');
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card className="border border-[#171719] bg-[#171719] text-white">
+        <CardHeader>
+          <CardTitle className="font-serif text-2xl">Sandra — AI Chat Mentor</CardTitle>
+          <p className="font-sans text-sm opacity-80">Empowering guidance, whenever you need it most.</p>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          <div className="flex flex-wrap gap-2">
+            {topics.map((topic) => (
+              <Button
+                key={topic}
+                variant={selectedTopic === topic ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedTopic(topic === selectedTopic ? '' : topic)}
+                className="text-xs border border-white text-white bg-transparent hover:bg-white hover:text-black"
+              >
+                {topic}
+              </Button>
+            ))}
+          </div>
+
+          <div className="p-4 h-96 overflow-y-auto space-y-4 border border-[#B5B5B3] rounded" style={{ backgroundColor: '#F1F1F1' }}>
+            {messages.map((m) => (
+              <div key={m.id} className={`flex ${m.isUser ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[80%] p-4 rounded-lg ${m.isUser ? 'bg-white text-black' : 'bg-[#171719] text-white'} border ${m.isUser ? 'border-none' : 'border-[#B5B5B3]'}`}
+                  style={{ fontFamily: m.isUser ? 'Neue Einstellung' : 'Cormorant Garamond', fontSize: m.isUser ? '14px' : '16px' }}
+                >
+                  <p>{m.message}</p>
+                </div>
+              </div>
+            ))}
+            {chatMutation.isPending && (
+              <div className="flex justify-start text-sm italic">Sandra is responding…</div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          <Textarea
+            placeholder="What's on your heart today?"
+            value={currentMessage}
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            rows={3}
+            className="bg-white text-black border border-[#171719] font-sans"
+          />
+
+          <Button
+            onClick={sendMessage}
+            disabled={!currentMessage.trim() || chatMutation.isPending}
+            className="bg-transparent border border-white text-white hover:bg-white hover:text-black w-full uppercase font-sans text-sm tracking-wide"
+          >
+            {chatMutation.isPending ? 'Sandra is responding…' : 'Send'}
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

@@ -1,0 +1,73 @@
+﻿🔥 FINAL TOUCH
+"You Did That. And You’re Just Getting Started."
+
+
+
+
+<section class="bg-[#171719] text-white py-24 px-6 md:px-12">
+  <div class="max-w-5xl mx-auto text-center">
+    <!-- Final Hero -->
+    <h2 class="text-5xl md:text-6xl font-light font-['Cormorant Garamond'] mb-6 leading-tight">
+      You Did That.
+      <br class="hidden md:block" />
+      And You’re Just Getting Started.
+    </h2>
+    <p class="text-lg md:text-xl font-['Neue Einstellung'] text-[#B5B5B3] max-w-3xl mx-auto mt-6 leading-relaxed">
+      You didn’t just download a kit. You showed up, you got clear, you took aligned action. And that energy?
+      That’s what builds a brand.
+    </p>
+  </div>
+
+
+  <!-- Message Block -->
+  <div class="mt-20 max-w-4xl mx-auto bg-white text-[#171719] py-12 px-8 md:px-16">
+    <h3 class="text-2xl font-['Cormorant Garamond'] italic text-center mb-6">
+      A Message from Sandra
+    </h3>
+    <p class="text-base font-['Neue Einstellung'] leading-relaxed space-y-4">
+      <span class="block mb-4">
+        This wasn’t just about filters or photos. It was about reclaiming your voice—and making sure it’s seen.
+      </span>
+      <span class="block mb-4">
+        You now have a branded identity, an editing routine, a caption system, and a more confident YOU behind the content.
+      </span>
+      <span class="block mb-4">
+        This platform will keep growing with you. But today, pause and own it:
+      </span>
+      <span class="block font-semibold text-lg mt-6 text-center uppercase tracking-wider">
+        You are the brand now.
+      </span>
+    </p>
+  </div>
+
+
+  <!-- CTA Card -->
+  <div class="mt-24 max-w-4xl mx-auto text-center">
+    <h4 class="text-3xl font-['Cormorant Garamond'] mb-4">
+      Ready to Build Your Empire?
+    </h4>
+    <p class="text-base font-['Neue Einstellung'] text-[#B5B5B3] mb-8">
+      If you’re ready to go deeper—into visibility, monetization, and next-level offers...
+    </p>
+    <a href="/branded-by-selfie" class="inline-block uppercase bg-white text-[#171719] font-['Neue Einstellung'] tracking-wide px-8 py-4 hover:bg-[#F1F1F1] transition">
+      Explore Branded by Selfie™
+    </a>
+  </div>
+
+
+  <!-- Final Challenge -->
+  <div class="mt-20 max-w-4xl mx-auto text-center">
+    <h4 class="text-xl font-['Cormorant Garamond'] mb-4">
+      Final Challenge
+    </h4>
+    <p class="text-base font-['Neue Einstellung'] text-[#B5B5B3] mb-4">
+      Post a power selfie using your favorite preset. Use one of your AI-generated captions.
+    </p>
+    <blockquote class="italic font-['Neue Einstellung'] text-lg max-w-xl mx-auto mb-6">
+      “This time, I’m not shrinking. I’m building something that reflects me. The era of Selfie CEO begins now.”
+    </blockquote>
+    <p class="text-[#B5B5B3] font-['Neue Einstellung']">
+      Tag <strong>@ssasocial</strong> and I’ll repost as many as I can 🖤
+    </p>
+  </div>
+</section>

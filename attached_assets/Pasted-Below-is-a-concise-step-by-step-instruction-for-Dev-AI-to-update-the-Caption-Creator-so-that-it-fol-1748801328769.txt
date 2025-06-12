@@ -1,0 +1,127 @@
+Below is a concise, step-by-step instruction for Dev AI to update the Caption Creator so that it follows Sandra’s “Becoming HER” storytelling framework (Hook → Before → Shift → Now → Takeaway → CTA), produces longer, richer copy, and still uses the existing tab layout (Captions & Hooks, Hashtags, Framework, Visuals). Make sure not to alter the UI—only replace the prompt logic and output parsing.
+
+1. Locate and Update the Server-Side Prompt (in server/routes.ts):
+
+Find the OpenAI call under the /api/caption-generator (or similar) route.
+
+Replace the existing prompt template with one that explicitly instructs OpenAI to produce five distinct caption variations, each broken out into:
+
+Hook (1–2 short, emotionally charged sentences, viral-worthy),
+
+Before (visceral description of the user’s struggle),
+
+Shift (what changed — the turning point),
+
+The Now (where they are now),
+
+Takeaway (relate it back to “HER”—the reader),
+
+Call-to-Action (e.g. “Drop a 🔥 if…,” “Share to your future self,” etc.)
+
+Example prompt structure (pseudo-JSON):
+
+js
+Kopier
+Rediger
+const prompt = `
+  You are Sandra’s AI Copywriter. Use the user’s input (their personal story/context) to craft 5 unique Instagram captions. Each caption must strictly follow this 6-step “Becoming HER” storytelling framework:
+  1) Hook: a short, viral-worthy line that grabs attention (1–2 sentences).  
+  2) Before: describe the user’s struggle in rich, visceral detail.  
+  3) Shift: explain the turning point—what changed in their life.  
+  4) The Now: where they are today, after that shift.  
+  5) Takeaway: a sentence that speaks directly to the reader (HER) and their own transformation.  
+  6) Call-to-Action: a single-line prompt that encourages engagement (e.g., “Drop a 🔥 if you feel…,” “Share this with your future self”).  
+
+  Requirements per caption:  
+  • 120–200 characters total (excluding CTA).  
+  • Include exactly 1-2 emojis (no more).  
+  • Tone: everyday, simple, warm, and authentically Sandra (use signature emojis).  
+  • Do NOT mention Sandra’s own story—use only the details from the user’s input.  
+
+  Output format (for each of the 5 captions):  
+  — CAPTION #1 —  
+  Hook: …  
+  Before: …  
+  Shift: …  
+  The Now: …  
+  Takeaway: …  
+  Call-to-Action: …  
+
+  — CAPTION #2 —  
+  Hook: …  
+  Before: …  
+  Shift: …  
+  The Now: …  
+  Takeaway: …  
+  Call-to-Action: …  
+
+  (and so on up to #5).  
+
+  If the user’s input is fewer than 10 meaningful words, respond with: “Please provide more detail about your own story before I can craft a powerful caption.”  
+`;
+Ensure the environment variable OPENAI_API_KEY is used (no hardcoded token).
+
+Update the JSON-parsing logic so the server splits out “Hook” vs. the rest. You only need to return the entire block for each caption; the front end can parse by the labels (“Hook:”, “Before:”, etc.).
+
+2. Adjust the Front-End Component (CaptionCreator.tsx):
+
+In CaptionCreator.tsx, locate the code that reads the server response (currently expecting a flat list of short captions and hooks).
+
+Update it to parse each block (split on “— CAPTION #” markers) and store an array of objects with properties:
+{ hook, before, shift, now, takeaway, cta }.
+
+Under the “Captions & Hooks” tab:
+
+For each of the 5 generated items, display:
+
+vbnet
+Kopier
+Rediger
+Hook: [hook text]
+Caption: [“Before. Shift. The Now. Takeaway. CTA.” concatenated or shown inline]
+Keep the existing “Copy” icon next to each so users can copy the full caption (all six lines, including the CTA).
+
+Under the “Framework” tab:
+
+For each of the 5 results, output a small box that clearly labels each of the six steps in order (one line each). For example:
+
+pgsql
+Kopier
+Rediger
+– Hook 1: “Hook text…”  
+– Before 1: “Before text…”  
+– Shift 1: “Shift text…”  
+– The Now 1: “The Now text…”  
+– Takeaway 1: “Takeaway text…”  
+– CTA 1: “Call-to-Action text…”
+Repeat for captions #2–#5.
+
+Keep the “Hashtags” and “Visuals” tabs unchanged—they already function.
+
+Ensure the “Generate” button is disabled unless the user has entered at least 10 characters in the “Selfie context” textarea.
+
+Preserve all styling (Prata font, black backgrounds, white text) exactly as is.
+
+3. Update Validation & Error Handling:
+
+If the server returns "Please provide more detail about your own story…”, show that message in place of the tabs and disable “Copy”/“Save to Calendar” until the user adds more text.
+
+Keep the existing loading spinner or “Generating…” indicator while awaiting OpenAI.
+
+4. Quick Smoke Test:
+
+Enter a detailed scenario (e.g. “I just quit my 9-to-5 paramedic job to launch my handmade candle line—every day feels scary but I’m owning my creativity.”).
+
+Click “Generate.” Verify:
+
+Server returns 5 structured caption blocks in the new format.
+
+Under “Captions & Hooks”, you see each Hook and the combined six-step caption.
+
+Under “Framework”, you see each step broken out exactly.
+
+Hashtags tab still shows strategic hashtags (you can leave that as‐is or tweak separately).
+
+Visuals tab remains untouched.
+
+That’s it—no UI changes beyond parsing the new “Problem → Shift → Now → Takeaway” format. Once Dev AI makes these prompt-and-parsing changes, the Caption Creator will generate longer, on-brand, Sandra-driven captions that actually follow her proven storytelling framework.

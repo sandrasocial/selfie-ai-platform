@@ -1,0 +1,113 @@
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export default function VIPThankYou() {
+  return (
+    <div className="min-h-screen bg-[#F1F1F1] px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        {/* HERO SECTION */}
+        <section className="text-center mb-20">
+          <h1 className="text-5xl md:text-6xl text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Your Application Is In
+          </h1>
+          <p className="text-lg text-[#4C4B4B] max-w-2xl mx-auto font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+            Thank you for applying to Empire Builder VIP. We’ll review your application within 48 hours and be in touch.
+          </p>
+        </section>
+
+        {/* NEXT STEPS */}
+        <section className="grid md:grid-cols-3 gap-8 mb-20">
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[#171719] mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                01. Review
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#4C4B4B] font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+                We’ll read your answers and make sure it’s the right fit.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[#171719] mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                02. Strategy Call
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#4C4B4B] font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+                If selected, you’ll be invited to a 30-min 1:1 call with Sandra.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border border-[#B5B5B3] p-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[#171719] mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+                03. Welcome
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#4C4B4B] font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+                If it’s a yes on both sides — you’ll begin your Empire Builder experience.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* ENCOURAGEMENT BLOCK */}
+        <section className="bg-[#171719] text-white py-16 px-6 mb-20">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl mb-6" style={{ fontFamily: 'Cormorant Garamond' }}>
+              You’re Already Ahead
+            </h2>
+            <p className="text-lg font-light mb-6" style={{ fontFamily: 'Neue Einstellung' }}>
+              Most people never even apply. You did. That says everything.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mt-8">
+              <div>
+                <p className="text-xl font-normal mb-1" style={{ fontFamily: 'Cormorant Garamond' }}>Vision</p>
+                <p className="text-sm text-white/80 font-light">You’re thinking big picture.</p>
+              </div>
+              <div>
+                <p className="text-xl font-normal mb-1" style={{ fontFamily: 'Cormorant Garamond' }}>Courage</p>
+                <p className="text-sm text-white/80 font-light">You said yes to yourself.</p>
+              </div>
+              <div>
+                <p className="text-xl font-normal mb-1" style={{ fontFamily: 'Cormorant Garamond' }}>Action</p>
+                <p className="text-sm text-white/80 font-light">You moved toward your future.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTINUE EXPLORING */}
+        <section className="text-center">
+          <h3 className="text-3xl mb-6 text-[#171719]" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Want to Keep Growing While You Wait?
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            <Link href="/products/selfie-starter-kit">
+              <Button variant="outline" className="uppercase tracking-wide border-2 border-black text-black w-full py-4 text-sm font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+                Selfie Starter Kit
+              </Button>
+            </Link>
+            <Link href="/products/branded-by-selfie">
+              <Button variant="outline" className="uppercase tracking-wide border-2 border-black text-black w-full py-4 text-sm font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+                Branded by Selfie
+              </Button>
+            </Link>
+          </div>
+          <Link href="/">
+            <Button variant="ghost" className="text-sm underline font-light" style={{ fontFamily: 'Neue Einstellung' }}>
+              Return to Homepage
+            </Button>
+          </Link>
+        </section>
+      </div>
+    </div>
+  );
+}

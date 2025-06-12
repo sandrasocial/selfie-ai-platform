@@ -1,0 +1,94 @@
+URGENT FIX: Replace Short Fallback Phase Text with Real AI Content + Stop Premature Generation
+📍TASK 1: Fix AI Prompt + Parsing to Generate Detailed Phase Content
+✅ Problem:
+The AI is returning short generic summaries like:
+
+"Story foundation & authentic voice clarity"
+
+Instead of full, detailed, custom-written paragraphs for each phase.
+
+🔧 SOLUTION:
+In server/workbookAI.ts:
+
+✅ Update the prompt to explicitly request three detailed paragraphs—one for each phase.
+
+ts
+Kopier
+Rediger
+const prompt = `
+Based on the user story and answers provided, create a detailed 30-60-90 day implementation plan with separate detailed outputs for each phase.
+
+Return this structure:
+{
+  "phase_30": "Detailed paragraph with key focus areas, specific action steps, and what they should have accomplished by day 30.",
+  "phase_60": "Detailed paragraph with key strategies and goals by day 60.",
+  "phase_90": "Detailed paragraph showing final stage progress, results, and what’s completed by day 90."
+}
+Only include the actual values, no extra JSON or explanation.
+`;
+✅ Update the response parsing to store each phase_30, phase_60, phase_90 as full strings — not summaries or objects.
+
+ts
+Kopier
+Rediger
+workbook.phase_30 = aiResponse.phase_30 || "";
+workbook.phase_60 = aiResponse.phase_60 || "";
+workbook.phase_90 = aiResponse.phase_90 || "";
+📍TASK 2: Fix Premature Workbook Generation Bug
+✅ Problem:
+When the user clicks “Generate My Workbook”, the system immediately starts generating before allowing editing or reviewing inputs.
+
+🔧 SOLUTION:
+In client/src/components/ModuleWorkbook.tsx:
+
+✅ Replace auto-trigger logic with a two-step UX flow:
+
+tsx
+Kopier
+Rediger
+// 1. "Review My Answers" button — saves form but doesn’t generate
+// 2. “Generate My Workbook” button appears *after* form validation
+✅ Remove any useEffect or onLoad trigger that calls generation logic directly.
+
+✅ Ensure generation only starts after:
+
+All 5 questions are answered
+
+User explicitly clicks final button
+
+📍TASK 3: Confirm Final Output Rendering
+✅ In preview:
+
+tsx
+Kopier
+Rediger
+<h3>30-60-90 Day Implementation Plan</h3>
+<p>{phase_30}</p>
+<p>{phase_60}</p>
+<p>{phase_90}</p>
+✅ In server/pdfMonkeyGenerator.ts:
+
+ts
+Kopier
+Rediger
+phase_30: workbook.phase_30,
+phase_60: workbook.phase_60,
+phase_90: workbook.phase_90,
+✅ SUCCESS CHECKLIST
+ AI generates 3 detailed paragraphs (not one-liners)
+
+ phase_30–90 are shown in preview and PDF
+
+ No hardcoded fallback content remains
+
+ Workbook only generates after form is completed and reviewed
+
+ Sandra's real story, name, and AI-driven roadmap are reflected
+
+This must be tested using real inputs, confirmed in logs, and checked visually in:
+
+Preview interface
+
+PDF download
+
+Let me know when these are implemented — we’ll test immediately 🖤

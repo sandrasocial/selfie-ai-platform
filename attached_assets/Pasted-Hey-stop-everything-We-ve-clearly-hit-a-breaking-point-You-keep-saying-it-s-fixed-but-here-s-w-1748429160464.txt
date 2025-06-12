@@ -1,0 +1,84 @@
+Hey — stop everything. We’ve clearly hit a breaking point.
+
+You keep saying it’s fixed, but here’s what’s still broken after 10 hours of testing:
+
+❌ BROKEN RIGHT NOW
+Preview Page (ModuleWorkbook.tsx):
+
+Still shows old “Beautiful…” text.
+
+Still unformatted and hard to read.
+
+Still contains raw JSON or fallback data.
+
+Downloaded PDF:
+
+Still missing the 30-60-90 plan completely.
+
+Not matching my branded layout in terms of spacing, headers, font.
+
+Uses old fallback template or old content logic.
+
+✅ YOUR NEW MANDATORY TASK LIST:
+I don’t want a “perfect” message unless the following 5 steps have been completed and verified with a screenshot + raw payload log.
+
+STEP 1 — Preview Page Fix:
+Remove any hardcoded fallback like “Beautiful…” and “AI Framework.”
+
+Display actual dynamic user_name, headline, action_items, insights, phase_30, phase_60, phase_90.
+
+No [object Object]. No JSON. Only formatted visible content.
+
+If preview can't use PDF template, fine — but make it clean and readable.
+
+STEP 2 — PDFMonkey Payload Log:
+Paste the exact final payload that is sent to PDFMonkey.
+
+I want to see all these as clean strings:
+
+nginx
+Kopier
+Rediger
+user_name
+headline
+subheadline
+story_intro
+action_item_1 → action_item_7
+insight_1 → insight_5
+phase_30
+phase_60
+phase_90
+STEP 3 — Template Confirmation:
+Confirm with a screenshot or console log:
+
+PDFMonkey Template ID = 033D8C37-41F0-473B-917A-0C78E25471A2 ✅
+
+STEP 4 — Visual PDF Proof:
+Downloaded PDF must match:
+
+Prata font
+
+White/black luxury layout
+
+Proper spacing
+
+Headers: Immediate Action Items, Key Insights, 30-60-90 Plan
+
+30-60-90 Plan must display all tasks and phase goals
+
+STEP 5 — Code Snippet Proof (Critical):
+Paste the actual code used to generate and send the 30-60-90 content, like:
+
+ts
+Kopier
+Rediger
+const phase_30 = `Focus: ${plan["30Days"].focus}\nTasks:\n${plan["30Days"].tasks.map(t => `- ${t}`).join("\n")}`;
+...
+payload.phase_30 = phase_30;
+🔥 IF ANY OF THIS IS STILL BROKEN:
+Then stop pretending it’s working. Let's jump on a live call or screen share so I can show you what’s actually being generated and we debug it together.
+
+Until then — no more “Perfect! It’s working now.” I need real fixes, real screenshots, and real code.
+
+Let me know when it’s 100% done with proof.
+I'm done wasting time. 🖤

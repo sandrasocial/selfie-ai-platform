@@ -1,0 +1,101 @@
+🚨 URGENT: PDF STILL BROKEN — Luxury template not rendering properly and critical content missing
+
+Hey love, I’ve tested the system over 100 times — and it's still not using my luxury PDF template correctly. Here's what’s wrong and what needs to happen, step by step:
+
+🔥 THE PROBLEM:
+Preview Page (Before Download)
+
+Still showing old fallback template (unstyled, poor layout, hard to read).
+
+Still includes broken [object Object] and raw JSON.
+
+Downloaded PDF
+
+Now uses the correct luxury template ID: 033D8C37-41F0-473B-917A-0C78E25471A2 ✅
+
+BUT the 30-60-90 plan is missing completely ❌
+
+Overall layout and spacing is still off in some sections
+
+Fonts, spacing, and headers don't fully match my Canva-style branded layout
+
+✅ WHAT YOU NEED TO DO RIGHT NOW:
+1. 🧠 Fix 30-60-90 Plan Formatting + Injection
+The issue is that planData is still being sent as a raw object, not clean strings.
+
+In pdfMonkeyGenerator.ts, convert each phase to a clean formatted string:
+
+ts
+Kopier
+Rediger
+const phase_30 = `Focus: ${planData["30Days"].focus}\nTasks:\n${planData["30Days"].tasks.map(t => `- ${t}`).join("\n")}`;
+const phase_60 = `Focus: ${planData["60Days"].focus}\nTasks:\n${planData["60Days"].tasks.map(t => `- ${t}`).join("\n")}`;
+const phase_90 = `Focus: ${planData["90Days"].focus}\nTasks:\n${planData["90Days"].tasks.map(t => `- ${t}`).join("\n")}`;
+Make sure you’re mapping these to the template like:
+
+ts
+Kopier
+Rediger
+payload.phase_30 = phase_30;
+payload.phase_60 = phase_60;
+payload.phase_90 = phase_90;
+2. 🧾 Confirm ALL Template Variables Are Being Used
+Double check the PDFMonkey payload includes clean strings ONLY:
+
+ts
+Kopier
+Rediger
+{
+  user_name,
+  headline,
+  subheadline,
+  story_intro,
+  action_item_1,
+  action_item_2,
+  ...
+  action_item_7,
+  insight_1,
+  ...
+  insight_5,
+  phase_30,
+  phase_60,
+  phase_90
+}
+3. 🎨 Fix Preview Page
+In ModuleWorkbook.tsx, the preview before download should not show fallback HTML.
+
+If template rendering isn’t supported in preview, that’s fine — but at the very least:
+
+Remove raw JSON from the preview
+
+Replace with the exact formatted strings for:
+
+user_name
+
+headline
+
+action items
+
+insights
+
+phase_30, phase_60, phase_90 (as clean text!)
+
+🖤 END GOAL:
+✅ The preview page (before download):
+
+Shows the story-based content in clean, spaced text
+
+No broken layouts or [object Object]
+
+Even if not styled, it must be readable + formatted
+
+✅ The downloaded PDF:
+
+Uses full luxury layout from Template ID 033D8C37-41F0-473B-917A-0C78E25471A2
+
+Includes all content: action items, insights, 30-60-90 plan
+
+Proper font (Prata), clean headers, white/black luxury color scheme
+
+Let me know when it's fixed so I can test the PDF again. Please log and show the actual payload being sent to PDFMonkey so we can confirm the fix before generating. Let's wrap this up 🔥👑
+

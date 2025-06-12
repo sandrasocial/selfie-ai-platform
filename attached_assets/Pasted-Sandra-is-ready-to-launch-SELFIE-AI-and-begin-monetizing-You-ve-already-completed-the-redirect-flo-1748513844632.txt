@@ -1,0 +1,97 @@
+Sandra is ready to launch SELFIE AI™ and begin monetizing. You’ve already completed the redirect flow from the Pricing page → Offer Upsell, but we now need to:
+
+✅ PRIORITY 1: REAL STRIPE CHECKOUT INTEGRATION
+🔹 Replace placeholder upsell/checkout with actual Stripe Checkout
+🔹 Use Sandra’s real Stripe credentials (she will provide)
+🔹 Price: $47/month for SELFIE PRO subscription
+🔹 After successful payment, redirect user to /thank-you
+
+📌 Make sure subscription is created in the backend database and mark user as:
+
+ts
+Kopier
+Rediger
+{
+  selfieProAccess: true,
+  accessExpiresAt: [30 days from now]
+}
+✅ PRIORITY 2: BUILD POST-PURCHASE FUNNEL LOGIC (UPSELL + DOWNSELL)
+🔹 After /checkout → redirect to /offer-upsell
+
+$147 Branded By Selfie course
+
+If accepted: tag user with brandedBySelfie: true
+
+If declined: redirect to /offer-downsell
+
+Downsell = $27 Selfie Starter Kit
+
+🔹 Both offers are currently hosted on Shopify. Use placeholder links or Stripe links for now, Sandra will provide final ones.
+
+🔹 After the final choice (upsell accepted, declined, or downsell accepted), redirect user to /dashboard
+
+✅ PRIORITY 3: CREATE THE REAL DASHBOARD PAGE
+Route: /dashboard
+
+This replaces the current Templates page as the home view after login.
+
+Layout: Editorial Vogue-style (white background, Prata for headers, Inter for body)
+
+🔲 Section 1: Welcome Message
+
+“Welcome back, queen 💋 Here’s where to begin…”
+
+🔲 Section 2: Quick Access Tiles
+
+Templates (link to /templates)
+
+Blueprint (link to /blueprint)
+
+AI Studio (link to /studio)
+
+Chat with Sandra (link to /sandra-ai)
+
+Apply for VIP (link to /apply)
+
+🔲 Section 3: Progress Stats
+
+“You joined X days ago”
+
+“Your content streak: [placeholder or static number]”
+
+✅ PRIORITY 4: UPDATE HEADER NAVIGATION
+Replace “Templates” nav link with “Dashboard”
+
+After user logs in or completes a purchase, always redirect to /dashboard as their starting point.
+
+✅ PRIORITY 5: SUBSCRIPTION AUTOMATION
+For each user:
+
+If SELFIE PRO purchase is complete → unlock 30-day access
+
+If they buy Branded By Selfie (via upsell or manually) → unlock Blueprint Module 1
+
+If they are Empire Builder VIP → unlock all modules and admin privileges
+
+✅ PRIORITY 6: BUTTON FIX CONFIRMATION
+Confirm that:
+
+Clicking "Start Your Glow Up" now leads to working Stripe checkout
+
+Redirects work: /checkout → /upsell → /downsell → /thank-you → /dashboard
+
+No errors occur if user declines upsell/downsell
+
+Payment is tracked and access granted automatically
+
+Sandra will review content, photos, and upsell offer copy after launch systems are functional.
+
+Once this flow is working, we can:
+
+Build out a custom email welcome automation
+
+Replace placeholders with branded Shopify links
+
+Add real testimonials, reviews, and countdown timers
+
+Let’s GO! 🚀

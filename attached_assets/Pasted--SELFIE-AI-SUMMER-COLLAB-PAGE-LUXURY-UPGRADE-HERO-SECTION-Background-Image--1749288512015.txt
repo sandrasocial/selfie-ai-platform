@@ -1,0 +1,97 @@
+**SELFIE AI™ SUMMER COLLAB PAGE – LUXURY UPGRADE**
+
+---
+
+## 🌅 HERO SECTION
+
+* **Background Image:** `https://i.postimg.cc/W4tbWRNr/45.png`
+* **Overlay:** `linear-gradient(rgba(23, 23, 25, 0.5), rgba(23, 23, 25, 0.5))`
+* **Headline:** Sandra in Marbella
+* **Subtext:** "A summer of sun, stories, and brand storytelling."
+* **CTA:** Partner With Me (smooth scroll to form)
+* **Fonts:** Cormorant Garamond + Neue Einstellung
+
+---
+
+## 💫 ABOUT SANDRA SECTION
+
+* **Text Area (Left):** Brand intro copy
+* **Portrait Image (Right):** `https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg`
+* **Optional Split Background Column:**
+
+  * Add subtle side visual using: `https://i.postimg.cc/zBgDNnRG/44.png`
+
+---
+
+## 📈 STATS SECTION (REACH + AUDIENCE)
+
+* **Background Layered Image:** `https://i.postimg.cc/CxGjhqkJ/109.png` (opacity 10%)
+* **Stat Cards:**
+
+  * TikTok Followers
+  * Instagram Followers
+  * Monthly Reach
+  * Engagement Rate
+* **CTA:** Download Media Kit
+
+---
+
+## 🎬 CONTENT EXAMPLES GALLERY
+
+* **Behind the Scenes:** `https://i.postimg.cc/0QVy2L7N/Heroimagehomaepage_(1).png`
+* **Coming Soon Reel Block:** (black bg placeholder)
+* **Marbella Lifestyle Image:** `https://i.postimg.cc/N097BN8X/2.png`
+
+---
+
+## 🏷️ TRUSTED BY SECTION
+
+* **Grid of Brands:** You can now upload real logos here (replace placeholder text blocks)
+* Optional: light logo watermark background
+
+---
+
+## 📸 WHAT I OFFER
+
+* **Background:** `https://i.postimg.cc/cJTwYGDn/111.png` (opacity 10%)
+* 4 Offers:
+
+  * Content Feature
+  * Editorial Set
+  * Full Campaign
+  * VIP Co-Creation
+* **Quote Banner:**
+
+  * “All content is created and edited by me…” on soft neutral overlay
+
+---
+
+## 📝 COLLABORATION FORM
+
+* CTA: "Let's Collaborate – Summer '25"
+* Fields: Name, Company, Email, Collab Type, Message
+* Button: Submit Inquiry (lux button style)
+* **Style:**
+
+  * `bg-[#B5B5B3]` section with white form fields
+  * Inter + Cormorant Garamond pairing
+
+---
+
+## ✨ FINAL CTA FOOTER
+
+* **Background:** `https://i.postimg.cc/ncQrZfB1/11.png`
+* **Overlay:** black/40
+* **Quote:** "Let’s co-create something unforgettable."
+* **Signature:** — Sandra
+
+---
+
+## 🧷 FIXED MEDIA KIT BUTTON
+
+* Always visible bottom-right
+* CTA: Download Media Kit
+
+---
+
+Let me know if you want the HTML/React version of this markdown written out again with full JSX!

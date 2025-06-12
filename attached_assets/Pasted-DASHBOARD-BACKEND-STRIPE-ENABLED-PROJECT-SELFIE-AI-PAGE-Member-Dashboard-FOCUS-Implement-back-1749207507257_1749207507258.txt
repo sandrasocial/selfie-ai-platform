@@ -1,0 +1,115 @@
+DASHBOARD BACKEND – STRIPE ENABLED)
+PROJECT: SELFIE AI™
+PAGE: Member Dashboard
+FOCUS: Implement backend logic and functionality — subscription handling, purchase-based access, and progress logic.
+
+⚠️ DO NOT touch or modify any frontend or UX code. This is a logic-only task.
+
+✅ TASKS TO IMPLEMENT:
+
+1. Purchase-Based Access Logic
+Use /api/purchases to determine which product(s) the user has purchased.
+
+Return object like:
+
+ts
+Kopier
+Rediger
+{
+  starterKit: boolean,
+  brandedBySelfie: boolean,
+  vipAccess: boolean
+}
+Use this to determine feature/tool access and Offer Ladder progress.
+
+2. Subscription Integration (Stripe)
+Create a new /api/subscription endpoint to return user’s subscription status:
+
+Check active Stripe subscription via stored Stripe customer ID
+
+If subscription is active, return:
+
+ts
+Kopier
+Rediger
+{
+  isSubscribed: true,
+  isExpired: false,
+  expiresInDays: null
+}
+If access is via a product (not an active subscription), calculate expiry date based on purchase time + duration (e.g., 30 days, 90 days, 12 months)
+
+If expired, return:
+
+ts
+Kopier
+Rediger
+{
+  isSubscribed: false,
+  isExpired: true,
+  expiresInDays: 0
+}
+Also include expiresInDays if nearing expiration (e.g., 7, 3, 1)
+
+3. Stripe Webhook Handling
+Implement webhook receiver to:
+
+Detect successful subscription purchase
+
+Update user’s subscription status in Supabase (e.g., isSubscribed: true)
+
+Optionally store plan type and renewal timestamp
+
+Store expiration fallback if webhook fails
+
+4. Tool Access Logic
+Create backend logic that maps access rights per tool using product or subscription state.
+
+Example response:
+
+ts
+Kopier
+Rediger
+{
+  tools: {
+    sandraAI: true,
+    uploader: true,
+    captionGenerator: true,
+    strategyWorkbooks: false,
+    contentCalendar: false,
+    poseCoach: true
+  }
+}
+Apply this logic:
+
+starterKit unlocks limited tools
+
+brandedBySelfie unlocks more tools
+
+vipAccess or isSubscribed unlocks all tools
+
+5. Offer Ladder & Progress Tracker
+Return ladder progress data:
+
+ts
+Kopier
+Rediger
+{
+  currentStage: "branded", // freebie | starter | branded | vip
+  progressPercent: 75,
+  ladder: [
+    { tier: "freebie", owned: true },
+    { tier: "starter", owned: true },
+    { tier: "branded", owned: true },
+    { tier: "vip", owned: false }
+  ]
+}
+Used by frontend for the footer and offer card badges.
+
+✅ Do NOT:
+
+Build or style any UI
+
+Touch layout or CSS
+
+Hardcode any user states — always use live API, Supabase, or Stripe data

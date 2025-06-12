@@ -1,0 +1,184 @@
+Below are the exact steps and code edits required to lock in Sandra’s “Becoming HER” single-caption framework, enforce length requirements, validate user input, and parse the new JSON structure—without touching any other parts of the codebase. Please apply only the changes specified (file paths and exact code snippets) and do not modify any unrelated functionality.
+
+1. Server: Enforce user‐story validation and length checks
+File: server/routes.ts
+
+Add an early check at the top of the /api/generate-captions handler to ensure userStory is at least 15 characters. Insert this immediately after the handler’s first line:
+
+js
+Kopier
+Rediger
+// server/routes.ts
+
+// ... inside your POST("/api/generate-captions") handler, first lines:
+const userStory = req.body.userStory?.trim() || "";
+if (userStory.length < 15) {
+  return res.status(400).json({ error: "Please share at least 15 meaningful characters about your own experience." });
+}
+// Continue building the prompt below...
+Replace the existing OpenAI prompt block with the exact “Becoming HER” 6-part JSON prompt. Locate the code that builds const prompt = \...`` and replace it completely with:
+
+js
+Kopier
+Rediger
+// server/routes.ts
+
+// Replace whatever `prompt = ...` you have now with this exact block:
+
+const prompt = `
+You are Sandra AI, a business mentor and content coach for women. Follow her signature “Becoming HER” story framework exactly.  
+INPUT: ${userStory}  
+
+STRUCTURE (return JSON only, no extra text):  
+{  
+  "caption": {  
+    "hook":    "<6–10 words emotionally driven, grabs attention>",  
+    "before":  "<describe the user’s challenge or ‘before’ state>",  
+    "shift":   "<describe the moment or action that changed everything>",  
+    "now":     "<describe the user’s new life or transformation>",  
+    "takeaway": "<a concise lesson or key insight>",  
+    "cta":     "<a powerful call-to-action asking the audience to engage—e.g., comment, share>"  
+  }  
+}  
+
+REQUIREMENTS:  
+• Output “hook” + “before” + “shift” + “now” + “takeaway” + “cta” in a single JSON object.  
+• Total “caption.body” length (excluding JSON keys) must be 120–180 characters.  
+• Use simple, everyday language like a one-on-one conversation—no jargon.  
+• Tone: Professional + Approachable + Empowering + Encouraging + High-Vibe + Strategic.  
+• Use exactly 1–2 emojis from Sandra’s list: ❤️ 🥹 🫶🏻 💋 ✨ 🔥 📱 💼.  
+• Always reference the user’s own story (INPUT) – do NOT generate generic or Sandra’s story.  
+• If the output is shorter than 120 characters or longer than 180, return an error message instead of a caption.  
+`;
+Immediately after receiving OpenAI’s response, parse and enforce the 120–180 character rule. Replace the old parsing block with:
+
+js
+Kopier
+Rediger
+// server/routes.ts
+
+// After openai.createCompletion(...) and receiving `openAiResponse`:
+let parsed;
+try {
+  parsed = JSON.parse(openAiResponse.choices[0].message.content);
+} catch (err) {
+  console.error("🔴 Failed to parse JSON from OpenAI:", err);
+  return res.status(500).json({ error: "AI returned malformed JSON. Please try again." });
+}
+
+const captionObj = parsed.caption;
+if (!captionObj?.hook || !captionObj?.before || !captionObj?.shift || !captionObj?.now || !captionObj?.takeaway || !captionObj?.cta) {
+  return res.status(500).json({ error: "AI did not return all required fields." });
+}
+
+// Combine all text fields into one string (no JSON keys) and measure length:
+const fullCaptionText = `${captionObj.hook} ${captionObj.before} ${captionObj.shift} ${captionObj.now} ${captionObj.takeaway} ${captionObj.cta}`.trim();
+if (fullCaptionText.length < 120 || fullCaptionText.length > 180) {
+  console.error("❌ Caption length invalid:", fullCaptionText.length);
+  return res.status(500).json({ error: "AI output is too short or too long. Please try again." });
+}
+
+// Return JSON in this exact shape:
+return res.json({  
+  hook: captionObj.hook,  
+  before: captionObj.before,  
+  shift: captionObj.shift,  
+  now: captionObj.now,  
+  takeaway: captionObj.takeaway,  
+  cta: captionObj.cta  
+});
+Do not remove or alter any other routes or middlewares. Only these blocks should change.
+
+2. Frontend: Adjust CaptionCreator.tsx to use new JSON format
+File: client/src/components/strategy/CaptionCreator.tsx
+
+Validate userStory before submitting
+At the top of your submit handler (e.g. handleGenerate), add:
+
+tsx
+Kopier
+Rediger
+// client/src/components/strategy/CaptionCreator.tsx
+
+// Inside handleGenerate (before calling the API):
+if (!userStory.trim() || userStory.trim().length < 15) {
+  setError("Please share at least 15 meaningful characters about your story.");
+  return;
+}
+Replace old response‐parsing logic
+Anywhere you currently process response.data.captions or response.data.framework, replace that entire block with:
+
+tsx
+Kopier
+Rediger
+// client/src/components/strategy/CaptionCreator.tsx
+
+// After `const json = await response.json();`
+const { hook, before, shift, now, takeaway, cta } = json;
+
+// Update state to hold exactly these values:
+setGeneratedCaptions([{ hook, before, shift, now, takeaway, cta }]);
+Ensure you remove any leftover loops over “captions” or “hooks” arrays—there should now only be one object.
+
+Display the single‐caption framework
+Replace the UI render code that used to show “Caption 1, Caption 2, Caption 3” with a single panel that displays the six fields in order. For example:
+
+tsx
+Kopier
+Rediger
+// client/src/components/strategy/CaptionCreator.tsx
+
+// In JSX, where you map through captions array (now always length 1):
+{generatedCaptions.map((item, i) => (
+  <div key={i} className="caption-card">
+    <div><strong>Hook:</strong> {item.hook}</div>
+    <div><strong>Before:</strong> {item.before}</div>
+    <div><strong>Shift:</strong> {item.shift}</div>
+    <div><strong>Now:</strong> {item.now}</div>
+    <div><strong>Takeaway:</strong> {item.takeaway}</div>
+    <div><strong>CTA:</strong> {item.cta}</div>
+    <button onClick={() => copyToClipboard(`${item.hook} ${item.before} ${item.shift} ${item.now} ${item.takeaway} ${item.cta}`)}>
+      Copy Full Caption
+    </button>
+  </div>
+))}
+Important: Keep the tab layout and styling exactly as-is. Only replace the internal card content.
+
+Remove old “Hooks” tab logic
+If you have a separate “Hooks” tab or multi‐caption UI, delete that code entirely. You should now have exactly one “Captions & Hooks” tab (which displays all six fields together) and the new “Script” tab if already present.
+
+Ensure error messages show
+Wherever you handle server errors, display error state prominently. For example:
+
+tsx
+Kopier
+Rediger
+// client/src/components/strategy/CaptionCreator.tsx
+
+{error && <div className="error-banner">{error}</div>}
+3. Final Testing Checklist
+Rebuild and redeploy on Replit.
+
+Open /studio/captions in the browser.
+
+In the “Story” input, type at least 20 meaningful characters (e.g. “I quit my 9-to-5 at 42 to start my own jewelry line, terrified but determined…”).
+
+Click Generate Caption (and Generate Script if needed).
+
+In Replit console, confirm logs show the exact “Becoming HER” prompt from step 1.
+
+On-screen, you should see exactly six fields (Hook, Before, Shift, Now, Takeaway, CTA) in one card. All text combined must total 120–180 characters.
+
+Verify that the “Copy Full Caption” button copies precisely the concatenated string (no extraneous line breaks).
+
+If error “AI output is too short or too long” appears, adjust userStory length and retry. Confirm your 120–180 char check works.
+
+Confirm no other UI elements (old multi‐caption tabs, leftover CTA buttons) appear.
+
+IMPORTANT:
+
+• Do not modify any files outside of the two specified paths (server/routes.ts and client/src/components/strategy/CaptionCreator.tsx).
+• Do not delete or alter any routes, authentication hooks, or CSS classes not mentioned here.
+• Follow the code snippets exactly—copy‐and‐paste line by line if possible.
+
+Once you complete these steps, the Caption Creator will produce one rich, 6-step caption in Sandra’s authentic voice, at the correct length, based on each user’s personal story. Let me know when all tests pass.

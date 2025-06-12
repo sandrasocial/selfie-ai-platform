@@ -1,0 +1,84 @@
+🧭 SELFIE AI™ – NAVIGATION & ROUTING AUDIT
+PROJECT: SELFIE AI™
+FOCUS: Global Navigation, Dashboard Shortcuts, Sidebar (if used), Mobile Nav
+
+1️⃣ GLOBAL NAVIGATION (Top Nav – Minimal Luxury)
+🌐 Final Navigation Items (max 5 for luxury UX):
+Label	Path	Notes
+Studio	/studio	Main creative space: upload, edit, plan feed
+Sandra AI	/sandra-ai	Assistant + prompts, positioned as core value
+Planner	/planner	Weekly visibility tracker
+Drops	/drops	Monthly content drops hub
+Account Icon	/account	Avatar or profile icon (top-right only)
+
+🔥 "Dashboard" is removed from nav — user lands in Studio or is guided there via logo click.
+
+2️⃣ DASHBOARD CTA / QUICK LINKS
+Update all Dashboard CTA buttons or cards to clean, focused destinations:
+
+Button Copy	Route
+Start in Studio	/studio
+Open Planner	/planner
+Ask Sandra	/sandra-ai
+View This Month’s Drop	/drops
+Resume Course	/courses (dynamic based on purchase)
+
+✅ Use on-brand copy like “Explore,” “Start,” “Create,” “Unlock,” etc.
+✅ Style: All caps, thin border button, Neue Einstellung, no emojis
+
+3️⃣ SIDEBAR OR QUICK ACCESS (Optional, for Power Users)
+If a sidebar or floating tool tray is added:
+
+Keep it icon-only or minimal text (collapsed by default)
+
+VIP badge appears only if user has access (small crown icon + tooltip)
+
+Include floating “Ask Sandra” button (bottom-right) visible on all pages
+
+4️⃣ COURSE NAVIGATION PREP
+Situation	Behavior
+User owns Starter	Route /courses to /courses/starter-kit
+User owns Branded	Route /courses to /courses/branded-by-selfie
+User has no course	/courses routes to locked course teaser page
+
+Label suggestion: “Courses” or “Brand Training”
+→ Keep out of top nav unless feature is a main focus.
+
+5️⃣ MOBILE NAVIGATION
+Use hamburger menu in top right
+
+Prioritize these routes in the menu:
+
+css
+Kopier
+Rediger
+▸ Studio
+▸ Sandra AI
+▸ Planner
+▸ Drops
+▸ Account (at bottom)
+All items stack vertically, touch-friendly
+
+Use divider lines to visually separate core tools from extras
+
+6️⃣ FOOTER NAVIGATION (Optional Utility Links)
+Label	Path
+Terms & Privacy	/terms
+Affiliate Program	/referral
+Help Center	/help
+Contact Sandra	/contact
+Upgrade	/plans
+
+—
+
+✨ UX POLISH: DESIGN GUIDELINES
+Fonts: Neue Einstellung (nav + labels), Cormorant Garamond (section titles)
+
+Active state: Thin underline or bold serif (no highlight blocks)
+
+Color: White on dark, Black on light — match page bg
+
+Hover state: Subtle letter spacing or underline animation
+
+No dropdowns unless absolutely needed — keep scroll experience clean
+

@@ -1,0 +1,76 @@
+Please create a full GitHub repo backup of this project, including the entire /client and /server directories, plus .env, package.json, and configuration files.”
+
+Why: We want a safety net before making any structural changes.
+
+🔧 PHASE 2: CLEAN STRUCTURE + STANDARDIZE
+🧹 1. Organize client/src/components into subfolders:
+Ask Replit AI:
+
+“Let’s group related components. Please move these into folders:
+
+SandraChat.tsx, CourseChat.tsx → /components/chat/
+
+SelfieUpload.tsx, PhotoEditor.tsx, ImageEnhancement.tsx, PoseCoach.tsx → /components/studio/
+
+CaptionCreator.tsx, ContentCreator.tsx, StrategyCoach.tsx → /components/strategy/
+
+ModuleSlideViewer.tsx → /components/course/
+
+UserProfileForm.tsx, PricingSection.tsx → /components/user/
+
+Header.tsx, Footer.tsx → /components/layout/
+
+Then update the import paths accordingly.”
+
+🧼 2. Consolidate AI logic in the backend:
+Right now, you have AI files split across:
+
+sandraAI.ts
+
+strategyCoachAI.ts
+
+poseCoachAI.ts
+
+workbookAI.ts
+
+content.ts
+
+Ask Replit AI:
+
+“Let’s move all AI logic into /server/ai/. Please create that folder and move:
+
+sandraAI.ts, strategyCoachAI.ts, poseCoachAI.ts, workbookAI.ts, content.ts into it.
+
+Then clean up the import paths in routes.ts and index.ts.”
+
+📦 3. Fix API Routing Chaos (your current issue)
+Ask Replit AI:
+
+“Let’s fix the Vite dev override issue:
+
+In server/index.ts, please register all /api/* routes before Vite middleware. Then, ensure Vite’s app.use("*") excludes any path starting with /api. Example:
+
+ts
+Kopier
+Rediger
+app.use("/api", apiRouter); // Register API first
+
+app.use("*", (req, res) => {
+  if (req.originalUrl.startsWith("/api")) return; // Don't override API
+  // Vite middleware or serve index.html
+});
+```”
+This will permanently solve the issue where API returns HTML instead of JSON.
+
+🪄 4. Create a Reusable Module Template
+You’re building 6 modules. Let’s make it easy:
+
+Ask Replit AI:
+
+“Please create a reusable module component and backend route setup:
+
+ModuleTemplate.tsx that receives questions, form state, and output renderer as props
+
+Create a backend pattern like /api/module/:id/answers, /api/module/:id/generate
+
+Let’s refactor Module 1 & 2 to use this shared logic.”

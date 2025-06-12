@@ -1,0 +1,112 @@
+
+📚 COURSE PAGE STRUCTURE (POST-PURCHASE)
+
+🧱 MODULE 1 – Welcome + Mindset
+Header:
+ “Welcome to Your Glow-Up Era”
+Subhead:
+ “This is about more than just selfies. It’s about how you see yourself.”
+Components:
+Video Placeholder: upload-later-module-1.mp4
+
+
+Checklist (new UI block):
+
+
+✅ Watch welcome video
+
+
+✅ Answer Sandra AI: “What’s your confidence blocker?”
+
+
+✅ Get 5-step AI action plan (in scroll block)
+
+
+Timeline Animation:
+ → Show “You’re here” on Day 1
+ → “Your future self is 30 days away…”
+
+
+
+🎨 MODULE 2 – Signature Editing Masterclass
+Header:
+ “Learn to edit like it’s your superpower”
+Subhead:
+ “No filter needed. Just formula.”
+Components:
+Video Placeholder: upload-later-module-2.mp4
+
+
+AI-Powered Editing Flow Builder:
+
+
+User selects:
+
+
+Mood: Soft, Bold, Cinematic
+
+
+App: Lightroom or CapCut
+
+
+Gets instant PDF or email instructions
+
+
+
+📸 MODULE 3 – Tools Hub
+Header:
+ “All my favorite tools. Now they’re yours.”
+Each tool = card with hover animation
+Tool
+UI Element
+Preset Pack
+Downloadable lightroom presets (Sandra will upload later) 
+Pose Coach:
+Show me poses for [mood] + [angle]
+ Brand Vibe Generator
+ (colors, font, layout moodboard drag and drop to customize)
+
+
+
+
+Caption Coach
+Generates captions for the users (same structure as 30-day templates 
+
+
+💡 BONUS TOOLS SECTION
+1. Selfie Strategy Wizard
+Inputs: Niche, vibe, visibility goal
+
+
+Output: PDF of 30-day content plan + hooks
+
+
+2. Before/After Confidence Tracker
+Upload 2 photos
+
+
+Get:
+
+
+Side-by-side slider
+
+
+Reflection journaling prompt
+
+
+CTA: “Post Your Glow-Up” share card
+
+
+
+🛍️ CTA & Progress Blocks (Automated Flow)
+If user finishes all 3 modules:
+ → Show pop-up: “You’re ready for Branded by Selfie”
+ → Button: VIEW NEXT LEVEL →
+
+
+
+🖋 COPY VOICE SNAPSHOT (IN YOUR TONE)
+“Let’s be honest. It’s not about just posting pretty photos. It’s about becoming the woman who’s done hiding.”
+This kit is the exact blueprint I used when I had no time, no money, and no idea how to show up again.
+You don’t need to be an influencer. You need to start where you are—with the version of you that’s ready to be seen.
+

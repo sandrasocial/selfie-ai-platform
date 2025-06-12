@@ -1,0 +1,71 @@
+he Visuals page must be fully responsive and mobile‐friendly. Right now on small screens:
+
+The left sidebar (filters panel, buttons, etc.) is overflowing off the viewport.
+
+The preview pane is too wide and forces horizontal scrolling.
+
+Buttons (e.g. “Enhanced/Original” toggle, filter thumbnails, Download) overlap or get cut off.
+
+Please implement the following responsive adjustments:
+
+Stack Sidebar and Preview Vertically on Mobile
+
+Below a certain breakpoint (e.g. max-width: 768px), change the layout from two columns to a single column.
+
+In your CSS (or Tailwind/Styled Components), wrap the sidebar and preview in a container that switches from display: flex; flex-direction: row; to flex-direction: column;.
+
+Ensure the sidebar appears above the preview (so filters show first, then the image).
+
+Sidebar Full‐Width on Mobile
+
+On mobile, the sidebar should be width: 100% (not a fixed pixel width).
+
+Use relative units (e.g. max-width: 100%, padding: 16px) so its contents (buttons, filter grid) resize fluidly.
+
+Filter thumbnails (Glow, Luna, etc.) should arrange in a 2×n grid instead of a single column. For example, use CSS grid with grid-template-columns: repeat(2, 1fr) under the mobile breakpoint so buttons aren’t stacked in one long column.
+
+Preview Pane Responsiveness
+
+Ensure the preview <img> container scales to the device width. For mobile, set its container to width: 100% and the image inside to max-width: 100%; height: auto;.
+
+Remove any fixed pixel heights or widths that cause overflow.
+
+The “Enhanced / Original” toggle should be repositioned below (or above) the image on mobile, not on top of it. You can wrap it in a flex container that switches from justify-content: flex-end on desktop to justify-content: center or space-between on mobile.
+
+Button & Text Sizing
+
+Increase tap target sizes (minimum 44×44px) for all filter buttons and action buttons on mobile.
+
+Use slightly larger font (e.g. font-size: 18px) for labels and ensure sufficient padding around them.
+
+Add margin-bottom: 12px between buttons so they’re not jammed together.
+
+Hide Overflow & Prevent Horizontal Scrolling
+
+On the body or main container, set overflow-x: hidden; during mobile view to prevent sideways scrolling.
+
+Audit any elements with fixed widths or absolute positioning and convert them to percentage/flex units so they shrink correctly.
+
+Test Across Common Mobile Breakpoints
+
+At 480px (small phones), 600px (portrait tablets), and 768px (large phones/small tablets), verify the layout stacks correctly.
+
+Use browser dev tools or an actual device to confirm no sideways scrolling and that buttons/images scale fluidly.
+
+Once these changes are in place, redeploy and verify on an iPhone/Android that:
+
+The filter sidebar stacks above the preview.
+
+Filter thumbnails appear in two columns (or an adaptive grid) rather than one long vertical list.
+
+The image preview and “Enhanced/Original” toggle fit the screen width without overlap.
+
+All buttons remain tappable and legible (no clipped text).
+
+Let me know when mobile optimization is complete so we can move on to the next item.
+
+
+
+
+
+

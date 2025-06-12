@@ -1,0 +1,119 @@
+✅ DEV AI PROMPT — FIX SET 5
+Role: Full-stack developer for SELFIE AI™ platform
+Goal: Finalize functionality and routing across all secondary pages (Pricing, Contact, Support, Footer links, etc.).
+Reminder: No design changes unless required. Any new elements must follow the SELFIE AI™ luxury editorial standard (no emojis, no icons, no color).
+
+🔧 FIX SET 5 TASKS
+1. My Account Page
+❌ FIX: Page is broken or missing key features
+
+Allow user to edit: name, email, password
+
+Show Stripe subscription plan + renewal date
+
+Display past purchases (query courses.purchases)
+
+Add “Save” button and toast on successful profile update
+
+If not logged in → redirect to Supabase auth
+
+2. Templates Page
+✅ Page loads
+
+❌ FIX: Needs logic and layout updates
+
+Connect each template card to AI generator
+
+Use Trello-style prompt logic customized by brand profile
+
+Add correct image covers to each card
+
+Save generated content per user under generated_templates
+
+AI output must reflect user's: tone, story, niche, brand voice
+
+3. Pricing Page
+❌ FIX: Rewrite outdated tiers
+
+Free: Limited tools, no courses
+
+Starter Kit ($47 one-time)
+
+Branded by Selfie™ ($397)
+
+VIP Empire Builder (monthly/high-ticket option)
+
+❌ Redesign required → Skip detailed styling
+
+Add minimalist tier grid using current font system
+
+Buttons: transparent with black border, uppercase
+
+Route buttons to correct checkout links
+
+4. Support + Contact Pages
+❌ Both pages route to 404
+
+Create /support: brief section with FAQ toggle logic
+
+Create /contact: form with name/email/message + submit button
+
+Store messages in supabase.support_requests
+
+Add success toast: “Thanks, we’ll be in touch shortly.”
+
+5. Footer Links
+✅ Privacy and Terms → Working
+
+❌ FIX:
+
+Templates = link to /templates
+
+Pricing = link to /pricing
+
+Contact = link to /contact
+
+Support = link to /support
+
+Ensure all footer links are hardcoded and not broken on mobile
+
+6. Preset Page
+❌ FIX: Currently routes to 404
+
+Build minimalist landing page for Lightroom Presets
+
+Hero: “Elevate Your Edits with Sandra’s Signature Presets”
+
+Section: 3-column preview of preset categories
+
+CTA: “Buy Now” → Shopify or Stripe checkout
+
+Do NOT add cart or payment logic unless already active
+
+7. Free Selfie Guide Page
+✅ Page exists
+
+❌ FIX:
+
+Add “Unlock access” logic: show email field to access
+
+Once unlocked, allow download
+
+Save access flag in Supabase (has_free_guide = true)
+
+🧱 STRUCTURE + DATABASE
+Use or create:
+
+supabase.support_requests
+
+supabase.user_profiles.subscription_status
+
+supabase.generated_templates
+
+supabase.purchases
+
+supabase.user_flags.has_free_guide
+
+✅ FINAL PHASE 1 STATUS:
+Once Fix Set 5 is complete, Phase 1 (Foundation Lock-In) is DONE.
+Next → Phase 2: Full UI/UX Redesign + Pre-Launch Testing

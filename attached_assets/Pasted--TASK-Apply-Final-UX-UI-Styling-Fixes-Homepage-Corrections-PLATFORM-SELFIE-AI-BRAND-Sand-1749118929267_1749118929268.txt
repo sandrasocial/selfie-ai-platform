@@ -1,0 +1,85 @@
+🛠 TASK: Apply Final UX/UI Styling Fixes + Homepage Corrections  
+PLATFORM: SELFIE AI™  
+BRAND: Sandra by SELFIE AI™  
+GOAL: Refine homepage and global styling to fully match luxury branding system + visual references
+
+–––––––––––––––––––––––––––––––––––––––––
+
+✅ 1. GLOBAL NAVIGATION & FOOTER
+- Header background: Solid black (#171719)
+- Footer background: Solid black (#171719)
+- Navigation & footer text: Solid white (#F1F1F1)
+- Font: Cormorant Garamond for all headings, Inter Light for nav links
+- Add global "Log In" button top right, same style as other nav links
+- Replace logo in header with this image: https://i.postimg.cc/L5YndZk4/2.png
+  ⤷ Image must be globally responsive, fixed left
+
+✅ 2. OVERLAY TEXT FIX
+- All overlay text on hero, cards, buttons, and images must be:
+  ➤ Font: Cormorant Garamond
+  ➤ Color: White (#F1F1F1)
+- Remove all transparency or gray text — ensure **strong white contrast** across all overlays
+
+✅ 3. CTA BUTTON STYLING
+- Use this rule globally for **all CTA buttons**:
+  ● Solid version: Black background, white text, uppercase, no icons
+  ● Transparent version: Transparent background, white border, white text
+  ● Hover state: Invert colors (white background, black text) or underline only
+  ● Font: Cormorant Garamond, all caps, 14px, letter-spacing: 0.5px
+- Update “START YOUR JOURNEY” + “VIEW PLANS” on homepage to match this button style
+
+✅ 4. HOMEPAGE PRICING SECTION (Fix Tier 3)
+- Replace third card ("VIP") with corrected tier:
+
+Title: EMPIRE BUILDER VIP
+Price: $Apply /exclusive access
+Description: Complete business-in-a-box system. I don’t just coach you — I build your entire automated empire WITH you.
+Bullet list:
+✔ Custom sales funnels & landing pages built
+✔ Complete automation setup (emails, ManyChat, upsells)
+✔ Digital product creation & launch strategy
+✔ Weekly 1:1 strategy calls with Sandra
+✔ Access to Sandra's template & resource hub
+✔ Done-for-you brand assets & graphics
+✔ Revenue optimization & scaling systems
+✔ Direct WhatsApp access for urgent support
+CTA: APPLY FOR EMPIRE BUILDER (match global button style)
+
+markdown
+Kopier
+Rediger
+
+✅ 5. IMAGE OVERLAY FIXES
+- All overlay text on:
+  • Hero image  
+  • “90 Days / 120K Followers / 1.7M Reach”  
+  • “Looking Forward / From Broken to Unbreakable”  
+…must be **pure white text** (#F1F1F1) with **no transparency**
+- Mobile placement: use `@media` to keep text above shoulders/faces
+
+✅ 6. REMOVE ICONS & EMOJIS
+- Globally remove all icons inside buttons or UI (arrows, camera, emojis)
+
+✅ 7. GLOBAL FONT SYSTEM (Re-confirm)
+- Headings: Cormorant Garamond
+- Body Text: Inter Light (fallback Helvetica Neue)
+- All font sizes and weights follow SELFIE AI™ design manual
+
+–––––––––––––––––––––––––––––––––––––––––
+
+🧱 FILES TO EDIT:
+- client/src/components/layout/Header.tsx
+- client/src/components/layout/Footer.tsx
+- client/src/pages/Home.tsx
+- client/src/pages/Pricing.tsx (if split)
+- client/src/index.css
+
+📲 MOBILE SPECIFIC:
+- Ensure hero text never covers face on mobile
+- Stack CTA buttons center-aligned on mobile with padding
+- Maintain white text overlays on all screen sizes
+- Mobile nav: logo + hamburger menu, clean dark background
+
+💾 After all changes:
+→ Save and restart the app
+→ Preview homepage and pricing to confirm

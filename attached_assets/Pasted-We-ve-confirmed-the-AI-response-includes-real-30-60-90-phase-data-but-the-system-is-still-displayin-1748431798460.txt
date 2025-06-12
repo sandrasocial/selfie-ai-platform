@@ -1,0 +1,77 @@
+We’ve confirmed the AI response includes real 30-60-90 phase data, but the system is still displaying fallback template text in both the preview and PDF.
+
+✅ TASK OBJECTIVE
+Update the entire workbook system to use the actual AI-generated phase_30, phase_60, phase_90 values instead of static fallback copy.
+
+📍Step-by-Step Instructions
+1. AI Response Handling (server/workbookAI.ts)
+Extract and assign phase_30, phase_60, and phase_90 directly from the AI response:
+
+ts
+Kopier
+Rediger
+workbook.phase_30 = aiResponse.phase_30 || "Missing phase 30";
+workbook.phase_60 = aiResponse.phase_60 || "Missing phase 60";
+workbook.phase_90 = aiResponse.phase_90 || "Missing phase 90";
+Ensure these values are not being merged into implementationPlan or discarded.
+
+2. Frontend Preview Fix (client/src/components/ModuleWorkbook.tsx)
+Update the preview render logic to use these fields:
+
+tsx
+Kopier
+Rediger
+<section className="implementation-plan">
+  <h3>30-60-90 Day Implementation Plan</h3>
+
+  <div className="phase-block">
+    <h4>First 30 Days</h4>
+    <p>{workbook.phase_30}</p>
+  </div>
+
+  <div className="phase-block">
+    <h4>Next 30 Days</h4>
+    <p>{workbook.phase_60}</p>
+  </div>
+
+  <div className="phase-block">
+    <h4>Final 30 Days</h4>
+    <p>{workbook.phase_90}</p>
+  </div>
+</section>
+🔁 This replaces any default text like:
+"Story foundation & authentic voice clarity"
+
+3. PDF Generation Fix (server/pdfMonkeyGenerator.ts)
+Confirm the PDFMonkey payload includes all 3 individual phases:
+
+ts
+Kopier
+Rediger
+{
+  ...,
+  phase_30: workbook.phase_30,
+  phase_60: workbook.phase_60,
+  phase_90: workbook.phase_90
+}
+⚠️ Do not include implementationPlan or static fallback values here.
+
+🧪 Test Checklist
+ Go to Module One
+
+ Fill all 5 story fields → generate workbook
+
+ Preview page shows Sandra + real 30/60/90 text
+
+ PDF includes actual AI-written phase_30–90 content
+
+ No mention of fallback template copy in either view
+
+✅ Success Criteria
+Preview and PDF show Sandra’s actual 3-phase roadmap
+
+No fallback/default template text remains
+
+Workbook now reflects the real AI-driven strategy and implementation plan
+
+Run this fix and test the full flow — then we’re launch-ready 💋🔥🖤

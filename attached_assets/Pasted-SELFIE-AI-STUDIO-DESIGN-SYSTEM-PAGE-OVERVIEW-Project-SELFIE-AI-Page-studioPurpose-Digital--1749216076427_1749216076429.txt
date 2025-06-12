@@ -1,0 +1,147 @@
+SELFIE AI™ STUDIO DESIGN SYSTEM
+
+🏠 PAGE OVERVIEW
+
+Project: SELFIE AI™Page: /studioPurpose: Digital Vanity + Editorial Workspace
+
+The SELFIE AI™ Studio is your user's sacred creative space. Think: a luxury-glam dressing room meets Notion meets Apple Photos. This is where content begins—from raw selfies to elevated brand visuals. The entire experience must feel empowering, minimal, elegant, and functional.
+
+📅 PAGE LAYOUT STRUCTURE
+
+1. Hero Section
+
+Background: https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png full bleed
+
+Headline: "STUDIO"
+
+Subtext: "Your tools for visual branding, caption clarity, and personal brand strategy—powered by AI, styled by you."
+
+Font: Cormorant Garamond (H1), Neue Einstellung (body)
+
+Color: Black text on soft beige background / white overlay
+
+2. Tool Suite Grid (Top Modules)
+
+Layout: 2x3 clean editorial cards
+
+Hover Behavior: Thin border expands slightly with soft shadow
+
+Card Titles: Serif (uppercase)
+
+Icons: Transparent outline icons or remove entirely for cleaner look
+
+Cards:
+
+Selfie Editor — AI filters + photo adjustment
+
+Feed Designer — Grid planner with drag-to-schedule
+
+Photo Vault — Browse, filter, and manage uploads
+
+Daily Upload Boost — Quote widget + reminder
+
+Brand Notes — Notion-style notes per photo
+
+Auto Tagger — Mood, tone, lighting suggestions
+
+Images for cards:Selfie Editor — https://i.postimg.cc/26JSx8ss/5.pngFeed Designer — https://i.postimg.cc/V673b4J4/81.pngPhoto Vault — https://i.postimg.cc/dQ5q8mbb/22.pngDaily Upload Boost — https://i.postimg.cc/0jv5My39/final-Quote-Image-1.pngBrand Notes — https://i.postimg.cc/KY664Mz6/8.pngAuto Tagger — https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg
+
+3. Upload + Feed Designer Area
+
+Subheader: "Plan. Polish. Post."
+
+Grid Planner:
+
+Instagram-style 3x3 preview grid
+
+Drag-to-sort and rearrange
+
+Placeholder cards: "+ Upload Selfie" or "+ Plan Post"
+
+Optional switch between Grid View and Calendar View
+
+Under Each Grid Card:
+
+CTA: "Save as Draft"
+
+CTA: "Add to Calendar"
+
+Dropdown: Select content type (Reel, Quote, Selfie, etc)
+
+Auto-Tag: Mood, tone, lighting (using basic ML/AI metadata)
+
+4. Visual Editor Module (when editing an image)
+
+Tabs:
+
+VOGUE FILTERS (custom preset buttons)
+
+ADJUST (sliders: brightness, contrast, warmth, sharpness)
+
+Button Row: Reset, Save, Download
+
+Overlay toggle: Enhanced / Original
+
+5. Photo Vault Section
+
+Scrollable gallery with saved photos
+
+Filter by: Upload date, tag, color tone, filter used
+
+View toggle: Small/large thumbnails
+
+Grid image backgrounds: https://i.postimg.cc/HLN6LDSj/15.png, https://i.postimg.cc/Bbn4rXK7/3.png, https://i.postimg.cc/nhDpf8Xx/35.png
+
+6. Daily Upload Motivation Widget
+
+Minimal box in sidebar
+
+Rotates inspiring quote:
+
+"Your face is your brand. Show it boldly."
+
+"Every selfie is a signature."
+
+Button: "Upload Today’s Selfie"
+
+Image: https://i.postimg.cc/fLSsQQth/IMG-6384-jpg.jpg
+
+7. Optional Enhancements
+
+Add mini Notion-style workspace block to write notes next to each photo
+
+Add "Send to Sandra AI for feedback" button
+
+Option: Sync planned content with Instagram via Meta API
+
+Add AI tone scanner: reads selfie and suggests vibe (lux, warm, moody)
+
+User theme toggle: Cream / Black / Vogue Gray
+
+🌈 VISUAL SYSTEM
+
+Font Pairing: Cormorant Garamond (Headlines), Neue Einstellung (UI)
+
+Button Style: Transparent, thin black or white border, 0px radius
+
+Color Theme:
+
+Cream background / Black text
+
+Accent: Soft beige, graphite, warm gray
+
+🪧 DEV INSTRUCTIONS
+
+Pull user image history from /api/uploads
+
+Enable drag-to-sort using react-grid-layout or similar
+
+Tag images on upload using /api/image-meta
+
+Save layout to /api/feed-layout
+
+Connect "Save as Draft" and "Add to Calendar" to existing /api/calendar
+
+Keep all buttons border-only, no background fill
+
+Mobile: Stack tools in 1 column; planner becomes horizontal scroll

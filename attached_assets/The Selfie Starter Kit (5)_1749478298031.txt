@@ -1,0 +1,103 @@
+﻿import React from "react";
+import { Button } from "@/components/ui/button";
+import { Download, Sparkles } from "lucide-react";
+
+
+export default function Module6() {
+  return (
+    <div className="bg-[#F1F1F1] min-h-screen text-[#171719] font-sans">
+      {/* Hero */}
+      <section className="py-24 px-6 text-center bg-white">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="font-serif text-5xl leading-tight mb-6 italic">
+            Design Like You Mean It
+          </h1>
+          <p className="text-lg text-[#4C4B4B] font-light">
+            You’re not just building a brand. You’re curating an experience.
+            And this final lesson gives your visual identity the clarity, elegance,
+            and structure it deserves—using AI.
+          </p>
+        </div>
+      </section>
+
+
+      {/* Workbook Generation CTA */}
+      <section className="bg-[#F1F1F1] py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <Sparkles className="w-10 h-10 text-[#4C4B4B] mx-auto mb-4" />
+          <h2 className="text-3xl font-serif mb-4">
+            Build Your Visual Identity Guide
+          </h2>
+          <p className="text-[#4C4B4B] font-light max-w-2xl mx-auto mb-6">
+            You’ll answer a few prompts, and SELFIE AI™ will generate a
+            high-end PDF containing your custom color palette, font pairings,
+            brand aesthetic, layout tips, and example assets.
+          </p>
+          <Button className="uppercase border border-black rounded-none px-8 py-3 hover:underline hover:bg-transparent text-black bg-white">
+            Generate Your Guide
+          </Button>
+        </div>
+      </section>
+
+
+      {/* Preview Block */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="font-serif text-2xl mb-4">
+              What You'll Get Inside:
+            </h3>
+            <ul className="text-[#4C4B4B] font-light leading-loose">
+              <li>• Your curated color palette</li>
+              <li>• Font pairings for titles and body</li>
+              <li>• Your moodboard aesthetic + style keywords</li>
+              <li>• Brand layout tips (spacing, rhythm)</li>
+              <li>• Visual examples to emulate</li>
+            </ul>
+          </div>
+          <div>
+            <img
+              src="https://i.postimg.cc/D08QL2F7/visualguide-mockup.jpg"
+              alt="Workbook preview"
+              className="w-full shadow-lg border border-[#B5B5B3]"
+            />
+          </div>
+        </div>
+      </section>
+
+
+      {/* Prompt + Practice */}
+      <section className="bg-[#F1F1F1] py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h4 className="font-serif text-xl italic mb-4">
+            Creative Journal Prompt
+          </h4>
+          <p className="text-[#4C4B4B] font-light mb-6">
+            “If your brand was a woman walking into the room… What would she be wearing? What kind of energy would she bring? What would people feel when they see her?”
+          </p>
+          <p className="italic text-sm text-[#4C4B4B]">
+            Let this vision guide your aesthetic direction.
+          </p>
+        </div>
+      </section>
+
+
+      {/* Final CTA */}
+      <section className="bg-white py-20 px-6 text-center">
+        <div className="max-w-xl mx-auto">
+          <h4 className="font-serif text-2xl mb-4">
+            Creative Challenge
+          </h4>
+          <p className="text-[#4C4B4B] font-light mb-6">
+            Once your guide is ready: Create one branded graphic using your new visual direction.
+            Post it with the caption: <br />
+            <span className="italic">“This is the beginning of something bigger. CEO energy only.”</span>
+          </p>
+          <p className="text-sm text-[#4C4B4B]">
+            Tag @ssasocial so Sandra can feature your glow-up 🖤
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}

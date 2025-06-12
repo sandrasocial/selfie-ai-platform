@@ -1,0 +1,119 @@
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
+import AdminHeader from '@/components/AdminHeader';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { apiRequest } from '@/lib/queryClient';
+
+export default function AdminDashboard() {
+  const { isAdmin, user, isLoading } = useAdminAuth();
+  const [timeframe, setTimeframe] = useState<'week' | 'month' | 'quarter'>('month');
+  const [customDateRange, setCustomDateRange] = useState({ start: '2025-03-01', end: '2025-05-30' });
+  const [showCustomDates, setShowCustomDates] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
+  const queryClient = useQueryClient();
+
+  const { data: dashboardData, refetch } = useQuery({
+    queryKey: ['/api/admin/dashboard', timeframe],
+    enabled: isAdmin,
+  });
+
+  const syncMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('POST', '/api/admin/sync-fiken');
+      return response;
+    },
+    onMutate: () => setSyncStatus('syncing'),
+    onSuccess: () => {
+      setSyncStatus('success');
+      refetch();
+      setTimeout(() => setSyncStatus('idle'), 3000);
+    },
+    onError: () => {
+      setSyncStatus('error');
+      setTimeout(() => setSyncStatus('idle'), 3000);
+    }
+  });
+
+  const today = new Date().toLocaleDateString('en-GB', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-[#171719] border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl text-[#171719] font-light" style={{ fontFamily: 'Cormorant Garamond' }}>Access Denied</h2>
+          <p className="text-[#4C4B4B] mt-2">This area is restricted to administrators.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F1F1F1]">
+      <AdminHeader />
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="mb-8">
+          <h1 className="text-5xl text-[#171719] mb-2" style={{ fontFamily: 'Cormorant Garamond' }}>
+            Welcome Back, {user?.firstName}
+          </h1>
+          <p className="text-[#4C4B4B] font-light" style={{ fontFamily: 'Neue Einstellung' }}>{today}</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <Label htmlFor="start" className="text-sm uppercase text-[#4C4B4B]">Start Date</Label>
+            <Input
+              type="date"
+              id="start"
+              value={customDateRange.start}
+              onChange={e => setCustomDateRange(prev => ({ ...prev, start: e.target.value }))}
+              className="mt-1"
+            />
+          </div>
+          <div>
+            <Label htmlFor="end" className="text-sm uppercase text-[#4C4B4B]">End Date</Label>
+            <Input
+              type="date"
+              id="end"
+              value={customDateRange.end}
+              onChange={e => setCustomDateRange(prev => ({ ...prev, end: e.target.value }))}
+              className="mt-1"
+            />
+          </div>
+          <div className="flex items-end">
+            <Button onClick={() => refetch()} className="w-full border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white text-sm uppercase">
+              Apply Range
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <h2 className="text-3xl text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond' }}>Dashboard Metrics</h2>
+          <p className="text-[#4C4B4B] font-light mb-8" style={{ fontFamily: 'Neue Einstellung' }}>
+            Total Revenue: {dashboardData?.revenue?.total || 0} NOK
+          </p>
+
+          <Button
+            onClick={() => syncMutation.mutate()}
+            className="border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white text-sm uppercase"
+          >
+            {syncStatus === 'syncing' ? 'Syncing…' : 'Sync to Fiken'}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,52 @@
+We’re ready to create truly magazine-quality PDFs via PDFMonkey. Please replace the existing export templates with a custom Vogue-style design. Follow these steps:
+
+Use PDFMonkey as the Generator
+• In server/pdfService.ts, update the payload builder for both calendar and content-collection exports to specify PDFMonkey’s template ID for our Vogue layout.
+• Instead of any generic “default” template, point to a new PDFMonkey template named "vogue_collection" (for content exports) and "vogue_calendar" (for calendar exports).
+
+Design the Vogue-Styled Template in PDFMonkey
+• Create a new template in PDFMonkey’s dashboard called “vogue_calendar” for weekly calendars:
+
+Header: Black background with white “SELFIE AI™” in Prata Bold, large (48pt) at top.
+
+Subheader: “Your Weekly Content Plan” in Helvetica Neue, 24pt, letter-spacing 0.5px.
+
+Grid Layout: Seven columns (Mon–Sun), each column header in Prata Bold 14pt.
+
+Cell Styling: Each day cell has a thin Soft Beige border, light-gray background for empty spots, and Black text for day numbers.
+
+Content Preview: Under each day-number, show the hook in Helvetica Neue 12pt italics, caption snippet in Helvetica Neue 10pt, and a subtle Soft Beige line separator.
+
+Footer: “Powered by SELFIE AI™” in Prata Regular 10pt, centered at bottom over a Soft Beige bar.
+• Create another template called “vogue_collection” for content vault exports:
+
+Cover Page: Full-page hero image (black-white editorial selfie) as background with “Your Content Vault” overlay in Prata Bold white 56pt.
+
+Table of Contents: List of days and template names in Helvetica Neue 14pt on a Soft Beige background.
+
+Content Pages: Each page shows one or two content items: large day number (Prata Bold 36pt), followed by the personalized AI-generated text in Helvetica Neue 12pt, with a Soft Beige left border accent.
+
+Embellishments: Small Vogue-style accents—thin horizontal Prata lines, subtle drop caps for the first letter of each caption.
+
+Branding: Add a “selfie ai” logo watermark (30% opacity) in the bottom-right corner of each page.
+
+Update Server Routes to Use New Template IDs
+• In server/routes.ts, change the PDF export endpoints to reference "vogue_calendar" and "vogue_collection" when calling PDFMonkey.
+• For example:
+
+ts
+Kopier
+Rediger
+const payload = {
+  template_id: 'vogue_calendar',
+  data: calendarPayload
+};
+pdfMonkey.generatePDF(payload);
+Test the New Vogue Layout
+• Generate a sample calendar PDF for Days 1–7 using /api/export-calendar-week/1 (or equivalent).
+• Verify that the PDF matches the Vogue-style spec (black & white header, grid, Soft Beige accents, etc.).
+• Generate a sample content-collection PDF via /api/export-content-vault. Confirm the cover page, table of contents, and content pages match the Vogue design guidelines above.
+
+Polish & Iterate
+• If any font sizes or spacing feel off, adjust the template in PDFMonkey until it looks like a high-end fashion editorial.
+• Ensure mobile and desktop previews (PDFMonkey’s preview) show exactly how it will render when downloaded.

@@ -90,7 +90,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Proof Section */}
+      {/* Proof Block */}
       <section className="bg-white py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -164,51 +164,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="min-h-screen flex items-center bg-[#FAFAF8]">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 py-32">
-          <div className="grid grid-cols-12 gap-16 items-center">
-            {/* Large Typography */}
-            <div className="col-span-12 lg:col-span-3">
-              <div className="font-['Lingerie_Typeface'] text-[300px] md:text-[400px] leading-none -ml-8">
-                01
-              </div>
-            </div>
-            
-            {/* Story Content */}
-            <div className="col-span-12 lg:col-span-6">
-              <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight mb-8">
-                From Heartbreak<br/>
-                <span className="italic font-light">to Headlines</span>
-              </h2>
-              
-              <div className="space-y-6 font-['Neue_Einstellung'] text-lg leading-relaxed text-black/80">
-                <p>
-                  I built my first personal brand from rock bottom. After my divorce, I had a camera, a vision, and the audacity to believe I could turn selfies into a six-figure business.
-                </p>
-                
-                <p>
-                  Today, I help women skip the struggle and go straight to strategy. SELFIE AI™ is everything I wish I had when I started—the tools, templates, and confidence to show up like the luxury brand you already are.
-                </p>
-                
-                <p className="font-['Bordoni_FLF'] italic text-2xl pt-4">
-                  "Your camera roll is a goldmine. Let me show you how to refine it."
-                </p>
-              </div>
-              
-              <div className="mt-12">
-                <img src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" alt="Sandra's Signature" className="h-16 opacity-80" />
-              </div>
-            </div>
-            
-            {/* Image */}
-            <div className="col-span-12 lg:col-span-3">
-              <img src="/sandra-working.jpg" alt="Sandra at work" className="w-full h-[500px] object-cover" />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Audience Archetypes */}
       <section className="bg-white py-32">
         <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
@@ -225,60 +180,60 @@ export default function Home() {
           
           {/* Archetype Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10">
-            {/* The Visionary */}
+            {/* The Coach */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="https://i.postimg.cc/sgxn9PZX/141.png" alt="The Visionary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/sgxn9PZX/141.png" alt="The Coach" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The Visionary
+                The Coach
               </div>
               
               <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You see the bigger picture
+                You know your stuff
               </h3>
               
               <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                But your brand doesn't reflect your vision yet. You need sophisticated tools that match your ambition.
+                Let's make sure your brand shows it.
               </p>
             </div>
             
-            {/* The Phoenix */}
+            {/* The Creator */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="https://i.postimg.cc/YqQMgyPp/106.png" alt="The Phoenix" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/YqQMgyPp/106.png" alt="The Creator" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The Phoenix
+                The Creator
               </div>
               
               <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You're rebuilding stronger
+                You've got taste, ideas, and a phone full of content
               </h3>
               
               <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                After life's plot twist, you're ready to show up differently. Let's make your comeback your best chapter.
+                Let's turn it into gold.
               </p>
             </div>
             
-            {/* The Luminary */}
+            {/* The CEO */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="https://i.postimg.cc/Bng37Psk/107.png" alt="The Luminary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/Bng37Psk/107.png" alt="The CEO" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The Luminary
+                The CEO
               </div>
               
               <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You're ready to shine
+                You're running the show
               </h3>
               
               <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                You have wisdom to share but need the right aesthetic. Time to package your brilliance beautifully.
+                I'll help you make it look effortless.
               </p>
             </div>
           </div>
@@ -460,7 +415,7 @@ export default function Home() {
             <div className="font-['Lingerie_Typeface'] text-[120px] leading-none text-white/10">03</div>
             <div>
               <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight text-white">
-                Your Luxury Toolkit
+                AI Tools
               </h2>
               <div className="w-32 h-px bg-white/20 mt-4"></div>
             </div>
@@ -469,45 +424,37 @@ export default function Home() {
           {/* Carousel Container */}
           <div className="relative">
             <div className="flex gap-8 overflow-x-auto scrollbar-hide pb-8">
-              {/* AI Caption Studio */}
+              {/* AI Studio */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
                 <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
                   01
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  AI Caption Studio
+                  AI Studio
                 </h3>
                 
-                <p className="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
-                  Transform one selfie into 30 days of content. Our AI writes in your voice, not like a robot.
+                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
+                  Make content that looks like you, but better.
                 </p>
-                
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
-                  Included in all plans
-                </div>
               </div>
               
-              {/* Template Vault */}
+              {/* Template Library */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
                 <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
                   02
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  Template Vault
+                  Template Library
                 </h3>
                 
-                <p className="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
-                  200+ luxury post templates. Canva-ready, brand-aligned, designed to stop the scroll.
+                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
+                  Beautiful design, done-for-you. No stress, no guesswork.
                 </p>
-                
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
-                  Updated monthly
-                </div>
               </div>
               
-              {/* Sandra AI */}
+              {/* Sandra AI Chat */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
                 <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
                   03
@@ -517,66 +464,59 @@ export default function Home() {
                   Sandra AI Chat
                 </h3>
                 
-                <p className="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
-                  Your 24/7 brand strategist. Ask me anything about poses, captions, or confidence.
+                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
+                  Ask me anything. I'll help you show up like you mean it.
                 </p>
-                
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
-                  Exclusive feature
-                </div>
               </div>
               
-              {/* Pose Library */}
+              {/* Workbooks */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
                 <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
                   04
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  Pose & Presence Library
+                  Workbooks
                 </h3>
                 
-                <p className="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
-                  500+ poses that work. Video tutorials, angle guides, and confidence coaching included.
+                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
+                  Structure, clarity, and space to build your brand with intention.
                 </p>
-                
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
-                  With video guides
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Modules Section */}
-      <section className="bg-[#FAFAF8] py-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
+      {/* What's Inside Modules */}
+      <section className="bg-white py-32">
+        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="text-center mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[200px] leading-none text-black/5">
-              04
+          <div className="flex items-baseline gap-8 mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none">04</div>
+            <div>
+              <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight">
+                What's Inside
+              </h2>
+              <div className="w-32 h-px bg-black mt-4"></div>
             </div>
-            <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight -mt-24">
-              The Transformation Path
-            </h2>
           </div>
           
-          {/* Modules Grid */}
+          {/* Module Grid */}
           <div className="space-y-px bg-black/10">
             {/* Module 1 */}
             <div className="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
               <div className="flex-1">
                 <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
-                  Foundation — Week 1-2
+                  Foundation — Week 1-3
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  Brand DNA Discovery
+                  Brand Starter Kit
                 </h3>
                 
                 <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  Uncover your authentic brand essence. Define your visual identity, voice, and values with precision.
+                  Find your look. Your voice. Your rhythm.
                 </p>
               </div>
               
@@ -589,15 +529,15 @@ export default function Home() {
             <div className="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
               <div className="flex-1">
                 <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
-                  Creation — Week 3-6
+                  Creation — Week 4-6
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  Content Mastery Sprint
+                  30-Day Visibility Sprint
                 </h3>
                 
                 <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  30 days of guided content creation. Daily prompts, templates, and AI assistance to build your library.
+                  One month of structure so you can stop stalling and start posting.
                 </p>
               </div>
               
@@ -614,11 +554,11 @@ export default function Home() {
                 </div>
                 
                 <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  Visibility & Growth Lab
+                  Pose & Presence Coach
                 </h3>
                 
                 <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  Strategic visibility tactics. Engagement strategies, collaboration templates, and growth tracking.
+                  Feel good in front of the camera. Finally.
                 </p>
               </div>
               
@@ -754,13 +694,13 @@ export default function Home() {
           <div className="space-y-12">
             <h2 className="font-['Bordoni_FLF'] text-[64px] md:text-[96px] lg:text-[120px] leading-[0.9] tracking-tight">
               Let's build<br/>
-              <span className="italic font-light">your luxury brand</span><br/>
+              <span className="italic font-light">your brand</span><br/>
               from your<br/>
               camera roll.
             </h2>
             
             <p className="font-['Neue_Einstellung'] text-xl text-black/70 max-w-2xl mx-auto">
-              Join 10,000+ women who transformed their selfies into sophisticated personal brands that attract opportunities.
+              I'll send you the tools and the clarity—straight to your inbox.
             </p>
             
             <div className="max-w-lg mx-auto">
@@ -770,19 +710,21 @@ export default function Home() {
                   placeholder="Your best email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent border-b-2 border-black py-4 px-2 font-['Neue_Einstellung'] text-lg placeholder:text-black/30 focus:outline-none focus:border-black/60 transition-colors"
+                  className="w-full px-0 py-4 text-lg bg-transparent border-0 border-b border-black/20 placeholder:text-black/40 focus:border-black focus:outline-none font-['Neue_Einstellung']"
                 />
                 
-                <button 
+                <button
                   type="submit"
-                  className="w-full bg-black text-white py-6 font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase hover:bg-black/90 transition-colors"
+                  className="group w-full relative overflow-hidden bg-black text-white py-4 px-8"
                 >
-                  Begin Your Transformation
+                  <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase">Get On The List</span>
+                  <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                  <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Get On The List</span>
                 </button>
               </form>
               
               <p className="font-['Neue_Einstellung'] text-xs text-black/40 mt-6">
-                Instant access. Cancel anytime. Transform forever.
+                Let's do this together, shall we...
               </p>
             </div>
           </div>

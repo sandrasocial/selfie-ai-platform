@@ -43,27 +43,30 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
               <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.9] tracking-[-0.03em] mb-12 text-white text-left">
-                <div className="leading-[1.1]">Your</div>
-                <span className="italic font-light">Selfie is</span><br/>
-                <div className="leading-[1.1]">Your Brand.</div>
+                <div className="leading-[1.1]">Your selfie</div>
+                <span className="italic font-light">is your</span><br/>
+                <div className="leading-[1.1]">brand.</div>
               </h1>
               
               <div className="max-w-xl">
+                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-white/80 mb-4">
+                  Let's make it work for you.
+                </p>
                 <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-white/80 mb-12">
-                  Let's make it work for you. Transform your camera roll into a luxury personal brand that opens doors, builds trust, and attracts your dream opportunities.
+                  You don't need to do more. You just need to show up with strategy.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <Link href="/dashboard">
                     <button className="group relative overflow-hidden bg-white text-black px-12 py-5">
-                      <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Begin Your Journey</span>
+                      <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Start Here</span>
                       <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                      <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Begin Your Journey</span>
+                      <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Start Here</span>
                     </button>
                   </Link>
                   
                   <button className="group relative overflow-hidden bg-transparent border border-white text-white px-12 py-5 hover:bg-white hover:text-black transition-all duration-300">
-                    <span className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Watch My Story</span>
+                    <span className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Explore Tools</span>
                   </button>
                 </div>
               </div>
@@ -77,45 +80,86 @@ export default function Home() {
               </div>
             </div>
           </div>
+          
+          {/* Hero Tagline */}
+          <div className="text-center mt-24">
+            <p className="font-['Bordoni_FLF'] italic text-white text-lg md:text-xl">
+              This is how we turn your camera roll into your brand.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Proof Section */}
-      <section className="bg-black py-24">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-16">
-            <div className="text-center md:text-left">
-              <div className="font-['Lingerie_Typeface'] text-[100px] md:text-[120px] leading-none text-white mb-2">
-                120K
-              </div>
-              <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/60">
-                Followers Built
-              </p>
+      <section className="bg-white py-16 md:py-24">
+        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">120K</div>
+              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Followers</div>
             </div>
-            
-            <div className="text-center">
-              <div className="font-['Lingerie_Typeface'] text-[100px] md:text-[120px] leading-none text-white mb-2">
-                1.7M
-              </div>
-              <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/60">
-                Monthly Reach
-              </p>
+            <div>
+              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">1.7M</div>
+              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Monthly Reach</div>
             </div>
-            
-            <div className="text-center md:text-right">
-              <div className="font-['Lingerie_Typeface'] text-[100px] md:text-[120px] leading-none text-white mb-2">
-                90
-              </div>
-              <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/60">
-                Days to Transform
-              </p>
+            <div>
+              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">90</div>
+              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Days</div>
             </div>
           </div>
-          
-          <div className="mt-16 text-center">
-            <p className="font-['Bordoni_FLF'] italic text-2xl text-white/80">
-              Proof, not promises. Results, not rhetoric.
-            </p>
+          <p className="font-['Bordoni_FLF'] italic text-xl text-black/80">
+            This isn't hype. It's what's possible.
+          </p>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="min-h-screen flex items-center bg-[#FAFAF8]">
+        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 py-32">
+          <div className="grid grid-cols-12 gap-16 items-center">
+            {/* Large Typography */}
+            <div className="col-span-12 lg:col-span-3">
+              <div className="font-['Lingerie_Typeface'] text-[300px] md:text-[400px] leading-none -ml-8">
+                01
+              </div>
+            </div>
+            
+            {/* Story Content */}
+            <div className="col-span-12 lg:col-span-6">
+              <div className="space-y-8">
+                <p className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">
+                  "I needed a way to show up."
+                </p>
+                
+                <div className="space-y-6 text-black/80">
+                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                    I created this because I was done second-guessing myself online.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                    I wanted to post with confidence. To feel proud of what I was building.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                    After my divorce, I had nothing but my iPhone, a vision, and the nerve to start showing up anyway.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                    SELFIE AI™ is the exact system I wish I had back then.
+                  </p>
+                </div>
+                
+                <p className="font-['Bordoni_FLF'] italic text-2xl pt-4">
+                  Let's do this together, shall we…
+                </p>
+              </div>
+              
+              <div className="mt-12">
+                <img src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" alt="Sandra's Signature" className="h-16 opacity-80" />
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="col-span-12 lg:col-span-3">
+              <img src="/sandra-working.jpg" alt="Sandra at work" className="w-full h-[500px] object-cover" />
+            </div>
           </div>
         </div>
       </section>

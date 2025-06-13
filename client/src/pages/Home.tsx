@@ -49,7 +49,7 @@ export default function Home() {
                   Let's make it work for you. Transform your camera roll into a luxury personal brand that opens doors, builds trust, and attracts your dream opportunities.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-6">
+                <div className="flex gap-4 justify-center">
                   <Link href="/dashboard">
                     <button className="group relative overflow-hidden bg-black text-white px-12 py-5">
                       <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Begin Your Journey</span>
@@ -418,8 +418,8 @@ export default function Home() {
       {/* Footer CTA */}
       <section className="relative min-h-screen bg-white flex items-center">
         {/* Background Typography */}
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-          <div className="font-['Lingerie_Typeface'] text-[600px] md:text-[800px] text-black/3 leading-none">
+        <div className="absolute inset-0 opacity-10 z-0 text-[400px] flex items-center justify-center overflow-hidden">
+          <div className="font-['Lingerie_Typeface'] text-[600px] md:text-[800px] text-black leading-none">
             S
           </div>
         </div>
@@ -475,6 +475,13 @@ export default function Home() {
               <Link href="/contact" className="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40 hover:text-black/80 transition-colors">Contact</Link>
             </div>
           </div>
+        </div>
+        
+        {/* Final CTA Text */}
+        <div className="absolute bottom-8 left-0 right-0 text-center z-10">
+          <p className="font-['Bordoni_FLF'] text-lg sm:text-xl mt-6 mb-2 italic">
+            Your Brand.
+          </p>
         </div>
       </section>
     </div>

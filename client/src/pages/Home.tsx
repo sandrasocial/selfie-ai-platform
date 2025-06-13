@@ -20,7 +20,7 @@ export default function Home() {
         {/* Hero Background Image - Full Bleed */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png)' }}
+          style={{ backgroundImage: 'url(https://i.postimg.cc/yYKKKpTW/Herofullbleed.png)' }}
         ></div>
         
         {/* Dark Overlay for Text Readability */}
@@ -42,10 +42,16 @@ export default function Home() {
           {/* Hero Content */}
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
-              <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[200px] leading-[0.8] tracking-[-0.03em] mb-16 text-white text-left">
-                <div className="text-[40px] md:text-[60px] lg:text-[80px] leading-[1.2] mb-4">Your</div>
-                <div className="leading-[0.8]">Selfie is your</div>
-                <div className="leading-[0.8] font-light">Brand.</div>
+              <h1 className="text-white text-left mb-16">
+                <div className="font-['Bordoni_FLF'] text-[40px] md:text-[60px] lg:text-[80px] leading-[1.3] tracking-wide mb-6 font-normal">
+                  Your
+                </div>
+                <div className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[180px] leading-[0.85] tracking-[-0.02em] mb-4">
+                  <span className="block">Selfie is your</span>
+                </div>
+                <div className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[180px] leading-[0.85] tracking-[-0.02em] font-light italic">
+                  Brand.
+                </div>
               </h1>
               
               <div className="max-w-xl">
@@ -268,7 +274,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div className="md:col-span-5 text-left md:text-right">
                   <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none text-white/10">
+                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
                       01
                     </div>
                     <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
@@ -310,7 +316,7 @@ export default function Home() {
                 
                 <div className="md:col-span-5 text-left order-3">
                   <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none text-white/10">
+                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
                       02
                     </div>
                     <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
@@ -332,7 +338,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div className="md:col-span-5 text-left md:text-right">
                   <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none text-white/10">
+                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
                       03
                     </div>
                     <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
@@ -374,7 +380,7 @@ export default function Home() {
                 
                 <div className="md:col-span-5 text-left order-3">
                   <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none text-white/10">
+                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
                       04
                     </div>
                     <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
@@ -692,11 +698,11 @@ export default function Home() {
         
         <div className="relative max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24 text-center">
           <div className="space-y-12">
-            <h2 className="font-['Bordoni_FLF'] text-[64px] md:text-[96px] lg:text-[120px] leading-[0.9] tracking-tight">
-              Let's build<br/>
-              <span className="italic font-light">your brand</span><br/>
-              from your<br/>
-              camera roll.
+            <h2 className="font-['Bordoni_FLF'] text-[64px] md:text-[96px] lg:text-[120px] leading-[0.9] tracking-[-0.01em]">
+              <span className="block mb-2">Let's build</span>
+              <span className="block italic font-light mb-2">your brand</span>
+              <span className="block mb-2">from your</span>
+              <span className="block">camera roll.</span>
             </h2>
             
             <p className="font-['Neue_Einstellung'] text-xl text-black/70 max-w-2xl mx-auto">

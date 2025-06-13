@@ -1,0 +1,56 @@
+<section class="relative min-h-screen bg-white flex items-center">
+  <!-- Background Typography -->
+  <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div class="font-['Lingerie_Typeface'] text-[600px] md:text-[800px] text-black/3 leading-none">
+      S
+    </div>
+  </div>
+  
+  <div class="relative max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24 text-center">
+    <div class="space-y-12">
+      <h2 class="font-['Bordoni_FLF'] text-[64px] md:text-[96px] lg:text-[120px] leading-[0.9] tracking-tight">
+        Let's build<br/>
+        <span class="italic font-light">your luxury brand</span><br/>
+        from your<br/>
+        camera roll.
+      </h2>
+      
+      <p class="font-['Neue_Einstellung'] text-xl text-black/70 max-w-2xl mx-auto">
+        Join 10,000+ women who transformed their selfies into sophisticated personal brands that attract opportunities.
+      </p>
+      
+      <div class="max-w-lg mx-auto">
+        <form class="space-y-8">
+          <input
+            type="email"
+            placeholder="Your best email"
+            class="w-full bg-transparent border-b-2 border-black py-4 px-2 font-['Neue_Einstellung'] text-lg placeholder:text-black/30 focus:outline-none focus:border-black/60 transition-colors"
+          />
+          
+          <button class="w-full bg-black text-white py-6 font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase hover:bg-black/90 transition-colors">
+            Begin Your Transformation
+          </button>
+        </form>
+        
+        <p class="font-['Neue_Einstellung'] text-xs text-black/40 mt-6">
+          Instant access. Cancel anytime. Transform forever.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16">
+    <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-t border-black/10 pt-8">
+      <div class="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-black/40">
+        © 2024 Selfie AI™ by Sandra Sigurjonsdottir
+      </div>
+      
+      <div class="flex gap-8">
+        <a href="#" class="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40 hover:text-black/80 transition-colors">Privacy</a>
+        <a href="#" class="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40 hover:text-black/80 transition-colors">Terms</a>
+        <a href="#" class="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40 hover:text-black/80 transition-colors">Contact</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -17,10 +17,10 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen bg-white overflow-hidden">
-        {/* Hero Background Image */}
+        {/* Hero Background Image - Full Bleed */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(https://i.postimg.cc/T30rkYjR/IMG-5635.jpg)' }}
+          style={{ backgroundImage: 'url(https://i.postimg.cc/rwgGZ6jy/flatlay-overlay-Url.png)' }}
         ></div>
         
         {/* Dark Overlay for Text Readability */}
@@ -29,8 +29,8 @@ export default function Home() {
         <div className="relative max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 pt-32 pb-24">
           {/* Navigation */}
           <nav className="flex justify-between items-center mb-32">
-            <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white">
-              Selfie AI™
+            <div className="flex items-center">
+              <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="Selfie AI Logo" className="h-8 md:h-10" />
             </div>
             <div className="flex gap-12">
               <Link href="/pricing" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">About</Link>
@@ -42,10 +42,10 @@ export default function Home() {
           {/* Hero Content */}
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
-              <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.9] tracking-[-0.03em] mb-12 text-white text-left">
-                <div className="leading-[1.1]">Your selfie</div>
-                <span className="italic font-light">is your</span><br/>
-                <div className="leading-[1.1]">brand.</div>
+              <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[200px] leading-[0.8] tracking-[-0.03em] mb-16 text-white text-left">
+                <div className="text-[40px] md:text-[60px] lg:text-[80px] leading-[1.2] mb-4">Your</div>
+                <div className="leading-[0.8]">Selfie is your</div>
+                <div className="leading-[0.8] font-light">Brand.</div>
               </h1>
               
               <div className="max-w-xl">
@@ -73,7 +73,7 @@ export default function Home() {
             </div>
             
             <div className="col-span-12 lg:col-span-4 relative">
-              <img src="/sandra-portrait-editorial.jpg" alt="Sandra Sigurjonsdottir" className="w-full h-[600px] object-cover grayscale" />
+              <img src="https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg" alt="Sandra Sigurjonsdottir" className="w-full h-[600px] object-cover" />
               <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur p-6">
                 <p className="font-['Bordoni_FLF'] italic text-lg">— Sandra Sigurjonsdottir</p>
                 <p className="font-['Neue_Einstellung'] text-xs tracking-wider uppercase mt-1">Founder & Creator</p>
@@ -158,7 +158,7 @@ export default function Home() {
             
             {/* Image */}
             <div className="col-span-12 lg:col-span-3">
-              <img src="/sandra-working.jpg" alt="Sandra at work" className="w-full h-[500px] object-cover" />
+              <img src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" alt="Sandra Quote" className="w-full h-[500px] object-cover" />
             </div>
           </div>
         </div>
@@ -243,7 +243,7 @@ export default function Home() {
       {/* Value Ladder Section */}
       <section className="bg-black py-32 md:py-48 relative overflow-hidden">
         {/* Background Design Element */}
-        <div className="absolute top-0 right-0 font-['Lingerie_Typeface'] text-[600px] md:text-[800px] text-white/5 leading-none select-none">
+        <div className="absolute top-0 right-0 font-['Lingerie_Typeface'] text-[600px] md:text-[800px] leading-none select-none" style={{color: '#f5f5f5', opacity: 0.1}}>
           06
         </div>
         
@@ -412,7 +412,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
           <div className="flex items-baseline gap-8 mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none text-white/10">03</div>
+            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>03</div>
             <div>
               <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight text-white">
                 AI Tools
@@ -426,7 +426,7 @@ export default function Home() {
             <div className="flex gap-8 overflow-x-auto scrollbar-hide pb-8">
               {/* AI Studio */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
                   01
                 </div>
                 
@@ -441,7 +441,7 @@ export default function Home() {
               
               {/* Template Library */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
                   02
                 </div>
                 
@@ -456,7 +456,7 @@ export default function Home() {
               
               {/* Sandra AI Chat */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
                   03
                 </div>
                 
@@ -471,7 +471,7 @@ export default function Home() {
               
               {/* Workbooks */}
               <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
                   04
                 </div>
                 

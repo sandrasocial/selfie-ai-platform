@@ -17,49 +17,53 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen bg-white overflow-hidden">
-        {/* Dramatic Typography Background */}
-        <div className="absolute top-0 right-0 text-[400px] font-['Lingerie_Typeface'] text-black/5 leading-none select-none">
-          S
-        </div>
+        {/* Hero Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(https://i.postimg.cc/T30rkYjR/IMG-5635.jpg)' }}
+        ></div>
+        
+        {/* Dark Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         
         <div className="relative max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 pt-32 pb-24">
           {/* Navigation */}
           <nav className="flex justify-between items-center mb-32">
-            <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase">
+            <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white">
               Selfie AI™
             </div>
             <div className="flex gap-12">
-              <Link href="/pricing" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase hover:opacity-60 transition-opacity">About</Link>
-              <Link href="/studio" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase hover:opacity-60 transition-opacity">Tools</Link>
-              <Link href="/dashboard" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase hover:opacity-60 transition-opacity">Start</Link>
+              <Link href="/pricing" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">About</Link>
+              <Link href="/studio" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">Tools</Link>
+              <Link href="/dashboard" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">Start</Link>
             </div>
           </nav>
           
           {/* Hero Content */}
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
-              <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.8] tracking-[-0.03em] mb-12">
-                Your Selfie<br/>
-                <span className="italic font-light">is Your</span><br/>
-                Brand.
+              <h1 className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.9] tracking-[-0.03em] mb-12 text-white text-left">
+                <div className="leading-[1.1]">Your</div>
+                <span className="italic font-light">Selfie is</span><br/>
+                <div className="leading-[1.1]">Your Brand.</div>
               </h1>
               
               <div className="max-w-xl">
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-black/70 mb-12">
+                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-white/80 mb-12">
                   Let's make it work for you. Transform your camera roll into a luxury personal brand that opens doors, builds trust, and attracts your dream opportunities.
                 </p>
                 
-                <div className="flex gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <Link href="/dashboard">
-                    <button className="group relative overflow-hidden bg-black text-white px-12 py-5">
+                    <button className="group relative overflow-hidden bg-white text-black px-12 py-5">
                       <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Begin Your Journey</span>
-                      <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                      <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Begin Your Journey</span>
+                      <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                      <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Begin Your Journey</span>
                     </button>
                   </Link>
                   
-                  <button className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase border-b border-black pb-1 hover:pb-2 transition-all">
-                    Watch My Story
+                  <button className="group relative overflow-hidden bg-transparent border border-white text-white px-12 py-5 hover:bg-white hover:text-black transition-all duration-300">
+                    <span className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Watch My Story</span>
                   </button>
                 </div>
               </div>
@@ -149,7 +153,7 @@ export default function Home() {
               </div>
               
               <div className="mt-12">
-                <img src="/sandra-signature.png" alt="Sandra's Signature" className="h-16 opacity-80" />
+                <img src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" alt="Sandra's Signature" className="h-16 opacity-80" />
               </div>
             </div>
             
@@ -180,7 +184,7 @@ export default function Home() {
             {/* The Visionary */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="/archetype-visionary.jpg" alt="The Visionary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/sgxn9PZX/141.png" alt="The Visionary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
@@ -199,7 +203,7 @@ export default function Home() {
             {/* The Phoenix */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="/archetype-phoenix.jpg" alt="The Phoenix" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/YqQMgyPp/106.png" alt="The Phoenix" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
@@ -218,7 +222,7 @@ export default function Home() {
             {/* The Luminary */}
             <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
               <div className="mb-8">
-                <img src="/archetype-luminary.jpg" alt="The Luminary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <img src="https://i.postimg.cc/Bng37Psk/107.png" alt="The Luminary" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
               
               <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">

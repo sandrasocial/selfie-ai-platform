@@ -1,0 +1,95 @@
+<section class="bg-black py-32 overflow-hidden">
+  <div class="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+    <!-- Section Header -->
+    <div class="flex items-baseline gap-8 mb-24">
+      <div class="font-['Lingerie_Typeface'] text-[120px] leading-none text-white/10">03</div>
+      <div>
+        <h2 class="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight text-white">
+          Your Luxury Toolkit
+        </h2>
+        <div class="w-32 h-px bg-white/20 mt-4"></div>
+      </div>
+    </div>
+    
+    <!-- Carousel Container -->
+    <div class="relative">
+      <div class="flex gap-8 overflow-x-auto scrollbar-hide pb-8">
+        <!-- AI Caption Studio -->
+        <div class="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
+          <div class="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+            01
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
+            AI Caption Studio
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
+            Transform one selfie into 30 days of content. Our AI writes in your voice, not like a robot.
+          </p>
+          
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
+            Included in all plans
+          </div>
+        </div>
+        
+        <!-- Template Vault -->
+        <div class="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
+          <div class="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+            02
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
+            Template Vault
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
+            200+ luxury post templates. Canva-ready, brand-aligned, designed to stop the scroll.
+          </p>
+          
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
+            Updated monthly
+          </div>
+        </div>
+        
+        <!-- Sandra AI -->
+        <div class="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
+          <div class="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+            03
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
+            Sandra AI Chat
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
+            Your 24/7 brand strategist. Ask me anything about poses, captions, or confidence.
+          </p>
+          
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
+            Exclusive feature
+          </div>
+        </div>
+        
+        <!-- Pose Library -->
+        <div class="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
+          <div class="font-['Lingerie_Typeface'] text-[80px] leading-none text-white/20 mb-8">
+            04
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
+            Pose & Presence Library
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-base text-white/70 leading-relaxed mb-8">
+            500+ poses that work. Video tutorials, angle guides, and confidence coaching included.
+          </p>
+          
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white/40">
+            With video guides
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

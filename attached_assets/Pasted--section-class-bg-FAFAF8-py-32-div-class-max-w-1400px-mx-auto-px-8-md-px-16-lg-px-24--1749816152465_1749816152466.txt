@@ -1,0 +1,79 @@
+<section class="bg-[#FAFAF8] py-32">
+  <div class="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
+    <!-- Section Header -->
+    <div class="text-center mb-24">
+      <div class="font-['Lingerie_Typeface'] text-[200px] leading-none text-black/5">
+        04
+      </div>
+      <h2 class="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight -mt-24">
+        The Transformation Path
+      </h2>
+    </div>
+    
+    <!-- Modules Grid -->
+    <div class="space-y-px bg-black/10">
+      <!-- Module 1 -->
+      <div class="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
+        <div class="flex-1">
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
+            Foundation — Week 1-2
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
+            Brand DNA Discovery
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
+            Uncover your authentic brand essence. Define your visual identity, voice, and values with precision.
+          </p>
+        </div>
+        
+        <div class="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
+          01
+        </div>
+      </div>
+      
+      <!-- Module 2 -->
+      <div class="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
+        <div class="flex-1">
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
+            Creation — Week 3-6
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
+            Content Mastery Sprint
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
+            30 days of guided content creation. Daily prompts, templates, and AI assistance to build your library.
+          </p>
+        </div>
+        
+        <div class="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
+          02
+        </div>
+      </div>
+      
+      <!-- Module 3 -->
+      <div class="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
+        <div class="flex-1">
+          <div class="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
+            Amplification — Week 7-12
+          </div>
+          
+          <h3 class="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
+            Visibility & Growth Lab
+          </h3>
+          
+          <p class="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
+            Strategic visibility tactics. Engagement strategies, collaboration templates, and growth tracking.
+          </p>
+        </div>
+        
+        <div class="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
+          03
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

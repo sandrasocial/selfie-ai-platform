@@ -20,6 +20,7 @@ import CoachingApplication from "@/pages/CoachingApplication";
 import ViralSelfieBlueprint from "@/pages/ViralSelfieBlueprint";
 import ModuleOne from "@/pages/ModuleOne";
 import ModuleTwo from "@/pages/ModuleTwo";
+import ModuleThree from "@/pages/ModuleThree";
 import MyWorkbooks from "@/pages/MyWorkbooks";
 import ContentVault from "@/pages/ContentVault";
 import MonthlyDrops from "@/pages/MonthlyDrops";
@@ -78,7 +79,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 
 function Router() {
   const SelfieGuide = lazy(() => import('@/pages/freebie/SelfieGuide'));
-  const VIPThankYou = lazy(() => import('./pages/thank-you/VIPThankYou'));
+  const VIPThankYou = lazy(() => import('@/pages/thank-you/VIPThankYou'));
 
   useEffect(() => {
     // Clear any stale auth state on fresh page load
@@ -120,7 +121,7 @@ function Router() {
         <Route path="/planner" component={() => <ProtectedRoute><Planner /></ProtectedRoute>} />
         <Route path="/drops" component={() => <ProtectedRoute><MonthlyDrops /></ProtectedRoute>} />
         <Route path="/courses" component={() => <ProtectedRoute><Courses /></ProtectedRoute>} />
-        <Route path="/account" component={() => <ProtectedRoute><MyAccount /></ProtectedRoute>} />
+
         <Route path="/calendar" component={() => <ProtectedRoute><Calendar /></ProtectedRoute>} />
         <Route path="/templates" component={() => <ProtectedRoute><Templates /></ProtectedRoute>} />
         <Route path="/content-vault" component={() => <ProtectedRoute><ContentVault /></ProtectedRoute>} />
@@ -156,6 +157,7 @@ function Router() {
         {/* Module Routes - Course Content */}
         <Route path="/module/1" component={() => <ProtectedRoute><ModuleOne /></ProtectedRoute>} />
         <Route path="/module/2" component={() => <ProtectedRoute><ModuleTwo /></ProtectedRoute>} />
+        <Route path="/module/3" component={() => <ProtectedRoute><ModuleThree /></ProtectedRoute>} />
 
         {/* Upsell Flow Routes */}
         <Route path="/offer-upsell" component={OfferUpsell} />

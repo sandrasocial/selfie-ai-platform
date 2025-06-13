@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'lingerie': ['Lingerie', 'serif'],
+        'bordoni': ['Bordoni FLF', 'serif'],
+        'neue': ['Neue Einstellung', 'sans-serif'],
+        'sans': ['Neue Einstellung', 'Inter', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

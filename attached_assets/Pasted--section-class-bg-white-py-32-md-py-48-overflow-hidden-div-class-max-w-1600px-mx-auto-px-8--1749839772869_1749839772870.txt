@@ -1,0 +1,109 @@
+<section class="bg-white py-32 md:py-48 overflow-hidden">
+  <div class="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+    <!-- Section Header -->
+    <div class="text-center mb-24">
+      <div class="font-['Lingerie_Typeface'] text-[180px] md:text-[240px] leading-none text-black/5 select-none">
+        05
+      </div>
+      <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight -mt-32 mb-8">
+        Their Words, Not Mine
+      </h2>
+      <div className="w-32 h-px bg-black/20 mx-auto"></div>
+    </div>
+    
+    <!-- Messages Grid -->
+    <div className="relative">
+      <!-- Background Quote Mark -->
+      <div className="absolute -top-20 -left-10 font-['Lingerie_Typeface'] text-[300px] text-black/3 leading-none select-none">
+        "
+      </div>
+      
+      <!-- Messages Layout -->
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+        
+        <!-- Message 1 - Large Feature -->
+        <div className="md:col-span-7 relative">
+          <div className="bg-[#FAFAF8] p-12 md:p-16 border-l-4 border-black/10">
+            <p className="font-['Neue_Einstellung'] text-[18px] md:text-[22px] leading-relaxed text-black/80 mb-6">
+              "Sandra, thank you so much for each of your reels. 90%, it's sound like my life. Inspired by you, I started to take selfies of myself and recorded 3 stories of what I felt and what I did."
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-black/10"></div>
+              <div>
+                <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-black/40">
+                  DM Received
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Message 2 - Offset -->
+        <div className="md:col-span-5 md:mt-24">
+          <div className="bg-black text-white p-10 md:p-12">
+            <p className="font-['Bordoni_FLF'] italic text-[20px] md:text-[24px] leading-tight mb-6">
+              "You have literally changed my picture taking from boring selfies to professional pictures!"
+            </p>
+            <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase opacity-60">
+              @follower
+            </p>
+          </div>
+        </div>
+        
+        <!-- Message 3 - Floating -->
+        <div className="md:col-span-5 md:col-start-2">
+          <div className="border border-black/10 p-8 md:p-10 hover:border-black/30 transition-colors duration-500">
+            <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-relaxed text-black/70 mb-4">
+              "I'm so in love with your journey! Today was the day I decided to not use any more filters ever."
+            </p>
+            <div className="flex justify-between items-center">
+              <span className="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40">
+                Instagram DM
+              </span>
+              <span className="text-2xl">❤️</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Message 4 - Accent -->
+        <div className="md:col-span-6 md:col-start-7">
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 font-['Lingerie_Typeface'] text-[120px] text-black/5 leading-none">
+              !
+            </div>
+            <div className="bg-[#FAFAF8] p-10 md:p-12">
+              <p className="font-['Neue_Einstellung'] text-[17px] md:text-[19px] leading-relaxed text-black/80">
+                "Oh my goodness! I need to hear this on repeat. I will start posting more even when I'm not ready."
+              </p>
+              <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-black/40 mt-4">
+                Sarah Catherine
+              </p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Floating accent messages -->
+      <div className="mt-16 flex flex-wrap gap-6 justify-center">
+        <div className="bg-black/5 backdrop-blur px-8 py-4 inline-block">
+          <p className="font-['Neue_Einstellung'] text-sm text-black/60">
+            "Love how you show the actual camera settings!"
+          </p>
+        </div>
+        
+        <div className="bg-black/5 backdrop-blur px-8 py-4 inline-block">
+          <p className="font-['Neue_Einstellung'] text-sm text-black/60">
+            "I'm pursuing my dream! Thank you so much!"
+          </p>
+        </div>
+        
+        <div className="bg-black/5 backdrop-blur px-8 py-4 inline-block">
+          <p className="font-['Neue_Einstellung'] text-sm text-black/60">
+            "Ready for next level at 41!"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

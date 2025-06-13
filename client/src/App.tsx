@@ -22,7 +22,7 @@ import ModuleOne from "@/pages/ModuleOne";
 import ModuleTwo from "@/pages/ModuleTwo";
 import MyWorkbooks from "@/pages/MyWorkbooks";
 import ContentVault from "@/pages/ContentVault";
-import MonthlyDrops from "./pages/MonthlyDrops";
+import MonthlyDrops from "@/pages/MonthlyDrops";
 import Courses from "@/pages/Courses";
 import Templates from "@/pages/Templates";
 import SandraAI from "@/pages/SandraAI";
@@ -36,9 +36,9 @@ import AuthCallback from "@/pages/AuthCallback";
 import SupabaseAuth from "@/pages/SupabaseAuth";
 import SupabaseCallback from "@/pages/SupabaseCallback";
 import AdminDashboard from "@/pages/AdminDashboard";
-import AdminDrops from './pages/AdminDrops';
-import TempAdminLogin from './pages/TempAdminLogin';
-import TestLogin from './pages/TestLogin';
+import AdminDrops from "@/pages/AdminDrops";
+import TempAdminLogin from "@/pages/TempAdminLogin";
+import TestLogin from "@/pages/TestLogin";
 import DevLogin from "@/pages/DevLogin";
 import DevAuth from "@/pages/DevAuth";
 import DashboardDev from "@/pages/DashboardDev";
@@ -204,7 +204,6 @@ function Router() {
 
         {/* Public Routes */}
         <Route path="/pricing" component={Pricing} />
-        <Route path="/templates" component={Templates} />
         <Route path="/contact" component={Contact} />
         <Route path="/support" component={Support} />
         <Route path="/login" component={Login} />

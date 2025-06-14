@@ -638,162 +638,157 @@ export default function Home() {
       </section>
 
       {/* Benefits Carousel */}
-      <section className="bg-black py-32 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+      <section className="relative bg-black py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          05 — Tools
+        </div>
+        
+        <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="flex items-baseline gap-8 mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>03</div>
-            <div>
-              <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight text-white">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-8 md:gap-12 mb-16 md:mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.8] text-white/5 select-none">
+              05
+            </div>
+            <div className="flex-1">
+              <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-white tracking-[-0.01em]">
                 AI Tools
               </h2>
-              <div className="w-32 h-px bg-white/20 mt-4"></div>
+              <div className="w-16 md:w-24 h-px bg-white/20 mt-4"></div>
             </div>
           </div>
           
-          {/* Carousel Container */}
-          <div className="relative">
-            <div className="flex gap-8 overflow-x-auto scrollbar-hide pb-8">
-              {/* AI Studio */}
-              <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
-                  01
-                </div>
-                
-                <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  AI Studio
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
-                  Make content that looks like you, but better.
-                </p>
+          {/* Tools Grid - Responsive */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8">
+            {/* AI Studio */}
+            <div className="group relative bg-white/5 backdrop-blur border border-white/10 p-8 md:p-10 transition-all duration-700 hover:bg-white/10 hover:border-white/20">
+              <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[70px] leading-[0.8] mb-6 text-white/10 select-none">
+                01
               </div>
               
-              {/* Template Library */}
-              <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
-                  02
-                </div>
-                
-                <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  Template Library
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
-                  Beautiful design, done-for-you. No stress, no guesswork.
-                </p>
+              <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] text-white mb-4 leading-[1.2] tracking-[-0.01em] -mt-12 md:-mt-14">
+                AI Studio
+              </h3>
+              
+              <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-white/70 tracking-[0.01em]">
+                Make content that looks like you, but better.
+              </p>
+            </div>
+            
+            {/* Template Library */}
+            <div className="group relative bg-white/5 backdrop-blur border border-white/10 p-8 md:p-10 transition-all duration-700 hover:bg-white/10 hover:border-white/20">
+              <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[70px] leading-[0.8] mb-6 text-white/10 select-none">
+                02
               </div>
               
-              {/* Sandra AI Chat */}
-              <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
-                  03
-                </div>
-                
-                <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  Sandra AI Chat
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
-                  Ask me anything. I'll help you show up like you mean it.
-                </p>
+              <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] text-white mb-4 leading-[1.2] tracking-[-0.01em] -mt-12 md:-mt-14">
+                Template Library
+              </h3>
+              
+              <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-white/70 tracking-[0.01em]">
+                Beautiful design, done-for-you. No stress, no guesswork.
+              </p>
+            </div>
+            
+            {/* Sandra AI Chat */}
+            <div className="group relative bg-white/5 backdrop-blur border border-white/10 p-8 md:p-10 transition-all duration-700 hover:bg-white/10 hover:border-white/20">
+              <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[70px] leading-[0.8] mb-6 text-white/10 select-none">
+                03
               </div>
               
-              {/* Workbooks */}
-              <div className="min-w-[400px] bg-white/5 backdrop-blur border border-white/10 p-12">
-                <div className="font-['Lingerie_Typeface'] text-[80px] leading-none mb-8" style={{color: '#f5f5f5', opacity: 0.25}}>
-                  04
-                </div>
-                
-                <h3 className="font-['Bordoni_FLF'] text-[32px] text-white mb-4">
-                  Workbooks
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed mb-8">
-                  Structure, clarity, and space to build your brand with intention.
-                </p>
+              <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] text-white mb-4 leading-[1.2] tracking-[-0.01em] -mt-12 md:-mt-14">
+                Sandra AI Chat
+              </h3>
+              
+              <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-white/70 tracking-[0.01em]">
+                Ask me anything. I'll help you show up like you mean it.
+              </p>
+            </div>
+            
+            {/* Workbooks */}
+            <div className="group relative bg-white/5 backdrop-blur border border-white/10 p-8 md:p-10 transition-all duration-700 hover:bg-white/10 hover:border-white/20">
+              <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[70px] leading-[0.8] mb-6 text-white/10 select-none">
+                04
               </div>
+              
+              <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] text-white mb-4 leading-[1.2] tracking-[-0.01em] -mt-12 md:-mt-14">
+                Workbooks
+              </h3>
+              
+              <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-white/70 tracking-[0.01em]">
+                Structure, clarity, and space to build your brand with intention.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* What's Inside Modules */}
-      <section className="bg-white py-32">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+      <section className="relative bg-white py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          06 — Modules
+        </div>
+        
+        <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="flex items-baseline gap-8 mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none">04</div>
-            <div>
-              <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-8 md:gap-12 mb-16 md:mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.8] text-[#171719]/5 select-none">
+              06
+            </div>
+            <div className="flex-1">
+              <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-[#171719] tracking-[-0.01em]">
                 What's Inside
               </h2>
-              <div className="w-32 h-px bg-black mt-4"></div>
+              <div className="w-16 md:w-24 h-px bg-[#171719]/20 mt-4"></div>
             </div>
           </div>
           
           {/* Module Grid */}
-          <div className="space-y-px bg-black/10">
+          <div className="space-y-4 md:space-y-6">
             {/* Module 1 */}
-            <div className="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
-              <div className="flex-1">
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
-                  Foundation — Week 1-3
+            <div className="group relative bg-[#FAFAF8] border border-[#171719]/5 p-8 md:p-12 lg:p-16 transition-all duration-700 hover:bg-[#171719] hover:text-white hover:border-[#171719]">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 lg:gap-8">
+                <div className="flex-1">
+                  <div className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] group-hover:text-white/60 mb-4">
+                    Foundation — Week 1-3
+                  </div>
+                  
+                  <h3 className="font-['Bordoni_FLF'] text-[28px] md:text-[36px] lg:text-[42px] leading-[1.2] text-[#171719] group-hover:text-white mb-4 tracking-[-0.01em]">
+                    Brand Starter Kit
+                  </h3>
+                  
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/70 group-hover:text-white/80 max-w-2xl tracking-[0.01em]">
+                    Find your look. Your voice. Your rhythm.
+                  </p>
                 </div>
                 
-                <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  Brand Starter Kit
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  Find your look. Your voice. Your rhythm.
-                </p>
-              </div>
-              
-              <div className="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
-                01
+                <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] lg:text-[100px] leading-[0.8] text-[#171719]/5 group-hover:text-white/10 select-none">
+                  01
+                </div>
               </div>
             </div>
             
             {/* Module 2 */}
-            <div className="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
-              <div className="flex-1">
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
-                  Creation — Week 4-6
+            <div className="group relative bg-[#FAFAF8] border border-[#171719]/5 p-8 md:p-12 lg:p-16 transition-all duration-700 hover:bg-[#171719] hover:text-white hover:border-[#171719]">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 lg:gap-8">
+                <div className="flex-1">
+                  <div className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] group-hover:text-white/60 mb-4">
+                    Creation — Week 4-6
+                  </div>
+                  
+                  <h3 className="font-['Bordoni_FLF'] text-[28px] md:text-[36px] lg:text-[42px] leading-[1.2] text-[#171719] group-hover:text-white mb-4 tracking-[-0.01em]">
+                    30-Day Visibility Sprint
+                  </h3>
+                  
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/70 group-hover:text-white/80 max-w-2xl tracking-[0.01em]">
+                    One month of structure so you can stop stalling and start posting.
+                  </p>
                 </div>
                 
-                <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  30-Day Visibility Sprint
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  One month of structure so you can stop stalling and start posting.
-                </p>
-              </div>
-              
-              <div className="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
-                02
-              </div>
-            </div>
-            
-            {/* Module 3 */}
-            <div className="bg-[#FAFAF8] p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 group hover:bg-black hover:text-white transition-all duration-500">
-              <div className="flex-1">
-                <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase opacity-60 mb-4">
-                  Amplification — Week 7-12
+                <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] lg:text-[100px] leading-[0.8] text-[#171719]/5 group-hover:text-white/10 select-none">
+                  02
                 </div>
-                
-                <h3 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] leading-tight mb-4">
-                  Pose & Presence Coach
-                </h3>
-                
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed opacity-80 max-w-2xl">
-                  Feel good in front of the camera. Finally.
-                </p>
-              </div>
-              
-              <div className="font-['Lingerie_Typeface'] text-[80px] opacity-10 group-hover:opacity-20">
-                03
               </div>
             </div>
           </div>
@@ -801,65 +796,103 @@ export default function Home() {
       </section>
 
       {/* Social Proof Section */}
-      <section className="bg-white py-32 md:py-48 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+      <section className="relative bg-white py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          07 — Testimonials
+        </div>
+        
+        <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="text-center mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[180px] md:text-[240px] leading-none text-black/5 select-none">
-              05
+          <div className="flex flex-col md:flex-row md:items-baseline gap-8 md:gap-12 mb-16 md:mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.8] text-[#171719]/5 select-none">
+              07
             </div>
-            <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight -mt-32 mb-8">
-              Their Words, Not Mine
-            </h2>
-            <div className="w-32 h-px bg-black/20 mx-auto"></div>
+            <div className="flex-1">
+              <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-[#171719] tracking-[-0.01em]">
+                Their Words, Not Mine
+              </h2>
+              <div className="w-16 md:w-24 h-px bg-[#171719]/20 mt-4"></div>
+            </div>
           </div>
           
           {/* Messages Grid */}
-          <div className="relative">
-            {/* Background Quote Mark */}
-            <div className="absolute -top-20 -left-10 font-['Lingerie_Typeface'] text-[300px] text-black/3 leading-none select-none">
-              "
-            </div>
-            
-            {/* Messages Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-              
-              {/* Message 1 - Large Feature */}
-              <div className="md:col-span-7 relative">
-                <div className="bg-[#FAFAF8] p-12 md:p-16 border-l-4 border-black/10">
-                  <p className="font-['Neue_Einstellung'] text-[18px] md:text-[22px] leading-relaxed text-black/80 mb-6">
-                    "Sandra, thank you so much for each of your reels. 90%, it's sound like my life. Inspired by you, I started to take selfies of myself and recorded 3 stories of what I felt and what I did."
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-black/10"></div>
-                    <div>
-                      <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-black/40">
-                        DM Received
-                      </p>
-                    </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Message 1 - Large Feature */}
+            <div className="group relative">
+              <div className="bg-[#FAFAF8] border border-[#171719]/5 p-8 md:p-12 transition-all duration-700 hover:bg-[#171719] hover:text-white hover:border-[#171719]">
+                <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/80 group-hover:text-white/90 mb-6 tracking-[0.01em]">
+                  "Sandra, thank you so much for each of your reels. 90%, it's sound like my life. Inspired by you, I started to take selfies of myself and recorded 3 stories of what I felt and what I did."
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-[#171719]/10 group-hover:bg-white/20"></div>
+                  <div>
+                    <p className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] group-hover:text-white/60">
+                      DM Received
+                    </p>
                   </div>
                 </div>
               </div>
-              
-              {/* Message 2 - Offset */}
-              <div className="md:col-span-5 md:mt-24">
-                <div className="bg-black text-white p-10 md:p-12">
-                  <p className="font-['Bordoni_FLF'] italic text-[20px] md:text-[24px] leading-tight mb-6">
-                    "You have literally changed my picture taking from boring selfies to professional pictures!"
-                  </p>
-                  <p className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase opacity-60">
-                    @follower
-                  </p>
-                </div>
+            </div>
+            
+            {/* Message 2 - Offset */}
+            <div className="group relative lg:mt-16">
+              <div className="bg-[#171719] text-white border border-[#171719] p-8 md:p-12 transition-all duration-700 hover:bg-white hover:text-[#171719] hover:border-[#171719]/20">
+                <p className="font-['Bordoni_FLF'] italic text-[18px] md:text-[22px] leading-[1.3] mb-6 tracking-[0.02em]">
+                  "You have literally changed my picture taking from boring selfies to professional pictures!"
+                </p>
+                <p className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-white/60 group-hover:text-[#4C4B4B]">
+                  @follower
+                </p>
               </div>
-              
-              {/* Message 3 - Floating */}
-              <div className="md:col-span-5 md:col-start-2">
-                <div className="border border-black/10 p-8 md:p-10 hover:border-black/30 transition-colors duration-500">
-                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-relaxed text-black/70 mb-4">
-                    "I'm so in love with your journey! Today was the day I decided to not use any more filters ever."
-                  </p>
-                  <div className="flex justify-between items-center">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="relative min-h-screen bg-[#FAFAF8] flex items-center justify-center overflow-hidden">
+        {/* Background Design Element */}
+        <div className="absolute top-0 right-0 font-['Lingerie_Typeface'] text-[400px] md:text-[600px] lg:text-[800px] leading-[0.8] select-none" style={{color: '#171719', opacity: 0.02}}>
+          08
+        </div>
+        
+        <div className="relative max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24 text-center">
+          <div className="space-y-12">
+            <h2 className="font-['Bordoni_FLF'] text-[64px] md:text-[96px] lg:text-[120px] leading-[0.9] tracking-[-0.01em]">
+              <span className="block mb-2">Let's build</span>
+              <span className="block italic font-light mb-2">your brand</span>
+              <span className="block mb-2">from your</span>
+              <span className="block">camera roll.</span>
+            </h2>
+            
+            <p className="font-['Neue_Einstellung'] text-xl text-black/70 max-w-2xl mx-auto">
+              I'll send you the tools and the clarity—straight to your inbox.
+            </p>
+            
+            <div className="max-w-lg mx-auto">
+              <form className="space-y-8" onSubmit={handleEmailSubmit}>
+                <input
+                  type="email"
+                  placeholder="Your best email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-0 py-4 text-lg bg-transparent border-0 border-b border-black/20 placeholder:text-black/40 focus:border-black focus:outline-none font-['Neue_Einstellung']"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-black text-white py-4 px-8 font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase hover:bg-black/80 transition-colors duration-300"
+                >
+                  Get Started Free
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
                     <span className="font-['Neue_Einstellung'] text-xs tracking-[0.15em] uppercase text-black/40">
                       Instagram DM
                     </span>

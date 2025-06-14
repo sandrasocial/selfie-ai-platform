@@ -25,7 +25,7 @@ export default function SelfieGuide() {
       const result = await submitSelfieGuideLead({ email, name });
       // Redirect to thank you page with PDF URL
       const pdfParam = result.pdfUrl ? `?pdf=${encodeURIComponent(result.pdfUrl)}` : '';
-      setLocation(`/freebie/selfieguide/thankyou${pdfParam}`);
+      window.location.href = `/freebie/selfieguide/thankyou${pdfParam}`;
     } catch (error) {
       console.error('Failed to submit:', error);
       setShowSuccess(true); // Show fallback success state
@@ -326,5 +326,5 @@ export default function SelfieGuide() {
     </div>
   );
 }
-// ready for push - PDFMonkey integration complete
+// ready for deploy
   

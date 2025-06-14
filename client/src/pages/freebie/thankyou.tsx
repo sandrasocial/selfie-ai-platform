@@ -2,14 +2,17 @@ import React from 'react';
 import { Link } from 'wouter';
 
 export default function ThankYou() {
-  // Get PDF URL from query params or use default
+  // Get PDF URL from query params - no fallback to static file
   const urlParams = new URLSearchParams(window.location.search);
-  const dynamicPdfUrl = urlParams.get('pdf');
-  const pdfUrl = dynamicPdfUrl || 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf';
+  const pdfUrl = urlParams.get('pdf');
 
   const handleDownload = () => {
     // Open PDF in new tab for download
-    window.open(pdfUrl, '_blank');
+    if (pdfUrl) {
+      window.open(pdfUrl, '_blank');
+    } else {
+      console.error('No PDF URL available');
+    }
   };
 
   return (
@@ -118,5 +121,5 @@ export default function ThankYou() {
     </div>
   );
 }
-// ready for push - Dynamic PDF URL support added
+// ready for deploy
      

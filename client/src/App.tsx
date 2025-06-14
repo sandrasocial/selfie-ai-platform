@@ -170,7 +170,7 @@ function Router() {
         <Route path="/summer-collabs" component={SummerCollabs} />
 
         {/* Freebie Routes */}
-        <Route path="/freebie/selfie-guide" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuide /></Suspense>} />
+        <Route path="/freebie/selfieguide" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuide /></Suspense>} />
 
         {/* Admin Routes */}
         <Route path="/admin" component={() => <ProtectedRoute><AdminDashboard /></ProtectedRoute>} />

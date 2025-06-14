@@ -218,5 +218,4 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
     return { success: true, emailError: error };
   }
 }
-// ready for deploy 
- 
+// ready for deploy

@@ -1,220 +1,307 @@
+import React, { useState } from 'react';
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-
-export default function SelfieGuideLanding() {
+export default function StartHere() {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [elementsLoaded, setElementsLoaded] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  React.useEffect(() => {
+    const timer = setTimeout(() => setElementsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    if (!email) return;
 
-    try {
-      // Store in Supabase and trigger Flodesk via Zapier
-      const response = await fetch('/api/freebie/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name, guide: 'ultimate-selfie' })
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setShowSuccess(true);
+    setIsSubmitting(false);
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-[#F1F1F1]">
-        <Header />
-        <main className="min-h-[80vh] flex items-center justify-center px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h1 
-              className="text-5xl lg:text-6xl mb-6 text-[#171719]"
-              style={{ fontFamily: 'Cormorant Garamond' }}
-            >
-              Check your inbox.
-            </h1>
-            <p 
-              className="text-xl text-[#4C4B4B] mb-8"
-              style={{ fontFamily: 'Inter', fontWeight: 300 }}
-            >
-              Your glow-up starts now
-            </p>
-            <div className="bg-white p-8 border border-[#B5B5B3] max-w-md mx-auto">
-              <h3 
-                className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond' }}
-              >
-                Ready for More?
-              </h3>
-              <p 
-                className="text-[#4C4B4B] mb-6"
-                style={{ fontFamily: 'Inter', fontWeight: 300 }}
-              >
-                Take the complete transformation with our starter kit
-              </p>
-              <Button 
-                className="bg-[#171719] text-white hover:bg-white hover:text-[#171719] border border-[#171719] w-full py-3 font-normal tracking-wide uppercase"
-                style={{ borderRadius: 0 }}
-                onClick={() => window.location.href = '/products/starter-kit'}
-              >
-                GET THE STARTER KIT → $67
-              </Button>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#F1F1F1]">
-      <Header />
-      
-      {/* Hero Section */}
-      <section 
-        className="min-h-screen flex items-center justify-center px-6 bg-cover bg-center relative"
-        style={{ backgroundImage: 'url(https://i.postimg.cc/XJ5LHY2R/IMG-0407-jpg.jpg)' }}
-      >
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center text-white">
-          <h1 
-            className="text-6xl lg:text-7xl mb-6"
-            style={{ fontFamily: 'Cormorant Garamond' }}
-          >
-            Your camera roll is about to glow up.
-          </h1>
-          <p 
-            className="text-xl lg:text-2xl mb-12 max-w-2xl mx-auto"
-            style={{ fontFamily: 'Inter', fontWeight: 300 }}
-          >
-            Everything you need to start taking confident, content-ready selfies—today.
+    <div className="min-h-screen bg-white">
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+
+        @keyframes fadeInScale {
+          from { 
+            opacity: 0; 
+            transform: scale(0.95);
+          }
+          to { 
+            opacity: 1; 
+            transform: scale(1);
+          }
+        }
+
+        .animate-shimmer {
+          animation: shimmer 3s infinite;
+        }
+
+        .animate-fadeInScale {
+          animation: fadeInScale 0.8s ease-out forwards;
+        }
+      `}</style>
+
+      {/* Premium loading line */}
+      <div className="fixed top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#171719]/20 to-transparent animate-shimmer z-50"></div>
+
+      {/* Hero Section - Editorial Impact */}
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
+        {/* Background gradient for luxury depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FAFAF8] via-white to-[#F1F1F1]"></div>
+
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.015]" 
+          style={{ 
+            backgroundImage: 'repeating-linear-gradient(45deg, #171719 0, #171719 1px, transparent 1px, transparent 20px)' 
+          }}
+        ></div>
+
+        {/* Large decorative number */}
+        <div className="absolute -right-20 top-0 font-['Lingerie_Typeface'] text-[400px] md:text-[600px] leading-none text-[#171719]/[0.02] select-none pointer-events-none">
+          01
+        </div>
+
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              {/* Small accent */}
+              <div className={`mb-8 transition-all duration-1000 ease-out transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.35em] text-[#4C4B4B]">
+                  Free Guide — Start Today
+                </p>
+              </div>
+
+              {/* Headline */}
+              <h1 className={`font-['Bordoni_FLF'] text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.9] text-[#171719] mb-8 transition-all duration-1000 ease-out delay-200 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                Not loving your selfies?
+                <span className="block font-['Bordoni_FLF'] italic font-light text-[#4C4B4B]/80 text-[40px] sm:text-[56px] md:text-[72px] lg:text-[88px] mt-2">
+                  Let's change that.
+                </span>
+              </h1>
+
+              {/* What they'll get */}
+              <div className={`space-y-6 mb-12 transition-all duration-1000 ease-out delay-400 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="font-['Neue_Einstellung'] text-[18px] md:text-[20px] leading-[1.6] text-[#171719]/80">
+                  This free guide shows you how to take better selfies—with just your phone. No filters. No weird angles. No second guessing.
+                </p>
+
+                <div className="space-y-4 ml-0 md:ml-8">
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] text-[#4C4B4B] mb-6">
+                    Inside, I'll show you:
+                  </p>
+
+                  {[
+                    'The camera settings that make a big difference',
+                    'How to get good lighting (yes, even indoors)',
+                    'Easy editing tips to make your photos pop',
+                    'A 7-day challenge to boost your confidence'
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-4 group">
+                      <span className="font-['Neue_Einstellung'] text-[14px] text-[#171719]/40 mt-1">✓</span>
+                      <p className="font-['Neue_Einstellung'] text-[16px] md:text-[17px] leading-relaxed text-[#171719]/70 group-hover:text-[#171719] transition-colors duration-300">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="font-['Bordoni_FLF'] text-[22px] md:text-[26px] text-[#171719] mt-8 italic">
+                  It's simple. It works. And you'll actually like how you look.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Content - Form */}
+            <div className="lg:col-span-5">
+              <div className={`bg-[#FAFAF8] p-8 md:p-12 border border-[#171719]/10 transition-all duration-1000 ease-out delay-600 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                {/* Mini about */}
+                <div className="mb-10">
+                  <div className="w-16 h-px bg-[#171719]/20 mb-6"></div>
+                  <p className="font-['Neue_Einstellung'] text-[15px] md:text-[16px] leading-relaxed text-[#4C4B4B]">
+                    I made this because I used to hate every photo of myself. Now? I take selfies I'm proud to post—and help other women do the same. This is where we start.
+                  </p>
+                </div>
+
+                {/* Form */}
+                {!showSuccess ? (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Your best email"
+                        required
+                        className="w-full px-0 py-4 text-[18px] bg-transparent border-0 border-b-2 border-[#171719]/20 placeholder:text-[#B5B5B3] focus:border-[#171719] focus:outline-none font-['Neue_Einstellung'] transition-colors duration-300"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#171719] text-white py-5 font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.3em] transition-all duration-500 hover:bg-[#171719]/90 disabled:opacity-50 relative overflow-hidden group"
+                    >
+                      <span className="relative z-10">
+                        {isSubmitting ? 'SENDING...' : 'GET INSTANT ACCESS'}
+                      </span>
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </button>
+                  </form>
+                ) : (
+                  <div className="text-center py-8 animate-fadeInScale">
+                    <div className="w-16 h-16 bg-[#171719] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <span className="text-white text-2xl">✓</span>
+                    </div>
+                    <p className="font-['Bordoni_FLF'] text-[24px] text-[#171719] mb-2">
+                      Check your inbox!
+                    </p>
+                    <p className="font-['Neue_Einstellung'] text-[14px] text-[#4C4B4B]">
+                      Your guide is on its way.
+                    </p>
+                  </div>
+                )}
+
+                {/* Trust elements */}
+                <div className="mt-8 pt-8 border-t border-[#171719]/10">
+                  <p className="font-['Neue_Einstellung'] text-[11px] text-[#B5B5B3] text-center uppercase tracking-[0.2em]">
+                    Join 10,000+ women taking better selfies
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#171719]/10 to-transparent"></div>
+      </section>
+
+      {/* Love Notes Section */}
+      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAFAF8]/50 to-transparent"></div>
+
+        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          {/* Section header */}
+          <div className="text-center mb-16 md:mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[120px] md:text-[180px] leading-none text-[#171719]/[0.03] select-none">
+              Love
+            </div>
+            <h2 className="font-['Bordoni_FLF'] text-[36px] md:text-[48px] text-[#171719] -mt-16 md:-mt-24">
+              What They're Saying
+            </h2>
+          </div>
+
+          {/* Testimonials Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#171719]/10 max-w-6xl mx-auto">
+            {[
+              '"I\'ve taken some of my best selfies thanks to you."',
+              '"You made me stop using filters. I actually like what I see now."',
+              '"Your tips turned my boring selfies into real photos I\'m proud of."',
+              '"Love how you show the actual camera settings—so helpful!"',
+              '"This gave me the push to show up more."'
+            ].map((quote, index) => (
+              <div key={index} className="bg-white p-8 md:p-10 group hover:bg-[#FAFAF8] transition-all duration-500">
+                <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-relaxed text-[#171719]/70 group-hover:text-[#171719] transition-colors duration-300">
+                  {quote}
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#171719]/10 rounded-full"></div>
+                  <div className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.2em] text-[#B5B5B3]">
+                    Verified
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Empty cell for layout on desktop */}
+            <div className="hidden lg:block bg-[#171719] p-10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+              <div className="relative z-10">
+                <p className="font-['Bordoni_FLF'] text-[28px] text-white italic">
+                  Join them.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Step Teaser */}
+      <section className="py-24 md:py-40 bg-[#171719] text-white relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E")` 
+          }}
+        ></div>
+
+        {/* Large background text */}
+        <div className="absolute -left-20 top-1/2 transform -translate-y-1/2 font-['Lingerie_Typeface'] text-[300px] md:text-[500px] leading-none text-white/[0.02] select-none pointer-events-none">
+          AI
+        </div>
+
+        <div className="relative z-10 max-w-[1000px] mx-auto px-6 sm:px-8 md:px-16 text-center">
+          <div className="mb-8">
+            <p className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.35em] text-white/60 mb-8">
+              What Happens Next
+            </p>
+
+            <h3 className="font-['Bordoni_FLF'] text-[32px] sm:text-[40px] md:text-[56px] leading-tight mb-8">
+              Your first AI-powered
+              <span className="block font-['Bordoni_FLF'] italic font-light">selfie session awaits</span>
+            </h3>
+
+            <p className="font-['Neue_Einstellung'] text-[18px] md:text-[20px] leading-relaxed text-white/80 max-w-2xl mx-auto">
+              Once you go through the guide, you'll unlock your first AI-powered selfie session—made to help you show up like the woman you know you are.
+            </p>
+          </div>
+
+          {/* Visual element */}
+          <div className="mt-16 flex justify-center">
+            <div className="relative">
+              <div className="w-32 h-32 border border-white/20 rotate-45 animate-spin-slow"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simple Footer */}
+      <footer className="py-12 bg-white border-t border-[#171719]/10">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24 text-center">
+          <img 
+            src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" 
+            alt="SELFIE AI™" 
+            className="h-8 mx-auto mb-6 opacity-80 invert"
+          />
+          <p className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.2em] text-[#B5B5B3]">
+            © 2024 Selfie AI™ by Sandra Sigurjonsdottir
           </p>
-          
-          {/* Email Capture Form */}
-          <div className="bg-white p-8 max-w-md mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                type="text"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="border-[#B5B5B3] focus:border-[#171719]"
-                style={{ borderRadius: 0 }}
-              />
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="border-[#B5B5B3] focus:border-[#171719]"
-                style={{ borderRadius: 0 }}
-              />
-              <Button 
-                type="submit"
-                disabled={isLoading}
-                className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white w-full py-3 font-normal tracking-wide uppercase"
-                style={{ borderRadius: 0 }}
-              >
-                {isLoading ? 'SENDING...' : 'GET THE FREE GUIDE →'}
-              </Button>
-            </form>
-          </div>
         </div>
-      </section>
+      </footer>
 
-      {/* What You'll Learn Section */}
-      <section className="py-20 px-6 bg-[#F1F1F1]">
-        <div className="max-w-6xl mx-auto">
-          <h2 
-            className="text-5xl text-center mb-16 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond' }}
-          >
-            What You'll Learn
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-white border border-[#B5B5B3] hover:transform hover:scale-105 transition-transform duration-300">
-              <h3 
-                className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond' }}
-              >
-                Lighting like a pro—even on a budget
-              </h3>
-              <p 
-                className="text-[#4C4B4B]"
-                style={{ fontFamily: 'Inter', fontWeight: 300 }}
-              >
-                Master natural and artificial lighting to create stunning selfies anywhere
-              </p>
-            </div>
-            
-            <div className="text-center p-8 bg-white border border-[#B5B5B3] hover:transform hover:scale-105 transition-transform duration-300">
-              <h3 
-                className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond' }}
-              >
-                Pose confidently in every frame
-              </h3>
-              <p 
-                className="text-[#4C4B4B]"
-                style={{ fontFamily: 'Inter', fontWeight: 300 }}
-              >
-                Learn the poses that flatter every angle and build unshakeable confidence
-              </p>
-            </div>
-            
-            <div className="text-center p-8 bg-white border border-[#B5B5B3] hover:transform hover:scale-105 transition-transform duration-300">
-              <h3 
-                className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond' }}
-              >
-                Mindset shift to feel magnetic on camera
-              </h3>
-              <p 
-                className="text-[#4C4B4B]"
-                style={{ fontFamily: 'Inter', fontWeight: 300 }}
-              >
-                Transform your relationship with the camera and radiate authentic confidence
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <style jsx global>{`
+        @keyframes spin-slow {
+          from { transform: rotate(45deg); }
+          to { transform: rotate(405deg); }
+        }
 
-      {/* Social Proof Section */}
-      <section className="py-20 px-6 bg-[#171719]">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 
-            className="text-5xl mb-16 text-white"
-            style={{ fontFamily: 'Cormorant Garamond' }}
-          >
-            Used by 20,000+ women building personal brands with confidence
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="aspect-square bg-white/10 border border-white/20"></div>
-            <div className="aspect-square bg-white/10 border border-white/20"></div>
-            <div className="aspect-square bg-white/10 border border-white/20"></div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }

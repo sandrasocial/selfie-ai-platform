@@ -79,7 +79,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 
 function Router() {
   const SelfieGuide = lazy(() => import('@/pages/freebie/SelfieGuide'));
-  const SelfieGuideThankYou = lazy(() => import('@/pages/freebie/ThankYou'));
+  const SelfieGuideThankYou = lazy(() => import('@/pages/freebie/thankyou'));
   const VIPThankYou = lazy(() => import('@/pages/thank-you/VIPThankYou'));
 
   useEffect(() => {

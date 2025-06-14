@@ -153,6 +153,39 @@
     animation: shimmer 3s ease-in-out infinite;
   }
 
+  /* Entrance animations for hero content */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 1.2s ease-out forwards;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  /* Radial gradient for vignette effect */
+  .bg-radial-gradient {
+    background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(23, 23, 25, 0.3) 100%);
+  }
+
   /* CTA Button Styles */
   .cta-solid {
     background-color: #171719;

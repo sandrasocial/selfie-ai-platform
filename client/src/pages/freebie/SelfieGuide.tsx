@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function StartHere() {
+export default function SelfieGuide() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -11,7 +11,7 @@ export default function StartHere() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 

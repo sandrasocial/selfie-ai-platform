@@ -297,6 +297,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="min-h-screen flex items-center bg-[#FAFAF8] py-20 sm:py-24 md:py-32">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24 w-full">
+          <div className="grid grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
+            {/* Large Typography */}
+            <div className="col-span-12 lg:col-span-3 text-center lg:text-left">
+              <div className="font-['Lingerie_Typeface'] text-[200px] sm:text-[250px] md:text-[300px] lg:text-[400px] leading-none -ml-0 lg:-ml-8 opacity-5 lg:opacity-100">
+                01
+              </div>
+            </div>
+            
+            {/* Story Content */}
+            <div className="col-span-12 lg:col-span-6 -mt-20 sm:-mt-32 lg:mt-0">
+              <div className="space-y-6 md:space-y-8">
+                <p className="font-['Bordoni_FLF'] text-[36px] sm:text-[48px] md:text-[64px] leading-tight text-center lg:text-left">
+                  "I needed a way to show up."
+                </p>
+                
+                <div className="space-y-4 md:space-y-6 text-black/80">
+                  <p className="font-['Neue_Einstellung'] text-base md:text-lg leading-relaxed">
+                    I created this because I was done second-guessing myself online.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-base md:text-lg leading-relaxed">
+                    I wanted to post with confidence. To feel proud of what I was building.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-base md:text-lg leading-relaxed">
+                    After my divorce, I had nothing but my iPhone, a vision, and the nerve to start showing up anyway.
+                  </p>
+                  <p className="font-['Neue_Einstellung'] text-base md:text-lg leading-relaxed">
+                    SELFIE AI™ is the exact system I wish I had back then.
+                  </p>
+                </div>
+                
+                <p className="font-['Bordoni_FLF'] italic text-xl md:text-2xl pt-2 md:pt-4">
+                  Let's do this together, shall we…
+                </p>
+              </div>
+              
+              <div className="mt-8 md:mt-12 text-center lg:text-left">
+                <img src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" alt="Sandra's Signature" className="h-12 md:h-16 opacity-80 hover:opacity-100 transition-opacity duration-500 inline-block" />
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="col-span-12 lg:col-span-3 mt-8 lg:mt-0">
+              <div className="relative overflow-hidden group max-w-[400px] mx-auto lg:max-w-none">
+                <img src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" alt="Sandra Quote" className="w-full h-[400px] md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                {/* Subtle frame on hover */}
+                <div className="absolute inset-2 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA Section */}
       <section className="relative min-h-screen bg-[#FAFAF8] flex items-center justify-center overflow-hidden">
         {/* Background Design Element */}

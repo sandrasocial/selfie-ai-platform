@@ -1,4 +1,4 @@
-// PDFMonkey API integration for Selfie Guide generation
+// PDFMonkey API integration for Selfie Guide generation 
 export interface PDFGenerationRequest {
   templateId: string;
   payload: {

@@ -24,7 +24,7 @@ export default function SelfieGuide() {
 
   return (
     <div className="min-h-screen bg-white">
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(400%); }
@@ -292,7 +292,7 @@ export default function SelfieGuide() {
         </div>
       </footer>
 
-      <style jsx global>{`
+      <style>{`
         @keyframes spin-slow {
           from { transform: rotate(45deg); }
           to { transform: rotate(405deg); }

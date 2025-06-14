@@ -22,9 +22,10 @@ export default function SelfieGuide() {
     setIsSubmitting(true);
     
     try {
-      await submitSelfieGuideLead({ email, name });
-      // Redirect to thank you page
-      setLocation('/freebie/selfieguide/thankyou');
+      const result = await submitSelfieGuideLead({ email, name });
+      // Redirect to thank you page with PDF URL
+      const pdfParam = result.pdfUrl ? `?pdf=${encodeURIComponent(result.pdfUrl)}` : '';
+      setLocation(`/freebie/selfieguide/thankyou${pdfParam}`);
     } catch (error) {
       console.error('Failed to submit:', error);
       setShowSuccess(true); // Show fallback success state

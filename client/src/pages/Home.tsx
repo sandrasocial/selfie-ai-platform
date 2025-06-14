@@ -286,212 +286,266 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="min-h-screen flex items-center bg-[#FAFAF8]">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 py-32">
-          <div className="grid grid-cols-12 gap-16 items-center">
+      <section className="relative bg-[#FAFAF8] py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          02 — Story
+        </div>
+        
+        <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             {/* Large Typography */}
-            <div className="col-span-12 lg:col-span-3">
-              <div className="font-['Lingerie_Typeface'] text-[300px] md:text-[400px] leading-none -ml-8">
-                01
+            <div className="lg:col-span-2 order-1">
+              <div className="font-['Lingerie_Typeface'] text-[120px] md:text-[200px] lg:text-[280px] leading-[0.8] text-[#171719]/5 select-none">
+                02
               </div>
             </div>
             
             {/* Story Content */}
-            <div className="col-span-12 lg:col-span-6">
-              <div className="space-y-8">
-                <p className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">
+            <div className="lg:col-span-7 order-3 lg:order-2">
+              <div className="space-y-8 md:space-y-12">
+                <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-[#171719] tracking-[-0.01em]">
                   "I needed a way to show up."
-                </p>
+                </h2>
                 
-                <div className="space-y-6 text-black/80">
-                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                <div className="space-y-6 md:space-y-8 max-w-2xl">
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/80 tracking-[0.01em]">
                     I created this because I was done second-guessing myself online.
                   </p>
-                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/80 tracking-[0.01em]">
                     I wanted to post with confidence. To feel proud of what I was building.
                   </p>
-                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/80 tracking-[0.01em]">
                     After my divorce, I had nothing but my iPhone, a vision, and the nerve to start showing up anyway.
                   </p>
-                  <p className="font-['Neue_Einstellung'] text-lg leading-relaxed">
+                  <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-[#171719]/80 tracking-[0.01em]">
                     SELFIE AI™ is the exact system I wish I had back then.
                   </p>
                 </div>
                 
-                <p className="font-['Bordoni_FLF'] italic text-2xl pt-4">
+                <p className="font-['Bordoni_FLF'] italic text-[20px] md:text-[24px] leading-[1.3] text-[#171719] tracking-[0.02em] pt-4">
                   Let's do this together, shall we…
                 </p>
-              </div>
-              
-              <div className="mt-12">
-                <img src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" alt="Sandra's Signature" className="h-16 opacity-80" />
+                
+                {/* Signature */}
+                <div className="pt-8">
+                  <img 
+                    src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" 
+                    alt="Sandra's Signature" 
+                    className="h-12 md:h-16 opacity-70 hover:opacity-90 transition-opacity duration-300" 
+                  />
+                </div>
               </div>
             </div>
             
             {/* Image */}
-            <div className="col-span-12 lg:col-span-3">
-              <img src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" alt="Sandra Quote" className="w-full h-[500px] object-cover" />
+            <div className="lg:col-span-3 order-2 lg:order-3">
+              <div className="relative max-w-[280px] mx-auto">
+                <div className="relative overflow-hidden group">
+                  <img 
+                    src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" 
+                    alt="Sandra Quote" 
+                    className="w-full h-[320px] md:h-[400px] object-cover filter contrast-110 transition-all duration-700 group-hover:contrast-125 group-hover:scale-[1.02]" 
+                  />
+                  {/* Subtle frame */}
+                  <div className="absolute inset-0 border border-[#171719]/5"></div>
+                </div>
+                {/* Caption */}
+                <p className="mt-4 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] text-center">
+                  The Beginning
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Audience Archetypes */}
-      <section className="bg-white py-32">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24">
+      <section className="relative bg-white py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          03 — Archetypes
+        </div>
+        
+        <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="flex items-baseline gap-8 mb-24">
-            <div className="font-['Lingerie_Typeface'] text-[120px] leading-none">02</div>
-            <div>
-              <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] tracking-tight">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-8 md:gap-12 mb-16 md:mb-24">
+            <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] lg:text-[160px] leading-[0.8] text-[#171719]/5 select-none">
+              03
+            </div>
+            <div className="flex-1">
+              <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-[#171719] tracking-[-0.01em]">
                 Who It's For
               </h2>
-              <div className="w-32 h-px bg-black mt-4"></div>
+              <div className="w-16 md:w-24 h-px bg-[#171719]/20 mt-4"></div>
             </div>
           </div>
           
           {/* Archetype Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* The Coach */}
-            <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
-              <div className="mb-8">
-                <img src="https://i.postimg.cc/sgxn9PZX/141.png" alt="The Coach" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+            <div className="group relative bg-white border border-[#171719]/5 overflow-hidden transition-all duration-700 hover:border-[#171719]/20 hover:shadow-lg">
+              <div className="relative overflow-hidden">
+                <img 
+                  src="https://i.postimg.cc/sgxn9PZX/141.png" 
+                  alt="The Coach" 
+                  className="w-full h-[280px] md:h-[320px] object-cover filter contrast-110 transition-all duration-700 group-hover:contrast-125 group-hover:scale-[1.02]" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               </div>
               
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The Coach
+              <div className="p-8 md:p-10">
+                <div className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] mb-4">
+                  The Coach
+                </div>
+                
+                <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] leading-[1.2] text-[#171719] mb-4 tracking-[-0.01em]">
+                  You know your stuff
+                </h3>
+                
+                <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-[#171719]/70 tracking-[0.01em]">
+                  Let's make sure your brand shows it.
+                </p>
               </div>
-              
-              <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You know your stuff
-              </h3>
-              
-              <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                Let's make sure your brand shows it.
-              </p>
             </div>
             
             {/* The Creator */}
-            <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
-              <div className="mb-8">
-                <img src="https://i.postimg.cc/YqQMgyPp/106.png" alt="The Creator" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+            <div className="group relative bg-white border border-[#171719]/5 overflow-hidden transition-all duration-700 hover:border-[#171719]/20 hover:shadow-lg">
+              <div className="relative overflow-hidden">
+                <img 
+                  src="https://i.postimg.cc/YqQMgyPp/106.png" 
+                  alt="The Creator" 
+                  className="w-full h-[280px] md:h-[320px] object-cover filter contrast-110 transition-all duration-700 group-hover:contrast-125 group-hover:scale-[1.02]" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               </div>
               
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The Creator
+              <div className="p-8 md:p-10">
+                <div className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] mb-4">
+                  The Creator
+                </div>
+                
+                <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] leading-[1.2] text-[#171719] mb-4 tracking-[-0.01em]">
+                  You've got taste, ideas, and a phone full of content
+                </h3>
+                
+                <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-[#171719]/70 tracking-[0.01em]">
+                  Let's turn it into gold.
+                </p>
               </div>
-              
-              <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You've got taste, ideas, and a phone full of content
-              </h3>
-              
-              <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                Let's turn it into gold.
-              </p>
             </div>
             
             {/* The CEO */}
-            <div className="bg-white p-12 group hover:bg-black hover:text-white transition-all duration-700">
-              <div className="mb-8">
-                <img src="https://i.postimg.cc/Bng37Psk/107.png" alt="The CEO" className="w-full h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+            <div className="group relative bg-white border border-[#171719]/5 overflow-hidden transition-all duration-700 hover:border-[#171719]/20 hover:shadow-lg">
+              <div className="relative overflow-hidden">
+                <img 
+                  src="https://i.postimg.cc/Bng37Psk/107.png" 
+                  alt="The CEO" 
+                  className="w-full h-[280px] md:h-[320px] object-cover filter contrast-110 transition-all duration-700 group-hover:contrast-125 group-hover:scale-[1.02]" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               </div>
               
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase mb-4 opacity-60">
-                The CEO
+              <div className="p-8 md:p-10">
+                <div className="font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.25em] text-[#4C4B4B] mb-4">
+                  The CEO
+                </div>
+                
+                <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] leading-[1.2] text-[#171719] mb-4 tracking-[-0.01em]">
+                  You're running the show
+                </h3>
+                
+                <p className="font-['Neue_Einstellung'] text-[14px] md:text-[16px] leading-[1.6] text-[#171719]/70 tracking-[0.01em]">
+                  I'll help you make it look effortless.
+                </p>
               </div>
-              
-              <h3 className="font-['Bordoni_FLF'] text-[32px] leading-tight mb-6">
-                You're running the show
-              </h3>
-              
-              <p className="font-['Neue_Einstellung'] text-base leading-relaxed opacity-80">
-                I'll help you make it look effortless.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Value Ladder Section */}
-      <section className="bg-black py-32 md:py-48 relative overflow-hidden">
+      <section className="relative bg-black py-20 md:py-28 lg:py-36 overflow-hidden">
+        {/* Section identifier */}
+        <div className="absolute top-8 left-8 md:left-24 font-['Neue_Einstellung'] text-[10px] uppercase tracking-[0.3em] text-[#B5B5B3]">
+          04 — Journey
+        </div>
+        
         {/* Background Design Element */}
-        <div className="absolute top-0 right-0 font-['Lingerie_Typeface'] text-[600px] md:text-[800px] leading-none select-none" style={{color: '#f5f5f5', opacity: 0.1}}>
-          06
+        <div className="absolute top-0 right-0 font-['Lingerie_Typeface'] text-[400px] md:text-[600px] lg:text-[800px] leading-[0.8] select-none" style={{color: '#f5f5f5', opacity: 0.05}}>
+          04
         </div>
         
         <div className="relative max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
           {/* Section Header */}
-          <div className="text-center mb-32">
-            <h2 className="font-['Bordoni_FLF'] text-[48px] md:text-[72px] tracking-tight text-white mb-8">
+          <div className="text-center mb-20 md:mb-28">
+            <h2 className="font-['Bordoni_FLF'] text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] text-white mb-6 md:mb-8 tracking-[-0.01em]">
               Your Journey Starts Here
             </h2>
-            <p className="font-['Neue_Einstellung'] text-lg text-white/60 max-w-2xl mx-auto">
+            <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-white/70 max-w-2xl mx-auto tracking-[0.01em]">
               Choose your path. Each step builds on the last, creating your complete transformation.
             </p>
           </div>
           
-          {/* Journey Path */}
-          <div className="relative">
-            {/* Connecting Line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 transform -translate-x-1/2 hidden md:block"></div>
-            
+          {/* Journey Path - Responsive Grid */}
+          <div className="space-y-16 md:space-y-24">
             {/* Step 1: Free Guide */}
-            <div className="relative mb-24 md:mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-5 text-left md:text-right">
-                  <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
+            <div className="relative group">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="lg:col-span-6 order-2 lg:order-1">
+                  <div className="space-y-6">
+                    <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] leading-[0.8] text-white/10 select-none">
                       01
                     </div>
-                    <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
+                    <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[32px] lg:text-[36px] text-white leading-[1.1] tracking-[-0.01em] -mt-12 md:-mt-16">
                       Free Selfie Guide
                     </h3>
-                    <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed">
+                    <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-white/70 tracking-[0.01em] max-w-xl">
                       5 poses that work every time. The lighting secrets I use. Your first step to confidence.
                     </p>
-                    <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white/40">
+                    <div className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.25em] text-white/50 pt-2">
                       Start Here • Free
                     </div>
                   </div>
                 </div>
                 
-                {/* Center Node */}
-                <div className="md:col-span-2 flex justify-center">
-                  <div className="w-4 h-4 bg-white rounded-full relative">
-                    <div className="absolute inset-0 bg-white rounded-full animate-ping"></div>
+                <div className="lg:col-span-6 order-1 lg:order-2">
+                  <div className="relative max-w-sm mx-auto">
+                    <div className="aspect-square bg-white/5 border border-white/10 p-8 transition-all duration-700 group-hover:border-white/20 group-hover:bg-white/10">
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="md:col-span-5">
-                  {/* Empty for alternating layout */}
                 </div>
               </div>
             </div>
             
             {/* Step 2: Starter Kit */}
-            <div className="relative mb-24 md:mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-5 order-2 md:order-1">
-                  {/* Empty for alternating layout */}
+            <div className="relative group">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="lg:col-span-6 order-1">
+                  <div className="relative max-w-sm mx-auto">
+                    <div className="aspect-square bg-white/5 border border-white/10 p-8 transition-all duration-700 group-hover:border-white/20 group-hover:bg-white/10">
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white/50 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                {/* Center Node */}
-                <div className="md:col-span-2 flex justify-center order-1 md:order-2">
-                  <div className="w-4 h-4 bg-white/50 rounded-full"></div>
-                </div>
-                
-                <div className="md:col-span-5 text-left order-3">
-                  <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
+                <div className="lg:col-span-6 order-2">
+                  <div className="space-y-6">
+                    <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] leading-[0.8] text-white/10 select-none">
                       02
                     </div>
-                    <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
+                    <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[32px] lg:text-[36px] text-white leading-[1.1] tracking-[-0.01em] -mt-12 md:-mt-16">
                       Selfie Starter Kit
                     </h3>
-                    <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed">
+                    <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-white/70 tracking-[0.01em] max-w-xl">
                       30 days of prompts. Caption templates that convert. Your personal brand foundation.
                     </p>
-                    <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white/40">
+                    <div className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.25em] text-white/50 pt-2">
                       Essentials • $67
                     </div>
                   </div>
@@ -500,62 +554,64 @@ export default function Home() {
             </div>
             
             {/* Step 3: Branded */}
-            <div className="relative mb-24 md:mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-5 text-left md:text-right">
-                  <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
+            <div className="relative group">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="lg:col-span-6 order-2 lg:order-1">
+                  <div className="space-y-6">
+                    <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] leading-[0.8] text-white/10 select-none">
                       03
                     </div>
-                    <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
+                    <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[32px] lg:text-[36px] text-white leading-[1.1] tracking-[-0.01em] -mt-12 md:-mt-16">
                       Branded By Selfie
                     </h3>
-                    <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed">
+                    <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-white/70 tracking-[0.01em] max-w-xl">
                       Complete transformation system. AI tools, pose library, weekly coaching. Everything you need.
                     </p>
-                    <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white/40">
+                    <div className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.25em] text-white/50 pt-2">
                       Full Program • $397
                     </div>
                   </div>
                 </div>
                 
-                {/* Center Node */}
-                <div className="md:col-span-2 flex justify-center">
-                  <div className="w-4 h-4 bg-white/50 rounded-full"></div>
-                </div>
-                
-                <div className="md:col-span-5">
-                  {/* Empty for alternating layout */}
+                <div className="lg:col-span-6 order-1 lg:order-2">
+                  <div className="relative max-w-sm mx-auto">
+                    <div className="aspect-square bg-white/5 border border-white/10 p-8 transition-all duration-700 group-hover:border-white/20 group-hover:bg-white/10">
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white/50 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Step 4: VIP */}
-            <div className="relative">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-5 order-2 md:order-1">
-                  {/* Empty for alternating layout */}
-                </div>
-                
-                {/* Center Node */}
-                <div className="md:col-span-2 flex justify-center order-1 md:order-2">
-                  <div className="w-6 h-6 bg-white rounded-full relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-full scale-150"></div>
+            <div className="relative group">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="lg:col-span-6 order-1">
+                  <div className="relative max-w-sm mx-auto">
+                    <div className="aspect-square bg-white/10 border border-white/20 p-8 transition-all duration-700 group-hover:border-white/30 group-hover:bg-white/15">
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-4 h-4 bg-white rounded-full relative">
+                          <div className="absolute inset-0 bg-white/30 rounded-full scale-150 animate-pulse"></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="md:col-span-5 text-left order-3">
-                  <div className="space-y-4">
-                    <div className="font-['Lingerie_Typeface'] text-[80px] md:text-[120px] leading-none" style={{color: '#f5f5f5', opacity: 0.15}}>
+                <div className="lg:col-span-6 order-2">
+                  <div className="space-y-6">
+                    <div className="font-['Lingerie_Typeface'] text-[60px] md:text-[80px] leading-[0.8] text-white/10 select-none">
                       04
                     </div>
-                    <h3 className="font-['Bordoni_FLF'] text-[32px] md:text-[40px] text-white -mt-16 md:-mt-20">
+                    <h3 className="font-['Bordoni_FLF'] text-[24px] md:text-[32px] lg:text-[36px] text-white leading-[1.1] tracking-[-0.01em] -mt-12 md:-mt-16">
                       VIP Brand Builder
                     </h3>
-                    <p className="font-['Neue_Einstellung'] text-white/60 leading-relaxed">
+                    <p className="font-['Neue_Einstellung'] text-[16px] md:text-[18px] leading-[1.6] text-white/70 tracking-[0.01em] max-w-xl">
                       Private mentorship. Custom strategy. Direct access to Sandra. For serious transformations only.
                     </p>
-                    <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white/40">
+                    <div className="font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.25em] text-white/50 pt-2">
                       Application Only • Premium
                     </div>
                   </div>
@@ -565,16 +621,18 @@ export default function Home() {
           </div>
           
           {/* CTA */}
-          <div className="text-center mt-32">
-            <button className="group relative overflow-hidden bg-white text-black px-16 py-6">
-              <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase">
-                Start Your Journey
-              </span>
-              <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-              <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                Start Your Journey
-              </span>
-            </button>
+          <div className="text-center mt-20 md:mt-28">
+            <Link href="/dashboard">
+              <button className="group relative overflow-hidden bg-white text-black px-12 md:px-16 py-4 md:py-6 transition-all duration-300 hover:shadow-xl">
+                <span className="relative z-10 font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.3em]">
+                  Start Your Journey
+                </span>
+                <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-[11px] uppercase tracking-[0.3em] text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                  Start Your Journey
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
       </section>

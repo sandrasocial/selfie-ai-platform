@@ -1,64 +1,21 @@
-import { supabase } from './supabaseClient';
-
-export interface SelfieGuideSubmission {
-  name?: string;
-  email: string;
-}
-
-export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
-  try {
-    // Insert lead into Supabase
-    const { data: lead, error: insertError } = await supabase
-      .from('leads')
-      .insert([
-        {
-          name: data.name,
-          email: data.email,
-          source: 'selfie_guide',
-          created_at: new Date().toISOString()
-        }
-      ])
-      .select()
-      .single();
-
-    if (insertError && insertError.code !== '23505') {
-      // Ignore duplicate email errors (23505), but throw other errors
-      throw insertError;
-    }
-
-    // Send email via Edge Function or direct Resend call
-    await sendSelfieGuideEmail(data.email, data.name);
-
-    // Update lead with email sent status if we have a lead ID
-    if (lead?.id) {
-      await supabase
-        .from('leads')
-        .update({
-          email_sent: true,
-          email_sent_at: new Date().toISOString()
-        })
-        .eq('id', lead.id);
-    }
-
-    return { success: true, leadId: lead?.id };
-  } catch (error) {
-    console.error('Error submitting selfie guide lead:', error);
-    throw error;
-  }
-}
-
-async function sendSelfieGuideEmail(email: string, name?: string) {
-  try {
-    // Create the branded email HTML template
-    const pdfMonkeyUrl = 'https://app.pdfmonkey.io/api/v1/documents/1D0EE38C-3FAF-4A16-B5C8-6222AA82A629/generate';
-    
-    const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Free Selfie Guide</title>
+    
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    
+    <!-- Note: Custom fonts may not display in all email clients. Fallback fonts are provided. -->
     
     <style>
         /* Email Client Reset */
@@ -127,7 +84,7 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
                 <tr>
                     <td align="center" style="padding: 0 60px 40px;" class="mobile-padding">
                         <p style="margin: 0 0 20px; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;" class="body-text">
-                            Beautiful${name ? ` ${name}` : ''}, your guide to selfie confidence is ready! Inside, you'll discover my personal secrets to mastering lighting, finding your best angles, and capturing the authentic you.
+                            Beautiful, your guide to selfie confidence is ready! Inside, you'll discover my personal secrets to mastering lighting, finding your best angles, and capturing the authentic you.
                         </p>
                         <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;" class="body-text">
                             This isn't just about taking better photos — it's about seeing yourself through a lens of love and confidence.
@@ -141,7 +98,7 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="mobile-button">
                             <tr>
                                 <td style="background-color: #171719; text-align: center; border-radius: 0;">
-                                    <a href="${pdfMonkeyUrl}" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
+                                    <a href="{{pdf_download_link}}" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
                                         Download Your Guide
                                     </a>
                                 </td>
@@ -194,28 +151,15 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
     </tr>
 </table>
 
+<!-- Subject Line for Reference -->
+<!-- 
+Subject: Your Free Selfie Guide
+Preheader: Your journey to selfie confidence starts here
+
+Note: {{pdf_download_link}} is a PDF Monkey template variable that will be replaced with your actual PDF URL
+-->
+
+<!-- PDF Monkey ID: 1D0EE38C-3FAF-4A16-B5C8-6222AA82A629 -->
+
 </body>
 </html>
-    `;
-
-    // Call database-based email sending function
-    const { data, error } = await supabase.rpc('send_email_with_resend', {
-      p_email: email,
-      p_name: name,
-      p_subject: 'Your Free Selfie Guide 💖',
-      p_html: emailHtml
-    });
-
-    if (error) {
-      console.error('Email function error:', error);
-      // Don't throw error - continue with success for UX
-    }
-
-    console.log('Email processing initiated:', data);
-    return { success: true, emailId: data?.id };
-  } catch (error) {
-    console.error('Error sending email:', error);
-    // Don't throw error for email - just log it and continue
-    return { success: true, emailError: error };
-  }
-}

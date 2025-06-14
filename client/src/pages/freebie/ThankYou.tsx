@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from 'wouter';
 
 export default function ThankYou() {
-  const pdfUrl = 'https://app.pdfmonkey.io/api/v1/documents/1D0EE38C-3FAF-4A16-B5C8-6222AA82A629/generate';
+  const pdfUrl = 'https://replit.com/@sandrasocial/1D0EE38C-3FAF-4A16-B5C8-6222AA82A629';
 
   const handleDownload = () => {
-    // Open PDF in new tab for download
-    window.open(pdfUrl, '_blank');
+    // Create temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'SELFIE-AI-Guide.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -115,3 +120,4 @@ export default function ThankYou() {
     </div>
   );
 }  
+// Triggering redeploy

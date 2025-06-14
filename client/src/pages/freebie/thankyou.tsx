@@ -1,11 +1,9 @@
-// FINAL DEPLOY SYNC 
 import React from 'react';
 import { Link } from 'wouter';
 
 export default function ThankYou() {
-  // Get PDF URL from query params - no fallback to static file
-  const urlParams = new URLSearchParams(window.location.search);
-  const pdfUrl = urlParams.get('pdf');
+  // Get PDF URL from query params
+  const pdfUrl = new URLSearchParams(window.location.search).get("pdf");
 
   const handleDownload = () => {
     // Open PDF in new tab for download
@@ -72,13 +70,22 @@ export default function ThankYou() {
               Your exclusive guide is ready. Get ready to transform your selfie game and step into your confidence.
             </p>
             
-            <button
-              onClick={handleDownload}
-              className="group relative inline-block bg-[#171719] text-[#F1F1F1] px-12 md:px-16 py-5 md:py-6 text-[12px] md:text-[14px] letter-spacing-[0.3em] uppercase font-light transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-16 overflow-hidden"
-            >
-              <span className="relative z-10">Download Your Guide</span>
-              <div className="shimmer"></div>
-            </button>
+            {pdfUrl && (
+              <button
+                onClick={handleDownload}
+                className="group relative inline-block bg-[#171719] text-[#F1F1F1] px-12 md:px-16 py-5 md:py-6 text-[12px] md:text-[14px] letter-spacing-[0.3em] uppercase font-light transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg mb-16 overflow-hidden"
+              >
+                <span className="relative z-10">Download Your Guide</span>
+                <div className="shimmer"></div>
+              </button>
+            )}
+            
+            {!pdfUrl && (
+              <div className="text-center mb-16">
+                <p className="text-[#4C4B4B] mb-4">Your personalized guide is being prepared...</p>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#171719] mx-auto"></div>
+              </div>
+            )}
             
             <p className="loading-text">Preparing your exclusive content...</p>
             

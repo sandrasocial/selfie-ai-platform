@@ -304,4 +304,4 @@ export default function SelfieGuide() {
       `}</style>
     </div>
   );
-}
+} 

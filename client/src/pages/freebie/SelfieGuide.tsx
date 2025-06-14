@@ -32,14 +32,21 @@ export default function SelfieGuide() {
       const result = await submitSelfieGuideLead({ email, name });
       console.log('Submission result:', result);
       
-      if (result && result.pdfUrl) {
-        console.log('PDF URL received:', result.pdfUrl);
-        const redirectUrl = `/freebie/selfieguide/thankyou?pdf=${encodeURIComponent(result.pdfUrl)}`;
-        console.log('Redirecting to:', redirectUrl);
-        window.location.href = redirectUrl;
-      } else if (result && result.success) {
-        console.log('Success but no PDF URL, redirecting anyway');
-        window.location.href = '/freebie/selfieguide/thankyou';
+      if (result && result.success) {
+        console.log('Form submission successful:', result);
+        
+        if (result.pdfUrl === 'error') {
+          console.log('PDF generation failed, redirecting with error flag');
+          window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
+        } else if (result.pdfUrl) {
+          console.log('PDF URL received:', result.pdfUrl);
+          const redirectUrl = `/freebie/selfieguide/thankyou?pdf=${encodeURIComponent(result.pdfUrl)}`;
+          console.log('Redirecting to:', redirectUrl);
+          window.location.href = redirectUrl;
+        } else {
+          console.log('Success but no PDF URL, redirecting with error flag');
+          window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
+        }
       } else {
         throw new Error('Invalid response from submission');
       }

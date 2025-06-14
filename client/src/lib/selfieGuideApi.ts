@@ -11,8 +11,11 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
     // Generate personalized PDF first
     const pdfResult = await generateSelfieGuidePDF(data.name || '', data.email);
     
+    console.log('PDF Generation Result:', pdfResult);
+    
     if (!pdfResult.success) {
-      throw new Error(`PDF generation failed: ${pdfResult.error}`);
+      console.warn('PDF generation failed, continuing with error flag:', pdfResult.error);
+      // Don't throw error - continue flow with error flag
     }
 
     // Insert lead into Supabase
@@ -52,7 +55,8 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
     return { 
       success: true, 
       leadId: lead?.id,
-      pdfUrl: pdfResult.documentUrl 
+      pdfUrl: pdfResult.success ? pdfResult.documentUrl : 'error',
+      pdfError: pdfResult.success ? null : pdfResult.error
     };
   } catch (error) {
     console.error('Error submitting selfie guide lead:', error);

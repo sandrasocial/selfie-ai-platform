@@ -1,4 +1,5 @@
 import { supabase } from './supabaseClient';
+import { generateSelfieGuidePDF } from './pdfmonkeyApi';
 
 export interface SelfieGuideSubmission {
   name?: string;
@@ -7,6 +8,13 @@ export interface SelfieGuideSubmission {
 
 export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
   try {
+    // Generate personalized PDF first
+    const pdfResult = await generateSelfieGuidePDF(data.name || '', data.email);
+    
+    if (!pdfResult.success) {
+      throw new Error(`PDF generation failed: ${pdfResult.error}`);
+    }
+
     // Insert lead into Supabase
     const { data: lead, error: insertError } = await supabase
       .from('leads')
@@ -15,6 +23,7 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
           name: data.name,
           email: data.email,
           source: 'selfie_guide',
+          pdf_url: pdfResult.documentUrl,
           created_at: new Date().toISOString()
         }
       ])
@@ -26,8 +35,8 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
       throw insertError;
     }
 
-    // Send email via Edge Function or direct Resend call
-    await sendSelfieGuideEmail(data.email, data.name);
+    // Send email with personalized PDF link
+    await sendSelfieGuideEmail(data.email, data.name, pdfResult.documentUrl);
 
     // Update lead with email sent status if we have a lead ID
     if (lead?.id) {
@@ -40,14 +49,18 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
         .eq('id', lead.id);
     }
 
-    return { success: true, leadId: lead?.id };
+    return { 
+      success: true, 
+      leadId: lead?.id,
+      pdfUrl: pdfResult.documentUrl 
+    };
   } catch (error) {
     console.error('Error submitting selfie guide lead:', error);
     throw error;
   }
 }
 
-async function sendSelfieGuideEmail(email: string, name?: string) {
+async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: string) {
   try {
     // Send email directly using Resend API
     const response = await fetch('https://api.resend.com/emails', {
@@ -134,7 +147,7 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="mobile-button">
                             <tr>
                                 <td style="background-color: #171719; text-align: center; border-radius: 0;">
-                                    <a href="https://selfie-ai-platform.vercel.app/selfie-guide.pdf" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
+                                    <a href="${pdfUrl || 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf'}" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
                                         Download Your Guide
                                     </a>
                                 </td>

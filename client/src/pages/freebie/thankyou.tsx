@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'wouter';
 
 export default function ThankYou() {
-  const pdfUrl = 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf';
+  // Get PDF URL from query params or use default
+  const urlParams = new URLSearchParams(window.location.search);
+  const dynamicPdfUrl = urlParams.get('pdf');
+  const pdfUrl = dynamicPdfUrl || 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf';
 
   const handleDownload = () => {
     // Open PDF in new tab for download

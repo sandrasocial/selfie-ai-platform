@@ -1,3 +1,4 @@
+// FINAL DEPLOY SYNC 
 import { supabase } from './supabaseClient';
 import { generateSelfieGuidePDF } from './pdfmonkeyApi';
 

@@ -1,3 +1,4 @@
+client/src/lib/pdfmonkeyApi.ts 
 // PDFMonkey API integration for Selfie Guide generation
 export interface PDFGenerationRequest {
   templateId: string;

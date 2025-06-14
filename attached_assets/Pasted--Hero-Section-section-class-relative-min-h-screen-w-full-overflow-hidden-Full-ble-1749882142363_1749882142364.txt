@@ -1,0 +1,98 @@
+<!-- Hero Section -->
+<section class="relative min-h-screen w-full overflow-hidden">
+  <!-- Full-bleed background image -->
+  <div 
+    class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+    style="background-image: url('https://i.postimg.cc/RFwJMj9s/Herofullbleed-1.png')"
+  >
+    <!-- Subtle overlay for text readability -->
+    <div class="absolute inset-0 bg-black/20"></div>
+  </div>
+  
+  <!-- Content Container -->
+  <div class="relative z-10 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="w-full px-8 md:px-12 lg:px-16 py-8 md:py-12">
+      <img 
+        src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" 
+        alt="SELFIE AI™" 
+        class="h-8 md:h-10 w-auto"
+      />
+    </nav>
+    
+    <!-- Hero Content -->
+    <div class="flex-1 flex items-center justify-center px-8 md:px-12 lg:px-16">
+      <div class="max-w-5xl mx-auto text-center">
+        <!-- Headline -->
+        <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight mb-8">
+          Your selfie is your brand.
+        </h1>
+        
+        <!-- Subhead -->
+        <p class="font-sans text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed">
+          Let's make it work for you. You don't need to do more. You just need to show up with strategy.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+          <!-- Primary Button -->
+          <button class="group relative overflow-hidden bg-white text-black px-10 py-4 min-w-[180px] transition-all duration-300 hover:shadow-2xl">
+            <span class="relative z-10 font-sans text-sm tracking-widest uppercase">
+              Start Here
+            </span>
+          </button>
+          
+          <!-- Secondary Button -->
+          <button class="group relative border border-white text-white px-10 py-4 min-w-[180px] transition-all duration-300 hover:bg-white hover:text-black">
+            <span class="relative z-10 font-sans text-sm tracking-widest uppercase">
+              Explore Tools
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Subtle scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div class="w-px h-16 bg-white/30"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="bg-white py-20 md:py-32">
+  <div class="max-w-7xl mx-auto px-8 md:px-12 lg:px-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <!-- Stats Content -->
+      <div class="order-2 lg:order-1">
+        <!-- Stats -->
+        <div class="mb-8">
+          <p class="font-serif text-3xl md:text-4xl lg:text-5xl text-gray-900 leading-tight">
+            120K Followers • 1.7M Monthly Reach • 90 Days
+          </p>
+        </div>
+        
+        <!-- Quote -->
+        <p class="font-serif italic text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed">
+          "This isn't hype. It's what's possible."
+        </p>
+        
+        <!-- Subtle divider -->
+        <div class="mt-12 w-24 h-px bg-gray-300"></div>
+      </div>
+      
+      <!-- Sandra's Image -->
+      <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+        <div class="relative">
+          <img 
+            src="https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg" 
+            alt="Sandra Sigurjonsdottir" 
+            class="w-full max-w-md lg:max-w-lg h-auto object-cover"
+          />
+          <!-- Optional: Subtle design element -->
+          <div class="absolute -bottom-4 -right-4 w-32 h-32 border border-gray-200 -z-10"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

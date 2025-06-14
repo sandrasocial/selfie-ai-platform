@@ -205,3 +205,4 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
     return { success: true, emailError: error };
   }
 }
+selfieGuideApi.ts 

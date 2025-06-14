@@ -79,6 +79,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 
 function Router() {
   const SelfieGuide = lazy(() => import('@/pages/freebie/SelfieGuide'));
+  const SelfieGuideThankYou = lazy(() => import('@/pages/freebie/ThankYou'));
   const VIPThankYou = lazy(() => import('@/pages/thank-you/VIPThankYou'));
 
   useEffect(() => {
@@ -171,6 +172,7 @@ function Router() {
 
         {/* Freebie Routes */}
         <Route path="/freebie/selfieguide" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuide /></Suspense>} />
+        <Route path="/freebie/selfieguide/thankyou" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuideThankYou /></Suspense>} />
 
         {/* Admin Routes */}
         <Route path="/admin" component={() => <ProtectedRoute><AdminDashboard /></ProtectedRoute>} />

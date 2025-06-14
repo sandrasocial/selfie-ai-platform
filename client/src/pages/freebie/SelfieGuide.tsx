@@ -148,6 +148,15 @@ export default function SelfieGuide() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your first name"
+                        className="w-full px-0 py-4 text-[18px] bg-transparent border-0 border-b-2 border-[#171719]/20 placeholder:text-[#B5B5B3] focus:border-[#171719] focus:outline-none font-['Neue_Einstellung'] transition-colors duration-300"
+                      />
+                    </div>
+                    <div>
+                      <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}

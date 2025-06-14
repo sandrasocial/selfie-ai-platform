@@ -139,6 +139,20 @@
     color: #F1F1F1;
   }
 
+  /* Premium animations for luxury feel */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
   /* CTA Button Styles */
   .cta-solid {
     background-color: #171719;

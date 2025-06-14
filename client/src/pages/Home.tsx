@@ -55,7 +55,7 @@ export default function Home() {
                 {/* Primary Button */}
                 <Link href="/dashboard">
                   <button className="group relative overflow-hidden bg-white text-black px-10 py-4 min-w-[180px] transition-all duration-300 hover:shadow-2xl">
-                    <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-widest uppercase">
+                    <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-[0.2em] uppercase">
                       Start Here
                     </span>
                   </button>
@@ -63,7 +63,7 @@ export default function Home() {
                 
                 {/* Secondary Button */}
                 <button className="group relative border border-white text-white px-10 py-4 min-w-[180px] transition-all duration-300 hover:bg-white hover:text-black">
-                  <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-widest uppercase">
+                  <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-[0.2em] uppercase">
                     Explore Tools
                   </span>
                 </button>
@@ -86,13 +86,13 @@ export default function Home() {
             <div className="order-2 lg:order-1">
               {/* Stats */}
               <div className="mb-8">
-                <p className="font-['Bordoni_FLF'] text-3xl md:text-4xl lg:text-5xl text-gray-900 leading-tight">
+                <p className="font-['Bordoni_FLF'] text-3xl md:text-4xl lg:text-5xl text-gray-900 leading-[1.2] tracking-[-0.01em]">
                   120K Followers • 1.7M Monthly Reach • 90 Days
                 </p>
               </div>
               
               {/* Quote */}
-              <p className="font-['Bordoni_FLF'] italic text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed">
+              <p className="font-['Bordoni_FLF'] italic text-xl md:text-2xl lg:text-3xl text-gray-700 leading-[1.4] tracking-wide">
                 "This isn't hype. It's what's possible."
               </p>
               

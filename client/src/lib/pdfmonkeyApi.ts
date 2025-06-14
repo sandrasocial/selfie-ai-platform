@@ -1,4 +1,4 @@
-// PDFMonkey API integration for Selfie Guide generation // DEBUGGING DEPLOY SYNC — FORCE GIT TRACKING
+// LIVE DEPLOY SYNC — FINAL PATCH
 export interface PDFGenerationRequest {
   templateId: string;
   payload: {

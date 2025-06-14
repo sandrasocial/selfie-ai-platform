@@ -69,14 +69,23 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
     }
 
     const generateResult = await generateResponse.json();
-    const documentId = generateResult.document.id;
+    console.log('PDFMonkey Generation Response:', generateResult);
+    
+    const documentId = generateResult.document?.id;
+    if (!documentId) {
+      throw new Error('No document ID received from PDFMonkey');
+    }
+    
+    console.log('Generated Document ID:', documentId);
 
-    // Step 2: Poll for document completion
+    // Step 2: Poll for document completion (10 second timeout)
     let attempts = 0;
-    const maxAttempts = 30; // 30 seconds max wait
+    const maxAttempts = 10; // 10 seconds max wait
     
     while (attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+      
+      console.log(`Polling attempt ${attempts + 1}/${maxAttempts} for document ${documentId}`);
       
       const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
         headers: {
@@ -85,28 +94,43 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
       });
 
       if (!statusResponse.ok) {
-        throw new Error('Failed to check PDF status');
+        console.error('Status check failed:', statusResponse.status, statusResponse.statusText);
+        throw new Error(`Failed to check PDF status: ${statusResponse.status}`);
       }
 
       const statusResult = await statusResponse.json();
-      const document = statusResult.document;
-
-      if (document.status === 'success' && document.download_url) {
-        return {
-          success: true,
-          documentUrl: document.download_url,
-          documentId: documentId
-        };
+      console.log('Status Response:', statusResult);
+      
+      // Check both possible response structures
+      const document = statusResult.document || statusResult.data;
+      
+      if (document?.status === 'success') {
+        // Try multiple possible URL locations
+        const downloadUrl = document.download_url || statusResult.data?.download_url || document.url;
+        
+        console.log('PDF Generation Complete! Download URL:', downloadUrl);
+        
+        if (downloadUrl) {
+          return {
+            success: true,
+            documentUrl: downloadUrl,
+            documentId: documentId
+          };
+        } else {
+          console.error('No download URL found in success response:', document);
+        }
       }
 
-      if (document.status === 'failure') {
+      if (document?.status === 'failure') {
+        console.error('PDF generation failed:', document);
         throw new Error('PDF generation failed');
       }
-
+      
+      console.log('Current status:', document?.status || 'unknown');
       attempts++;
     }
 
-    throw new Error('PDF generation timed out');
+    throw new Error('PDF generation timed out after 10 seconds');
 
   } catch (error) {
     console.error('Error generating PDF:', error);
@@ -116,4 +140,4 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
     };
   }
 }
-// PDFMonkey auth fixed
+// PDFMonkey polling added

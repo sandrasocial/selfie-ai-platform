@@ -16,106 +16,103 @@ export default function Home() {
       <DevLoginButton />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-white overflow-hidden">
-        {/* Hero Background Image - Full Bleed */}
+      <section className="relative min-h-screen w-full overflow-hidden">
+        {/* Full-bleed background image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(https://i.postimg.cc/yYKKKpTW/Herofullbleed.png)' }}
-        ></div>
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{backgroundImage: "url('https://i.postimg.cc/RFwJMj9s/Herofullbleed-1.png')"}}
+        >
+          {/* Subtle overlay for text readability */}
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
         
-        {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        
-        <div className="relative max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 pt-32 pb-24">
+        {/* Content Container */}
+        <div className="relative z-10 min-h-screen flex flex-col">
           {/* Navigation */}
-          <nav className="flex justify-between items-center mb-32">
-            <div className="flex items-center">
-              <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="Selfie AI Logo" className="h-8 md:h-10" />
-            </div>
-            <div className="flex gap-12">
-              <Link href="/pricing" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">About</Link>
-              <Link href="/studio" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">Tools</Link>
-              <Link href="/dashboard" className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white hover:opacity-60 transition-opacity">Start</Link>
-            </div>
+          <nav className="w-full px-8 md:px-12 lg:px-16 py-8 md:py-12">
+            <img 
+              src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" 
+              alt="SELFIE AI™" 
+              className="h-8 md:h-10 w-auto"
+            />
           </nav>
           
           {/* Hero Content */}
-          <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-12 lg:col-span-8">
-              <h1 className="text-white text-left mb-16">
-                <div className="font-['Bordoni_FLF'] text-[40px] md:text-[60px] lg:text-[80px] leading-[1.3] tracking-wide mb-6 font-normal">
-                  Your
-                </div>
-                <div className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[180px] leading-[0.85] tracking-[-0.02em] mb-4">
-                  <span className="block">Selfie is your</span>
-                </div>
-                <div className="font-['Bordoni_FLF'] text-[80px] md:text-[120px] lg:text-[180px] leading-[0.85] tracking-[-0.02em] font-light italic">
-                  Brand.
-                </div>
+          <div className="flex-1 flex items-center justify-center px-8 md:px-12 lg:px-16">
+            <div className="max-w-5xl mx-auto text-center">
+              {/* Headline */}
+              <h1 className="font-['Bordoni_FLF'] text-5xl md:text-7xl lg:text-8xl text-white leading-[0.9] tracking-tight mb-8">
+                Your selfie is your brand.
               </h1>
               
-              <div className="max-w-xl">
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-white/80 mb-4">
-                  Let's make it work for you.
-                </p>
-                <p className="font-['Neue_Einstellung'] text-lg leading-relaxed text-white/80 mb-12">
-                  You don't need to do more. You just need to show up with strategy.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <Link href="/dashboard">
-                    <button className="group relative overflow-hidden bg-white text-black px-12 py-5">
-                      <span className="relative z-10 font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Start Here</span>
-                      <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                      <span className="absolute inset-0 flex items-center justify-center font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Start Here</span>
-                    </button>
-                  </Link>
-                  
-                  <button className="group relative overflow-hidden bg-transparent border border-white text-white px-12 py-5 hover:bg-white hover:text-black transition-all duration-300">
-                    <span className="font-['Neue_Einstellung'] text-xs tracking-[0.2em] uppercase">Explore Tools</span>
+              {/* Subhead */}
+              <p className="font-['Neue_Einstellung'] text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed">
+                Let's make it work for you. You don't need to do more. You just need to show up with strategy.
+              </p>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+                {/* Primary Button */}
+                <Link href="/dashboard">
+                  <button className="group relative overflow-hidden bg-white text-black px-10 py-4 min-w-[180px] transition-all duration-300 hover:shadow-2xl">
+                    <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-widest uppercase">
+                      Start Here
+                    </span>
                   </button>
-                </div>
-              </div>
-            </div>
-            
-            <div className="col-span-12 lg:col-span-4 relative">
-              <img src="https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg" alt="Sandra Sigurjonsdottir" className="w-full h-[600px] object-cover" />
-              <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur p-6">
-                <p className="font-['Bordoni_FLF'] italic text-lg">— Sandra Sigurjonsdottir</p>
-                <p className="font-['Neue_Einstellung'] text-xs tracking-wider uppercase mt-1">Founder & Creator</p>
+                </Link>
+                
+                {/* Secondary Button */}
+                <button className="group relative border border-white text-white px-10 py-4 min-w-[180px] transition-all duration-300 hover:bg-white hover:text-black">
+                  <span className="relative z-10 font-['Neue_Einstellung'] text-sm tracking-widest uppercase">
+                    Explore Tools
+                  </span>
+                </button>
               </div>
             </div>
           </div>
           
-          {/* Hero Tagline */}
-          <div className="text-center mt-24">
-            <p className="font-['Bordoni_FLF'] italic text-white text-lg md:text-xl">
-              This is how we turn your camera roll into your brand.
-            </p>
+          {/* Subtle scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div className="w-px h-16 bg-white/30"></div>
           </div>
         </div>
       </section>
 
-      {/* Proof Block */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 text-center">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">120K</div>
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Followers</div>
+      {/* Stats Section */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="max-w-7xl mx-auto px-8 md:px-12 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Stats Content */}
+            <div className="order-2 lg:order-1">
+              {/* Stats */}
+              <div className="mb-8">
+                <p className="font-['Bordoni_FLF'] text-3xl md:text-4xl lg:text-5xl text-gray-900 leading-tight">
+                  120K Followers • 1.7M Monthly Reach • 90 Days
+                </p>
+              </div>
+              
+              {/* Quote */}
+              <p className="font-['Bordoni_FLF'] italic text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed">
+                "This isn't hype. It's what's possible."
+              </p>
+              
+              {/* Subtle divider */}
+              <div className="mt-12 w-24 h-px bg-gray-300"></div>
             </div>
-            <div>
-              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">1.7M</div>
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Monthly Reach</div>
-            </div>
-            <div>
-              <div className="font-['Bordoni_FLF'] text-[48px] md:text-[64px] leading-tight">90</div>
-              <div className="font-['Neue_Einstellung'] text-xs tracking-[0.3em] uppercase text-black/60">Days</div>
+            
+            {/* Sandra's Image */}
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="relative">
+                <img 
+                  src="https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg" 
+                  alt="Sandra Sigurjonsdottir" 
+                  className="w-full max-w-md lg:max-w-lg h-auto object-cover"
+                />
+                {/* Optional: Subtle design element */}
+                <div className="absolute -bottom-4 -right-4 w-32 h-32 border border-gray-200 -z-10"></div>
+              </div>
             </div>
           </div>
-          <p className="font-['Bordoni_FLF'] italic text-xl text-black/80">
-            This isn't hype. It's what's possible.
-          </p>
         </div>
       </section>
 

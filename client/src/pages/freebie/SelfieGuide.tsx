@@ -19,17 +19,34 @@ export default function SelfieGuide() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email) {
+      alert('Please enter your email address');
+      return;
+    }
 
+    console.log('Form submission started:', { email, name });
     setIsSubmitting(true);
     
     try {
+      console.log('Calling submitSelfieGuideLead...');
       const result = await submitSelfieGuideLead({ email, name });
-      // Redirect to thank you page with PDF URL
-      const pdfParam = result.pdfUrl ? `?pdf=${encodeURIComponent(result.pdfUrl)}` : '';
-      window.location.href = `/freebie/selfieguide/thankyou${pdfParam}`;
-    } catch (error) {
-      console.error('Failed to submit:', error);
+      console.log('Submission result:', result);
+      
+      if (result && result.pdfUrl) {
+        console.log('PDF URL received:', result.pdfUrl);
+        const redirectUrl = `/freebie/selfieguide/thankyou?pdf=${encodeURIComponent(result.pdfUrl)}`;
+        console.log('Redirecting to:', redirectUrl);
+        window.location.href = redirectUrl;
+      } else if (result && result.success) {
+        console.log('Success but no PDF URL, redirecting anyway');
+        window.location.href = '/freebie/selfieguide/thankyou';
+      } else {
+        throw new Error('Invalid response from submission');
+      }
+    } catch (error: any) {
+      console.error('Form submission error:', error);
+      const errorMessage = error?.message || 'Unknown error occurred';
+      alert(`Submission failed: ${errorMessage}`);
       setShowSuccess(true); // Show fallback success state
     } finally {
       setIsSubmitting(false);
@@ -328,4 +345,4 @@ export default function SelfieGuide() {
     </div>
   );
 }
-// ready for deploy
+// redirect ready for deploy

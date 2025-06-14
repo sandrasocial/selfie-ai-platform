@@ -118,5 +118,5 @@ export default function ThankYou() {
     </div>
   );
 }
-// ready for push
+// ready for push - Dynamic PDF URL support added
    

@@ -93,3 +93,4 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
     };
   }
 }
+// ready for push - PDFMonkey API integration complete

@@ -325,6 +325,6 @@ export default function SelfieGuide() {
       `}</style>
     </div>
   );
-} 
-// Triggering redeploy
+}
+// ready for push - PDFMonkey integration complete
  

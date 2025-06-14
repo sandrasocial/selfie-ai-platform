@@ -217,4 +217,5 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
     console.error('Error sending email:', error);
     return { success: true, emailError: error };
   }
-} 
+}
+// ready for push - PDFMonkey integration with email template 

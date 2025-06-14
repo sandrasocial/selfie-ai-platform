@@ -328,4 +328,3 @@ export default function SelfieGuide() {
   );
 }
 // ready for deploy
-  

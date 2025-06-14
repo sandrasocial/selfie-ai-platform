@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 
 export default function ThankYou() {
-  const pdfUrl = 'https://selfieai.com/selfie-guide.pdf';
+  const pdfUrl = 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf';
 
   const handleDownload = () => {
     // Open PDF in new tab for download
@@ -114,6 +114,6 @@ export default function ThankYou() {
       </div>
     </div>
   );
-}  
-// Triggering redeploy
+}
+// ready for push
    

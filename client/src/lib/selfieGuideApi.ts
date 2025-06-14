@@ -147,7 +147,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="mobile-button">
                             <tr>
                                 <td style="background-color: #171719; text-align: center; border-radius: 0;">
-                                    <a href="${pdfUrl || 'https://selfie-ai-platform.vercel.app/selfie-guide.pdf'}" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
+                                    <a href="${pdfUrl || ''}" target="_blank" style="display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;">
                                         Download Your Guide
                                     </a>
                                 </td>
@@ -218,5 +218,5 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
     return { success: true, emailError: error };
   }
 }
-// ready for push - PDFMonkey integration with email template 
+// ready for deploy 
  

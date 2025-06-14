@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useLocation } from 'wouter';
+import { submitSelfieGuideLead } from '@/lib/selfieGuideApi';
 
 export default function SelfieGuide() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState(false);
+  const [, setLocation] = useLocation();
 
   React.useEffect(() => {
     const timer = setTimeout(() => setElementsLoaded(true), 100);
@@ -16,10 +20,17 @@ export default function SelfieGuide() {
     if (!email) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setShowSuccess(true);
-    setIsSubmitting(false);
+    
+    try {
+      await submitSelfieGuideLead({ email, name });
+      // Redirect to thank you page
+      setLocation('/freebie/selfieguide/thankyou');
+    } catch (error) {
+      console.error('Failed to submit:', error);
+      setShowSuccess(true); // Show fallback success state
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

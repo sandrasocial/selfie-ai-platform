@@ -204,4 +204,4 @@ async function sendSelfieGuideEmail(email: string, name?: string) {
     console.error('Error sending email:', error);
     return { success: true, emailError: error };
   }
-}
+} 

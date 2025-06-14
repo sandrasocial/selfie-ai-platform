@@ -17,12 +17,23 @@ export interface PDFGenerationResponse {
 export async function generateSelfieGuidePDF(name: string, email: string): Promise<PDFGenerationResponse> {
   try {
     const templateId = '1D0EE38C-3FAF-4A16-B5C8-6222AA82A629';
+    const apiKey = import.meta.env.VITE_PDFMONKEY_API_KEY;
+    
+    console.log('PDFMonkey API Debug:');
+    console.log('- Template ID:', templateId);
+    console.log('- API Key present:', !!apiKey);
+    console.log('- API Key length:', apiKey ? apiKey.length : 0);
+    console.log('- Payload:', { name: name || 'Friend', email });
+    
+    if (!apiKey) {
+      throw new Error('VITE_PDFMONKEY_API_KEY is not configured');
+    }
     
     // Step 1: Generate the PDF using PDFMonkey
     const generateResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_PDFMONKEY_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -39,10 +50,22 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
       })
     });
 
+    console.log('PDFMonkey Response Status:', generateResponse.status);
+    console.log('PDFMonkey Response Headers:', Object.fromEntries(generateResponse.headers.entries()));
+    
     if (!generateResponse.ok) {
-      const errorData = await generateResponse.json();
-      console.error('PDFMonkey generation error:', errorData);
-      throw new Error(errorData.message || 'Failed to generate PDF');
+      const errorData = await generateResponse.json().catch(() => null);
+      console.error('PDFMonkey generation error:', {
+        status: generateResponse.status,
+        statusText: generateResponse.statusText,
+        errorData
+      });
+      
+      if (generateResponse.status === 401) {
+        throw new Error('PDFMonkey API authentication failed - check VITE_PDFMONKEY_API_KEY');
+      }
+      
+      throw new Error(errorData?.message || `PDFMonkey API error: ${generateResponse.status} ${generateResponse.statusText}`);
     }
 
     const generateResult = await generateResponse.json();
@@ -57,7 +80,7 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
       
       const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_PDFMONKEY_API_KEY}`
+          'Authorization': `Bearer ${apiKey}`
         }
       });
 
@@ -93,4 +116,4 @@ export async function generateSelfieGuidePDF(name: string, email: string): Promi
     };
   }
 }
-// ready for deploy
+// PDFMonkey auth fixed

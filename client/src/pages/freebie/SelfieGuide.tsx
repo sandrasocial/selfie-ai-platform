@@ -1,7 +1,7 @@
-// FINAL DEPLOY SYNC
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
 import { submitSelfieGuideLead } from '@/lib/selfieGuideApi';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function SelfieGuide() {
   const [email, setEmail] = useState('');

@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import { supabase } from './supabaseClient'; 
 import { generateSelfieGuidePDF } from './pdfmonkeyApi';
 
 export interface SelfieGuideSubmission {

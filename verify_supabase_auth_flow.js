@@ -4,7 +4,7 @@
  */
 
 const SUPABASE_URL = 'https://zlslzllzejdhyfczcumv.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_URL; // Note: env vars are swapped
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 async function makeRequest(url, options = {}) {
   const response = await fetch(url, {

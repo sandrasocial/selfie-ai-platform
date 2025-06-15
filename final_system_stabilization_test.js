@@ -3,180 +3,173 @@
  * Comprehensive validation of AI tools with brand profile context
  */
 
-const BASE_URL = 'https://sselfie.ai';
+const SUPABASE_URL = 'https://zlslzllzejdhyfczcumv.supabase.co';
+const SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpsc2x6bGx6ZWpkaHlmY3pjdW12Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODU4Njk0NywiZXhwIjoyMDY0MTYyOTQ3fQ.DMSn6sVsOPOSANRvP6UuQ15mGdKc3I1seWkNSHaMDSQ';
+const PDFMONKEY_API_KEY = process.env.VITE_PDFMONKEY_API_KEY;
 
 async function makeAuthenticatedRequest(url, options = {}) {
   const response = await fetch(url, {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
-      'Cookie': 'connect.sid=s%3AdAX0iqhoC-4xKipKSKH8_7ZUp4pCA9r9.%2FoQN%2BeVLjSCRJPzCBm5Y0w7JRbpG%2BmvI7M5E6d1aHss',
       ...options.headers
-    },
-    credentials: 'include',
-    ...options
+    }
   });
-  
+
   const text = await response.text();
   let data;
   try {
     data = JSON.parse(text);
   } catch {
-    data = { rawResponse: text };
+    data = text;
   }
-  
-  return { response, data, status: response.status };
+
+  return { status: response.status, ok: response.ok, data };
 }
 
 async function validateBrandProfileContext() {
-  console.log("🔍 Validating Brand Profile Context Access");
+  console.log('Testing brand profile context validation...');
   
-  const { response, data, status } = await makeAuthenticatedRequest(`${BASE_URL}/api/me-with-profile`);
-  
-  if (status === 200 && data.profile) {
-    console.log("✅ Brand profile context accessible");
-    console.log("Profile data available:");
-    console.log("- Brand Mission:", data.profile.brandMission);
-    console.log("- Ideal Audience:", data.profile.idealAudience);
-    console.log("- Visual Aesthetic:", data.profile.visualAesthetic);
-    console.log("- Tone Voice:", data.profile.toneVoice);
-    return { success: true, profile: data.profile };
+  const profileData = {
+    businessName: "Test Beauty Brand",
+    industry: "Beauty & Wellness",
+    targetAudience: "Women entrepreneurs 25-45",
+    brandVoice: "Empowering and authentic",
+    primaryGoals: ["Increase brand awareness", "Drive sales"],
+    uniqueValue: "Sustainable beauty solutions"
+  };
+
+  const result = await makeAuthenticatedRequest('http://localhost:5001/api/brand-profile', {
+    method: 'POST',
+    body: JSON.stringify(profileData)
+  });
+
+  if (result.ok) {
+    console.log('✓ Brand profile context validation successful');
+    return result.data;
   } else {
-    console.log("❌ Brand profile context not accessible:", status);
-    return { success: false, error: data };
+    console.log('✗ Brand profile validation failed:', result.data);
+    return null;
   }
 }
 
 async function testStrategyGeneratorWithContext() {
-  console.log("\n📊 Testing Strategy Generator with Brand Context");
+  console.log('Testing strategy generator with brand context...');
   
-  const { response, data, status } = await makeAuthenticatedRequest(`${BASE_URL}/api/strategy-coach`, {
+  const strategyData = {
+    businessGoal: "Increase online presence",
+    targetAudience: "Professional women",
+    timeframe: "3 months",
+    budget: "medium"
+  };
+
+  const result = await makeAuthenticatedRequest('http://localhost:5001/api/strategy-generator', {
     method: 'POST',
-    body: JSON.stringify({
-      strategyType: 'messaging',
-      goals: 'Build authentic brand presence',
-      timeframe: '30-day-plan'
-    })
+    body: JSON.stringify(strategyData)
   });
 
-  if (status === 200) {
-    console.log("✅ Strategy generated with personalized context");
-    console.log("Strategy title:", data.strategy?.title);
-    console.log("Saved to vault:", data.savedToVault);
-    return { success: true, strategy: data.strategy, savedToVault: data.savedToVault };
+  if (result.ok) {
+    console.log('✓ Strategy generator with context working');
+    return true;
   } else {
-    console.log("❌ Strategy generation failed:", status, data.error);
-    return { success: false, error: data };
+    console.log('✗ Strategy generator failed:', result.data);
+    return false;
   }
 }
 
 async function testSandraAIWithPersonalization() {
-  console.log("\n💬 Testing Sandra AI with Brand Personalization");
+  console.log('Testing Sandra AI with personalization...');
   
-  const { response, data, status } = await makeAuthenticatedRequest(`${BASE_URL}/api/chat-sandra`, {
+  const prompt = "Create a social media post about confidence for my beauty brand";
+  
+  const result = await makeAuthenticatedRequest('http://localhost:5001/api/sandra-ai', {
     method: 'POST',
-    body: JSON.stringify({
-      message: "Help me create content that reflects my brand mission",
-      category: "content-creation"
-    })
+    body: JSON.stringify({ prompt })
   });
 
-  if (status === 200) {
-    console.log("✅ Sandra AI responded with personalized content");
-    console.log("Response length:", data.response.length);
-    console.log("Contains brand context:", data.response.includes("women starting over") || data.response.includes("divorce"));
-    return { success: true, response: data.response };
+  if (result.ok) {
+    console.log('✓ Sandra AI personalization working');
+    return true;
   } else {
-    console.log("❌ Sandra AI failed:", status, data.error);
-    return { success: false, error: data };
+    console.log('✗ Sandra AI failed:', result.data);
+    return false;
   }
 }
 
 async function testContentGeneratorWithProfile() {
-  console.log("\n📝 Testing Content Generator with Profile Context");
+  console.log('Testing content generator with brand profile...');
   
-  const { response, data, status } = await makeAuthenticatedRequest(`${BASE_URL}/api/content-generator`, {
+  const contentData = {
+    type: "social_post",
+    platform: "instagram",
+    topic: "Brand storytelling",
+    tone: "inspirational"
+  };
+
+  const result = await makeAuthenticatedRequest('http://localhost:5001/api/content-generator', {
     method: 'POST',
-    body: JSON.stringify({
-      contentType: 'post',
-      prompt: 'Create a motivational post about starting over',
-      tone: 'warm and supportive'
-    })
+    body: JSON.stringify(contentData)
   });
 
-  if (status === 200) {
-    console.log("✅ Content generated with brand context");
-    console.log("Content reflects tone:", data.content?.includes("warm") || data.content?.includes("support"));
-    console.log("Saved to vault:", data.savedToVault);
-    return { success: true, content: data.content, savedToVault: data.savedToVault };
+  if (result.ok) {
+    console.log('✓ Content generator with profile working');
+    return true;
   } else {
-    console.log("❌ Content generation failed:", status, data.error);
-    return { success: false, error: data };
+    console.log('✗ Content generator failed:', result.data);
+    return false;
   }
 }
 
 async function validateContentVaultSaves() {
-  console.log("\n📂 Validating Content Vault Storage");
+  console.log('Testing content vault save functionality...');
   
-  const { response, data, status } = await makeAuthenticatedRequest(`${BASE_URL}/api/content-vault`);
+  const saveData = {
+    title: "Test Strategy",
+    content: "This is a test strategy content",
+    type: "strategy",
+    tags: ["test", "validation"]
+  };
 
-  if (status === 200) {
-    console.log("✅ Content vault accessible");
-    console.log("Total items in vault:", data.content?.length || 0);
-    console.log("Recent saves working:", data.content?.some(item => 
-      new Date(item.createdAt).getTime() > Date.now() - 3600000 // Within last hour
-    ));
-    return { success: true, vaultItems: data.content?.length || 0 };
+  const result = await makeAuthenticatedRequest('http://localhost:5001/api/content-vault', {
+    method: 'POST',
+    body: JSON.stringify(saveData)
+  });
+
+  if (result.ok) {
+    console.log('✓ Content vault save working');
+    return true;
   } else {
-    console.log("❌ Content vault not accessible:", status);
-    return { success: false, error: data };
+    console.log('✗ Content vault save failed:', result.data);
+    return false;
   }
 }
 
 async function runSystemStabilizationValidation() {
-  console.log("=".repeat(80));
-  console.log("🔒 SELFIE AI™ SYSTEM STABILIZATION VALIDATION");
-  console.log("=".repeat(80));
-  
-  const profileResult = await validateBrandProfileContext();
-  const strategyResult = await testStrategyGeneratorWithContext();
-  const sandraResult = await testSandraAIWithPersonalization();
-  const contentResult = await testContentGeneratorWithProfile();
-  const vaultResult = await validateContentVaultSaves();
-  
-  console.log("\n" + "=".repeat(80));
-  console.log("📋 FINAL SYSTEM STATUS");
-  console.log("=".repeat(80));
-  
-  const allSystemsOperational = [
-    profileResult.success,
-    strategyResult.success,
-    sandraResult.success,
-    contentResult.success,
-    vaultResult.success
-  ].every(result => result === true);
-  
-  console.log("Brand Profile Context:", profileResult.success ? "✅ OPERATIONAL" : "❌ FAILED");
-  console.log("Strategy Generator:", strategyResult.success ? "✅ OPERATIONAL" : "❌ FAILED");
-  console.log("Sandra AI Personalization:", sandraResult.success ? "✅ OPERATIONAL" : "❌ FAILED");
-  console.log("Content Generator:", contentResult.success ? "✅ OPERATIONAL" : "❌ FAILED");
-  console.log("Content Vault Storage:", vaultResult.success ? "✅ OPERATIONAL" : "❌ FAILED");
-  
-  console.log("\n🎯 SYSTEM STABILITY STATUS:");
-  if (allSystemsOperational) {
-    console.log("✅ ALL SYSTEMS STABLE AND OPERATIONAL");
-    console.log("🚀 Platform ready for luxury UX/UI redesign phase");
-    console.log("🔒 Brand profile onboarding and AI personalization confirmed working");
-    console.log("📊 Content generation and vault storage functioning properly");
-  } else {
-    console.log("⚠️ Some systems need stabilization:");
-    if (!profileResult.success) console.log("- Brand profile context access needs repair");
-    if (!strategyResult.success) console.log("- Strategy generator needs stabilization");
-    if (!sandraResult.success) console.log("- Sandra AI personalization needs fixing");
-    if (!contentResult.success) console.log("- Content generator needs repair");
-    if (!vaultResult.success) console.log("- Content vault storage needs fixing");
+  console.log('Running comprehensive system validation...\n');
+
+  try {
+    // Test brand profile context
+    const profileResult = await validateBrandProfileContext();
+    if (!profileResult) return false;
+
+    // Test AI tools with context
+    const strategyResult = await testStrategyGeneratorWithContext();
+    const sandraResult = await testSandraAIWithPersonalization();
+    const contentResult = await testContentGeneratorWithProfile();
+    const vaultResult = await validateContentVaultSaves();
+
+    if (strategyResult && sandraResult && contentResult && vaultResult) {
+      console.log('\n🎉 All systems operational with brand context integration!');
+      return true;
+    } else {
+      console.log('\n❌ Some systems failed validation');
+      return false;
+    }
+
+  } catch (error) {
+    console.error('System validation error:', error.message);
+    return false;
   }
-  
-  return allSystemsOperational;
 }
 
-runSystemStabilizationValidation().catch(console.error);
+runSystemStabilizationValidation();

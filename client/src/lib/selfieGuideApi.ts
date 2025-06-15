@@ -10,9 +10,9 @@ export async function submitSelfieGuideLead(data: SelfieGuideSubmission) {
   try {
     // Generate personalized PDF first
     const pdfResult = await generateSelfieGuidePDF(data.name || '', data.email);
-    
+
     console.log('PDF Generation Result:', pdfResult);
-    
+
     if (!pdfResult.success) {
       console.warn('PDF generation failed, continuing with error flag:', pdfResult.error);
       // Don't throw error - continue flow with error flag
@@ -109,13 +109,13 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
     <tr>
         <td align="center" style="padding: 40px 20px;">
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #FFFFFF; box-shadow: 0 8px 40px rgba(0,0,0,0.05);" class="container">
-                
+
                 <tr>
                     <td align="center" style="padding: 60px 40px 40px;" class="mobile-padding">
                         <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #B5B5B3; font-weight: 300;">SELFIE AI™</p>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td align="center" style="padding: 0 40px;">
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="60">
@@ -125,7 +125,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         </table>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td align="center" style="padding: 40px 40px 30px;" class="mobile-padding">
                         <h1 style="margin: 0; font-family: 'Bodoni Moda', Georgia, 'Times New Roman', serif; font-size: 48px; line-height: 1.1; color: #171719; font-weight: 300; letter-spacing: -1px;" class="headline">
@@ -134,7 +134,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         </h1>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td align="center" style="padding: 0 60px 40px;" class="mobile-padding">
                         <p style="margin: 0 0 20px; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;" class="body-text">
@@ -145,7 +145,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         </p>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td align="center" style="padding: 0 40px 50px;" class="mobile-padding">
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="mobile-button">
@@ -159,7 +159,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         </table>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td style="background-color: #F1F1F1; padding: 50px 40px;" class="mobile-padding">
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -173,9 +173,9 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                         </table>
                     </td>
                 </tr>
-                
+
             </table>
-            
+
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="container">
                 <tr>
                     <td align="center" style="padding: 30px 20px;">
@@ -197,7 +197,7 @@ async function sendSelfieGuideEmail(email: string, name?: string, pdfUrl?: strin
                     </td>
                 </tr>
             </table>
-            
+
         </td>
     </tr>
 </table>

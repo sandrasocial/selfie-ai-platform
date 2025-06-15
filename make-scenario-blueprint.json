@@ -1,0 +1,351 @@
+{
+  "name": "SELFIE GUIDE Funnel Automation",
+  "flow": [
+    {
+      "id": 1,
+      "app": "webhooks",
+      "module": "webhook",
+      "parameters": {
+        "hook": "https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe",
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {
+          "hook": {
+            "data": {
+              "editable": "true"
+            },
+            "label": "Custom webhook"
+          }
+        },
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "app": "http",
+      "module": "make-a-request",
+      "parameters": {
+        "url": "https://api.pdfmonkey.io/api/v1/documents",
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.PDFMONKEY_API_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "document": {
+            "document_template_id": "1D0EE38C-3FAF-4A16-B5C8-6222AA82A629",
+            "payload": {
+              "name": "{{ifempty(1.name; \"Friend\")}}",
+              "email": "{{1.email}}"
+            },
+            "meta": {
+              "_filename": "selfie-guide-{{replace(1.email; \"@\"; \"-at-\")}}.pdf"
+            }
+          }
+        },
+        "timeout": 300
+      },
+      "mapper": {
+        "url": "https://api.pdfmonkey.io/api/v1/documents",
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.PDFMONKEY_API_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\n  \"document\": {\n    \"document_template_id\": \"1D0EE38C-3FAF-4A16-B5C8-6222AA82A629\",\n    \"payload\": {\n      \"name\": \"{{ifempty(1.name; \"Friend\")}}\",\n      \"email\": \"{{1.email}}\"\n    },\n    \"meta\": {\n      \"_filename\": \"selfie-guide-{{replace(1.email; \"@\"; \"-at-\")}}.pdf\"\n    }\n  }\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "restore": {
+          "method": {
+            "mode": "chose",
+            "label": "POST"
+          },
+          "headers": {
+            "mode": "chose"
+          },
+          "body": {
+            "mode": "raw"
+          }
+        },
+        "parameters": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": ["get", "post", "put", "patch", "delete", "head"]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "app": "repeater",
+      "module": "repeat",
+      "parameters": {
+        "repeats": 15,
+        "interval": 2
+      },
+      "mapper": {
+        "repeats": 15,
+        "interval": 2
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "app": "http",
+      "module": "make-a-request",
+      "parameters": {
+        "url": "https://api.pdfmonkey.io/api/v1/documents/{{2.data.document.id}}",
+        "method": "get",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.PDFMONKEY_API_KEY}}"
+          }
+        ]
+      },
+      "mapper": {
+        "url": "https://api.pdfmonkey.io/api/v1/documents/{{2.data.document.id}}",
+        "method": "get",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.PDFMONKEY_API_KEY}}"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "restore": {
+          "method": {
+            "mode": "chose",
+            "label": "GET"
+          },
+          "headers": {
+            "mode": "chose"
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "app": "flow-control",
+      "module": "break",
+      "parameters": {
+        "condition": "{{if(4.data.document.status = \"success\"; true; false)}}"
+      },
+      "mapper": {
+        "condition": "{{if(4.data.document.status = \"success\"; true; false)}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "app": "http",
+      "module": "make-a-request",
+      "parameters": {
+        "url": "{{env.SUPABASE_URL}}/rest/v1/leads",
+        "method": "post",
+        "headers": [
+          {
+            "name": "apikey",
+            "value": "{{env.SUPABASE_ANON_KEY}}"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.SUPABASE_ANON_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Prefer",
+            "value": "return=representation"
+          }
+        ],
+        "body": {
+          "name": "{{1.name}}",
+          "email": "{{1.email}}",
+          "source": "selfie_guide",
+          "pdf_url": "{{4.data.document.download_url}}",
+          "created_at": "{{now}}"
+        }
+      },
+      "mapper": {
+        "url": "{{env.SUPABASE_URL}}/rest/v1/leads",
+        "method": "post",
+        "headers": [
+          {
+            "name": "apikey",
+            "value": "{{env.SUPABASE_ANON_KEY}}"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.SUPABASE_ANON_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Prefer",
+            "value": "return=representation"
+          }
+        ],
+        "body": "{\n  \"name\": \"{{1.name}}\",\n  \"email\": \"{{1.email}}\",\n  \"source\": \"selfie_guide\",\n  \"pdf_url\": \"{{4.data.document.download_url}}\",\n  \"created_at\": \"{{now}}\"\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        },
+        "restore": {
+          "method": {
+            "mode": "chose",
+            "label": "POST"
+          },
+          "headers": {
+            "mode": "chose"
+          },
+          "body": {
+            "mode": "raw"
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "app": "http",
+      "module": "make-a-request",
+      "parameters": {
+        "url": "https://api.resend.com/emails",
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.RESEND_API_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "from": "Sandra <hello@selfieai.co>",
+          "to": ["{{1.email}}"],
+          "subject": "Your Free Selfie Guide 💖",
+          "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Your Free Selfie Guide</title><style>body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }body { margin: 0; padding: 0; width: 100% !important; min-width: 100%; }@media screen and (max-width: 600px) {.mobile-padding { padding: 20px !important; }.mobile-center { text-align: center !important; }.container { width: 100% !important; max-width: 100% !important; }.mobile-button { width: 100% !important; }.headline { font-size: 36px !important; line-height: 1.2 !important; }.body-text { font-size: 16px !important; }}</style></head><body style=\"margin: 0; padding: 0; background-color: #F1F1F1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\"><div style=\"display: none; font-size: 1px; color: #F1F1F1; line-height: 1px; font-family: Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;\">Your journey to selfie confidence starts here</div><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" style=\"background-color: #F1F1F1;\"><tr><td align=\"center\" style=\"padding: 40px 20px;\"><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"600\" style=\"background-color: #FFFFFF; box-shadow: 0 8px 40px rgba(0,0,0,0.05);\" class=\"container\"><tr><td align=\"center\" style=\"padding: 60px 40px 40px;\" class=\"mobile-padding\"><p style=\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #B5B5B3; font-weight: 300;\">SELFIE AI™</p></td></tr><tr><td align=\"center\" style=\"padding: 0 40px;\"><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"60\"><tr><td style=\"border-bottom: 1px solid #B5B5B3; font-size: 1px; line-height: 1px;\">&nbsp;</td></tr></table></td></tr><tr><td align=\"center\" style=\"padding: 40px 40px 30px;\" class=\"mobile-padding\"><h1 style=\"margin: 0; font-family: 'Bodoni Moda', Georgia, 'Times New Roman', serif; font-size: 48px; line-height: 1.1; color: #171719; font-weight: 300; letter-spacing: -1px;\" class=\"headline\">Welcome to<br><em style=\"font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-style: italic; color: #171719;\">SELFIE AI™</em></h1></td></tr><tr><td align=\"center\" style=\"padding: 0 60px 40px;\" class=\"mobile-padding\"><p style=\"margin: 0 0 20px; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;\" class=\"body-text\">Beautiful{{if(length(1.name) > 0; \" \" + 1.name; \"\")}}, your guide to selfie confidence is ready! Inside, you'll discover my personal secrets to mastering lighting, finding your best angles, and capturing the authentic you.</p><p style=\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;\" class=\"body-text\">This isn't just about taking better photos — it's about seeing yourself through a lens of love and confidence.</p></td></tr><tr><td align=\"center\" style=\"padding: 0 40px 50px;\" class=\"mobile-padding\"><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mobile-button\"><tr><td style=\"background-color: #171719; text-align: center; border-radius: 0;\"><a href=\"{{4.data.document.download_url}}\" target=\"_blank\" style=\"display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;\">Download Your Guide</a></td></tr></table></td></tr><tr><td style=\"background-color: #F1F1F1; padding: 50px 40px;\" class=\"mobile-padding\"><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\"><tr><td align=\"center\"><p style=\"margin: 0 0 15px; font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 24px; font-style: italic; color: #171719;\">With love,</p><p style=\"margin: 0 0 10px; font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 32px; color: #171719; font-weight: 400;\">Sandra</p><p style=\"margin: 20px 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #B5B5B3; font-weight: 300;\">Founder, SELFIE AI™</p></td></tr></table></td></tr></table><table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"600\" class=\"container\"><tr><td align=\"center\" style=\"padding: 30px 20px;\"><p style=\"margin: 0 0 10px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; color: #B5B5B3; font-weight: 300;\">Follow along for daily inspiration</p><p style=\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 13px; color: #B5B5B3;\"><a href=\"https://instagram.com/sandra.social\" style=\"color: #171719; text-decoration: none;\">@sandra.social</a></p></td></tr><tr><td align=\"center\" style=\"padding: 0 20px 30px;\"><p style=\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 11px; color: #D4D4D4; line-height: 1.5;\">© 2024 SELFIE AI™. All rights reserved.<br><a href=\"#\" style=\"color: #D4D4D4; text-decoration: underline;\">Unsubscribe</a> | <a href=\"#\" style=\"color: #D4D4D4; text-decoration: underline;\">Privacy Policy</a></p></td></tr></table></td></tr></table></body></html>"
+        }
+      },
+      "mapper": {
+        "url": "https://api.resend.com/emails",
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{env.RESEND_API_KEY}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\n  \"from\": \"Sandra <hello@selfieai.co>\",\n  \"to\": [\"{{1.email}}\"],\n  \"subject\": \"Your Free Selfie Guide 💖\",\n  \"html\": \"<!DOCTYPE html><html lang=\\\"en\\\"><head><meta charset=\\\"UTF-8\\\"><meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\"><title>Your Free Selfie Guide</title><style>body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }body { margin: 0; padding: 0; width: 100% !important; min-width: 100%; }@media screen and (max-width: 600px) {.mobile-padding { padding: 20px !important; }.mobile-center { text-align: center !important; }.container { width: 100% !important; max-width: 100% !important; }.mobile-button { width: 100% !important; }.headline { font-size: 36px !important; line-height: 1.2 !important; }.body-text { font-size: 16px !important; }}</style></head><body style=\\\"margin: 0; padding: 0; background-color: #F1F1F1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\\\"><div style=\\\"display: none; font-size: 1px; color: #F1F1F1; line-height: 1px; font-family: Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;\\\">Your journey to selfie confidence starts here</div><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" width=\\\"100%\\\" style=\\\"background-color: #F1F1F1;\\\"><tr><td align=\\\"center\\\" style=\\\"padding: 40px 20px;\\\"><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" width=\\\"600\\\" style=\\\"background-color: #FFFFFF; box-shadow: 0 8px 40px rgba(0,0,0,0.05);\\\" class=\\\"container\\\"><tr><td align=\\\"center\\\" style=\\\"padding: 60px 40px 40px;\\\" class=\\\"mobile-padding\\\"><p style=\\\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #B5B5B3; font-weight: 300;\\\">SELFIE AI™</p></td></tr><tr><td align=\\\"center\\\" style=\\\"padding: 0 40px;\\\"><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" width=\\\"60\\\"><tr><td style=\\\"border-bottom: 1px solid #B5B5B3; font-size: 1px; line-height: 1px;\\\">&nbsp;</td></tr></table></td></tr><tr><td align=\\\"center\\\" style=\\\"padding: 40px 40px 30px;\\\" class=\\\"mobile-padding\\\"><h1 style=\\\"margin: 0; font-family: 'Bodoni Moda', Georgia, 'Times New Roman', serif; font-size: 48px; line-height: 1.1; color: #171719; font-weight: 300; letter-spacing: -1px;\\\" class=\\\"headline\\\">Welcome to<br><em style=\\\"font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-style: italic; color: #171719;\\\">SELFIE AI™</em></h1></td></tr><tr><td align=\\\"center\\\" style=\\\"padding: 0 60px 40px;\\\" class=\\\"mobile-padding\\\"><p style=\\\"margin: 0 0 20px; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;\\\" class=\\\"body-text\\\">Beautiful{{if(length(1.name) > 0; \\\" \\\" + 1.name; \\\"\\\")}}, your guide to selfie confidence is ready! Inside, you'll discover my personal secrets to mastering lighting, finding your best angles, and capturing the authentic you.</p><p style=\\\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #4C4B4B; font-weight: 300;\\\" class=\\\"body-text\\\">This isn't just about taking better photos — it's about seeing yourself through a lens of love and confidence.</p></td></tr><tr><td align=\\\"center\\\" style=\\\"padding: 0 40px 50px;\\\" class=\\\"mobile-padding\\\"><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" class=\\\"mobile-button\\\"><tr><td style=\\\"background-color: #171719; text-align: center; border-radius: 0;\\\"><a href=\\\"{{4.data.document.download_url}}\\\" target=\\\"_blank\\\" style=\\\"display: inline-block; padding: 20px 60px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; text-decoration: none; font-weight: 300;\\\">Download Your Guide</a></td></tr></table></td></tr><tr><td style=\\\"background-color: #F1F1F1; padding: 50px 40px;\\\" class=\\\"mobile-padding\\\"><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" width=\\\"100%\\\"><tr><td align=\\\"center\\\"><p style=\\\"margin: 0 0 15px; font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 24px; font-style: italic; color: #171719;\\\">With love,</p><p style=\\\"margin: 0 0 10px; font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 32px; color: #171719; font-weight: 400;\\\">Sandra</p><p style=\\\"margin: 20px 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #B5B5B3; font-weight: 300;\\\">Founder, SELFIE AI™</p></td></tr></table></td></tr></table><table role=\\\"presentation\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" border=\\\"0\\\" width=\\\"600\\\" class=\\\"container\\\"><tr><td align=\\\"center\\\" style=\\\"padding: 30px 20px;\\\"><p style=\\\"margin: 0 0 10px; font-family: 'Inter', Arial, sans-serif; font-size: 13px; color: #B5B5B3; font-weight: 300;\\\">Follow along for daily inspiration</p><p style=\\\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 13px; color: #B5B5B3;\\\"><a href=\\\"https://instagram.com/sandra.social\\\" style=\\\"color: #171719; text-decoration: none;\\\">@sandra.social</a></p></td></tr><tr><td align=\\\"center\\\" style=\\\"padding: 0 20px 30px;\\\"><p style=\\\"margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 11px; color: #D4D4D4; line-height: 1.5;\\\">© 2024 SELFIE AI™. All rights reserved.<br><a href=\\\"#\\\" style=\\\"color: #D4D4D4; text-decoration: underline;\\\">Unsubscribe</a> | <a href=\\\"#\\\" style=\\\"color: #D4D4D4; text-decoration: underline;\\\">Privacy Policy</a></p></td></tr></table></td></tr></table></body></html>\"\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        },
+        "restore": {
+          "method": {
+            "mode": "chose",
+            "label": "POST"
+          },
+          "headers": {
+            "mode": "chose"
+          },
+          "body": {
+            "mode": "raw"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "eu2.make.com"
+  }
+}

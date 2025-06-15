@@ -28,33 +28,60 @@ export default function SelfieGuide() {
     setIsSubmitting(true);
 
     try {
-      console.log('Calling submitSelfieGuideLead...');
-      const result = await submitSelfieGuideLead({ email, name });
-      console.log('Submission result:', result);
+      // Primary automation via Make.com webhook
+      console.log('Triggering Make.com automation...');
+      const webhookResponse = await fetch('https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name || '',
+          email: email
+        })
+      });
 
-      if (result && result.success) {
-        console.log('Form submission successful:', result);
-
-        if (result.pdfUrl === 'error') {
-          console.log('PDF generation failed, redirecting with error flag');
-          window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
-        } else if (result.pdfUrl) {
-          console.log('PDF URL received:', result.pdfUrl);
-          const redirectUrl = `/freebie/selfieguide/thankyou?pdf=${encodeURIComponent(result.pdfUrl)}`;
-          console.log('Redirecting to:', redirectUrl);
-          window.location.href = redirectUrl;
-        } else {
-          console.log('Success but no PDF URL, redirecting with error flag');
-          window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
-        }
+      if (webhookResponse.ok) {
+        console.log('Make.com webhook triggered successfully');
+        // Redirect to thank you page - Make.com will handle PDF generation and email
+        window.location.href = '/freebie/selfieguide/thankyou';
       } else {
-        throw new Error('Invalid response from submission');
+        console.warn('Make.com webhook failed, falling back to direct processing');
+        throw new Error('Webhook failed, using fallback');
       }
-    } catch (error: any) {
-      console.error('Form submission error:', error);
-      const errorMessage = error?.message || 'Unknown error occurred';
-      alert(`Submission failed: ${errorMessage}`);
-      setShowSuccess(true); // Show fallback success state
+    } catch (webhookError) {
+      console.warn('Make.com webhook error, using fallback processing:', webhookError);
+      
+      try {
+        // Fallback to existing direct processing
+        console.log('Using fallback: calling submitSelfieGuideLead...');
+        const result = await submitSelfieGuideLead({ email, name });
+        console.log('Fallback submission result:', result);
+        
+        if (result && result.success) {
+          console.log('Fallback submission successful:', result);
+          
+          if (result.pdfUrl === 'error') {
+            console.log('PDF generation failed, redirecting with error flag');
+            window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
+          } else if (result.pdfUrl) {
+            console.log('PDF URL received:', result.pdfUrl);
+            const redirectUrl = `/freebie/selfieguide/thankyou?pdf=${encodeURIComponent(result.pdfUrl)}`;
+            console.log('Redirecting to:', redirectUrl);
+            window.location.href = redirectUrl;
+          } else {
+            console.log('Success but no PDF URL, redirecting with error flag');
+            window.location.href = '/freebie/selfieguide/thankyou?pdf=error';
+          }
+        } else {
+          throw new Error('Invalid response from fallback submission');
+        }
+      } catch (fallbackError: any) {
+        console.error('Both webhook and fallback failed:', fallbackError);
+        const errorMessage = fallbackError?.message || 'Unknown error occurred';
+        alert(`Submission failed: ${errorMessage}`);
+        setShowSuccess(true); // Show fallback success state
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -352,4 +379,4 @@ export default function SelfieGuide() {
     </div>
   );
 }
-// redirect ready for deploy
+// Make.com webhook integrated - ready for deploy

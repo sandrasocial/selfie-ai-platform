@@ -16,7 +16,7 @@ export interface PDFGenerationResponse {
 
 export async function generateSelfieGuidePDF(name: string, email: string): Promise<PDFGenerationResponse> {
   try {
-    const templateId = '1D0EE38C-3FAF-4A16-B5C8-6222AA82A629';
+    const templateId = '48780153-6e0d-4695-920f-968888304d90';
     const apiKey = import.meta.env.VITE_PDFMONKEY_API_KEY;
 
     console.log('PDFMonkey API Debug:');

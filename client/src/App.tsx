@@ -103,7 +103,7 @@ function Router() {
         <Route path="/" component={Home} />
 
         {/* Protected Platform Routes - Require Authentication */}
-        <Route path="/internal" element={<InternalPage />} />
+        <Route path="/internal" component={InternalPage} />
         <Route path="/dashboard" component={() => <ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/dashboard/presets-kit-access" component={() => <ProtectedRoute><PresetsKitAccess /></ProtectedRoute>} />
         <Route path="/dashboard-dev" component={() => <ProtectedRoute><DashboardDev /></ProtectedRoute>} />

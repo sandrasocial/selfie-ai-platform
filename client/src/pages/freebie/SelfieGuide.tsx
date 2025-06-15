@@ -26,15 +26,15 @@ export default function SelfieGuide() {
 
     console.log('Form submission started:', { email, name });
     setIsSubmitting(true);
-    
+
     try {
       console.log('Calling submitSelfieGuideLead...');
       const result = await submitSelfieGuideLead({ email, name });
       console.log('Submission result:', result);
-      
+
       if (result && result.success) {
         console.log('Form submission successful:', result);
-        
+
         if (result.pdfUrl === 'error') {
           console.log('PDF generation failed, redirecting with error flag');
           window.location.href = '/freebie/selfieguide/thankyou?pdf=error';

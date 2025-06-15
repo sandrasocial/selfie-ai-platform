@@ -21,11 +21,11 @@ export default function ThankYou() {
           0% { left: -100%; }
           100% { left: 100%; }
         }
-        
+
         @keyframes fadeIn {
           to { opacity: 1; }
         }
-        
+
         .shimmer {
           position: absolute;
           top: 0;
@@ -35,7 +35,7 @@ export default function ThankYou() {
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
           animation: shimmer 3s infinite;
         }
-        
+
         .loading-text {
           font-size: 12px;
           letter-spacing: 0.2em;
@@ -52,24 +52,24 @@ export default function ThankYou() {
         <div className="bg-white border border-[#E5E5E5] overflow-hidden relative shadow-lg md:shadow-2xl">
           {/* Top Bar */}
           <div className="bg-[#171719] h-1 w-full"></div>
-          
+
           {/* Content */}
           <div className="px-6 py-12 md:px-20 md:py-24 text-center">
             <p className="font-['Neue_Einstellung'] text-[14px] letter-spacing-[0.4em] text-[#B5B5B3] uppercase font-light mb-10">
               SELFIE AI™
             </p>
-            
+
             <h1 className="font-['Bordoni_FLF'] text-[36px] md:text-[64px] lg:text-[72px] leading-[1.1] font-light tracking-[-0.02em] mb-5 text-[#171719]">
               Welcome to Your
               <span className="block font-['Bordoni_FLF'] italic text-[32px] md:text-[56px] lg:text-[64px] mt-2">
                 Selfie Journey
               </span>
             </h1>
-            
+
             <p className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.6] text-[#4C4B4B] mb-12 md:mb-16 max-w-2xl mx-auto">
               Your exclusive guide is ready. Get ready to transform your selfie game and step into your confidence.
             </p>
-            
+
             {pdfUrl && (
               <button
                 onClick={handleDownload}
@@ -79,19 +79,19 @@ export default function ThankYou() {
                 <div className="shimmer"></div>
               </button>
             )}
-            
+
             {!pdfUrl && (
               <div className="text-center mb-16">
                 <p className="text-[#4C4B4B] mb-4">Your personalized guide is being prepared...</p>
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#171719] mx-auto"></div>
               </div>
             )}
-            
+
             <p className="loading-text">Preparing your exclusive content...</p>
-            
+
             {/* Divider */}
             <div className="w-16 h-px bg-[#B5B5B3] mx-auto my-16"></div>
-            
+
             {/* Quote Section */}
             <div className="mb-16">
               <p className="font-['Bordoni_FLF'] text-[24px] md:text-[32px] leading-[1.3] italic text-[#171719] mb-5">
@@ -102,7 +102,7 @@ export default function ThankYou() {
               </p>
             </div>
           </div>
-          
+
           {/* CTA Section */}
           <div className="bg-[#F1F1F1] px-6 py-12 md:px-20 md:py-16 text-center">
             <h2 className="font-['Bordoni_FLF'] text-[24px] md:text-[28px] mb-4 font-light text-[#171719]">
@@ -118,7 +118,7 @@ export default function ThankYou() {
             </Link>
           </div>
         </div>
-        
+
         {/* Social Footer */}
         <div className="text-center pt-10 md:pt-12">
           <p className="font-['Neue_Einstellung'] text-[11px] md:text-[13px] text-[#B5B5B3] letter-spacing-[0.1em]">

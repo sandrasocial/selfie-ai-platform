@@ -1,30 +1,30 @@
-import { VercelRequest, VercelResponse } from '@vercel/node'
-import OpenAI from 'openai'
+// /api/agent-console.ts
+const { OpenAI } = require("openai");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { prompt, agent, context } = req.body
+  const { prompt, agent, context } = req.body;
   if (!prompt || !agent) {
-    return res.status(400).json({ error: 'Missing required fields' })
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: "gpt-4",
       messages: [
-        { role: 'system', content: `You are ${agent}. ${context || ''}` },
-        { role: 'user', content: prompt }
-      ]
-    })
+        { role: "system", content: `You are ${agent}. ${context || ""}` },
+        { role: "user", content: prompt },
+      ],
+    });
 
-    const message = response.choices?.[0]?.message?.content || 'No response from agent.'
-    res.status(200).json({ response: message })
-  } catch (error) {
-    res.status(500).json({ error: 'Agent error', detail: (error as any).message })
+    const message = response.choices?.[0]?.message?.content || "No response";
+    res.status(200).json({ response: message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-}
+};

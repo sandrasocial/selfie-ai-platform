@@ -1,33 +1,35 @@
-// /api/agent-console.js
-
-import OpenAI from "openai";
+import { OpenAI } from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { prompt, agent, context } = req.body;
-
-  if (!prompt || !agent) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
+  const { command } = req.body;
 
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4",
+    const chat = await openai.chat.completions.create({
+      model: 'gpt-4',
       messages: [
-        { role: "system", content: `You are ${agent}. ${context || ""}` },
-        { role: "user", content: prompt },
+        {
+          role: 'system',
+          content: 'You are a helpful AI assistant.',
+        },
+        {
+          role: 'user',
+          content: command,
+        },
       ],
     });
 
-    res.status(200).json({ response: response.choices?.[0]?.message?.content || "No response" });
+    const reply = chat.choices[0]?.message?.content || '[No reply]';
+    return res.status(200).json({ reply });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to process command.' });
   }
 }

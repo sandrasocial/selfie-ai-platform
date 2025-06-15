@@ -1,9 +1,34 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { Link } from 'wouter';
 
 export default function ThankYou() {
   // Get PDF URL from query params
   const pdfUrl = new URLSearchParams(window.location.search).get("pdf");
+
+  // Trigger Make.com webhook on page load
+  useEffect(() => {
+    const submitToMake = async () => {
+      try {
+        const res = await fetch('https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: 'Test User', // replace with dynamic data if available
+            email: 'ssa@ssasocial.com' // replace with dynamic data if available
+          })
+        });
+
+        const result = await res.json();
+        console.log('Webhook triggered successfully:', result);
+      } catch (error) {
+        console.error('Webhook submission failed:', error);
+      }
+    };
+
+    submitToMake();
+  }, []);
 
   const handleDownload = () => {
     // Open PDF in new tab for download

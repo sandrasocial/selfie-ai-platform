@@ -23,6 +23,7 @@ export default function ThankYouPage() {
   });
   const [statusMessage, setStatusMessage] = useState('');
   const [buttonText, setButtonText] = useState('Download Your Guide');
+  const [pdfUrl, setPdfUrl] = useState('');
   const [location] = useLocation();
 
   // Configuration from environment variables
@@ -78,6 +79,8 @@ export default function ThankYouPage() {
       const response = await Promise.race([fetchPromise, timeoutPromise]);
 
       if (response.ok) {
+        const data = await response.json();
+        
         // Success - wait a bit for PDF processing
         setStatusMessage('Your guide is almost ready...');
 
@@ -91,6 +94,13 @@ export default function ThankYouPage() {
           });
           setStatusMessage('Your guide is ready! Click to download.');
           setButtonText('Download Now');
+
+          // Use webhook PDF URL if available, otherwise fallback
+          if (data.pdfUrl) {
+            setPdfUrl(data.pdfUrl);
+          } else {
+            setPdfUrl('/selfie-guide.pdf');
+          }
 
           // Store success state
           sessionStorage.setItem('pdfReady', 'true');
@@ -120,6 +130,9 @@ export default function ThankYouPage() {
       setStatusMessage('Ready to download your guide.');
       setButtonText('Download Guide');
 
+      // Set fallback PDF path
+      setPdfUrl('/selfie-guide.pdf');
+
       // Enable direct download as fallback
       sessionStorage.setItem('pdfFallback', 'true');
     }
@@ -128,9 +141,9 @@ export default function ThankYouPage() {
   // Handle download button click
   const handleDownload = async (): Promise<void> => {
     if (pdfState.isSuccess || pdfState.isError) {
-      // Direct download
-      const pdfUrl = '/api/download-guide';
-      window.location.href = pdfUrl;
+      // Direct download using stored pdfUrl or fallback
+      const downloadUrl = pdfUrl || '/selfie-guide.pdf';
+      window.location.href = downloadUrl;
 
       // Update UI
       setStatusMessage('Download started! Check your downloads folder.');

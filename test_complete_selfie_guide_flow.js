@@ -26,7 +26,7 @@ async function testCompleteSelfieGuideFlow() {
       },
       body: JSON.stringify({
         document: {
-          document_template_id: '48780153-6e0d-4695-920f-968888304d90',
+          document_template_id: '24197B16-1667-4C4B-A446-A37D12260E85',
           payload: {
             name: testData.name || 'Friend',
             email: testData.email

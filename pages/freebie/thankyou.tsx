@@ -8,16 +8,26 @@ interface UserData {
   templateId: string;
 }
 
+interface PDFState {
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+}
+
 export default function ThankYouPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [pdfState, setPdfState] = useState<PDFState>({
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    errorMessage: ''
+  });
   const [statusMessage, setStatusMessage] = useState('');
   const [buttonText, setButtonText] = useState('Download Your Guide');
-  const [pdfReady, setPdfReady] = useState(false);
-  const [pdfFallback, setPdfFallback] = useState(false);
   const router = useRouter();
 
-  // Configuration
-  const WEBHOOK_URL = 'https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe';
+  // Configuration from environment variables
+  const WEBHOOK_URL = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_URL || 'https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe';
   const TEMPLATE_ID = '24197B16-1667-4C4B-A446-A37D12260E85';
   const TIMEOUT_DURATION = 15000; // 15 seconds
 
@@ -35,10 +45,15 @@ export default function ThankYouPage() {
   const triggerPDFGeneration = async (): Promise<void> => {
     const userData = getUserData();
     
-    // Show loading state
+    // Reset state and show loading
+    setPdfState({
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+      errorMessage: ''
+    });
     setStatusMessage('Creating your personalized guide...');
     setButtonText('Processing...');
-    setIsLoading(true);
 
     try {
       // Create a timeout promise
@@ -69,10 +84,14 @@ export default function ThankYouPage() {
 
         // Simulate PDF processing time
         setTimeout(() => {
+          setPdfState({
+            isLoading: false,
+            isSuccess: true,
+            isError: false,
+            errorMessage: ''
+          });
           setStatusMessage('Your guide is ready! Click to download.');
           setButtonText('Download Now');
-          setIsLoading(false);
-          setPdfReady(true);
 
           // Store success state
           if (typeof window !== 'undefined') {
@@ -80,22 +99,29 @@ export default function ThankYouPage() {
           }
         }, 3000);
       } else {
-        throw new Error('Webhook failed');
+        throw new Error(`Webhook failed with status: ${response.status}`);
       }
 
     } catch (error) {
       console.error('PDF generation error:', error);
-
-      // Fallback behavior
-      if (error instanceof Error && error.message === 'timeout') {
-        setStatusMessage('Taking longer than expected... You can still access your guide.');
-      } else {
-        setStatusMessage('Ready to download your guide.');
+      
+      let errorMessage = 'An error occurred while generating your guide.';
+      if (error instanceof Error) {
+        if (error.message === 'timeout') {
+          errorMessage = 'Taking longer than expected... You can still access your guide.';
+        } else {
+          errorMessage = error.message;
+        }
       }
 
+      setPdfState({
+        isLoading: false,
+        isSuccess: false,
+        isError: true,
+        errorMessage
+      });
+      setStatusMessage('Ready to download your guide.');
       setButtonText('Download Guide');
-      setIsLoading(false);
-      setPdfFallback(true);
 
       // Enable direct download as fallback
       if (typeof window !== 'undefined') {
@@ -106,9 +132,9 @@ export default function ThankYouPage() {
 
   // Handle download button click
   const handleDownload = async (): Promise<void> => {
-    if (pdfReady || pdfFallback) {
+    if (pdfState.isSuccess || pdfState.isError) {
       // Direct download
-      const pdfUrl = '/api/download-guide'; // Your PDF endpoint
+      const pdfUrl = '/api/download-guide';
       if (typeof window !== 'undefined') {
         window.location.href = pdfUrl;
       }
@@ -121,9 +147,9 @@ export default function ThankYouPage() {
     }
   };
 
-  // Auto-trigger on page load if user data exists
+  // Auto-trigger PDF generation on page load if user data exists
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && router.isReady) {
       const userData = getUserData();
       if (userData.email) {
         // Auto-trigger after 1 second
@@ -134,7 +160,7 @@ export default function ThankYouPage() {
         return () => clearTimeout(timer);
       }
     }
-  }, [router.query]);
+  }, [router.isReady, router.query]);
 
   return (
     <>
@@ -197,12 +223,12 @@ export default function ThankYouPage() {
           transition: all 0.3s ease;
         }
 
-        .download-btn:hover {
+        .download-btn:hover:not(:disabled) {
           transform: translateY(-2px);
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
-        .download-btn:active {
+        .download-btn:active:not(:disabled) {
           transform: translateY(0);
         }
 
@@ -214,13 +240,21 @@ export default function ThankYouPage() {
           background-color: #171719;
           color: #F1F1F1;
         }
+
+        .error-state {
+          color: #dc2626;
+        }
+
+        .success-state {
+          color: #16a34a;
+        }
       `}</style>
 
       <div className="bg-[#F1F1F1] min-h-screen flex items-center justify-center">
         <div className="w-full max-w-[1200px] mx-auto px-5 py-10">
           <div className="bg-white border border-[#E5E5E5] overflow-hidden relative">
             {/* Top Bar */}
-            <div className="bg-[#171719] h-1 w-full"></div>
+            <div className="bg-[#171719] h-1 w-full" />
 
             <div className="px-8 py-16 md:px-16 md:py-24 lg:px-20 lg:py-32 text-center">
               {/* Logo */}
@@ -244,27 +278,36 @@ export default function ThankYouPage() {
               {/* Download Button */}
               <button 
                 onClick={handleDownload}
-                disabled={isLoading}
+                disabled={pdfState.isLoading}
                 className="download-btn relative inline-block bg-[#171719] text-[#F1F1F1] px-12 py-6 md:px-16 md:py-6 text-xs tracking-[0.3em] uppercase font-light mb-16 overflow-hidden font-neue disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10">
-                  {isLoading && <div className="spinner"></div>}
+                  {pdfState.isLoading && <div className="spinner" />}
                   {buttonText}
                 </span>
-                <div className="shimmer"></div>
+                <div className="shimmer" />
               </button>
 
               {/* Status Message */}
               <p 
-                className={`text-xs tracking-[0.2em] uppercase text-[#B5B5B3] mt-5 transition-opacity duration-500 font-neue ${
+                className={`text-xs tracking-[0.2em] uppercase mt-5 transition-opacity duration-500 font-neue ${
                   statusMessage ? 'opacity-100' : 'opacity-0'
+                } ${
+                  pdfState.isError ? 'error-state' : pdfState.isSuccess ? 'success-state' : 'text-[#B5B5B3]'
                 }`}
               >
                 {statusMessage || 'Preparing your exclusive content...'}
               </p>
 
+              {/* Error Message */}
+              {pdfState.isError && pdfState.errorMessage && (
+                <p className="text-xs text-[#dc2626] mt-2 font-neue">
+                  {pdfState.errorMessage}
+                </p>
+              )}
+
               {/* Divider */}
-              <div className="w-16 h-px bg-[#B5B5B3] mx-auto my-16"></div>
+              <div className="w-16 h-px bg-[#B5B5B3] mx-auto my-16" />
 
               {/* Quote Section */}
               <div className="mb-16">

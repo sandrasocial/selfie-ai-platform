@@ -11,7 +11,7 @@
 
 @font-face {
   font-family: 'Bordoni FLF';
-  src: url('/fonts/bodoni/BodoniFlf-Regular.woff2') format('woff2');
+  src: url('/fonts/bodoni/BodoniFlf-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -19,7 +19,7 @@
 
 @font-face {
   font-family: 'Bordoni FLF';
-  src: url('/fonts/bodoni/BodoniFlf-Italic.woff2') format('woff2');
+  src: url('/fonts/bodoni/BodoniFlf-Italic.woff') format('woff');
   font-weight: normal;
   font-style: italic;
   font-display: swap;
@@ -27,16 +27,8 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Regular.woff2') format('woff2');
+  src: url('/fonts/neue-einstellung/NeueEinstellung-Regular.woff') format('woff');
   font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Bold.woff2') format('woff2');
-  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }

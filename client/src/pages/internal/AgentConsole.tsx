@@ -59,3 +59,11 @@ export default function AgentConsole() {
     </div>
   );
 }
+const response = await fetch('/api/agent-console', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    command: input,
+    model: 'claude' // or 'gpt4'
+  }),
+});

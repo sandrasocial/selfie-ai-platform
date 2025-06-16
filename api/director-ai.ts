@@ -1,28 +1,38 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateDirectorPrompt } from '@/agents/director-ai';
-import fs from 'fs';
-import path from 'path';
+import { promptBase } from '@/agents/prompt-base';
+import { listGitFiles, fetchGitFile } from '@/lib/github';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { goal } = req.body;
 
-  const schema = fs.readFileSync(path.join(process.cwd(), 'public/schema.json'), 'utf8');
-  const routes = fs.readFileSync(path.join(process.cwd(), 'public/routes.json'), 'utf8');
-  const components = fs.readFileSync(path.join(process.cwd(), 'public/components.json'), 'utf8');
+  const allFiles = await listGitFiles();
+  const pages = allFiles.filter((f) => f.startsWith('app/') || f.startsWith('pages/'));
+  const tools = allFiles.filter((f) => f.includes('tools') || f.includes('features'));
+  const components = allFiles.filter((f) => f.includes('components'));
 
-  const prompt = await generateDirectorPrompt(goal, { schema, routes, components });
+  const fileList = [...pages, ...tools, ...components].slice(0, 30); // Limit for now
 
-  const result = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-4',
-      messages: [{ role: 'system', content: prompt }],
-    }),
-  }).then(r => r.json());
+  const previews = await Promise.all(
+    fileList.map(async (file) => {
+      try {
+        const { content } = await fetchGitFile(file);
+        return `📄 ${file}\n${content.slice(0, 600)}\n---`;
+      } catch {
+        return `📄 ${file}\n[Error loading file]\n---`;
+      }
+    })
+  );
 
-  res.status(200).json(result);
-}
+  const fullPrompt = `
+${promptBase}
+
+🎯 GOAL:
+${goal}
+
+📁 FILE INDEX (partial):
+${fileList.join('\n')}
+
+🧠 FILE PREVIEWS:
+${previews.join('\n\n')}
+
+Your job is to scan the platform code, tools, and features — not just pages. Audit everything. Re

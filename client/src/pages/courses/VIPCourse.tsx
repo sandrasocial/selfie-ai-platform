@@ -49,14 +49,15 @@ export default function VIPCourse() {
   const { data: userAccess } = useQuery<UserAccess>({ 
     queryKey: ["/api/user-access"], 
     enabled: !!user, 
-    retry: false 
+    retry: false,
+    initialData: {} as UserAccess
   });
 
   // Check if user has VIP access
   const hasVIPAccess = userAccess?.vipEmpireBuilder || false;
 
   // Get VIP progress (only if user has access)
-  const { data: progressData } = useQuery<VIPProgressData>({
+  const { data: progressData = { currentStage: 1, completedStages: [] } } = useQuery({
     queryKey: ['vip-progress'],
     queryFn: async () => {
       const response = await apiRequest('GET', '/api/vip/progress');

@@ -157,7 +157,7 @@ export default function ThankYouPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const productId = location.split('/thank-you/')[1];
-  const product = products[productId as keyof typeof products];
+  const product: Product | undefined = products[productId];
 
   useEffect(() => {
     // Simulate loading time for downloads preparation

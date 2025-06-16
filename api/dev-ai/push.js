@@ -48,3 +48,16 @@ export default async function handler(req, res) {
     res.status(500).json({ error: err.message, stack: err.stack })
   }
 }
+import { commitFile } from '@/lib/github';
+
+export default async function handler(req, res) {
+  const { file, newCode, commit_title } = req.body;
+
+  const result = await commitFile({
+    path: file,
+    content: newCode,
+    message: commit_title || '🧠 Agent commit',
+  });
+
+  res.status(200).json({ status: 'success', result });
+}

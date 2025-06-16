@@ -44,10 +44,10 @@ jobs:
           run();
           EOF
 
-      - name: Commit schema.json
-        run: |
-          git config --global user.name 'SELFIE AI Agent'
-          git config --global user.email 'agent@selfie.ai'
-          git add public/schema.json
-          git commit -m "🔁 Update schema.json from Supabase" || echo "No changes to commit"
-          git push
+- name: Commit [filename].json
+  run: |
+    git config --global user.name 'Sandra Social'
+    git config --global user.email 'ssa@ssasocial.com'
+    git add public/[filename].json
+    git commit -m "🔁 Update [filename].json from SELFIE AI Agent" || echo "No changes"
+    git push

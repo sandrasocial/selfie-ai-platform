@@ -3,7 +3,7 @@ name: Dev AI Push Handler
 on:
   schedule:
     - cron: '*/2 * * * *' # Runs every 2 minutes
-    workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   dev-ai-push:
@@ -16,70 +16,24 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch Supabase Dev AI task
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      - name: Install Supabase client (temporary)
+        run: npm install @supabase/supabase-js --no-save
+
+      - name: Commit and push changes
         run: |
-          npm install @supabase/supabase-js --no-save
-          node -e "
-            const { createClient } = require('@supabase/supabase-js');
-            const fs = require('fs');
-            const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
-            (async () => {
-              const { data } = await supabase
-                .from('dev_ai_tasks')
-                .select('*')
-                .eq('status', 'pending')
-                .limit(1)
-                .single();
-
-              if (!data) return;
-
-              const filePath = data.file || 'App.tsx';
-              const message = data.message || 'Dev AI update';
-              fs.appendFileSync(filePath, `\n// ${message} @ ${new Date().toISOString()}`);
-
-              fs.writeFileSync('.task-meta.json', JSON.stringify({ id: data.id, filePath, message }));
-            })();
-          "
-
-- name: Commit and push changes
-  run: |
-    if [ -f .task-meta.json ]; then
-      DATE=$(date +%s)
-      BRANCH=feature/dev-ai-$DATE
-      git checkout -b $BRANCH
-      META=$(cat .task-meta.json)
-      FILE=$(echo $META | jq -r '.filePath')
-      MSG=$(echo $META | jq -r '.message')
-      git add $FILE
-      git commit -m "$MSG"
-      git push origin $BRANCH
-    fi
-
-
-
-      - name: Mark Supabase task complete
-        if: success()
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        run: |
-          node -e "
-            const { createClient } = require('@supabase/supabase-js');
-            const fs = require('fs');
-            if (!fs.existsSync('.task-meta.json')) process.exit(0);
-            const meta = JSON.parse(fs.readFileSync('.task-meta.json', 'utf8'));
-            const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
-            (async () => {
-              await supabase.from('dev_ai_tasks').update({ status: 'done' }).eq('id', meta.id);
-            })();
-          "
+          if [ -f .task-meta.json ]; then
+            DATE=$(date +%s)
+            BRANCH=feature/dev-ai-$DATE
+            git checkout -b $BRANCH
+            META=$(cat .task-meta.json)
+            FILE=$(echo $META | jq -r '.filePath')
+            MSG=$(echo $META | jq -r '.message')
+            git add $FILE
+            git commit -m "$MSG"
+            git push origin $BRANCH
+          fi

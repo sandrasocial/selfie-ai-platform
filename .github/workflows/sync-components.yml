@@ -1,0 +1,87 @@
+name: Sync Components Index
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scan-components:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install parser deps
+        run: npm install typescript @babel/parser @babel/traverse
+
+      - name: Scan components and generate index
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const parser = require('@babel/parser');
+          const traverse = require('@babel/traverse').default;
+
+          const dir = './client/src/components';
+          const components = [];
+
+          const walk = (folder) => {
+            fs.readdirSync(folder).forEach(file => {
+              const fullPath = path.join(folder, file);
+              const stat = fs.statSync(fullPath);
+
+              if (stat.isDirectory()) return walk(fullPath);
+              if (!file.endsWith('.tsx')) return;
+
+              const content = fs.readFileSync(fullPath, 'utf8');
+              const ast = parser.parse(content, {
+                sourceType: 'module',
+                plugins: ['typescript', 'jsx']
+              });
+
+              let name = null;
+              const props = new Set();
+
+              traverse(ast, {
+                enter(path) {
+                  if (path.isExportNamedDeclaration() || path.isFunctionDeclaration()) {
+                    const id = path.node.declaration?.id || path.node.id;
+                    if (id) name = id.name;
+                  }
+                  if (path.isIdentifier() && path.node.name === 'props') {
+                    if (path.parent?.type === 'MemberExpression') {
+                      const propName = path.parent.property?.name;
+                      if (propName) props.add(propName);
+                    }
+                  }
+                }
+              });
+
+              components.push({
+                name: name || path.basename(file, '.tsx'),
+                path: fullPath.replace(/^\.\/client/, ''),
+                props: Array.from(props)
+              });
+            });
+          };
+
+          walk(dir);
+
+          fs.mkdirSync('public', { recursive: true });
+          fs.writeFileSync('public/components.json', JSON.stringify(components, null, 2));
+          console.log('✅ components.json created');
+          EOF
+
+      - name: Commit components.json
+        run: |
+          git config --global user.name 'SELFIE AI Agent'
+          git config --global user.email 'agent@selfie.ai'
+          git add public/components.json
+          git commit -m "🧩 Update components.json from scan" || echo "No changes"
+          git push

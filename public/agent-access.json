@@ -1,0 +1,8 @@
+{
+  "repo": "https://github.com/sandrasocial/selfie-ai-platform",
+  "branch": "main",
+  "token_env_var": "AGENT_GITHUB_TOKEN",
+  "schema_url": "/public/schema.json",
+  "routes_url": "/public/routes.json",
+  "components_url": "/public/components.json"
+}

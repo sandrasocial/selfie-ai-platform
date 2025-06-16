@@ -1,28 +1,21 @@
-import { promptBase } from './prompt-base';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getAgentContext } from '@/lib/agentContext';
 
-export async function generateDevPrompt(task: string): Promise<string> {
-  const origin = process.env.NEXT_PUBLIC_SITE_URL || 'https://selfie-ai-platform.vercel.app';
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { task } = req.body;
+  const prompt = getAgentContext('dev-ai', task);
 
-  const access = await fetch(`${origin}/public/agent-access.json`).then(r => r.json());
-  const schema = await fetch(`${origin}${access.schema_url}`).then(r => r.json());
-  const routes = await fetch(`${origin}${access.routes_url}`).then(r => r.json());
-  const components = await fetch(`${origin}${access.components_url}`).then(r => r.json());
+  const result = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'gpt-4',
+      messages: [{ role: 'system', content: prompt }],
+    }),
+  }).then(r => r.json());
 
-  return `
-${promptBase}
-
-📂 Repo: ${access.repo}
-🧠 Task: ${task}
-
-📊 Schema:
-${JSON.stringify(schema, null, 2)}
-
-🧭 Routes:
-${JSON.stringify(routes, null, 2)}
-
-🧩 Components:
-${JSON.stringify(components, null, 2)}
-
-Your job: Make safe code edits and suggest a commit with a .task-meta.json
-`;
+  res.status(200).json(result);
 }

@@ -6,31 +6,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Download, RefreshCw, Sparkles, History } from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from "@/hooks/use-toast";
+import { UserProfile, GeneratedContent } from '@/types';
 
 interface ContentGeneratorProps {
   day: number;
   isPro: boolean;
-  userProfile?: any;
+  userProfile?: UserProfile;
   dayTitle: string;
   dayDescription: string;
 }
 
-interface GeneratedContent {
-  id: string;
-  contentType: string;
-  ai_content: {
-    captions?: string[];
-    hooks?: string[];
-    story_slides?: string[];
-    hashtags?: string[];
-    seo_keywords?: string[];
-    cta?: string;
-    signature?: string;
-    reel_prompt?: string;
-    caption_template?: string;
-  };
-  createdAt: string;
-}
+
 
 interface ContentHistory {
   id: string;

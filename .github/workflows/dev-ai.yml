@@ -50,7 +50,7 @@ jobs:
             })();
           "
 
- - name: Commit and push changes
+- name: Commit and push changes
   run: |
     if [ -f .task-meta.json ]; then
       DATE=$(date +%s)
@@ -63,6 +63,7 @@ jobs:
       git commit -m "$MSG"
       git push origin $BRANCH
     fi
+
 
 
       - name: Mark Supabase task complete

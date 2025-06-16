@@ -1,9 +1,7 @@
 name: Dev AI Push Handler
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'  # Runs every 2 minutes
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   dev-ai-push:
@@ -26,14 +24,10 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          if [ -f .task-meta.json ]; then
-            DATE=$(date +%s)
-            BRANCH=feature/dev-ai-$DATE
-            git checkout -b $BRANCH
-            META=$(cat .task-meta.json)
-            FILE=$(echo $META | jq -r '.filePath')
-            MSG=$(echo $META | jq -r '.message')
-            git add $FILE
-            git commit -m "$MSG"
-            git push origin $BRANCH
-          fi
+          DATE=$(date +%s)
+          BRANCH="feature/dev-ai-$DATE"
+          git checkout -b $BRANCH
+          echo "// Dev AI auto-update at $(date)" >> src/pages/index.tsx
+          git add src/pages/index.tsx
+          git commit -m "Dev AI auto-update"
+          git push origin $BRANCH

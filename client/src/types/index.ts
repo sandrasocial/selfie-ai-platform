@@ -104,3 +104,24 @@ export interface FeedImage {
   tags?: string[];
   uploaded_at?: string;
 }
+
+export interface UserAccess {
+  vipEmpireBuilder?: boolean;
+  vipApplication?: 'pending' | 'accepted' | 'rejected';
+  starterKit?: boolean;
+  brandedAccess?: boolean;
+  [key: string]: any;
+}
+
+export interface VIPAccessData {
+  hasAccess: boolean;
+  isPending: boolean;
+  accessState: 'accepted' | 'pending' | 'locked';
+  message: string;
+}
+
+export interface VIPProgressData {
+  currentStage: number;
+  completedStages: number[];
+  lastViewedStage?: number;
+}

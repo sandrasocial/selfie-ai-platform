@@ -8,21 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Crown, Lock, CheckCircle, Clock, ArrowRight } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
+import { UserAccess, VIPAccessData, VIPProgressData } from '@/types';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-interface VIPAccessData {
-  hasAccess: boolean;
-  isPending: boolean;
-  accessState: 'accepted' | 'pending' | 'locked';
-  message: string;
-}
 
-interface VIPProgressData {
-  currentStage: number;
-  completedStages: number[];
-  lastViewedStage?: number;
-}
 
 const EMPIRE_STAGES = [
   {
@@ -56,7 +46,11 @@ export default function VIPCourse() {
 
   // Get user data and access
   const { data: user } = useQuery({ queryKey: ["/api/me"], retry: false });
-  const { data: userAccess } = useQuery({ queryKey: ["/api/user-access"], enabled: !!user, retry: false });
+  const { data: userAccess } = useQuery<UserAccess>({ 
+    queryKey: ["/api/user-access"], 
+    enabled: !!user, 
+    retry: false 
+  });
 
   // Check if user has VIP access
   const hasVIPAccess = userAccess?.vipEmpireBuilder || false;
@@ -64,9 +58,20 @@ export default function VIPCourse() {
   // Get VIP progress (only if user has access)
   const { data: progressData } = useQuery<VIPProgressData>({
     queryKey: ['vip-progress'],
-    queryFn: () => apiRequest('GET', '/api/vip/progress'),
+    queryFn: async () => {
+      const response = await apiRequest('GET', '/api/vip/progress');
+      return response;
+    },
     enabled: hasVIPAccess,
   });
+
+  // Create accessData object for consistency with existing code
+  const accessData: VIPAccessData = {
+    hasAccess: hasVIPAccess,
+    isPending: userAccess?.vipApplication === 'pending',
+    accessState: hasVIPAccess ? 'accepted' : (userAccess?.vipApplication === 'pending' ? 'pending' : 'locked'),
+    message: hasVIPAccess ? 'Welcome to VIP Empire Builder' : 'VIP access required'
+  };
 
   const getCtaButton = () => {
     if (hasVIPAccess) {

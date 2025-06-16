@@ -1,0 +1,228 @@
+1. Type Errors with Promise<Response> and VIPProgressData
+Issue:The job failure log reveals multiple issues across various files. Below are the root causes and solutions for The VIPProgressData type is expected but Promise<Response> the most prominent problems:
+**Key Issues and is being returned.
+Solution: Modify the query function to correctly transform the ` Solutions**
+1. TypeScript Type Errors (Promise<Response> vs VIPProgressData)
+**Responseobject into theVIPProgressData` type.
+
+Example Fix:
+
+TypeScript
+import {Error**:
+```typescript
+Type 'Promise<Response>' is VIPProgressData } from './types'; // Ensure this type not assignable to type 'VIPProgressData | Promise<V is correctly imported
+
+const fetchVIPProgressData: () => Promise<VIPProgressData> = async () => {
+  const response = await fetch('/api/vip-progress');
+  if (!response.ok) throw new Error('Failed to fetch VIP progress data');
+  const data = await responseIPProgressData>'.
+Cause: A function returning.json(); return data as VIPProgressData; Promise<Response> is being used where // Ensure this matches the structure of VIPProgressData Promise<VIPProgressData> is expected. The ` };
+
+Code
+2. Missing Properties: Response object lacks the required properties (currentcompletedStages and currentStage
+IssueStage, completedStages`).
+Solution: The VIPProgressData type doesn't match the data structure: Update the function to parse the Response being used in the code.
+Solution object into the expected VIPProgressData type. Example: Update the VIPProgressData type to include these fields or validate the data source to ensure it:
+TypeScript
+async function fetchVIP provides the expected properties.
+
+**Example Type UpdateProgressData(): Promise<VIPProgressData> {
+  const**:
+```typescript
+export interface VIPProgressData response = await fetch('/api/progress');
+  const data {
+  currentStage: string;
+  completedStages = await response.json(); // Ensure proper parsing: number;
+  // Add other fields if necessary
+  return {
+    currentStage: data.current
+}
+3. **Undefined Identifier:Stage,
+Code
+     completedStages: data.completedStages,
+accessData**
+
+Issue: The accessData }; }
+Code
+2. **Missing variable is being used but not defined.
+** Properties on NoInfer<TQueryFnData>** -Solution**: Locate the intended data source for ` Error:
+TypeScript
+Property 'completedStages'accessData` and ensure it is properly initialized.
+
+does not exist on type 'NoInfer<TQueryFnData>'.
+Example Fix: typescript      const accessData = someDataSource.getAccessData(); // Replace with actual     
+
+Cause: The query function's return type is not properly inferred or explicitly defined data source logic
+Code
+4..
+Solution: Ensure the query function Component Type Mismatch: { user: unknown; } explicitly specifies VIPProgressData as its return type:
+TypeScript
+Issue: The user property is being passed to components useQuery<VIP that do not accept it.
+Solution: ProgressData>('vipProgress', fetchVIPProgressData); Validate the props being passed to these components. If ```
+3. Unresolved Identifiers (access user should be included, update the component's propData)
+Error:
+
+TypeScript
+types.
+
+**Example Fix**:
+```typescript
+interface ComponentProps {
+  user?: UserType Cannot find name 'accessData'.
+**Cause; // Define the correct type for 'user' }
+
+const**: The variable accessData is used without being declared or imported.
+
+Solution: MyComponent: React.FC<ComponentProps> = ({ user }) => { // Component logic here }; Verify if accessData should come from a hook, props, or context. Example:
+
+TypeScript
+    ```
+5. Unknown Property: id
+const accessData = useContext(AppContext)?.accessData; // Example if using - Issue: The id property is being accessed on an `unknown Context ```
+
+4` type.
+Solution: Narrow or cast. Unknown Types in Components (id, user)
+
+the type of the object to include id.
+
+Error:
+
+TypeScript
+Property 'id **Example Fix**:
+```typescript
+const data:' does not exist on type 'unknown'.
+Cause SomeKnownType = ensureType(someUnknownData); console: Props or data passed to components are.log(data.id);
+
+Code
+6. **Merge Conflict typed as unknown.
+Solution: Update the types in components to explicitly define the expected structure in tsconfig.json**
+Issue: Merge. Example:
+TypeScript
+interface User {
+conflict markers (<<<<, ====, >>>>) are present in id: string; name: string; }
+
+Code
+ `tsconfig.json`.
+Solution: Resolve function MyComponent({ user }: { user: User }) { the merge conflict by selecting the appropriate changes and removing conflict markers.
+
+Example Fix:
+
+JSON
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true
+  }
+}
+7. Missing Modules in vite.config.ts
+Issue: Modules @replit/vite-plugin-runtime       return <div>{user.id}</div>; }     -error-modal and @replit/vite-plugin-cartographer are missing.
+
+Solution: Install the required modules or remove their usage if they are unnecessary.
+
+Example Fix:
+
+bash
+npm install @replit/vite-plugin-runtime-error-modal @replit/vite-plugin-cartographer
+Next Steps
+Apply the fixes to the relevant files.
+Test the application to ensure all issues are resolved.
+Re-run the CI/CD pipeline to verify the job passes successfully.
+Let me know if you'd like help with specific sections of the code!
+
+Are you able to fix this for me? 
+I see you’ve shared a GitHub Actions job run URL. To help you fix the issue, I’ll need to review the logs for this specific job to understand what went wrong. I’ll retrieve the logs now.Your workflow failed due to several TypeScript and configuration errors. Here’s a breakdown of the main issues and how to fix them:
+
+1. Type Mismatch in VIPCourse.tsx
+Errors like:
+Type 'Promise<Response>' is not assignable to type 'VIPProgressData | Promise<VIPProgressData>'.
+Property 'completedStages'/'currentStage' does not exist on type 'NoInfer<TQueryFnData>'.
+How to fix:
+
+Your query function should return a Promise<VIPProgressData>, not Promise<Response>. You likely need to parse the response:
+ts
+// Instead of returning fetch(...), do:
+const fetchProgress = async (): Promise<VIPProgressData> => {
+  const res = await fetch(...);
+  return res.json(); // assuming API returns VIPProgressData
+}
+Make sure the data returned actually includes currentStage and completedStages.
+2. Undeclared Variable 'accessData'
+Errors like:
+Cannot find name 'accessData'.
+How to fix:
+
+Declare and assign 'accessData' before using it, or replace it with the correct variable.
+3. Props Type Error (user: unknown)
+Errors like:
+Property 'user' does not exist on type 'IntrinsicAttributes'.
+How to fix:
+
+The component you are rendering does not expect a 'user' prop. Either add 'user' to the component’s prop types, or remove it where it’s used.
+4. Accessing Properties on 'unknown'
+Errors like:
+Property 'id' does not exist on type 'unknown'.
+How to fix:
+
+Typecast or type your data properly before accessing properties:
+ts
+// Example
+const { id } = myData as MyExpectedType;
+5. ThankYouPage.tsx Object Property Errors
+Errors like:
+Property 'courseAccess', 'downloads', or 'upsell' does not exist on type '{ name: string; welcomeTitle: string; ... }'.
+How to fix:
+
+Check your object structure and ensure these properties exist or update your type definitions and data accordingly.
+6. Merge Conflict Markers in tsconfig.json
+Errors like:
+Merge conflict marker encountered.
+How to fix:
+
+Open tsconfig.json and remove lines like <<<<<<<, =======, >>>>>>> etc. Resolve the conflicts!
+7. Missing Module Errors
+Errors like:
+Cannot find module '@replit/vite-plugin-runtime-error-modal' or its corresponding type declarations.
+How to fix:
+
+Run:
+Code
+npm install @replit/vite-plugin-runtime-error-modal @replit/vite-plugin-cartographer
+Or remove these plugins from vite.config.ts if you don’t need them.
+8. Module Import Error in VIPApplication.tsx
+Error:
+Module '"wouter"' has no exported member 'useNavigate'.
+How to fix:
+
+Either use the correct import (check wouter docs — it might be useLocation or another hook), or install a version that supports useNavigate.
+If you want code snippets or help with a specific file, let me know which error you want to tackle first!
+
+Lets go systimaticly 
+Great! Let's tackle the errors systematically. Here’s the order I suggest, as each step will help clear up a group of related errors:
+
+tsconfig.json — Merge conflict markers (must be fixed first or your project won’t compile)
+VIPCourse.tsx — Query function and property errors
+Studio & BrandNotes, etc. — Type errors with unknown/user/id
+ThankYouPage.tsx — Property existence errors
+vite.config.ts — Missing modules
+VIPApplication.tsx — wouter/useNavigate
+Let's begin with step 1:
+
+1. tsconfig.json — Merge Conflict Markers
+Your build output shows:
+
+Code
+tsconfig.json(17,1): error TS1185: Merge conflict marker encountered.
+tsconfig.json(23,1): error TS1185: Merge conflict marker encountered.
+tsconfig.json(27,1): error TS1185: Merge conflict marker encountered.
+Action:
+
+Open tsconfig.json and look for lines like:
+Code
+<<<<<<< HEAD
+...
+=======
+...
+>>>>>>> branchname
+Resolve the conflicts by keeping the correct configuration and removing these lines.
+Save the file.

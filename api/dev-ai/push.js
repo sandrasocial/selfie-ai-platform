@@ -1,6 +1,14 @@
+import { createClient } from '@supabase/supabase-js'
+import { exec } from 'child_process'
+import fs from 'fs'
+import path from 'path'
+
+// ✅ INIT SUPABASE CLIENT HERE
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
   try {

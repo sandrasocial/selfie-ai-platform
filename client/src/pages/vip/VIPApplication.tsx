@@ -8,12 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 export default function VIPApplication() {
-  const [, navigate] = useNavigate();
+  const [location, setLocation] = useLocation();
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
@@ -47,7 +47,7 @@ export default function VIPApplication() {
         title: "Application Submitted",
         description: "We'll review your application and respond within 48 hours.",
       });
-      navigate('/thank-you/vip');
+      setLocation('/thank-you/vip');
     },
     onError: (error: any) => {
       toast({

@@ -1,6 +1,8 @@
 name: Dev AI Push Handler
 
 on:
+  schedule:
+    - cron: '*/2 * * * *'  # every 2 minutes
   workflow_dispatch:
 
 jobs:
@@ -14,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -24,10 +26,19 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          DATE=$(date +%s)
-          BRANCH="feature/dev-ai-$DATE"
-          git checkout -b $BRANCH
-          echo "// Dev AI auto-update at $(date)" >> src/pages/index.tsx
-          git add src/pages/index.tsx
-          git commit -m "Dev AI auto-update"
-          git push origin $BRANCH
+          if [ -f .task-meta.json ]; then
+            DATE=$(date +%s)
+            BRANCH="feature/dev-ai-$DATE"
+            git checkout -b $BRANCH
+            FILE=$(jq -r '.filePath' .task-meta.json)
+            MSG=$(jq -r '.message' .task-meta.json)
+            if [ -f "$FILE" ]; then
+              git add "$FILE"
+              git commit -m "$MSG"
+              git push origin $BRANCH
+            else
+              echo "❌ File not found: $FILE"
+              exit 1
+            fi
+          else
+            echo "⚠️ No .task-meta.json found — skipping commit."

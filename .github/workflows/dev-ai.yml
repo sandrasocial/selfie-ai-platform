@@ -2,8 +2,8 @@ name: Dev AI Push Handler
 
 on:
   schedule:
-    - cron: '*/2 * * * *' # Runs every 2 minutes
-  workflow_dispatch:
+    - cron: '*/2 * * * *'  # Runs every 2 minutes
+  workflow_dispatch: {}
 
 jobs:
   dev-ai-push:

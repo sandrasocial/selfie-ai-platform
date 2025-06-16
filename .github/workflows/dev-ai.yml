@@ -24,6 +24,11 @@ jobs:
       - name: Install Supabase client (temporary)
         run: npm install @supabase/supabase-js --no-save
 
+      - name: Set Git identity
+        run: |
+          git config --global user.email "dev@selfieai.io"
+          git config --global user.name "SELFIE AI Dev Agent"
+
       - name: Commit and push changes
         run: |
           if [ -f .task-meta.json ]; then

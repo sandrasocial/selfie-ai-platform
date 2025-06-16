@@ -2,7 +2,35 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 
-const products = {
+interface CourseAccess {
+  title: string;
+  description: string;
+  courseUrl: string;
+}
+
+interface Download {
+  name: string;
+  url: string;
+}
+
+interface Upsell {
+  title: string;
+  description: string;
+  productName: string;
+  productUrl: string;
+  price: number;
+}
+
+interface Product {
+  name: string;
+  welcomeTitle: string;
+  description: string;
+  courseAccess?: CourseAccess;
+  downloads?: Download[];
+  upsell?: Upsell;
+}
+
+const products: Record<string, Product> = {
   'starter-kit': {
     name: 'Selfie Starter Kit',
     welcomeTitle: 'You\'re In!',

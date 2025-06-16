@@ -57,11 +57,20 @@ export default function VIPCourse() {
   const hasVIPAccess = userAccess?.vipEmpireBuilder || false;
 
   // Get VIP progress (only if user has access)
-  const { data: progressData = { currentStage: 1, completedStages: [] } } = useQuery({
+  const { data: progressData = { currentStage: 1, completedStages: [] } } = useQuery<VIPProgressData>({
     queryKey: ['vip-progress'],
-    queryFn: async () => {
+    queryFn: async (): Promise<VIPProgressData> => {
       const response = await apiRequest('GET', '/api/vip/progress');
-      return response;
+      // Validate response structure
+      if (response && typeof response === 'object' && 
+          'currentStage' in response && 'completedStages' in response) {
+        return {
+          currentStage: response.currentStage as number,
+          completedStages: response.completedStages as number[]
+        };
+      }
+      // Return default structure if API fails
+      return { currentStage: 1, completedStages: [] };
     },
     enabled: hasVIPAccess,
   });
@@ -99,15 +108,15 @@ export default function VIPCourse() {
   };
 
   const getStageStatus = (stageId: number) => {
-    if (!progressData || !('completedStages' in progressData)) return 'locked';
-    if ((progressData as VIPProgressData).completedStages.includes(stageId)) return 'complete';
-    if ((progressData as VIPProgressData).currentStage === stageId) return 'in-progress';
+    if (!progressData) return 'locked';
+    if (progressData.completedStages.includes(stageId)) return 'complete';
+    if (progressData.currentStage === stageId) return 'in-progress';
     return 'locked';
   };
 
   const calculateProgress = () => {
-    if (!progressData || !('completedStages' in progressData)) return 0;
-    return ((progressData as VIPProgressData).completedStages.length / EMPIRE_STAGES.length) * 100;
+    if (!progressData) return 0;
+    return (progressData.completedStages.length / EMPIRE_STAGES.length) * 100;
   };
 
   return (

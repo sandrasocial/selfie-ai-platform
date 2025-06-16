@@ -1,0 +1,53 @@
+name: Sync Supabase Schema
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Fetch Supabase schema
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          node <<'EOF'
+          const { createClient } = require('@supabase/supabase-js');
+          const fs = require('fs');
+          const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+          async function run() {
+            const { data, error } = await supabase.rpc('introspect_schema');
+            if (error) {
+              console.error('Failed to fetch schema:', error);
+              process.exit(1);
+            }
+            fs.mkdirSync('public', { recursive: true });
+            fs.writeFileSync('public/schema.json', JSON.stringify(data, null, 2));
+            console.log('✅ Schema written to public/schema.json');
+          }
+
+          run();
+          EOF
+
+- name: Commit [filename].json
+  run: |
+    git config --global user.name 'Sandra Social'
+    git config --global user.email 'ssa@ssasocial.com'
+    git add public/[filename].json
+    git commit -m "🔁 Update [filename].json from SELFIE AI Agent" || echo "No changes"
+    git push

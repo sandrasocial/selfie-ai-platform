@@ -1,0 +1,58 @@
+name: Dev AI Push
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  dev-ai-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Supabase client (temporary)
+        run: npm install @supabase/supabase-js --no-save
+
+      - name: TypeScript validation
+        run: npx tsc --noEmit
+
+      - name: Set Git identity
+        run: |
+          git config --global user.email "dev@selfieai.io"
+          git config --global user.name "SELFIE AI Dev Agent"
+
+      - name: Commit and push changes
+        run: |
+          if [ -f .task-meta.json ]; then
+            DATE=$(date +%s)
+            BRANCH_NAME="feature/dev-ai-$DATE"
+            git checkout -b "$BRANCH_NAME"
+            FILE_PATH=$(jq -r .filePath .task-meta.json)
+            COMMIT_MSG=$(jq -r .message .task-meta.json)
+            echo "<!-- Dev AI edit -->" >> "$FILE_PATH"
+            git add "$FILE_PATH"
+            git commit -m "$COMMIT_MSG"
+            git push origin "$BRANCH_NAME"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create pull request
+        if: env.BRANCH_NAME != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BRANCH_NAME }}
+          title: ${{ env.COMMIT_MSG }}
+          body: "Auto-generated PR from Dev AI"

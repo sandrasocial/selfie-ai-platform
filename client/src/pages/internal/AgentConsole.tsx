@@ -59,6 +59,31 @@ export default function AgentConsole() {
           {loading ? 'Running...' : 'Run'}
         </button>
       </div>
+<button
+  onClick={async () => {
+    setLogs(prev => [...prev, '> Pushing Dev AI update...']);
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/dev-ai/push', { method: 'POST' });
+      const data = await res.json();
+
+      if (data?.message) {
+        setLogs(prev => [...prev, `✅ ${data.message} (branch: ${data.branch})`]);
+      } else {
+        setLogs(prev => [...prev, '⚠️ Unknown response from Dev AI']);
+      }
+    } catch (err) {
+      setLogs(prev => [...prev, '❌ Failed to push Dev AI update']);
+    }
+
+    setLoading(false);
+  }}
+  disabled={loading}
+  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-50 ml-2"
+>
+  {loading ? 'Pushing...' : 'Push Dev AI Update'}
+</button>
 
       <div className="space-y-2 text-sm leading-relaxed">
         {logs.map((log, i) => (

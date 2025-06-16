@@ -44,3 +44,11 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create pull request
+        if: env.BRANCH_NAME != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BRANCH_NAME }}
+          title: ${{ env.COMMIT_MSG }}
+          body: "Auto-generated PR from Dev AI"

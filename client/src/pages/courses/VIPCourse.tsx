@@ -99,15 +99,15 @@ export default function VIPCourse() {
   };
 
   const getStageStatus = (stageId: number) => {
-    if (!progressData) return 'locked';
-    if (progressData.completedStages.includes(stageId)) return 'complete';
-    if (progressData.currentStage === stageId) return 'in-progress';
+    if (!progressData || !('completedStages' in progressData)) return 'locked';
+    if ((progressData as VIPProgressData).completedStages.includes(stageId)) return 'complete';
+    if ((progressData as VIPProgressData).currentStage === stageId) return 'in-progress';
     return 'locked';
   };
 
   const calculateProgress = () => {
-    if (!progressData) return 0;
-    return (progressData.completedStages.length / EMPIRE_STAGES.length) * 100;
+    if (!progressData || !('completedStages' in progressData)) return 0;
+    return ((progressData as VIPProgressData).completedStages.length / EMPIRE_STAGES.length) * 100;
   };
 
   return (

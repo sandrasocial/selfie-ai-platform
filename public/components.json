@@ -1,0 +1,551 @@
+[
+  {
+    "name": "AIIntegrationDashboard",
+    "path": "client/src/components/AIIntegrationDashboard.tsx",
+    "props": []
+  },
+  {
+    "name": "AdminHeader",
+    "path": "client/src/components/AdminHeader.tsx",
+    "props": []
+  },
+  {
+    "name": "AuthReset",
+    "path": "client/src/components/AuthReset.tsx",
+    "props": []
+  },
+  {
+    "name": "BrandAestheticBuilder",
+    "path": "client/src/components/BrandAestheticBuilder.tsx",
+    "props": []
+  },
+  {
+    "name": "BrandHubOnboarding",
+    "path": "client/src/components/BrandHubOnboarding.tsx",
+    "props": []
+  },
+  {
+    "name": "CheckoutForm",
+    "path": "client/src/components/CheckoutForm.tsx",
+    "props": []
+  },
+  {
+    "name": "ComingSoon",
+    "path": "client/src/components/ComingSoon.tsx",
+    "props": []
+  },
+  {
+    "name": "ContentGenerator",
+    "path": "client/src/components/ContentGenerator.tsx",
+    "props": []
+  },
+  {
+    "name": "ContentPreview",
+    "path": "client/src/components/ContentPreview.tsx",
+    "props": []
+  },
+  {
+    "name": "CourseNavigation",
+    "path": "client/src/components/CourseNavigation.tsx",
+    "props": []
+  },
+  {
+    "name": "CustomUploadButton",
+    "path": "client/src/components/CustomUploadButton.tsx",
+    "props": []
+  },
+  {
+    "name": "DevLoginButton",
+    "path": "client/src/components/DevLoginButton.tsx",
+    "props": []
+  },
+  {
+    "name": "DevRouteAudit",
+    "path": "client/src/components/DevRouteAudit.tsx",
+    "props": []
+  },
+  {
+    "name": "EnhancedContentGenerator",
+    "path": "client/src/components/EnhancedContentGenerator.tsx",
+    "props": []
+  },
+  {
+    "name": "ErrorBoundary",
+    "path": "client/src/components/ErrorBoundary.tsx",
+    "props": [
+      "props"
+    ]
+  },
+  {
+    "name": "LogoutButton",
+    "path": "client/src/components/LogoutButton.tsx",
+    "props": []
+  },
+  {
+    "name": "ModuleWorkbook",
+    "path": "client/src/components/ModuleWorkbook.tsx",
+    "props": []
+  },
+  {
+    "name": "MyBrandProfile",
+    "path": "client/src/components/MyBrandProfile.tsx",
+    "props": []
+  },
+  {
+    "name": "MyWorkbooks",
+    "path": "client/src/components/MyWorkbooks.tsx",
+    "props": []
+  },
+  {
+    "name": "PDFGenerator",
+    "path": "client/src/components/PDFGenerator.tsx",
+    "props": []
+  },
+  {
+    "name": "PersonalizedContentGenerator",
+    "path": "client/src/components/PersonalizedContentGenerator.tsx",
+    "props": []
+  },
+  {
+    "name": "PhotoEnhancementActions",
+    "path": "client/src/components/PhotoEnhancementActions.tsx",
+    "props": []
+  },
+  {
+    "name": "ProfileAwarePoseCoach",
+    "path": "client/src/components/ProfileAwarePoseCoach.tsx",
+    "props": []
+  },
+  {
+    "name": "ProfileCompletionPrompt",
+    "path": "client/src/components/ProfileCompletionPrompt.tsx",
+    "props": []
+  },
+  {
+    "name": "ProtectedRoute",
+    "path": "client/src/components/ProtectedRoute.tsx",
+    "props": []
+  },
+  {
+    "name": "RouteRedirects",
+    "path": "client/src/components/RouteRedirects.tsx",
+    "props": []
+  },
+  {
+    "name": "SandraAIAssistant",
+    "path": "client/src/components/SandraAIAssistant.tsx",
+    "props": []
+  },
+  {
+    "name": "SandraAIChat",
+    "path": "client/src/components/SandraAIChat.tsx",
+    "props": []
+  },
+  {
+    "name": "StrategyWidget",
+    "path": "client/src/components/StrategyWidget.tsx",
+    "props": []
+  },
+  {
+    "name": "SubscriptionStatusWidget",
+    "path": "client/src/components/SubscriptionStatusWidget.tsx",
+    "props": []
+  },
+  {
+    "name": "SupabaseAuthForm",
+    "path": "client/src/components/SupabaseAuthForm.tsx",
+    "props": []
+  },
+  {
+    "name": "SupabaseAuthProvider",
+    "path": "client/src/components/SupabaseAuthProvider.tsx",
+    "props": []
+  },
+  {
+    "name": "TemplateCustomizer",
+    "path": "client/src/components/TemplateCustomizer.tsx",
+    "props": []
+  },
+  {
+    "name": "TierAccessGuard",
+    "path": "client/src/components/TierAccessGuard.tsx",
+    "props": []
+  },
+  {
+    "name": "VisualStudioEditor",
+    "path": "client/src/components/VisualStudioEditor.tsx",
+    "props": []
+  },
+  {
+    "name": "CollectionSelector",
+    "path": "client/src/components/aesthetics/CollectionSelector.tsx",
+    "props": []
+  },
+  {
+    "name": "CourseChat",
+    "path": "client/src/components/chat/CourseChat.tsx",
+    "props": []
+  },
+  {
+    "name": "SandraChat",
+    "path": "client/src/components/chat/SandraChat.tsx",
+    "props": []
+  },
+  {
+    "name": "CourseAccessGuard",
+    "path": "client/src/components/course/CourseAccessGuard.tsx",
+    "props": []
+  },
+  {
+    "name": "CourseLayout",
+    "path": "client/src/components/course/CourseLayout.tsx",
+    "props": []
+  },
+  {
+    "name": "LessonContent",
+    "path": "client/src/components/course/LessonContent.tsx",
+    "props": []
+  },
+  {
+    "name": "LessonNavigation",
+    "path": "client/src/components/course/LessonNavigation.tsx",
+    "props": []
+  },
+  {
+    "name": "getSlideTitle",
+    "path": "client/src/components/course/ModuleSlideViewer.tsx",
+    "props": []
+  },
+  {
+    "name": "ProgressBar",
+    "path": "client/src/components/course/ProgressBar.tsx",
+    "props": []
+  },
+  {
+    "name": "Footer",
+    "path": "client/src/components/layout/Footer.tsx",
+    "props": []
+  },
+  {
+    "name": "Header",
+    "path": "client/src/components/layout/Header.tsx",
+    "props": []
+  },
+  {
+    "name": "ScrollToTop",
+    "path": "client/src/components/layout/ScrollToTop.tsx",
+    "props": []
+  },
+  {
+    "name": "CaptionCreator",
+    "path": "client/src/components/strategy/CaptionCreator.tsx",
+    "props": []
+  },
+  {
+    "name": "ContentCreator",
+    "path": "client/src/components/strategy/ContentCreator.tsx",
+    "props": []
+  },
+  {
+    "name": "FutureSelfAI",
+    "path": "client/src/components/strategy/FutureSelfAI.tsx",
+    "props": []
+  },
+  {
+    "name": "MicroStoryCreator",
+    "path": "client/src/components/strategy/MicroStoryCreator.tsx",
+    "props": []
+  },
+  {
+    "name": "PhotoEditor",
+    "path": "client/src/components/strategy/PhotoEditor.tsx",
+    "props": []
+  },
+  {
+    "name": "PhotoEditorNew",
+    "path": "client/src/components/strategy/PhotoEditorNew.tsx",
+    "props": []
+  },
+  {
+    "name": "StrategyCoach",
+    "path": "client/src/components/strategy/StrategyCoach.tsx",
+    "props": []
+  },
+  {
+    "name": "VisualsCreator",
+    "path": "client/src/components/strategy/VisualsCreator.tsx",
+    "props": []
+  },
+  {
+    "name": "VisualsCreator",
+    "path": "client/src/components/strategy/VisualsCreatorFixed.tsx",
+    "props": []
+  },
+  {
+    "name": "ImageEnhancement",
+    "path": "client/src/components/studio/ImageEnhancement.tsx",
+    "props": []
+  },
+  {
+    "name": "PhotoEditor",
+    "path": "client/src/components/studio/PhotoEditor.tsx",
+    "props": []
+  },
+  {
+    "name": "SelfieUpload",
+    "path": "client/src/components/studio/SelfieUpload.tsx",
+    "props": []
+  },
+  {
+    "name": "accordion",
+    "path": "client/src/components/ui/accordion.tsx",
+    "props": []
+  },
+  {
+    "name": "alert-dialog",
+    "path": "client/src/components/ui/alert-dialog.tsx",
+    "props": []
+  },
+  {
+    "name": "alert",
+    "path": "client/src/components/ui/alert.tsx",
+    "props": []
+  },
+  {
+    "name": "aspect-ratio",
+    "path": "client/src/components/ui/aspect-ratio.tsx",
+    "props": []
+  },
+  {
+    "name": "avatar",
+    "path": "client/src/components/ui/avatar.tsx",
+    "props": []
+  },
+  {
+    "name": "Badge",
+    "path": "client/src/components/ui/badge.tsx",
+    "props": []
+  },
+  {
+    "name": "breadcrumb",
+    "path": "client/src/components/ui/breadcrumb.tsx",
+    "props": []
+  },
+  {
+    "name": "ButtonProps",
+    "path": "client/src/components/ui/button.tsx",
+    "props": []
+  },
+  {
+    "name": "Calendar",
+    "path": "client/src/components/ui/calendar.tsx",
+    "props": []
+  },
+  {
+    "name": "card",
+    "path": "client/src/components/ui/card.tsx",
+    "props": []
+  },
+  {
+    "name": "useCarousel",
+    "path": "client/src/components/ui/carousel.tsx",
+    "props": []
+  },
+  {
+    "name": "getPayloadConfigFromPayload",
+    "path": "client/src/components/ui/chart.tsx",
+    "props": []
+  },
+  {
+    "name": "checkbox",
+    "path": "client/src/components/ui/checkbox.tsx",
+    "props": []
+  },
+  {
+    "name": "collapsible",
+    "path": "client/src/components/ui/collapsible.tsx",
+    "props": []
+  },
+  {
+    "name": "command",
+    "path": "client/src/components/ui/command.tsx",
+    "props": []
+  },
+  {
+    "name": "context-menu",
+    "path": "client/src/components/ui/context-menu.tsx",
+    "props": []
+  },
+  {
+    "name": "dialog",
+    "path": "client/src/components/ui/dialog.tsx",
+    "props": []
+  },
+  {
+    "name": "drawer",
+    "path": "client/src/components/ui/drawer.tsx",
+    "props": []
+  },
+  {
+    "name": "dropdown-menu",
+    "path": "client/src/components/ui/dropdown-menu.tsx",
+    "props": []
+  },
+  {
+    "name": "form",
+    "path": "client/src/components/ui/form.tsx",
+    "props": [
+      "name"
+    ]
+  },
+  {
+    "name": "hover-card",
+    "path": "client/src/components/ui/hover-card.tsx",
+    "props": []
+  },
+  {
+    "name": "image-placeholder",
+    "path": "client/src/components/ui/image-placeholder.tsx",
+    "props": []
+  },
+  {
+    "name": "input-otp",
+    "path": "client/src/components/ui/input-otp.tsx",
+    "props": []
+  },
+  {
+    "name": "input",
+    "path": "client/src/components/ui/input.tsx",
+    "props": []
+  },
+  {
+    "name": "label",
+    "path": "client/src/components/ui/label.tsx",
+    "props": []
+  },
+  {
+    "name": "MenubarSub",
+    "path": "client/src/components/ui/menubar.tsx",
+    "props": []
+  },
+  {
+    "name": "navigation-menu",
+    "path": "client/src/components/ui/navigation-menu.tsx",
+    "props": []
+  },
+  {
+    "name": "pagination",
+    "path": "client/src/components/ui/pagination.tsx",
+    "props": []
+  },
+  {
+    "name": "popover",
+    "path": "client/src/components/ui/popover.tsx",
+    "props": []
+  },
+  {
+    "name": "progress",
+    "path": "client/src/components/ui/progress.tsx",
+    "props": []
+  },
+  {
+    "name": "radio-group",
+    "path": "client/src/components/ui/radio-group.tsx",
+    "props": []
+  },
+  {
+    "name": "resizable",
+    "path": "client/src/components/ui/resizable.tsx",
+    "props": []
+  },
+  {
+    "name": "scroll-area",
+    "path": "client/src/components/ui/scroll-area.tsx",
+    "props": []
+  },
+  {
+    "name": "select",
+    "path": "client/src/components/ui/select.tsx",
+    "props": []
+  },
+  {
+    "name": "separator",
+    "path": "client/src/components/ui/separator.tsx",
+    "props": []
+  },
+  {
+    "name": "sheet",
+    "path": "client/src/components/ui/sheet.tsx",
+    "props": []
+  },
+  {
+    "name": "useSidebar",
+    "path": "client/src/components/ui/sidebar.tsx",
+    "props": []
+  },
+  {
+    "name": "Skeleton",
+    "path": "client/src/components/ui/skeleton.tsx",
+    "props": []
+  },
+  {
+    "name": "slider",
+    "path": "client/src/components/ui/slider.tsx",
+    "props": []
+  },
+  {
+    "name": "switch",
+    "path": "client/src/components/ui/switch.tsx",
+    "props": []
+  },
+  {
+    "name": "table",
+    "path": "client/src/components/ui/table.tsx",
+    "props": []
+  },
+  {
+    "name": "tabs",
+    "path": "client/src/components/ui/tabs.tsx",
+    "props": []
+  },
+  {
+    "name": "textarea",
+    "path": "client/src/components/ui/textarea.tsx",
+    "props": []
+  },
+  {
+    "name": "toast",
+    "path": "client/src/components/ui/toast.tsx",
+    "props": []
+  },
+  {
+    "name": "Toaster",
+    "path": "client/src/components/ui/toaster.tsx",
+    "props": []
+  },
+  {
+    "name": "toggle-group",
+    "path": "client/src/components/ui/toggle-group.tsx",
+    "props": []
+  },
+  {
+    "name": "toggle",
+    "path": "client/src/components/ui/toggle.tsx",
+    "props": []
+  },
+  {
+    "name": "tooltip",
+    "path": "client/src/components/ui/tooltip.tsx",
+    "props": []
+  },
+  {
+    "name": "PricingSection",
+    "path": "client/src/components/user/PricingSection.tsx",
+    "props": []
+  },
+  {
+    "name": "UserProfileForm",
+    "path": "client/src/components/user/UserProfileForm.tsx",
+    "props": []
+  }
+]

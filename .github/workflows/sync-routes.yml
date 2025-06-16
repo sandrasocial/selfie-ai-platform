@@ -1,0 +1,58 @@
+name: Sync Route Map
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-routes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install ts-node and deps
+        run: npm install ts-node @types/node
+
+      - name: Generate routes.json
+        run: |
+          npx ts-node <<'EOF'
+          import fs from 'fs';
+          import path from 'path';
+          import { routeAuthMap } from './agent/authMap';
+
+          const walkPages = (dir: string, base = ''): string[] => {
+            const fullPath = path.join(dir, base);
+            return fs.readdirSync(fullPath).flatMap(name => {
+              const p = path.join(base, name);
+              const full = path.join(dir, p);
+              if (fs.statSync(full).isDirectory()) return walkPages(dir, p);
+              if (!name.endsWith('.tsx') && !name.endsWith('.js')) return [];
+              return [`/${p.replace(/\.(tsx|js)$/, '').replace(/index$/, '')}`];
+            });
+          };
+
+          const pagesDir = 'app';
+          const routes = walkPages(pagesDir).map(route => {
+            const auth = routeAuthMap[route] || 'public';
+            return { route, auth };
+          });
+
+          fs.mkdirSync('public', { recursive: true });
+          fs.writeFileSync('public/routes.json', JSON.stringify(routes, null, 2));
+          console.log('✅ routes.json created');
+          EOF
+
+      - name: Commit routes.json
+        run: |
+          git config --global user.name 'SELFIE AI Agent'
+          git config --global user.email 'agent@selfie.ai'
+          git add public/routes.json
+          git commit -m "🧭 Update routes.json from route scan" || echo "No changes"
+          git push

@@ -1,9 +1,9 @@
-name: Dev AI Push Handler
+name: Dev AI Push
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'  # every 2 minutes
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   dev-ai-push:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
@@ -28,17 +28,14 @@ jobs:
         run: |
           if [ -f .task-meta.json ]; then
             DATE=$(date +%s)
-            BRANCH="feature/dev-ai-$DATE"
-            git checkout -b $BRANCH
-            FILE=$(jq -r '.filePath' .task-meta.json)
-            MSG=$(jq -r '.message' .task-meta.json)
-            if [ -f "$FILE" ]; then
-              git add "$FILE"
-              git commit -m "$MSG"
-              git push origin $BRANCH
-            else
-              echo "❌ File not found: $FILE"
-              exit 1
-            fi
-          else
-            echo "⚠️ No .task-meta.json found — skipping commit."
+            BRANCH_NAME="feature/dev-ai-$DATE"
+            git checkout -b "$BRANCH_NAME"
+            FILE_PATH=$(jq -r .filePath .task-meta.json)
+            COMMIT_MSG=$(jq -r .message .task-meta.json)
+            echo "<!-- Dev AI edit -->" >> "$FILE_PATH"
+            git add "$FILE_PATH"
+            git commit -m "$COMMIT_MSG"
+            git push origin "$BRANCH_NAME"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

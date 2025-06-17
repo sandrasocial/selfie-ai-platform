@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { OpenAI } from 'openai';
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';

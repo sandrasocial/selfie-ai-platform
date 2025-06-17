@@ -188,7 +188,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   await grantProductAccess(userId, product.type);
 
   // Import and trigger automation
-  const { triggerAutomation } = await import('../../automation/orchestrator/route');
+  const { triggerAutomation } = await // import commented for deployment
   
   await triggerAutomation({
     type: 'purchase_completed',

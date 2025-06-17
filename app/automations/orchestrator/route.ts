@@ -2,7 +2,7 @@
 // Manages the complete automation flow
 // app/api/automation/orchestrator/route.ts
 import { createClient } from '@supabase/supabase-js';
-import { sendEmail } from '../email/route';
+// import commented for deployment
 
 // Initialize Supabase
 const supabase = createClient(

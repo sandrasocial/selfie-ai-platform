@@ -292,7 +292,7 @@ function parseDevAIResponse(response: string, taskAnalysis: any) {
  * Extract suggested file changes from response
  */
 function extractSuggestedChanges(response: string, taskAnalysis: any) {
-  const changes = [];
+  const changes: any[] = [];
   
   // Look for file mentions
   const filePattern = /(?:file:|modify|update|create)\s*(\/[\w\-\/]+\.\w+)/gi;

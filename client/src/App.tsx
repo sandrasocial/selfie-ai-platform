@@ -1,241 +1,528 @@
-import React, { useEffect } from "react";
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { clearAuthState } from "./lib/supabaseClient";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import ScrollToTop from "@/components/layout/ScrollToTop";
-import Home from "@/pages/Home";
-import Studio from "@/pages/Studio";
-import VisualsStudio from "@/pages/studio/VisualsStudio";
-import VisualStrategy from "@/pages/studio/VisualStrategy";
-import FeedDesigner from "@/pages/studio/FeedDesigner";
-import PhotoVault from "@/pages/studio/PhotoVault";
-import DailyBoost from "@/pages/studio/DailyBoost";
-import BrandNotes from "@/pages/studio/BrandNotes";
-import AutoTagger from "@/pages/studio/AutoTagger";
-import Pricing from "@/pages/Pricing";
-import CoachingApplication from "@/pages/CoachingApplication";
-import ViralSelfieBlueprint from "@/pages/ViralSelfieBlueprint";
-import ModuleOne from "@/pages/ModuleOne";
-import ModuleTwo from "@/pages/ModuleTwo";
-import ModuleThree from "@/pages/ModuleThree";
-import MyWorkbooks from "@/pages/MyWorkbooks";
-import ContentVault from "@/pages/ContentVault";
-import MonthlyDrops from "@/pages/MonthlyDrops";
-import Courses from "@/pages/Courses";
-import Templates from "@/pages/Templates";
-import SandraAI from "@/pages/SandraAI";
-import Planner from "@/pages/WeeklyPlanner"; // Alias for /planner route
-import Checkout from "@/pages/Checkout";
-import OfferUpsell from "@/pages/OfferUpsell";
-import OfferDownsell from "@/pages/OfferDownsell";
-import Dashboard from "@/pages/Dashboard";
-import Calendar from "@/pages/Calendar";
-import AuthCallback from "@/pages/AuthCallback";
-import SupabaseAuth from "@/pages/SupabaseAuth";
-import SupabaseCallback from "@/pages/SupabaseCallback";
-import AdminDashboard from "@/pages/AdminDashboard";
-import AdminDrops from "@/pages/AdminDrops";
-import TempAdminLogin from "@/pages/TempAdminLogin";
-import TestLogin from "@/pages/TestLogin";
-import DevLogin from "@/pages/DevLogin";
-import DevAuth from "@/pages/DevAuth";
-import DashboardDev from "@/pages/DashboardDev";
-import SelfieStarterKit from "@/pages/products/SelfieStarterKit";
-import BrandedBySelfieProduct from "@/pages/products/BrandedBySelfie";
-import PresetBundles from "@/pages/products/PresetBundles";
-import CheckoutPage from "@/pages/checkout/CheckoutPage";
-import ThankYouPage from "@/pages/thank-you/ThankYouPage";
-import StarterKitCourse from "@/pages/courses/StarterKitCourse";
-import BrandedBySelfie from "@/pages/courses/BrandedBySelfie";
-import VIPCourse from "@/pages/courses/VIPCourse";
-import AestheticCollections from "@/pages/AestheticCollections";
-import NotFound from "@/pages/not-found";
-import Privacy from "@/pages/Privacy";
-import Terms from "@/pages/Terms";
-import Contact from "@/pages/Contact";
-import Support from "@/pages/Support";
-import MyAccount from "@/pages/MyAccount";
-import SummerCollabs from "@/pages/SummerCollabs";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { lazy, Suspense } from "react";
-import EmpireBuilderVIP from "@/pages/products/EmpireBuilderVIP";
-import DevRouteAudit from "@/components/DevRouteAudit";
-import RouteRedirects from "@/components/RouteRedirects";
-import SandraAIAssistant from '@/components/SandraAIAssistant';
-import AuthTest from '@/pages/AuthTest';
-import Login from "@/pages/Login";
-import ViewWorkbook from "@/pages/ViewWorkbook";
-import PresetsKitAccess from "@/pages/PresetsKitAccess";
-import DebugSession from "@/pages/DebugSession";
-import BrandOnboarding from "@/pages/BrandOnboarding";
-import { AIIntegrationDashboard } from "@/components/AIIntegrationDashboard";
-import MyBrandProfile from "@/components/MyBrandProfile";
-import { ProfileProvider } from "@/contexts/ProfileContext";
-import BrandHubOnboarding from "@/components/BrandHubOnboarding";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import React, { useEffect, Suspense, lazy } from 'react';
+import { Route, Switch, useLocation } from 'wouter';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { useAuthStore } from '@/stores/authStore';
+import { applyRedirect } from '@/lib/redirects';
+import { ROUTES } from '@/constants/routes';
 
-function Router() {
-  const SelfieGuide = lazy(() => import('@/pages/freebie/SelfieGuide'));
-  const SelfieGuideThankYou = lazy(() => import('@/pages/freebie/thankyou.tsx'));
-  const VIPThankYou = lazy(() => import('@/pages/thank-you/VIPThankYou'));
+// Layouts
+import MainLayout from '@/components/layout/MainLayout';
+import AuthLayout from '@/components/layout/AuthLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout';
 
-  useEffect(() => {
-    // Clear any stale auth state on fresh page load
-    const isCallback = window.location.pathname.includes('/supabase-auth/callback') || 
-                      window.location.pathname.includes('/supabase-callback');
-    
-    if (!isCallback && window.performance?.navigation?.type === 1) {
-      // Only clear on fresh page loads, not on redirects or back/forward
-      console.log('🔄 Fresh page load detected, clearing auth state...');
-      clearAuthState();
-    }
-  }, []);
+// Loading component
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-luxury-black mx-auto mb-4"></div>
+      <p className="text-luxury-text-gray font-helvetica">Loading...</p>
+    </div>
+  </div>
+);
 
-  return (
-    <>
-      <ScrollToTop />
-      <RouteRedirects />
-      <Switch>
-        <Route path="/" component={Home} />
+// Lazy load pages for better performance
+// Home & Marketing
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const TestimonialsPage = lazy(() => import('@/pages/TestimonialsPage'));
+const BlogPage = lazy(() => import('@/pages/BlogPage'));
+const BlogPostPage = lazy(() => import('@/pages/BlogPostPage'));
 
-        {/* Protected Platform Routes - Require Authentication */}
-        <Route path="/dashboard" component={() => <ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/dashboard/presets-kit-access" component={() => <ProtectedRoute><PresetsKitAccess /></ProtectedRoute>} />
-        <Route path="/dashboard-dev" component={() => <ProtectedRoute><DashboardDev /></ProtectedRoute>} />
-        <Route path="/onboarding" component={() => <ProtectedRoute><BrandOnboarding /></ProtectedRoute>} />
-        <Route path="/onboarding/brand-hub" component={() => <ProtectedRoute><BrandHubOnboarding /></ProtectedRoute>} />
-        <Route path="/studio" component={() => <ProtectedRoute><Studio /></ProtectedRoute>} />
-        <Route path="/studio/editor" component={() => <ProtectedRoute><VisualsStudio /></ProtectedRoute>} />
-        <Route path="/studio/visual-strategy" component={() => <ProtectedRoute><VisualStrategy /></ProtectedRoute>} />
-        <Route path="/studio/feed-designer" component={() => <ProtectedRoute><FeedDesigner /></ProtectedRoute>} />
-        <Route path="/studio/photo-vault" component={() => <ProtectedRoute><PhotoVault /></ProtectedRoute>} />
-        <Route path="/studio/boost" component={() => <ProtectedRoute><DailyBoost /></ProtectedRoute>} />
-        <Route path="/studio/notes" component={() => <ProtectedRoute><BrandNotes /></ProtectedRoute>} />
-        <Route path="/studio/tagger" component={() => <ProtectedRoute><AutoTagger /></ProtectedRoute>} />
-        <Route path="/sandra-ai" component={() => <ProtectedRoute><SandraAI /></ProtectedRoute>} />
-        <Route path="/ai-hub" component={() => <ProtectedRoute><AIIntegrationDashboard /></ProtectedRoute>} />
-        <Route path="/profile" component={() => <ProtectedRoute><MyBrandProfile /></ProtectedRoute>} />
-        <Route path="/my-profile" component={() => <ProtectedRoute><MyBrandProfile /></ProtectedRoute>} />
-        <Route path="/planner" component={() => <ProtectedRoute><Planner /></ProtectedRoute>} />
-        <Route path="/drops" component={() => <ProtectedRoute><MonthlyDrops /></ProtectedRoute>} />
-        <Route path="/courses" component={() => <ProtectedRoute><Courses /></ProtectedRoute>} />
+// Products (Sales Pages)
+const ProductsPage = lazy(() => import('@/pages/products/ProductsPage'));
+const StarterKitSalesPage = lazy(() => import('@/pages/products/StarterKitSalesPage'));
+const BrandedSalesPage = lazy(() => import('@/pages/products/BrandedSalesPage'));
+const VIPSalesPage = lazy(() => import('@/pages/products/VIPSalesPage'));
+const ToolsSalesPage = lazy(() => import('@/pages/products/ToolsSalesPage'));
+const AllAccessSalesPage = lazy(() => import('@/pages/products/AllAccessSalesPage'));
 
-        <Route path="/calendar" component={() => <ProtectedRoute><Calendar /></ProtectedRoute>} />
-        <Route path="/templates" component={() => <ProtectedRoute><Templates /></ProtectedRoute>} />
-        <Route path="/content-vault" component={() => <ProtectedRoute><ContentVault /></ProtectedRoute>} />
+// Learning (Course Access)
+const LearnDashboard = lazy(() => import('@/pages/learn/LearnDashboard'));
+const StarterKitHub = lazy(() => import('@/pages/learn/starter-kit/StarterKitHub'));
+const StarterKitModule = lazy(() => import('@/pages/learn/starter-kit/StarterKitModule'));
+const BrandedHub = lazy(() => import('@/pages/learn/branded/BrandedHub'));
+const BrandedModule = lazy(() => import('@/pages/learn/branded/BrandedModule'));
+const VIPPortal = lazy(() => import('@/pages/learn/vip/VIPPortal'));
+const VIPSessions = lazy(() => import('@/pages/learn/vip/VIPSessions'));
+const VIPRecordings = lazy(() => import('@/pages/learn/vip/VIPRecordings'));
+const VIPResources = lazy(() => import('@/pages/learn/vip/VIPResources'));
 
-        <Route path="/my-workbooks" component={() => <ProtectedRoute><MyWorkbooks /></ProtectedRoute>} />
-        <Route path="/view-workbook" component={() => <ProtectedRoute><ViewWorkbook /></ProtectedRoute>} />
+// Tools
+const ToolsDashboard = lazy(() => import('@/pages/tools/ToolsDashboard'));
+const SelfieStudio = lazy(() => import('@/pages/tools/SelfieStudio'));
+const SandraAI = lazy(() => import('@/pages/tools/SandraAI'));
+const ContentCalendar = lazy(() => import('@/pages/tools/ContentCalendar'));
+const CaptionWriter = lazy(() => import('@/pages/tools/CaptionWriter'));
+const BrandKitGenerator = lazy(() => import('@/pages/tools/BrandKitGenerator'));
+const AnalyticsDashboard = lazy(() => import('@/pages/tools/AnalyticsDashboard'));
 
-        {/* Course Routes - Payment Protected */}
-        <Route path="/course/viral-selfie-blueprint" component={() => <ProtectedRoute><ViralSelfieBlueprint /></ProtectedRoute>} />
-        <Route path="/courses/starter-kit" component={() => <ProtectedRoute><StarterKitCourse /></ProtectedRoute>} />
-        <Route path="/courses/branded-by-selfie" component={() => <ProtectedRoute><BrandedBySelfie /></ProtectedRoute>} />
-        <Route path="/courses/branded" component={() => <ProtectedRoute><BrandedBySelfie /></ProtectedRoute>} />
-        <Route path="/courses/vip" component={() => <ProtectedRoute><VIPCourse /></ProtectedRoute>} />
-        
-        {/* AI Collections */}
-        <Route path="/collections" component={() => <ProtectedRoute><AestheticCollections /></ProtectedRoute>} />
-        <Route path="/aesthetic-collections" component={() => <ProtectedRoute><AestheticCollections /></ProtectedRoute>} />
+// Account & Profile
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));
+const EditProfile = lazy(() => import('@/pages/profile/EditProfile'));
+const BillingPage = lazy(() => import('@/pages/profile/BillingPage'));
+const PurchaseHistory = lazy(() => import('@/pages/profile/PurchaseHistory'));
+const Certificates = lazy(() => import('@/pages/profile/Certificates'));
 
-        {/* Checkout & Thank You Routes - Payment Flow */}
-        <Route path="/checkout" component={CheckoutPage} />
-        <Route path="/checkout/:productId" component={CheckoutPage} />
-        <Route path="/thank-you" component={ThankYouPage} />
-        <Route path="/thank-you/:type" component={ThankYouPage} />
-        <Route path="/thank-you/vip" component={() => <Suspense fallback={<div>Loading...</div>}><VIPThankYou /></Suspense>} />
+// Authentication
+const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
+const SignupPage = lazy(() => import('@/pages/auth/SignupPage'));
+const ResetPasswordPage = lazy(() => import('@/pages/auth/ResetPasswordPage'));
+const VerifyEmailPage = lazy(() => import('@/pages/auth/VerifyEmailPage'));
 
-        {/* Product Pages - Subscription Gated */}
-        <Route path="/products/empire-builder-vip" component={EmpireBuilderVIP} />
-        <Route path="/products/preset-bundles" component={PresetBundles} />
+// Checkout
+const CheckoutPage = lazy(() => import('@/pages/checkout/CheckoutPage'));
+const CheckoutSuccess = lazy(() => import('@/pages/checkout/CheckoutSuccess'));
+const CheckoutCancel = lazy(() => import('@/pages/checkout/CheckoutCancel'));
 
-        {/* Account & Subscription Management */}
-        <Route path="/my-account" component={() => <ProtectedRoute><MyAccount /></ProtectedRoute>} />
+// Legal
+const PrivacyPage = lazy(() => import('@/pages/legal/PrivacyPage'));
+const TermsPage = lazy(() => import('@/pages/legal/TermsPage'));
+const RefundPolicyPage = lazy(() => import('@/pages/legal/RefundPolicyPage'));
+const AffiliateTermsPage = lazy(() => import('@/pages/legal/AffiliateTermsPage'));
 
-        {/* Module Routes - Course Content */}
-        <Route path="/module/1" component={() => <ProtectedRoute><ModuleOne /></ProtectedRoute>} />
-        <Route path="/module/2" component={() => <ProtectedRoute><ModuleTwo /></ProtectedRoute>} />
-        <Route path="/module/3" component={() => <ProtectedRoute><ModuleThree /></ProtectedRoute>} />
+// Special Pages
+const WelcomePage = lazy(() => import('@/pages/WelcomePage'));
+const CommunityPage = lazy(() => import('@/pages/CommunityPage'));
+const ResourcesPage = lazy(() => import('@/pages/ResourcesPage'));
+const ContactPage = lazy(() => import('@/pages/ContactPage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
-        {/* Upsell Flow Routes */}
-        <Route path="/offer-upsell" component={OfferUpsell} />
-        <Route path="/offer-downsell" component={OfferDownsell} />
+// Initialize React Query
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 10, // 10 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-        {/* VIP Application */}
-        <Route path="/vip-application" component={CoachingApplication} />
-
-        {/* Summer Collaborations */}
-        <Route path="/summer-collabs" component={SummerCollabs} />
-
-        {/* Freebie Routes */}
-        <Route path="/freebie/selfieguide" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuide /></Suspense>} />
-        <Route path="/freebie/selfieguide/thankyou" component={() => <Suspense fallback={<div>Loading...</div>}><SelfieGuideThankYou /></Suspense>} />
-
-        {/* Admin Routes */}
-        <Route path="/admin" component={() => <ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/admin/drops" component={() => <ProtectedRoute><AdminDrops /></ProtectedRoute>} />
-
-        {/* Auth Routes */}
-        <Route path="/auth-callback" component={AuthCallback} />
-        <Route path="/supabase-auth" component={SupabaseAuth} />
-        <Route path="/supabase-auth/callback" component={SupabaseCallback} />
-        <Route path="/supabase-callback" component={SupabaseCallback} />
-        <Route path="/auth-test" component={AuthTest} />
-
-        {/* Dev Routes */}
-        <Route path="/dev-login" component={DevLogin} />
-        <Route path="/dev-auth" component={DevAuth} />
-        <Route path="/temp-admin" component={() => {
-          // Set temporary session and redirect to dashboard
-          fetch('/api/temp-admin-access', { method: 'GET' })
-            .then(() => {
-              window.location.href = '/dashboard';
-            })
-            .catch(() => {
-              window.location.href = '/dashboard';
-            });
-          return <div className="p-8 text-center">
-            <h2 className="text-xl font-bold mb-4">Accessing Platform...</h2>
-            <p>Establishing temporary session and redirecting to dashboard</p>
-          </div>;
-        }} />
-        <Route path="/temp-admin-login" component={TempAdminLogin} />
-        <Route path="/test-login" component={TestLogin} />
-        <Route path="/debug-session" component={DebugSession} />
-
-        {/* Public Routes */}
-        <Route path="/pricing" component={Pricing} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/support" component={Support} />
-        <Route path="/login" component={Login} />
-        <Route path="/products/starter-kit" component={SelfieStarterKit} />
-        <Route path="/products/branded-by-selfie" component={BrandedBySelfieProduct} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/privacy" component={Privacy} />
-        <Route component={NotFound} />
-      </Switch>
-    </>
-  );
+// Route protection wrapper
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requiresPurchase?: string[]; // Optional: specific product IDs required
 }
 
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiresPurchase }) => {
+  const { isAuthenticated, isLoading, user } = useAuthStore();
+  const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      // Store intended destination for post-login redirect
+      sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
+      setLocation(ROUTES.AUTH.LOGIN);
+    }
+  }, [isAuthenticated, isLoading, setLocation]);
+
+  // Check for specific purchase requirements
+  useEffect(() => {
+    if (isAuthenticated && requiresPurchase && user) {
+      const hasPurchase = requiresPurchase.some(productId => 
+        user.purchases?.includes(productId)
+      );
+      
+      if (!hasPurchase) {
+        setLocation(ROUTES.PRODUCTS.HOME);
+      }
+    }
+  }, [isAuthenticated, requiresPurchase, user, setLocation]);
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
+
+  return isAuthenticated ? <>{children}</> : null;
+};
+
+// Redirect handler component
+const RedirectHandler: React.FC = () => {
+  const [location, setLocation] = useLocation();
+  
+  useEffect(() => {
+    const redirectTo = applyRedirect(location);
+    if (redirectTo && redirectTo !== location) {
+      console.log(`Redirecting from ${location} to ${redirectTo}`);
+      setLocation(redirectTo);
+    }
+  }, [location, setLocation]);
+  
+  return null;
+};
+
+// Main App Component
 function App() {
+  const { initialize } = useAuthStore();
+
+  // Initialize auth on mount
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
   return (
-    <React.StrictMode>
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <ProfileProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Router />
-              <DevRouteAudit />
-            </TooltipProvider>
-          </ProfileProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
-    </React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <RedirectHandler />
+      
+      <Suspense fallback={<PageLoader />}>
+        <Switch>
+          {/* ===== HOME & MARKETING ===== */}
+          <Route path={ROUTES.HOME}>
+            <MainLayout>
+              <HomePage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.ABOUT}>
+            <MainLayout>
+              <AboutPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.TESTIMONIALS}>
+            <MainLayout>
+              <TestimonialsPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.BLOG.HOME}>
+            <MainLayout>
+              <BlogPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.BLOG.POST(':slug')}>
+            {(params) => (
+              <MainLayout>
+                <BlogPostPage slug={params.slug} />
+              </MainLayout>
+            )}
+          </Route>
+
+          {/* ===== PRODUCTS (Sales Pages) ===== */}
+          <Route path={ROUTES.PRODUCTS.HOME}>
+            <MainLayout>
+              <ProductsPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.PRODUCTS.STARTER_KIT}>
+            <MainLayout>
+              <StarterKitSalesPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.PRODUCTS.BRANDED}>
+            <MainLayout>
+              <BrandedSalesPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.PRODUCTS.VIP}>
+            <MainLayout>
+              <VIPSalesPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.PRODUCTS.TOOLS}>
+            <MainLayout>
+              <ToolsSalesPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.PRODUCTS.ALL_ACCESS}>
+            <MainLayout>
+              <AllAccessSalesPage />
+            </MainLayout>
+          </Route>
+
+          {/* ===== LEARNING (Protected) ===== */}
+          <Route path={ROUTES.LEARN.HOME}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <LearnDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.STARTER_KIT.HOME}>
+            <ProtectedRoute requiresPurchase={['starter-kit', 'all-access']}>
+              <DashboardLayout>
+                <StarterKitHub />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.STARTER_KIT.MODULE(':module')}>
+            {(params) => (
+              <ProtectedRoute requiresPurchase={['starter-kit', 'all-access']}>
+                <DashboardLayout>
+                  <StarterKitModule module={params.module} />
+                </DashboardLayout>
+              </ProtectedRoute>
+            )}
+          </Route>
+          
+          <Route path={ROUTES.LEARN.BRANDED.HOME}>
+            <ProtectedRoute requiresPurchase={['branded', 'all-access']}>
+              <DashboardLayout>
+                <BrandedHub />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.BRANDED.MODULE(':module')}>
+            {(params) => (
+              <ProtectedRoute requiresPurchase={['branded', 'all-access']}>
+                <DashboardLayout>
+                  <BrandedModule module={params.module} />
+                </DashboardLayout>
+              </ProtectedRoute>
+            )}
+          </Route>
+          
+          <Route path={ROUTES.LEARN.VIP.HOME}>
+            <ProtectedRoute requiresPurchase={['vip', 'all-access']}>
+              <DashboardLayout>
+                <VIPPortal />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.VIP.SESSIONS}>
+            <ProtectedRoute requiresPurchase={['vip', 'all-access']}>
+              <DashboardLayout>
+                <VIPSessions />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.VIP.RECORDINGS}>
+            <ProtectedRoute requiresPurchase={['vip', 'all-access']}>
+              <DashboardLayout>
+                <VIPRecordings />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.LEARN.VIP.RESOURCES}>
+            <ProtectedRoute requiresPurchase={['vip', 'all-access']}>
+              <DashboardLayout>
+                <VIPResources />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+
+          {/* ===== TOOLS (Protected) ===== */}
+          <Route path={ROUTES.TOOLS.HOME}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ToolsDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.STUDIO}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <SelfieStudio />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.SANDRA_AI}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <SandraAI />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.CALENDAR}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <ContentCalendar />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.CAPTION_WRITER}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <CaptionWriter />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.BRAND_KIT}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <BrandKitGenerator />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.TOOLS.ANALYTICS}>
+            <ProtectedRoute requiresPurchase={['tools', 'all-access']}>
+              <DashboardLayout>
+                <AnalyticsDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+
+          {/* ===== ACCOUNT & PROFILE (Protected) ===== */}
+          <Route path={ROUTES.DASHBOARD}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.PROFILE.HOME}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ProfilePage />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.PROFILE.EDIT}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <EditProfile />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.PROFILE.BILLING}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <BillingPage />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.PROFILE.PURCHASES}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <PurchaseHistory />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.PROFILE.CERTIFICATES}>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Certificates />
+              </DashboardLayout>
+            </ProtectedRoute>
+          </Route>
+
+          {/* ===== AUTHENTICATION ===== */}
+          <Route path={ROUTES.AUTH.LOGIN}>
+            <AuthLayout>
+              <LoginPage />
+            </AuthLayout>
+          </Route>
+          
+          <Route path={ROUTES.AUTH.SIGNUP}>
+            <AuthLayout>
+              <SignupPage />
+            </AuthLayout>
+          </Route>
+          
+          <Route path={ROUTES.AUTH.RESET_PASSWORD}>
+            <AuthLayout>
+              <ResetPasswordPage />
+            </AuthLayout>
+          </Route>
+          
+          <Route path={ROUTES.AUTH.VERIFY_EMAIL}>
+            <AuthLayout>
+              <VerifyEmailPage />
+            </AuthLayout>
+          </Route>
+
+          {/* ===== CHECKOUT ===== */}
+          <Route path={ROUTES.CHECKOUT.HOME}>
+            <CheckoutPage />
+          </Route>
+          
+          <Route path={ROUTES.CHECKOUT.SUCCESS}>
+            <CheckoutSuccess />
+          </Route>
+          
+          <Route path={ROUTES.CHECKOUT.CANCEL}>
+            <CheckoutCancel />
+          </Route>
+
+          {/* ===== LEGAL ===== */}
+          <Route path={ROUTES.LEGAL.PRIVACY}>
+            <MainLayout>
+              <PrivacyPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.LEGAL.TERMS}>
+            <MainLayout>
+              <TermsPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.LEGAL.REFUND_POLICY}>
+            <MainLayout>
+              <RefundPolicyPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.LEGAL.AFFILIATE_TERMS}>
+            <MainLayout>
+              <AffiliateTermsPage />
+            </MainLayout>
+          </Route>
+
+          {/* ===== SPECIAL PAGES ===== */}
+          <Route path={ROUTES.WELCOME}>
+            <ProtectedRoute>
+              <MainLayout>
+                <WelcomePage />
+              </MainLayout>
+            </ProtectedRoute>
+          </Route>
+          
+          <Route path={ROUTES.COMMUNITY}>
+            <MainLayout>
+              <CommunityPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.RESOURCES}>
+            <MainLayout>
+              <ResourcesPage />
+            </MainLayout>
+          </Route>
+          
+          <Route path={ROUTES.CONTACT}>
+            <MainLayout>
+              <ContactPage />
+            </MainLayout>
+          </Route>
+
+          {/* ===== 404 - Catch All ===== */}
+          <Route>
+            <MainLayout>
+              <NotFoundPage />
+            </MainLayout>
+          </Route>
+        </Switch>
+      </Suspense>
+
+      <Toaster />
+    </QueryClientProvider>
   );
 }
 

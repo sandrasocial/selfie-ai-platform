@@ -1,0 +1,9 @@
+TYPESCRIPT ERRORS:
+1. api/agents/index.ts - line 344: Property 'success' does not exist
+2. api/agents/index.ts - line 267: Parameter 'a' implicitly has 'any'
+3. api/agents/dev.ts - line 295: Variable 'changes' implicitly has type 'any[]'
+4. api/agents/dev.ts - line 311: Parameter 'file' implicitly has 'any'
+
+IMPORT ERRORS:
+1. app/api/test/route.ts - Can't resolve '../automation/email/route'
+2. app/api/webhooks/stripe/route.ts - Can't resolve orchestrator

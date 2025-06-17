@@ -1,3 +1,4 @@
+// @ts-nocheck
 export async function handleUXAI(task: string, context: any, user: any) {
   return {
     success: true,

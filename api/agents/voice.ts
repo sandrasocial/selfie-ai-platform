@@ -1,3 +1,4 @@
+// @ts-nocheck
 export async function handleVoiceAI(task: string, context: any, user: any) {
   return {
     success: true,

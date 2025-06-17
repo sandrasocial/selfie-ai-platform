@@ -40,7 +40,6 @@ export async function POST(req: Request) {
           throw new Error('Missing userId in subscription metadata');
         }
 
-        // Type-safe check for plan changes
         if (previousAttributes && 
             'items' in previousAttributes && 
             Array.isArray(previousAttributes.items)) {

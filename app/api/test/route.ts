@@ -356,7 +356,7 @@ export async function testAutomationFlow(
         }));
 
         steps.push(await testStep('Send Email', async () => {
-          const { sendEmail } = await import('./email');
+          const { sendEmail } = await import('../automation/email/route');
           const result = await sendEmail({
             type: 'free_guide_delivery',
             to: testEmail,
@@ -428,7 +428,7 @@ export async function testAutomationFlow(
         }));
 
         steps.push(await testStep('Send Welcome Email', async () => {
-          const { sendEmail } = await import('./email');
+          const { sendEmail } = await import('../automation/email/route');
           const result = await sendEmail({
             type: 'purchase_welcome',
             to: testEmail,
@@ -479,7 +479,7 @@ export async function testAutomationFlow(
         }));
 
         steps.push(await testStep('Send VIP Approval Email', async () => {
-          const { sendEmail } = await import('./email');
+          const { sendEmail } = await import('../automation/email/route');
           const result = await sendEmail({
             type: 'vip_approved',
             to: testEmail,
@@ -562,7 +562,7 @@ export async function retryFailedJobs(limit: number = 10): Promise<{
   let successful = 0;
   let failed = 0;
 
-  const { processAutomationJob } = await import('./orchestrator');
+  const { processAutomationJob } = await import('../automation/orchestrator/route');
 
   for (const job of failedJobs) {
     try {

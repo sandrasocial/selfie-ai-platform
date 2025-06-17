@@ -1,0 +1,250 @@
+// Agent: Automation AI provided monitoring dashboard
+// Real-time view of purchases and system health
+// app/admin/automation/page.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
+
+// Create Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+interface HealthStatus {
+  status: string;
+  checks: {
+    supabase: boolean;
+    stripe: boolean;
+    resend: boolean;
+    environment: Record<string, boolean>;
+  };
+  timestamp: string;
+}
+
+interface Metrics {
+  totalPurchases: number;
+  pendingJobs: number;
+  recentPurchases: any[];
+  recentEmails: any[];
+}
+
+export default function AutomationDashboard() {
+  const [health, setHealth] = useState<HealthStatus | null>(null);
+  const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [testEmail, setTestEmail] = useState('');
+  const [testResult, setTestResult] = useState<string | null>(null);
+
+  useEffect(() => {
+    checkHealth();
+    loadMetrics();
+    
+    // Refresh every 30 seconds
+    const interval = setInterval(() => {
+      checkHealth();
+      loadMetrics();
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const checkHealth = async () => {
+    try {
+      const res = await fetch('/api/test-automation?action=health', {
+        method: 'POST'
+      });
+      const data = await res.json();
+      setHealth(data);
+    } catch (error) {
+      console.error('Health check failed:', error);
+    }
+  };
+
+  const loadMetrics = async () => {
+    try {
+      // Get recent purchases
+      const { data: purchases } = await supabase
+        .from('purchases')
+        .select('*, users(email, full_name)')
+        .order('purchased_at', { ascending: false })
+        .limit(5);
+
+      // Get pending jobs
+      const { count: pendingCount } = await supabase
+        .from('automation_jobs')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending');
+
+      // Get recent emails
+      const { data: emails } = await supabase
+        .from('email_queue')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      setMetrics({
+        totalPurchases: purchases?.length || 0,
+        pendingJobs: pendingCount || 0,
+        recentPurchases: purchases || [],
+        recentEmails: emails || []
+      });
+    } catch (error) {
+      console.error('Failed to load metrics:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sendTestEmail = async () => {
+    if (!testEmail) return;
+
+    setTestResult('Sending...');
+    try {
+      const res = await fetch('/api/test-automation?action=email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to: testEmail })
+      });
+      const data = await res.json();
+      setTestResult(data.success ? '✅ Email sent!' : `❌ Failed: ${data.error}`);
+    } catch (error) {
+      setTestResult('❌ Error sending email');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold mb-4">Automation Dashboard</h1>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-8 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8">SELFIE AI™ Automation Dashboard</h1>
+
+      {/* Health Status */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-4">System Health</h2>
+        {health && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className={`p-4 rounded ${health.checks.supabase ? 'bg-green-100' : 'bg-red-100'}`}>
+              <h3 className="font-medium">Supabase</h3>
+              <p className="text-2xl">{health.checks.supabase ? '✅' : '❌'}</p>
+            </div>
+            <div className={`p-4 rounded ${health.checks.stripe ? 'bg-green-100' : 'bg-red-100'}`}>
+              <h3 className="font-medium">Stripe</h3>
+              <p className="text-2xl">{health.checks.stripe ? '✅' : '❌'}</p>
+            </div>
+            <div className={`p-4 rounded ${health.checks.resend ? 'bg-green-100' : 'bg-red-100'}`}>
+              <h3 className="font-medium">Resend</h3>
+              <p className="text-2xl">{health.checks.resend ? '✅' : '❌'}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-medium text-gray-600">Recent Purchases</h3>
+          <p className="text-3xl font-bold">{metrics?.totalPurchases || 0}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-medium text-gray-600">Pending Jobs</h3>
+          <p className="text-3xl font-bold">{metrics?.pendingJobs || 0}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-medium text-gray-600">Status</h3>
+          <p className="text-3xl font-bold">
+            {health?.status === 'healthy' ? '🟢 Healthy' : '🟡 Degraded'}
+          </p>
+        </div>
+      </div>
+
+      {/* Test Email */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-4">Test Email</h2>
+        <div className="flex gap-4">
+          <input
+            type="email"
+            value={testEmail}
+            onChange={(e) => setTestEmail(e.target.value)}
+            placeholder="Enter email address"
+            className="flex-1 px-4 py-2 border rounded"
+          />
+          <button
+            onClick={sendTestEmail}
+            className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+          >
+            Send Test
+          </button>
+        </div>
+        {testResult && (
+          <p className="mt-2 text-sm">{testResult}</p>
+        )}
+      </div>
+
+      {/* Recent Purchases */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-4">Recent Purchases</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left py-2">Customer</th>
+                <th className="text-left py-2">Product</th>
+                <th className="text-left py-2">Amount</th>
+                <th className="text-left py-2">Date</th>
+                <th className="text-left py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {metrics?.recentPurchases.map((purchase: any) => (
+                <tr key={purchase.id} className="border-b">
+                  <td className="py-2">
+                    {purchase.users?.full_name || purchase.users?.email || 'Unknown'}
+                  </td>
+                  <td className="py-2">{purchase.product_name}</td>
+                  <td className="py-2">${purchase.amount}</td>
+                  <td className="py-2">
+                    {new Date(purchase.purchased_at).toLocaleDateString()}
+                  </td>
+                  <td className="py-2">
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      purchase.status === 'completed' ? 'bg-green-100' : 'bg-yellow-100'
+                    }`}>
+                      {purchase.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {(!metrics?.recentPurchases || metrics.recentPurchases.length === 0) && (
+            <p className="text-gray-500 py-4">No purchases yet</p>
+          )}
+        </div>
+      </div>
+
+      {/* Environment Check */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-semibold mb-4">Environment Variables</h2>
+        {health?.checks.environment && (
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            {Object.entries(health.checks.environment).map(([key, value]) => (
+              <div key={key} className="flex justify-between">
+                <span className="text-gray-600">{key}:</span>
+                <span>{value ? '✅' : '❌'}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

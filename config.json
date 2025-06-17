@@ -1,0 +1,10 @@
+{
+  "models": [
+    {
+      "title": "Claude",
+      "provider": "anthropic",
+      "model": "claude-3-opus-20240229",
+      "apiKey": "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"
+    }
+  ]
+} 

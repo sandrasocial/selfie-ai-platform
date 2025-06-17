@@ -308,7 +308,7 @@ function extractSuggestedChanges(response: string, taskAnalysis: any) {
     });
   } else {
     // Fallback to mentioned files
-    taskAnalysis.mentionedFiles.forEach(file => {
+    taskAnalysis.mentionedFiles.forEach((file: any) => {
       changes.push({
         file,
         changes: `Implement ${taskAnalysis.type} as described`,

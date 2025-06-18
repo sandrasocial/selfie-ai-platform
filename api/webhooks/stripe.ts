@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { Database } from '../types/supabase';
+import { Database } from '../../types/supabase/supabase';
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -252,7 +252,7 @@ async function handleSubscriptionUpdated(event: Stripe.Event) {
   }
 
   // Check if plan changed
-  if (previousAttributes?.items) {
+  if ((previousAttributes as any)?.items) {
     await handlePlanChange(userId, subscription);
   }
 

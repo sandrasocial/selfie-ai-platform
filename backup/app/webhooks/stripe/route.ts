@@ -188,16 +188,15 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   await grantProductAccess(userId, product.type);
 
   // Import and trigger automation
-  const { triggerAutomation } = await // import commented for deployment
-  
-  await triggerAutomation({
-    type: 'purchase_completed',
-    userId,
-    purchaseId: purchase.id,
-    productType: product.type,
-    email,
-    name: name || 'Friend'
-  });
+  // const { triggerAutomation } = await import('path-to-automation');
+  // await triggerAutomation({
+  //   type: 'purchase_completed',
+  //   userId,
+  //   purchaseId: purchase.id,
+  //   productType: product.type,
+  //   email,
+  //   name: name || 'Friend'
+  // });
 
   console.log(`✅ Successfully processed purchase for ${email} - ${product.name}`);
   

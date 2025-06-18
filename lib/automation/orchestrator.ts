@@ -49,23 +49,21 @@ async function handlePurchaseCompleted(payload: AutomationPayload) {
 
   console.log(`📧 Processing purchase for ${email} - ${productType}`);
 
-  // Step 1: Send welcome email
-  const emailResult = await sendEmail({
-    type: 'purchase_welcome',
-    to: email!,
-    data: {
-      name,
-      productType,
-      productName: getProductName(productType!),
-      loginUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/login`
-    }
-  });
-
-  if (!emailResult.success) {
-    throw new Error(`Email failed: ${emailResult.error}`);
-  }
-
-  console.log(`✅ Welcome email sent to ${email}`);
+  // Step 1: Send welcome email (TEMPORARILY DISABLED FOR DEPLOYMENT)
+  // const emailResult = await sendEmail({
+  //   type: 'purchase_welcome',
+  //   to: email!,
+  //   data: {
+  //     name,
+  //     productType,
+  //     productName: getProductName(productType!),
+  //     loginUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/login`
+  //   }
+  // });
+  // if (!emailResult.success) {
+  //   throw new Error(`Email failed: ${emailResult.error}`);
+  // }
+  // console.log(`✅ Welcome email sent to ${email}`);
 
   // Step 2: Queue PDF generation for later
   // TODO: Generate PDFs when PDFMonkey templates are ready
@@ -127,18 +125,17 @@ async function handleFreeGuideRequest(payload: AutomationPayload) {
     .select()
     .single();
 
-  // Step 2: Send immediate confirmation email
-  const emailResult = await sendEmail({
-    type: 'free_guide_confirmation',
-    to: email!,
-    data: {
-      name
-    }
-  });
-
-  if (!emailResult.success) {
-    throw new Error(`Email delivery failed: ${emailResult.error}`);
-  }
+  // Step 2: Send immediate confirmation email (TEMPORARILY DISABLED FOR DEPLOYMENT)
+  // const emailResult = await sendEmail({
+  //   type: 'free_guide_confirmation',
+  //   to: email!,
+  //   data: {
+  //     name
+  //   }
+  // });
+  // if (!emailResult.success) {
+  //   throw new Error(`Email delivery failed: ${emailResult.error}`);
+  // }
 
   // Step 3: Add to email list
   await supabase

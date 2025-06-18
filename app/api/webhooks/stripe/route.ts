@@ -4,18 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize services
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
-
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
-
 // Product mapping - UPDATE THESE WITH YOUR STRIPE PRICE IDS
 const PRODUCT_MAP = {
   'price_1234567890': { // Replace with your Starter Kit price ID
@@ -31,6 +19,16 @@ const PRODUCT_MAP = {
 };
 
 export async function POST(req: NextRequest) {
+  // Initialize services inside the handler to avoid build-time errors
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2023-10-16',
+  });
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL! as string,
+    process.env.SUPABASE_SERVICE_KEY! as string
+  ) as any;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+
   const body = await req.text();
   const sig = req.headers.get('stripe-signature')!;
 
@@ -52,7 +50,7 @@ export async function POST(req: NextRequest) {
   try {
     switch (event.type) {
       case 'checkout.session.completed':
-        await handleCheckoutComplete(event.data.object as Stripe.Checkout.Session);
+        await handleCheckoutComplete(event.data.object as Stripe.Checkout.Session, stripe, supabase);
         break;
 
       case 'payment_intent.succeeded':
@@ -72,12 +70,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
+async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: Stripe, supabase: ReturnType<typeof createClient>) {
   console.log('🎉 Processing checkout completion:', session.id);
 
   // Extract customer info
-  const email = session.customer_email || session.customer_details?.email;
-  const name = session.customer_details?.name;
+  const email = (session.customer_email || session.customer_details?.email) as string;
+  const name = session.customer_details?.name as string;
   
   if (!email) {
     throw new Error('No email found in checkout session');
@@ -85,7 +83,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
 
   // Get line items to determine product
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
-  const priceId = lineItems.data[0]?.price?.id;
+  const priceId = lineItems.data[0]?.price?.id as string;
   
   if (!priceId) {
     throw new Error('No price ID found in checkout session');
@@ -120,14 +118,14 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
         stripe_customer_id: session.customer as string,
         updated_at: new Date().toISOString()
       })
-      .eq('id', existingUser.id)
+      .eq('id', (existingUser.id as string))
       .select()
       .single();
 
     if (updateError || !updatedUser) {
       throw new Error(`Failed to update user: ${updateError?.message}`);
     }
-    userId = updatedUser.id;
+    userId = updatedUser.id as string;
   } else {
     // Create new user via auth
     console.log('👤 Creating new user:', email);
@@ -158,7 +156,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     if (userError || !newUser) {
       throw new Error(`Failed to create user record: ${userError?.message}`);
     }
-    userId = newUser.id;
+    userId = newUser.id as string;
   }
 
   // Create purchase record
@@ -185,19 +183,18 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
 
   // Grant access based on product
   console.log('🔓 Granting product access...');
-  await grantProductAccess(userId, product.type);
+  await grantProductAccess(userId, product.type, supabase);
 
   // Import and trigger automation
-  const { triggerAutomation } = await // import commented for deployment
-  
-  await triggerAutomation({
-    type: 'purchase_completed',
-    userId,
-    purchaseId: purchase.id,
-    productType: product.type,
-    email,
-    name: name || 'Friend'
-  });
+  // const { triggerAutomation } = await import('path-to-automation');
+  // await triggerAutomation({
+  //   type: 'purchase_completed',
+  //   userId,
+  //   purchaseId: purchase.id,
+  //   productType: product.type,
+  //   email,
+  //   name: name || 'Friend'
+  // });
 
   console.log(`✅ Successfully processed purchase for ${email} - ${product.name}`);
   
@@ -209,7 +206,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   console.log(`   Time: ${new Date().toISOString()}`);
 }
 
-async function grantProductAccess(userId: string, productType: string) {
+async function grantProductAccess(userId: string, productType: string, supabase: ReturnType<typeof createClient>) {
   const accessData: any = {
     user_id: userId,
     granted_at: new Date().toISOString()

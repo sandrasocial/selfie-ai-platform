@@ -21,7 +21,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "target": "ES2017",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "**/*.ts",
@@ -29,6 +34,8 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "client",
+    "client_backup"
   ]
 }

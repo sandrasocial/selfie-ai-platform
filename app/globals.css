@@ -1,3 +1,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS Variables for SELFIE AI™ Design System */
+:root {
+  --luxury-black: #171719;
+  --soft-white: #F1F1F1;
+  --warm-gray: #B5B5B3;
+  --luxury-text-gray: #8A8A8A;
+}
+
+/* Custom Animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Typography */
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('/fonts/bodoni/BodoniFlf-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('/fonts/bodoni/BodoniFlf-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Base Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--luxury-black);
+  background-color: var(--soft-white);
+}
+
+/* Luxury Design System */
+.luxury-black {
+  color: var(--luxury-black);
+}
+
+.luxury-bg-black {
+  background-color: var(--luxury-black);
+}
+
+.soft-white {
+  color: var(--soft-white);
+}
+
+.soft-bg-white {
+  background-color: var(--soft-white);
+}
+
+.warm-gray {
+  color: var(--warm-gray);
+}
+
+.warm-bg-gray {
+  background-color: var(--warm-gray);
+}
+
+/* Sharp corners - no rounded corners */
+.rounded-none {
+  border-radius: 0;
+}
+
+/* High contrast text */
+.text-high-contrast {
+  color: var(--luxury-black);
+}
+
+.text-high-contrast-white {
+  color: var(--soft-white);
+}

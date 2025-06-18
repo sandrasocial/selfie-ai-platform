@@ -1,0 +1,3 @@
+# Exclude client directory from build
+client/
+client/**/* 

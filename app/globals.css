@@ -1,6 +1,32 @@
+/* Import custom fonts for SELFIE AI™ */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,300;1,6..96,400;1,6..96,700;1,6..96,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Lingerie number style using Playfair italic as substitute */
+  .lingerie-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.05em;
+  }
+  
+  /* Global font smoothing */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* CRITICAL: No rounded corners ever */
+  * {
+    border-radius: 0 !important;
+  }
+}
 
 /* Custom CSS Variables for SELFIE AI™ Design System */
 :root {
@@ -83,4 +109,27 @@ body {
 
 .text-high-contrast-white {
   color: var(--soft-white);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.magnetic-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic-hover:hover {
+  transform: scale(1.05);
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
 }

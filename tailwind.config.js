@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
     "./client/index.html",
-    "./client/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -11,6 +13,9 @@ export default {
         'bordoni': ['Bordoni FLF', 'serif'],
         'neue': ['Neue Einstellung', 'sans-serif'],
         'sans': ['Neue Einstellung', 'Inter', 'sans-serif'],
+        'bodoni': ['Bodoni Moda', 'serif'],
+        'inter': ['Inter', 'sans-serif'],
+        'playfair': ['Playfair Display', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -46,6 +51,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        'luxury-black': '#171719',
+        'soft-white': '#F1F1F1',
+        'warm-gray': '#B5B5B3',
+        'deep-graphite': '#4C4B4B',
       },
       borderRadius: {
         lg: "var(--radius)",

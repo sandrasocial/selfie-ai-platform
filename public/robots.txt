@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://selfie-ai.com/sitemap.xml 

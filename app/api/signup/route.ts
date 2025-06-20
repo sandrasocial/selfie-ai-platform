@@ -2,8 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
+// In-memory rate limiting (per IP)
+const RATE_LIMIT_WINDOW = 10 * 60 * 1000; // 10 minutes
+const RATE_LIMIT_MAX = 5;
+const ipRequestMap = new Map<string, number[]>();
+
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const ip = request.headers.get('x-forwarded-for') || request.ip || 'unknown';
+    const now = Date.now();
+    let timestamps = ipRequestMap.get(ip) || [];
+    // Remove timestamps older than window
+    timestamps = timestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW);
+    if (timestamps.length >= RATE_LIMIT_MAX) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+    timestamps.push(now);
+    ipRequestMap.set(ip, timestamps);
+    // TODO: Use a persistent store (e.g., Redis) for production deployments
+
     const { email, source = 'homepage' } = await request.json();
 
     if (!email) {

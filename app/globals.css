@@ -311,3 +311,41 @@ input, textarea, select {
 .font-playfair {
   font-family: 'Playfair Display', serif;
 }
+
+/* ABOUT SECTION CUSTOM TYPOGRAPHY */
+.story-opener {
+  font-family: 'BodoniFLF', serif;
+  font-size: 24px;
+  line-height: 1.4;
+  color: #171719;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+.story-body {
+  font-family: 'NeueEinstellung', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #4C4B4B;
+  letter-spacing: 0.02em;
+}
+.story-highlight {
+  font-size: 18px;
+  color: #171719;
+  font-weight: 500;
+  margin: 32px 0;
+  padding-left: 24px;
+  border-left: 1px solid #171719;
+}
+.story-cta {
+  font-family: 'BodoniFLF', serif;
+  font-size: 32px;
+  color: #171719;
+  margin-top: 48px;
+  font-style: italic;
+}
+@media (max-width: 768px) {
+  .story-opener { font-size: 20px; }
+  .story-body { font-size: 15px; line-height: 1.7; }
+  .story-highlight { font-size: 16px; padding-left: 16px; margin: 24px 0; }
+  .image-section { order: -1; margin-bottom: 32px; }
+}

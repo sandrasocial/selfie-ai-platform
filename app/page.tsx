@@ -477,12 +477,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Transition */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-[#171719]/20 to-transparent">
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-1.5 md:w-2 h-1.5 md:h-2 bg-[#171719]/20 rotate-45 animate-spin-slow"></div>
+      {/* ABOUT SECTION */}
+      <section className="min-h-screen flex items-center bg-[#FAFAF8] py-20 sm:py-24 md:py-32 observe-me">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24 w-full">
+          <div className="grid grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
+            <div className="col-span-12 lg:col-span-3 text-center lg:text-left">
+              <div className="font-playfair italic text-[200px] sm:text-[250px] md:text-[300px] lg:text-[400px] leading-none -ml-0 lg:-ml-8 opacity-5 lg:opacity-100">
+                01
+              </div>
+            </div>
+
+            <div className="col-span-12 lg:col-span-6 -mt-20 sm:-mt-32 lg:mt-0">
+              <div className="space-y-6 md:space-y-8">
+                <p className="font-bodoni text-[36px] sm:text-[48px] md:text-[64px] leading-tight text-center lg:text-left">
+                  "I just needed a way to show up."
+                </p>
+
+                <div className="space-y-4 md:space-y-6 text-black/80">
+                  <p className="font-inter text-base md:text-lg leading-relaxed">
+                    Three years ago, I was sitting in my car after my divorce, scrolling through Instagram, wondering how everyone else made it look so easy.
+                  </p>
+                  <p className="font-inter text-base md:text-lg leading-relaxed">
+                    I had an iPhone, three kids, and zero confidence. But I also had this feeling that I was meant for more. That my story could help someone else going through the same thing.
+                  </p>
+                  <p className="font-inter text-base md:text-lg leading-relaxed">
+                    So I started taking selfies. Bad ones at first. Really bad. But I kept going. I figured out the light, the angles, the editing. More importantly, I figured out how to stop hiding.
+                  </p>
+                  <p className="font-inter text-base md:text-lg leading-relaxed">
+                    Now I help women build their entire personal brand from their camera roll. Because honestly? Your phone is all you need.
+                  </p>
+                </div>
+
+                <p className="font-bodoni italic text-xl md:text-2xl pt-2 md:pt-4">
+                  Let's build something real together...
+                </p>
+              </div>
+
+              <div className="mt-8 md:mt-12 text-center lg:text-left">
+                <LazyImage 
+                  src="https://i.postimg.cc/NMsTRh2K/Sandra-Signature-homepage.png" 
+                  alt="Sandra's Signature" 
+                  width={200}
+                  height={60}
+                  className="h-12 md:h-16"
+                />
+              </div>
+            </div>
+
+            <div className="col-span-12 lg:col-span-3 mt-8 lg:mt-0">
+              <div className="relative overflow-hidden group max-w-[400px] mx-auto lg:max-w-none film-grain">
+                <LazyImage 
+                  src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" 
+                  alt="Sandra Quote" 
+                  width={400}
+                  height={500}
+                  className="w-full h-[400px] md:h-[500px] object-cover"
+                />
+                <div className="absolute inset-2 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* STATS SECTION */}
       <section className="relative bg-white py-16 sm:py-20 md:py-28 overflow-hidden observe-me">

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { logger } from '@/lib/utils/logger';
 
 // In-memory rate limiting (per IP)
 const RATE_LIMIT_WINDOW = 10 * 60 * 1000; // 10 minutes
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
       ]);
 
     if (insertError) {
-      console.error('Error inserting lead:', insertError);
+      logger.error('Error inserting lead:', insertError);
       return NextResponse.json(
         { error: 'Failed to save your information. Please try again.' },
         { status: 500 }
@@ -102,7 +103,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Signup error:', error);
+    logger.error('Signup error:', error);
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }

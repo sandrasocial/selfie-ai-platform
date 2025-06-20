@@ -1,7 +1,8 @@
+import { logger } from '@/lib/utils/logger';
 // Placeholder PDF functions - to be implemented later
 
 export async function generatePDF(options: any) {
-  console.log('PDF generation called:', options);
+  logger.info('PDF generation called', options);
   return {
     success: true,
     url: 'https://example.com/mock-pdf.pdf',
@@ -10,7 +11,7 @@ export async function generatePDF(options: any) {
 }
 
 export async function generateBatchPDFs(batch: any[]) {
-  console.log('Batch PDF generation called:', batch.length, 'PDFs');
+  logger.info('Batch PDF generation called', batch.length);
   return {
     success: true,
     total: batch.length,

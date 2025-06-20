@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 
 // Product mapping - UPDATE THESE WITH YOUR STRIPE PRICE IDS
 const PRODUCT_MAP = {
@@ -38,14 +39,14 @@ export async function POST(req: NextRequest) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err: any) {
-    console.error('❌ Webhook signature verification failed:', err.message);
+    logger.error('❌ Webhook signature verification failed:', err.message);
     return NextResponse.json(
       { error: 'Invalid signature' },
       { status: 400 }
     );
   }
 
-  console.log(`📨 Processing webhook: ${event.type} - ${event.id}`);
+  logger.info(`📨 Processing webhook: ${event.type} - ${event.id}`);
 
   try {
     switch (event.type) {
@@ -54,24 +55,24 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'payment_intent.succeeded':
-        console.log('💰 Payment succeeded:', event.data.object.id);
+        logger.info('💰 Payment succeeded:', event.data.object.id);
         break;
 
       default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
+        logger.info(`ℹ️ Unhandled event type: ${event.type}`);
     }
 
     return NextResponse.json({ received: true });
 
   } catch (error) {
-    console.error('❌ Webhook processing error:', error);
+    logger.error('❌ Webhook processing error:', error);
     // Return success to prevent Stripe retries
     return NextResponse.json({ received: true });
   }
 }
 
 async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: Stripe, supabase: ReturnType<typeof createClient>) {
-  console.log('🎉 Processing checkout completion:', session.id);
+  logger.info('🎉 Processing checkout completion:', session.id);
 
   // Extract customer info
   const email = (session.customer_email || session.customer_details?.email) as string;
@@ -91,13 +92,13 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
 
   const product = PRODUCT_MAP[priceId as keyof typeof PRODUCT_MAP];
   if (!product) {
-    console.error(`❌ Unknown product for price ID: ${priceId}`);
+    logger.error(`❌ Unknown product for price ID: ${priceId}`);
     // Log available price IDs for debugging
-    console.log('Available price IDs:', Object.keys(PRODUCT_MAP));
+    logger.info('Available price IDs:', Object.keys(PRODUCT_MAP));
     throw new Error(`Unknown product for price ID: ${priceId}`);
   }
 
-  console.log(`📦 Product purchased: ${product.name} ($${product.price})`);
+  logger.info(`📦 Product purchased: ${product.name} ($${product.price})`);
 
   // Create or update user
   const { data: existingUser } = await supabase
@@ -110,7 +111,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
 
   if (existingUser) {
     // Update existing user
-    console.log('👤 Updating existing user:', email);
+    logger.info('👤 Updating existing user:', email);
     const { data: updatedUser, error: updateError } = await supabase
       .from('users')
       .update({
@@ -128,7 +129,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
     userId = updatedUser.id as string;
   } else {
     // Create new user via auth
-    console.log('👤 Creating new user:', email);
+    logger.info('👤 Creating new user:', email);
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email,
       email_confirm: true,
@@ -160,7 +161,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
   }
 
   // Create purchase record
-  console.log('💳 Recording purchase...');
+  logger.info('💳 Recording purchase...');
   const { data: purchase, error: purchaseError } = await supabase
     .from('purchases')
     .insert({
@@ -182,7 +183,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
   }
 
   // Grant access based on product
-  console.log('🔓 Granting product access...');
+  logger.info('🔓 Granting product access...');
   await grantProductAccess(userId, product.type, supabase);
 
   // Import and trigger automation
@@ -196,14 +197,14 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
   //   name: name || 'Friend'
   // });
 
-  console.log(`✅ Successfully processed purchase for ${email} - ${product.name}`);
+  logger.info(`✅ Successfully processed purchase for ${email} - ${product.name}`);
   
   // Log notification (replace Slack)
-  console.log('🎊 NEW PURCHASE NOTIFICATION:');
-  console.log(`   Customer: ${name} (${email})`);
-  console.log(`   Product: ${product.name}`);
-  console.log(`   Amount: $${session.amount_total! / 100}`);
-  console.log(`   Time: ${new Date().toISOString()}`);
+  logger.info('🎊 NEW PURCHASE NOTIFICATION:');
+  logger.info(`   Customer: ${name} (${email})`);
+  logger.info(`   Product: ${product.name}`);
+  logger.info(`   Amount: $${session.amount_total! / 100}`);
+  logger.info(`   Time: ${new Date().toISOString()}`);
 }
 
 async function grantProductAccess(userId: string, productType: string, supabase: ReturnType<typeof createClient>) {
@@ -250,5 +251,5 @@ async function grantProductAccess(userId: string, productType: string, supabase:
     })
     .eq('id', userId);
 
-  console.log(`✅ Access granted: ${productType} for user ${userId}`);
+  logger.info(`✅ Access granted: ${productType} for user ${userId}`);
 }

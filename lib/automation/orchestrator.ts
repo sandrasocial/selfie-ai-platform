@@ -2,6 +2,7 @@
 // Manages the complete automation flow
 // app/api/automation/orchestrator/route.ts
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 // import commented for deployment
 
 // Initialize Supabase
@@ -21,7 +22,7 @@ interface AutomationPayload {
 }
 
 export async function triggerAutomation(payload: AutomationPayload) {
-  console.log('🤖 Triggering automation:', payload.type);
+  logger.info('Triggering automation', payload.type);
 
   try {
     switch (payload.type) {
@@ -34,12 +35,12 @@ export async function triggerAutomation(payload: AutomationPayload) {
         break;
 
       default:
-        console.log(`❓ Unknown automation type: ${payload.type}`);
+        logger.info(`Unknown automation type: ${payload.type}`);
     }
 
-    console.log(`✅ Automation completed: ${payload.type}`);
+    logger.info(`Automation completed: ${payload.type}`);
   } catch (error) {
-    console.error(`❌ Automation failed: ${payload.type}`, error);
+    logger.error(`Automation failed: ${payload.type}`, error);
     throw error;
   }
 }
@@ -47,7 +48,7 @@ export async function triggerAutomation(payload: AutomationPayload) {
 async function handlePurchaseCompleted(payload: AutomationPayload) {
   const { userId, productType, email, name, purchaseId } = payload;
 
-  console.log(`📧 Processing purchase for ${email} - ${productType}`);
+  logger.info(`Processing purchase for ${email} - ${productType}`);
 
   // Step 1: Send welcome email (TEMPORARILY DISABLED FOR DEPLOYMENT)
   // const emailResult = await sendEmail({
@@ -68,7 +69,7 @@ async function handlePurchaseCompleted(payload: AutomationPayload) {
   // Step 2: Queue PDF generation for later
   // TODO: Generate PDFs when PDFMonkey templates are ready
   if (productType === 'starter_kit' || productType === 'branded') {
-    console.log('📄 PDF generation queued for later');
+    logger.info('PDF generation queued for later');
     
     // Store a record to generate PDFs later
     await supabase
@@ -90,25 +91,25 @@ async function handlePurchaseCompleted(payload: AutomationPayload) {
   // Step 3: Email sequences
   // TODO: Trigger Make.com webhook for email sequences
   if (productType === 'branded') {
-    console.log('📨 TODO: Trigger Make.com branded welcome sequence');
+    logger.info('TODO: Trigger Make.com branded welcome sequence');
     // Will implement: triggerMakeWebhook('branded_welcome_sequence', {...})
   }
 
   // Step 4: Console notification (replacing Slack)
-  console.log('🎉 PURCHASE COMPLETED NOTIFICATION:');
-  console.log(`   Customer: ${name} (${email})`);
-  console.log(`   Product: ${getProductName(productType!)}`);
-  console.log(`   User ID: ${userId}`);
-  console.log(`   Purchase ID: ${purchaseId}`);
+  logger.info('PURCHASE COMPLETED NOTIFICATION:');
+  logger.info(`   Customer: ${name} (${email})`);
+  logger.info(`   Product: ${getProductName(productType!)}`);
+  logger.info(`   User ID: ${userId}`);
+  logger.info(`   Purchase ID: ${purchaseId}`);
 }
 
 async function handleFreeGuideRequest(payload: AutomationPayload) {
   const { email, name } = payload;
 
-  console.log(`🎁 Processing free guide request for ${email}`);
+  logger.info(`Processing free guide request for ${email}`);
 
   // Step 1: Queue PDF generation
-  console.log('📄 PDF generation queued for later');
+  logger.info('PDF generation queued for later');
   
   // Store a record to generate PDF later
   const { data: job } = await supabase
@@ -153,10 +154,10 @@ async function handleFreeGuideRequest(payload: AutomationPayload) {
 
   // Step 4: Queue nurture sequence
   // TODO: Trigger Make.com free guide nurture sequence
-  console.log('📨 TODO: Trigger Make.com free guide nurture sequence');
+  logger.info('TODO: Trigger Make.com free guide nurture sequence');
   // Will implement: triggerMakeWebhook('free_guide_nurture', {...})
 
-  console.log(`✅ Free guide request processed for ${email}`);
+  logger.info(`Free guide request processed for ${email}`);
 }
 
 function getProductName(productType: string): string {
@@ -180,7 +181,7 @@ export async function POST(request: Request) {
       message: `Automation ${payload.type} triggered successfully`
     });
   } catch (error) {
-    console.error('Automation API error:', error);
+    logger.error('Automation API error:', error);
     return Response.json(
       { 
         success: false,

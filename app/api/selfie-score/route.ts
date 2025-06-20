@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeSelfie } from '@/lib/selfie-score/analyzer';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Selfie score API error:', error);
+    logger.error('Selfie score API error:', error);
     return NextResponse.json(
       { error: 'Failed to analyze selfie. Please try again.' },
       { status: 500 }

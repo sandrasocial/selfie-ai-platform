@@ -69,15 +69,18 @@ const TestimonialsSection: React.FC = () => {
     { number: "87%", label: "Show Up More" }
   ];
 
+  const featuredTestimonial = testimonials.find(t => t.featured);
+  const carouselTestimonials = testimonials.filter(t => !t.featured);
+
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || carouselTestimonials.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex((prev) => (prev + 1) % carouselTestimonials.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, testimonials.length]);
+  }, [isAutoPlaying, carouselTestimonials.length]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
@@ -85,12 +88,14 @@ const TestimonialsSection: React.FC = () => {
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    if (carouselTestimonials.length === 0) return;
+    setCurrentIndex((prev) => (prev - 1 + carouselTestimonials.length) % carouselTestimonials.length);
     setIsAutoPlaying(false);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    if (carouselTestimonials.length === 0) return;
+    setCurrentIndex((prev) => (prev + 1) % carouselTestimonials.length);
     setIsAutoPlaying(false);
   };
 
@@ -101,29 +106,41 @@ const TestimonialsSection: React.FC = () => {
         <span className="font-bodoni text-[600px] leading-none text-white opacity-[0.02]">"</span>
       </div>
 
-      <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
         {/* Section Header */}
-        <div className="flex items-baseline gap-8 mb-20">
-          <div className="font-bodoni italic text-[120px] leading-none text-white opacity-10">05</div>
+        <div className="flex flex-col sm:flex-row items-baseline gap-4 sm:gap-8 mb-20 text-center sm:text-left">
+          <div className="font-bodoni italic text-[80px] sm:text-[120px] leading-none text-white opacity-10 mx-auto sm:mx-0">05</div>
           <div>
-            <h2 className="font-bodoni text-[64px] tracking-tight text-white">
+            <h2 className="font-bodoni text-[40px] sm:text-[64px] tracking-tight text-white">
               Their Words, Not Mine
             </h2>
-            <div className="w-32 h-px bg-white/20 mt-4"></div>
+            <div className="w-24 sm:w-32 h-px bg-white/20 mt-4 mx-auto sm:mx-0"></div>
           </div>
         </div>
 
         {/* Stats Bar */}
-        <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto mb-20">
           {stats.map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="font-bodoni italic text-[48px] text-white">{stat.number}</div>
-              <div className="font-inter text-[11px] uppercase tracking-[0.3em] text-white/40 mt-2">
+              <div className="font-bodoni italic text-[40px] sm:text-[48px] text-white">{stat.number}</div>
+              <div className="font-inter text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-white/40 mt-2">
                 {stat.label}
               </div>
             </div>
           ))}
         </div>
+
+        {/* Featured Testimonial */}
+        {featuredTestimonial && (
+          <div className="max-w-4xl mx-auto text-center mb-20">
+            <p className="font-bodoni italic leading-tight text-white mb-8 text-[32px] sm:text-[40px] md:text-[48px]">
+              "{featuredTestimonial.text}"
+            </p>
+            <p className="font-inter text-[12px] uppercase tracking-[0.3em] text-white/60">
+              — {featuredTestimonial.author}, {featuredTestimonial.location}
+            </p>
+          </div>
+        )}
 
         {/* Testimonials Carousel */}
         <div className="relative">
@@ -132,12 +149,10 @@ const TestimonialsSection: React.FC = () => {
               className="flex transition-transform duration-700 ease-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {testimonials.map((testimonial) => (
+              {carouselTestimonials.map((testimonial) => (
                 <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
-                  <div className="max-w-4xl mx-auto text-center">
-                    <p className={`font-bodoni italic leading-tight text-white mb-8 ${
-                      testimonial.featured ? 'text-[48px]' : 'text-[32px]'
-                    }`}>
+                  <div className="max-w-3xl mx-auto text-center">
+                    <p className="font-bodoni italic leading-tight text-white mb-8 text-[24px] sm:text-[28px] md:text-[32px]">
                       "{testimonial.text}"
                     </p>
                     <p className="font-inter text-[12px] uppercase tracking-[0.3em] text-white/60">
@@ -160,7 +175,7 @@ const TestimonialsSection: React.FC = () => {
             </button>
 
             <div className="flex gap-2">
-              {testimonials.map((_, index) => (
+              {carouselTestimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}

@@ -344,7 +344,7 @@ export default function Home() {
 
         {/* Navigation Bar */}
         <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${scrolled ? 'bg-[#171719]/95 backdrop-blur-sm' : 'bg-transparent'}`}>
-          <div className="flex justify-between items-center px-6 sm:px-8 md:px-16 lg:px-24 py-6 md:py-8">
+          <div className="flex justify-between items-center px-4 sm:px-8 md:px-16 lg:px-24 py-6 md:py-8">
             {/* Logo */}
             <Link href="/" className="relative group" aria-label="SELFIE AI™ Home">
               <LazyImage 
@@ -432,10 +432,10 @@ export default function Home() {
         </nav>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
           <div className="flex flex-col justify-center min-h-screen">
             <div className="mt-[45vh]">
-              <h1 className="font-['Bordoni_FLF'] text-[52px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.9] text-white mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              <h1 className="font-['Bordoni_FLF'] text-[40px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.9] text-white mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 {'Your selfie is your brand'.split('').map((char, i) => (
                   <span key={i} style={{'--index': i} as any}>{char === ' ' ? '\u00A0' : char}</span>
                 ))}
@@ -479,7 +479,7 @@ export default function Home() {
 
       {/* ABOUT SECTION */}
       <section className="min-h-screen flex items-center bg-[#FAFAF8] py-20 sm:py-24 md:py-32 observe-me">
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24 w-full">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24 w-full">
           <div className="grid grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
             <div className="col-span-12 lg:col-span-3 text-center lg:text-left">
               <div className="font-playfair italic text-[200px] sm:text-[250px] md:text-[300px] lg:text-[400px] leading-none -ml-0 lg:-ml-8 opacity-5 lg:opacity-100">
@@ -531,7 +531,7 @@ export default function Home() {
                   alt="Sandra Quote" 
                   width={400}
                   height={500}
-                  className="w-full h-[400px] md:h-[500px] object-cover"
+                  className="w-full h-[400px] md:h-[500px] object-cover object-top"
                 />
                 <div className="absolute inset-2 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
@@ -544,7 +544,7 @@ export default function Home() {
       <section className="relative bg-white py-16 sm:py-20 md:py-28 overflow-hidden observe-me">
         <div className="absolute inset-0 opacity-[0.015] md:opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #171719 0, #171719 1px, transparent 1px, transparent 15px)' }}></div>
 
-        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+        <div className="relative max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
           <div className="absolute -top-3 md:-top-4 left-6 sm:left-8 lg:left-24 font-inter text-[9px] md:text-[10px] uppercase tracking-[0.25em] lg:tracking-[0.3em] text-[#B5B5B3]">
             01 — The Truth
           </div>
@@ -655,7 +655,7 @@ export default function Home() {
 
       {/* WHO IT'S FOR SECTION */}
       <section className="bg-white py-20 sm:py-24 md:py-32 observe-me">
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
           <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-4 sm:gap-8 mb-16 md:mb-24">
             <div className="font-playfair italic text-[80px] sm:text-[100px] md:text-[120px] leading-none opacity-10 sm:opacity-100">02</div>
             <div className="text-center sm:text-left">
@@ -763,7 +763,7 @@ export default function Home() {
           06
         </div>
 
-        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+        <div className="relative max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16 lg:px-24">
           <div className="text-center mb-20 sm:mb-24 md:mb-32">
             <h2 className="font-bodoni text-[36px] sm:text-[48px] md:text-[72px] tracking-tight text-white mb-6 md:mb-8">
               Your Path to Showing Up
@@ -912,7 +912,7 @@ export default function Home() {
       {/* TOOLS Section */}
       <section id="tools" className="py-32 relative">
         <div className="editorial-number top-40 right-0 translate-x-1/4">03</div>
-        <div className="container mx-auto px-6 md:px-12">
+        <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-20">
             <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-6">Your Tools</p>
             <h2 className="font-bodoni text-5xl md:text-7xl tracking-[-0.04em]">
@@ -997,7 +997,7 @@ export default function Home() {
           S
         </div>
 
-        <div className="relative max-w-[1000px] mx-auto px-6 sm:px-8 md:px-16 text-center">
+        <div className="relative max-w-[1000px] mx-auto px-4 sm:px-8 md:px-16 text-center">
           <h2 className="font-bodoni text-[40px] sm:text-[56px] md:text-[80px] leading-[0.9] text-[#171719] mb-8 md:mb-12">
             Ready to build your brand<br/>
             from your camera roll?

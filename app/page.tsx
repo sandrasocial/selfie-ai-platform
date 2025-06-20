@@ -191,7 +191,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white w-full">
       <style jsx>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: scale(0.9); }
@@ -329,12 +329,12 @@ export default function Home() {
       {/* HERO SECTION */}
       <section 
         id="main-content"
-        className="relative min-h-screen w-full overflow-hidden bg-cover bg-center pb-[120px]"
+        className="relative min-h-screen w-full overflow-hidden bg-cover bg-top lg:bg-center pb-[120px]"
         style={{ backgroundImage: `url('https://i.postimg.cc/T30rkYjR/IMG_5635.jpg')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#171719]/40 via-[#171719]/20 to-[#171719]/50"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#171719]/60 via-[#171719]/10 to-transparent"></div>
-        <div className="absolute inset-0 lg:w-1/2 bg-gradient-to-r from-[#171719]/80 to-transparent"></div>
+        <div className="hidden lg:block absolute inset-0 lg:w-1/2 bg-gradient-to-r from-[#171719]/80 to-transparent"></div>
 
         {/* Premium loading line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>

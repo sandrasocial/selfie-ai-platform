@@ -1,595 +1,994 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+'use client'
+
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
+import TestimonialsSection from "./components/TestimonialsSection";
 
-export default function HomePage() {
-  const [heroLoaded, setHeroLoaded] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [email, setEmail] = useState('');
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+// Lazy loaded image component with error handling
+function LazyImage({ src, alt, className = '', priority = false, width, height, fill = false }) {
+  const [error, setError] = useState(false);
+  
+  if (error) {
+    return (
+      <div className={`${className} bg-gray-200 flex items-center justify-center`}>
+        <span className="text-gray-400 text-sm">Image unavailable</span>
+      </div>
+    );
+  }
 
-  useEffect(() => {
-    setMounted(true);
-    setTimeout(() => setHeroLoaded(true), 100);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mounted]);
-
-  const handleEmailSubmit = () => {
-    if (!email || !email.includes('@')) {
-      console.log('Please enter a valid email');
-      return;
-    }
-    console.log('Email submitted:', email);
-    setEmail('');
-  };
-
-  // Safe parallax calculation
-  const parallaxOffset = {
-    x: mounted ? (mousePosition.x - (window?.innerWidth || 0) / 2) * 0.02 : 0,
-    y: mounted ? (mousePosition.y - (window?.innerHeight || 0) / 2) * 0.02 : 0
-  };
+  if (fill) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={className}
+        onError={() => setError(true)}
+        priority={priority}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      />
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
-      {/* Custom styles - Add these to your globals.css file */}
-      {/* 
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap');
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+      onError={() => setError(true)}
+      priority={priority}
+    />
+  );
+}
+
+export default function Home() {
+  const [email, setEmail] = useState('');
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // Refs for cleanup
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const loadingTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const heroTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle scroll for nav backdrop
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Cursor follower effect (desktop only)
+  useEffect(() => {
+    if (window.innerWidth < 768) return;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Loading sequence with cleanup
+  useEffect(() => {
+    let cancelled = false;
+    loadingTimerRef.current = setTimeout(() => {
+      if (!cancelled) {
+        setIsLoading(false);
+        heroTimerRef.current = setTimeout(() => setHeroLoaded(true), 100);
+      }
+    }, 2000);
+    
+    return () => {
+      cancelled = true;
+      if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current);
+      if (heroTimerRef.current) clearTimeout(heroTimerRef.current);
+    };
+  }, []);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    if (isLoading) return;
+    
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, observerOptions);
+
+    const elementsToObserve = document.querySelectorAll('.observe-me');
+    elementsToObserve.forEach(el => observer.observe(el));
+
+    return () => {
+      elementsToObserve.forEach(el => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, [isLoading]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Handle email form submission
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, source: 'homepage' }),
+      });
+
+      if (response.ok) {
+        setSubmitMessage('Check your email for your free guide!');
+        setEmail('');
         
-        .lingerie-number {
-          font-family: 'Bodoni Moda', serif;
-          font-weight: 900;
-          font-style: italic;
-          letter-spacing: -0.05em;
+        // Track conversion
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'conversion', {
+            'send_to': 'SELFIE_AI/homepage_signup',
+            'value': 1.0,
+            'currency': 'USD'
+          });
+        }
+      } else {
+        setSubmitMessage('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      setSubmitMessage('Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Loading Screen
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-[#F1F1F1] z-50 flex items-center justify-center">
+        <div className="relative">
+          <div className="font-playfair italic text-[120px] text-[#171719] opacity-0 animate-fadeIn">
+            S
+          </div>
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-32 h-[1px] bg-[#171719]/20">
+            <div className="h-full bg-[#171719] animate-loadingLine"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
         }
         
-        html {
-          scroll-behavior: smooth;
+        @keyframes loadingLine {
+          from { width: 0; }
+          to { width: 100%; }
         }
         
-        .magnetic-hover {
-          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-fadeIn {
+          animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
-        .magnetic-hover:hover {
-          transform: scale(1.05);
+        .animate-loadingLine {
+          animation: loadingLine 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes revealUp {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px);
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0);
+          }
+        }
+        
+        .letter-reveal span {
+          display: inline-block;
+          opacity: 0;
+          animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: calc(var(--index) * 50ms);
         }
         
         @keyframes shimmer {
-          0% { background-position: -1000px 0; }
-          100% { background-position: 1000px 0; }
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
         
-        .shimmer {
-          background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-          background-size: 1000px 100%;
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+
+        .animate-shimmer {
           animation: shimmer 3s infinite;
         }
-      */}
 
-      {/* HERO SECTION - Full Bleed Editorial with Parallax */}
-      <section className="relative min-h-screen bg-luxury-black overflow-hidden">
-        {/* Background with Parallax */}
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+        
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+
+        * {
+          border-radius: 0 !important;
+        }
+        
+        .film-grain::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+          pointer-events: none;
+          mix-blend-mode: overlay;
+        }
+        
+        .blur-load {
+          filter: blur(20px);
+          transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blur-load.loaded {
+          filter: blur(0);
+        }
+        
+        .observe-me {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .observe-me.in-view {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        *:focus {
+          outline: none;
+        }
+        
+        *:focus-visible {
+          outline: 2px solid currentColor;
+          outline-offset: 4px;
+        }
+      `}</style>
+
+      {/* Skip Navigation */}
+      <a href="#main-content" className="absolute top-[-40px] left-0 bg-[#171719] text-white p-2 z-[100] focus:top-0">Skip to main content</a>
+
+      {/* Subtle Cursor Follower (Desktop Only) */}
+      {typeof window !== 'undefined' && window.innerWidth >= 768 && (
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-100 ease-out"
-          style={{ 
-            backgroundImage: `url('https://i.postimg.cc/RFwJMj9s/Herofullbleed-1.png')`,
-            transform: `translate(${parallaxOffset.x}px, ${parallaxOffset.y}px) scale(1.1)`,
-            filter: 'brightness(0.85) contrast(1.1)'
+          className="fixed w-96 h-96 pointer-events-none z-50 opacity-5 hidden md:block"
+          style={{
+            background: `radial-gradient(circle at center, #171719 0%, transparent 70%)`,
+            transform: `translate(${cursorPos.x - 192}px, ${cursorPos.y - 192}px)`,
+            transition: 'transform 0.2s ease-out'
           }}
+          aria-hidden="true"
         />
-        {/* Gradient Overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30" />
-        {/* Navigation - Ultra Minimal */}
-        <nav className="relative z-20 flex justify-between items-center px-8 md:px-16 lg:px-24 py-8 md:py-12">
-          {/* Logo with magnetic hover */}
-          <Link href="/">
-            <div className="group cursor-pointer magnetic-hover">
-              <h1 className="text-white font-bodoni font-light tracking-[0.3em] text-xs md:text-sm">
-                SELFIE AI™
-              </h1>
-              <div className="h-px bg-white/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-            </div>
-          </Link>
-          {/* Navigation with stagger animation */}
-          <div className="hidden md:flex items-center gap-12 lg:gap-16">
-            {['ABOUT', 'TOOLS', 'STORIES'].map((item, i) => (
-              <Link 
-                key={item}
-                href={`/${item.toLowerCase()}`} 
-                className={`text-white/80 hover:text-white text-xs tracking-[0.3em] transition-all hover:tracking-[0.4em] ${
-                  heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-                style={{ transitionDelay: `${300 + i * 100}ms` }}
-              >
-                {item}
-              </Link>
-            ))}
-            <Link href="/dashboard">
-              <button className={`relative overflow-hidden border border-white/40 hover:border-white text-white px-8 py-3 text-xs tracking-[0.3em] transition-all group ${
-                heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: '600ms' }}>
-                <span className="relative z-10">BEGIN</span>
-                <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <span className="absolute inset-0 flex items-center justify-center text-luxury-black opacity-0 group-hover:opacity-100 transition-opacity duration-500">BEGIN</span>
-              </button>
+      )}
+
+
+
+      {/* HERO SECTION */}
+      <section 
+        id="main-content"
+        className="relative min-h-screen w-full overflow-hidden bg-cover bg-center pb-[120px]"
+        style={{ backgroundImage: `url('https://i.postimg.cc/T30rkYjR/IMG_5635.jpg')` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[#171719]/40 via-[#171719]/20 to-[#171719]/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#171719]/60 via-[#171719]/10 to-transparent"></div>
+        <div className="absolute inset-0 lg:w-1/2 bg-gradient-to-r from-[#171719]/80 to-transparent"></div>
+
+        {/* Premium loading line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+
+        {/* Film grain texture overlay */}
+        <div className="absolute inset-0 film-grain"></div>
+
+        {/* Navigation Bar */}
+        <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${scrolled ? 'bg-[#171719]/95 backdrop-blur-sm' : 'bg-transparent'}`}>
+          <div className="flex justify-between items-center px-6 sm:px-8 md:px-16 lg:px-24 py-6 md:py-8">
+            {/* Logo */}
+            <Link href="/" className="relative group" aria-label="SELFIE AI™ Home">
+              <LazyImage 
+                src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" 
+                alt="SELFIE AI™" 
+                width={120}
+                height={40}
+                className="h-8 md:h-10 w-auto opacity-95 hover:opacity-100 transition-all duration-500"
+                priority
+              />
+              <div className="absolute -bottom-1 left-0 w-full h-px bg-white/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
             </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center">
+              <div className="flex gap-10 lg:gap-16 items-center mr-10 lg:mr-16">
+                <Link href="/about" className="group relative font-inter text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300">
+                  About
+                  <div className="absolute -bottom-1 left-0 w-full h-px bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                </Link>
+                <div className="relative group">
+                  <button className="group relative font-inter text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300 flex items-center gap-1 bg-transparent">
+                    TOOLS
+                    <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300">{/* chevron down icon */}</svg>
+                    <div className="absolute -bottom-1 left-0 w-full h-px bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                  </button>
+                  <div className="absolute top-full left-0 w-64 bg-white border border-[#171719] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 mt-2">
+                    <Link href="/tools/glow-check" className="block px-6 py-4 hover:bg-[#F1F1F1] transition-colors">
+                      The Glow Check™
+                    </Link>
+                    {/* More tools */}
+                  </div>
+                </div>
+                <Link href="/stories" className="group relative font-inter text-[10px] lg:text-[11px] uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300">
+                  Stories
+                  <div className="absolute -bottom-1 left-0 w-full h-px bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                </Link>
+              </div>
+
+              <Link href="/start-here">
+                <button className="group relative overflow-hidden">
+                  <div className="relative bg-white/5 backdrop-blur-sm border border-white/30 px-8 lg:px-10 py-2.5 lg:py-3 transition-all duration-500 group-hover:bg-white group-hover:border-white">
+                    <span className="font-inter text-[10px] lg:text-[11px] uppercase tracking-[0.3em] text-white group-hover:text-[#171719] transition-colors duration-500">
+                      Let's Begin
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                </button>
+              </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden relative w-6 h-6 flex flex-col justify-center gap-1.5 group"
+              aria-label="Toggle mobile menu"
+            >
+              <span className={`w-full h-px bg-white/80 transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : 'group-hover:w-4'}`}></span>
+              <span className={`w-4 h-px bg-white/80 ml-auto transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : 'group-hover:w-full'}`}></span>
+              <span className={`w-full h-px bg-white/80 transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </button>
           </div>
 
-          {/* Mobile Menu - Minimal */}
-          <button className="md:hidden text-white">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-          </button>
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 right-0 bg-[#171719] border-t border-white/10">
+              <div className="px-6 py-8 space-y-6">
+                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block font-inter text-[12px] uppercase tracking-[0.2em] text-white/80 hover:text-white transition-colors">
+                  About
+                </Link>
+                <Link href="/tools" onClick={() => setMobileMenuOpen(false)} className="block font-inter text-[12px] uppercase tracking-[0.2em] text-white/80 hover:text-white transition-colors">
+                  Tools
+                </Link>
+                <Link href="/stories" onClick={() => setMobileMenuOpen(false)} className="block font-inter text-[12px] uppercase tracking-[0.2em] text-white/80 hover:text-white transition-colors">
+                  Stories
+                </Link>
+                <Link href="/start-here" onClick={() => setMobileMenuOpen(false)}>
+                  <button className="w-full bg-white text-[#171719] px-8 py-3 font-inter text-[11px] uppercase tracking-[0.3em] transition-all duration-300 hover:bg-[#F1F1F1]">
+                    Let's Begin
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
         </nav>
 
-        {/* Hero Content with Floating Animation */}
-        <div className="relative z-10 flex items-center min-h-[calc(100vh-120px)]">
-          <div className="w-full px-8 md:px-16 lg:px-24 max-w-[1600px] mx-auto">
-            <div className="max-w-5xl">
-              {/* Floating Accent Number */}
-              <div 
-                className={`absolute -top-20 -right-20 lingerie-number text-[300px] md:text-[400px] lg:text-[500px] text-white/5 select-none transition-all duration-1000 ${
-                  heroLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ transform: `translate(${parallaxOffset.x * 2}px, ${parallaxOffset.y * 2}px)` }}
-              >
-                01
-              </div>
-
-              {/* Editorial Headline with Stagger */}
-              <h2 className="text-white relative">
-                <span className={`block font-bodoni text-[56px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.85] font-light transition-all duration-1000 ${
-                  heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}>
-                  Your selfie
-                </span>
-                <span className={`block font-bodoni text-[56px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.85] font-light italic ml-0 md:ml-16 lg:ml-24 transition-all duration-1000 ${
-                  heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`} style={{ transitionDelay: '200ms' }}>
-                  is your
-                </span>
-                <span className={`block font-bodoni text-[56px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.85] font-light transition-all duration-1000 ${
-                  heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`} style={{ transitionDelay: '400ms' }}>
-                  brand.
-                </span>
-              </h2>
-              {/* Subheadline with refined copy */}
-              <p className={`font-inter text-white/80 text-lg md:text-xl lg:text-2xl mt-8 md:mt-12 max-w-2xl leading-relaxed transition-all duration-1000 ${
-                heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`} style={{ transitionDelay: '600ms' }}>
-                Stop overthinking every photo.
-                <br />Start showing up with confidence.
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="flex flex-col justify-center min-h-screen">
+            <div className="mt-[45vh]">
+              <h1 className="font-['Bordoni_FLF'] text-[52px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.9] text-white mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                {'Your selfie is your brand'.split('').map((char, i) => (
+                  <span key={i} style={{'--index': i} as any}>{char === ' ' ? '\u00A0' : char}</span>
+                ))}
+              </h1>
+              <p className="font-['Neue_Einstellung'] italic text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] text-white/80 mb-16 max-w-2xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+                You don't need another course telling you to "just be yourself."
+                <br/>You need a strategy that works with who you already are.
               </p>
-              {/* CTAs with hover effects */}
-              <div className={`flex flex-col sm:flex-row gap-4 md:gap-6 mt-12 md:mt-16 transition-all duration-1000 ${
-                heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`} style={{ transitionDelay: '800ms' }}>
-                <Link href="/free-guide">
-                  <button className="group relative bg-white text-luxury-black px-12 py-4 text-xs tracking-[0.3em] overflow-hidden transition-all hover:shadow-2xl">
-                    <span className="relative z-10">GET THE FREE GUIDE</span>
-                    <div className="absolute inset-0 bg-luxury-black transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom" />
-                    <span className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">GET THE FREE GUIDE</span>
+              <div className={`flex flex-col sm:flex-row gap-4 md:gap-6 mt-12 md:mt-16 mb-24 md:mb-32 transition-all duration-1200 ease-out delay-[1000ms] transform ${heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}> 
+                <Link href="/start-here">
+                  <button className="group relative overflow-hidden w-full sm:w-auto">
+                    <div className="bg-transparent border border-white text-white px-12 py-5 transition-all duration-500 hover:bg-white hover:text-[#171719]">
+                      <span className="relative z-10 font-inter text-[11px] uppercase tracking-[0.3em]">
+                        Let's Do This Together
+                      </span>
+                    </div>
                   </button>
                 </Link>
-                <Link href="/tools/glow-check">
-                  <button className="group relative border border-white text-white px-12 py-4 text-xs tracking-[0.3em] overflow-hidden transition-all">
-                    <span className="relative z-10">TRY THE GLOW CHECK</span>
-                    <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100" />
-                  </button>
-                </Link>
+
+                <button className="group relative">
+                  <span className="font-inter text-[11px] uppercase tracking-[0.3em] text-white/80 group-hover:text-white transition-colors duration-300">
+                    Here's What Happened
+                  </span>
+                  <div className="mt-2 w-full h-px bg-white/40 transform origin-left group-hover:scale-x-110 group-hover:bg-white/60 transition-all duration-500"></div>
+                </button>
               </div>
             </div>
           </div>
+          {/* Ensure 96px gap below buttons and next section */}
+          <div className="h-24 md:h-24" />
         </div>
 
-        {/* Scroll Indicator */}
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 ${
-          heroLoaded ? 'opacity-100' : 'opacity-0'
-        }`} style={{ transitionDelay: '1200ms' }}>
-          <div className="w-px h-16 bg-white/20 relative overflow-hidden">
-            <div className="absolute top-0 w-full h-1/2 bg-white animate-pulse" />
+        {/* Scroll indicator */}
+        <div className={`absolute bottom-12 left-6 sm:left-8 md:left-16 lg:left-24 transition-all duration-1200 ease-out delay-[1200ms] ${heroLoaded ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex flex-col items-center gap-2">
+            <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-white/60">Scroll</p>
+            <div className="w-px h-12 bg-gradient-to-b from-white/60 to-transparent animate-float"></div>
           </div>
         </div>
       </section>
 
-      {/* MANIFESTO SECTION - Editorial Typography */}
-      <section className="bg-white py-24 md:py-32 relative overflow-hidden">
-        {/* Background Number */}
-        <div className="absolute top-0 right-0 lingerie-number text-[400px] md:text-[600px] text-[#171719]/3 select-none">
-          02
+      {/* Section Transition */}
+      <div className="relative h-px bg-gradient-to-r from-transparent via-[#171719]/20 to-transparent">
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-1.5 md:w-2 h-1.5 md:h-2 bg-[#171719]/20 rotate-45 animate-spin-slow"></div>
         </div>
+      </div>
 
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* Left - Large Quote */}
-            <div className="flex items-center">
-              <div className="relative">
-                <span className="absolute -top-16 -left-12 text-[180px] leading-none text-[#171719]/5 font-serif">"</span>
-                <h3 className="font-['Bodoni_Moda'] text-[40px] md:text-[56px] lg:text-[64px] leading-[0.9] text-[#171719] font-light">
-                  I needed
-                  <br />a way
-                  <br />to show up.
-                </h3>
+      {/* STATS SECTION */}
+      <section className="relative bg-white py-16 sm:py-20 md:py-28 overflow-hidden observe-me">
+        <div className="absolute inset-0 opacity-[0.015] md:opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #171719 0, #171719 1px, transparent 1px, transparent 15px)' }}></div>
+
+        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="absolute -top-3 md:-top-4 left-6 sm:left-8 lg:left-24 font-inter text-[9px] md:text-[10px] uppercase tracking-[0.25em] lg:tracking-[0.3em] text-[#B5B5B3]">
+            01 — The Truth
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-20 items-center">
+            <div className="lg:col-span-8 order-2 lg:order-1">
+              <div className="flex flex-wrap items-center gap-6 sm:gap-8 md:gap-16 mb-12 md:mb-16 justify-center lg:justify-start">
+                <div className="relative group">
+                  <div className="text-center lg:text-left transform transition-all duration-700 hover:translate-y-[-4px]">
+                    <span className="relative font-playfair italic text-[48px] sm:text-[56px] md:text-[72px] leading-none text-[#171719]">
+                      120K
+                      <div className="absolute -bottom-1.5 md:-bottom-2 left-0 right-0 h-px bg-[#171719]/10 transition-all duration-500 group-hover:bg-[#171719]/30"></div>
+                    </span>
+                    <p className="font-inter text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#4C4B4B] mt-3 md:mt-4">
+                      Followers Built
+                    </p>
+                  </div>
+                </div>
+
+                <div className="hidden sm:block">
+                  <div className="w-6 md:w-8 h-px bg-[#B5B5B3]/30"></div>
+                </div>
+
+                <div className="relative group">
+                  <div className="text-center lg:text-left transform transition-all duration-700 hover:translate-y-[-4px]">
+                    <span className="relative font-playfair italic text-[48px] sm:text-[56px] md:text-[72px] leading-none text-[#171719]">
+                      1.7M
+                      <div className="absolute -bottom-1.5 md:-bottom-2 left-0 right-0 h-px bg-[#171719]/10 transition-all duration-500 group-hover:bg-[#171719]/30"></div>
+                    </span>
+                    <p className="font-inter text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#4C4B4B] mt-3 md:mt-4">
+                      Monthly Reach
+                    </p>
+                  </div>
+                </div>
+
+                <div className="hidden sm:block">
+                  <div className="w-6 md:w-8 h-px bg-[#B5B5B3]/30"></div>
+                </div>
+
+                <div className="relative group">
+                  <div className="text-center lg:text-left transform transition-all duration-700 hover:translate-y-[-4px]">
+                    <span className="relative font-playfair italic text-[48px] sm:text-[56px] md:text-[72px] leading-none text-[#171719]">
+                      90
+                      <div className="absolute -bottom-1.5 md:-bottom-2 left-0 right-0 h-px bg-[#171719]/10 transition-all duration-500 group-hover:bg-[#171719]/30"></div>
+                    </span>
+                    <p className="font-inter text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#4C4B4B] mt-3 md:mt-4">
+                      Days to Transform
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="max-w-2xl mx-auto lg:mx-0">
+                <div className="relative">
+                  <span className="absolute -top-6 md:-top-8 -left-4 md:-left-6 font-bodoni text-[60px] md:text-[80px] text-[#171719]/5 leading-none select-none transition-all duration-1000 hover:text-[#171719]/10">"</span>
+
+                  <p className="relative font-bodoni italic text-[20px] sm:text-[24px] md:text-[32px] leading-[1.2] md:leading-[1.3] text-[#171719] mb-8 md:mb-12 text-center lg:text-left tracking-[0.02em]">
+                    This isn't hype. These are real numbers from real women who stopped overthinking and started showing up.
+                  </p>
+                </div>
+
+                <div className="text-center lg:text-left">
+                  <div className="inline-block relative">
+                    <p className="font-bodoni text-[16px] md:text-[18px] text-[#171719] mb-1">
+                      — Sandra Sigurjonsdottir
+                    </p>
+                    <p className="font-inter text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#4C4B4B]">
+                      Founder & Former Overthinking Expert
+                    </p>
+                    <div className="absolute -bottom-3 md:-bottom-4 left-0 w-12 md:w-16 h-px bg-[#171719]/20"></div>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            {/* Right - Story with Voice AI's copy */}
-            <div className="flex items-center">
-              <div className="space-y-6 text-[#4C4B4B]">
-                <p className="text-lg leading-relaxed">
-                  I was tired of second-guessing every photo. Exhausted from overthinking every post.
+
+            <div className="lg:col-span-4 order-1 lg:order-2">
+              <div className="relative max-w-[280px] sm:max-w-[320px] mx-auto">
+                <div className="relative overflow-hidden group film-grain">
+                  <LazyImage 
+                    src="https://i.postimg.cc/YC0mdvs0/IMG-3198.jpg" 
+                    alt="Sandra Sigurjonsdottir" 
+                    width={320}
+                    height={400}
+                    className="w-full h-[350px] sm:h-[400px] object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  <div className="absolute bottom-6 md:bottom-8 left-6 md:left-8 right-6 md:right-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="font-inter text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] text-[#171719]/80 bg-white/90 px-3 md:px-4 py-1.5 md:py-2 text-center">
+                      Founder Story
+                    </p>
+                  </div>
+                </div>
+
+                <div className="absolute -top-3 md:-top-4 -left-3 md:-left-4 w-16 md:w-24 h-16 md:h-24 border-t border-l border-[#171719]/10"></div>
+                <div className="absolute -bottom-3 md:-bottom-4 -right-3 md:-right-4 w-16 md:w-24 h-16 md:h-24 border-b border-r border-[#171719]/10"></div>
+
+                <p className="mt-4 md:mt-6 font-inter text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-[#4C4B4B] text-center">
+                  Norway · 2025
                 </p>
-                <p className="text-lg leading-relaxed">
-                  So I built what I needed - simple tools that make showing up feel natural again.
-                </p>
-                <p className="text-lg leading-relaxed">
-                  SELFIE AI™ is for when you're ready to stop hiding behind "not ready yet."
-                </p>
-                <div className="pt-8">
-                  <p className="text-[#171719] text-lg italic">Ready to do this together?</p>
-                  <div className="mt-4">
-                    <p className="text-[#171719] text-base">— Sandra</p>
-                    <p className="text-xs tracking-[0.3em] text-[#B5B5B3] mt-1">YOUR FRIEND WHO GETS IT</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <TestimonialsSection />
+
+      {/* WHO IT'S FOR SECTION */}
+      <section className="bg-white py-20 sm:py-24 md:py-32 observe-me">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-4 sm:gap-8 mb-16 md:mb-24">
+            <div className="font-playfair italic text-[80px] sm:text-[100px] md:text-[120px] leading-none opacity-10 sm:opacity-100">02</div>
+            <div className="text-center sm:text-left">
+              <h2 className="font-bodoni text-[36px] sm:text-[48px] md:text-[64px] tracking-tight">
+                Who Shows Up Here
+              </h2>
+              <div className="w-24 md:w-32 h-px bg-black mt-3 md:mt-4 mx-auto sm:mx-0"></div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/10">
+            {/* The Coach */}
+            <div className="bg-white p-8 sm:p-10 md:p-12 group hover:bg-black hover:text-white transition-all duration-700 relative overflow-hidden observe-me">
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+
+              <div className="mb-6 md:mb-8 group relative overflow-hidden cursor-pointer film-grain">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 ease-out" />
+                <LazyImage 
+                  src="https://i.postimg.cc/tRDM6kxm/5.png" 
+                  alt="The Coach" 
+                  width={400}
+                  height={400}
+                  className="w-full h-[350px] md:h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              </div>
+
+              <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase mb-3 md:mb-4 opacity-60">
+                The Coach
+              </div>
+
+              <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
+                You know your stuff. Now let's make sure everyone else does too.
+              </h3>
+
+              <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
+                Your expertise deserves better than another Canva template.
+              </p>
+            </div>
+
+            {/* The Creator */}
+            <div className="bg-white p-8 sm:p-10 md:p-12 group hover:bg-black hover:text-white transition-all duration-700 relative overflow-hidden observe-me">
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+
+              <div className="mb-6 md:mb-8 group relative overflow-hidden cursor-pointer film-grain">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 ease-out" />
+                <LazyImage 
+                  src="https://i.postimg.cc/022hXFvs/2.png" 
+                  alt="The Creator" 
+                  width={400}
+                  height={400}
+                  className="w-full h-[350px] md:h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              </div>
+
+              <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase mb-3 md:mb-4 opacity-60">
+                The Creator
+              </div>
+
+              <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
+                You've got the vision. You've got the phone. Let's put them together.
+              </h3>
+
+              <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
+                Turn those random photos into a brand that pays.
+              </p>
+            </div>
+
+            {/* The CEO */}
+            <div className="bg-white p-8 sm:p-10 md:p-12 group hover:bg-black hover:text-white transition-all duration-700 relative overflow-hidden observe-me">
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+
+              <div className="mb-6 md:mb-8 group relative overflow-hidden cursor-pointer film-grain">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 ease-out" />
+                <LazyImage 
+                  src="https://i.postimg.cc/MTmrdbrH/3.png" 
+                  alt="The CEO" 
+                  width={400}
+                  height={400}
+                  className="w-full h-[350px] md:h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              </div>
+
+              <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase mb-3 md:mb-4 opacity-60">
+                The CEO
+              </div>
+
+              <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
+                You're building something bigger than yourself.
+              </h3>
+
+              <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
+                Let me help you look the part without the photoshoot budget.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VALUE LADDER SECTION */}
+      <section className="bg-black py-24 sm:py-32 md:py-48 relative overflow-hidden observe-me">
+        <div className="absolute top-0 right-0 font-playfair italic text-[400px] sm:text-[600px] md:text-[800px] leading-none text-[#F1F1F1] opacity-[0.05] select-none pointer-events-none">
+          06
+        </div>
+
+        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="text-center mb-20 sm:mb-24 md:mb-32">
+            <h2 className="font-bodoni text-[36px] sm:text-[48px] md:text-[72px] tracking-tight text-white mb-6 md:mb-8">
+              Your Path to Showing Up
+            </h2>
+            <p className="font-inter text-base md:text-lg text-white/60 max-w-2xl mx-auto">
+              Choose your path. Each step builds on the last, creating your complete transformation.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-px bg-white/10 transform md:-translate-x-1/2"></div>
+
+            {/* Step 1: Free Guide */}
+            <div className="relative mb-16 sm:mb-20 md:mb-32 observe-me">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+                <div className="md:col-span-5 text-left pl-12 md:pl-0 md:text-right">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="font-playfair italic text-[60px] sm:text-[80px] md:text-[120px] leading-none text-[#F1F1F1] opacity-[0.15]">
+                      01
+                    </div>
+                    <h3 className="font-bodoni text-[28px] sm:text-[32px] md:text-[40px] text-white -mt-12 sm:-mt-16 md:-mt-20">
+                      Free Selfie Guide
+                    </h3>
+                    <p className="font-inter text-sm md:text-base text-white/60 leading-relaxed">
+                      The basics that changed everything. Five poses, proper lighting, and why your bathroom mirror is lying to you.
+                    </p>
+                    <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/40">
+                      Start Here • Free
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-2 flex justify-start md:justify-center absolute left-4 top-8 md:relative md:left-auto md:top-auto">
+                  <div className="w-3 h-3 md:w-4 md:h-4 bg-white rounded-full relative">
+                    <div className="absolute inset-0 bg-white rounded-full animate-ping"></div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-5"></div>
+              </div>
+            </div>
+
+            {/* Step 2: Starter Kit */}
+            <div className="relative mb-16 sm:mb-20 md:mb-32 observe-me">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+                <div className="md:col-span-5 order-2 md:order-1"></div>
+
+                <div className="md:col-span-2 flex justify-start md:justify-center order-1 md:order-2 absolute left-4 top-8 md:relative md:left-auto md:top-auto">
+                  <div className="w-3 h-3 md:w-4 md:h-4 bg-white/50 rounded-full"></div>
+                </div>
+
+                <div className="md:col-span-5 text-left pl-12 md:pl-0 order-3">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="font-playfair italic text-[60px] sm:text-[80px] md:text-[120px] leading-none text-[#F1F1F1] opacity-[0.15]">
+                      02
+                    </div>
+                    <h3 className="font-bodoni text-[28px] sm:text-[32px] md:text-[40px] text-white -mt-12 sm:-mt-16 md:-mt-20">
+                      Selfie Starter Kit • $67
+                    </h3>
+                    <p className="font-inter text-sm md:text-base text-white/60 leading-relaxed">
+                      30 days of showing up. Daily poses, caption templates, and the exact editing workflow I use. No more second-guessing.
+                    </p>
+                    <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/40">
+                      Level Up • Most Popular
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3: Branded */}
+            <div className="relative mb-16 sm:mb-20 md:mb-32 observe-me">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+                <div className="md:col-span-5 text-left pl-12 md:pl-0 md:text-right">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="font-playfair italic text-[60px] sm:text-[80px] md:text-[120px] leading-none text-[#F1F1F1] opacity-[0.15]">
+                      03
+                    </div>
+                    <h3 className="font-bodoni text-[28px] sm:text-[32px] md:text-[40px] text-white -mt-12 sm:-mt-16 md:-mt-20">
+                      Branded By Selfie • $397
+                    </h3>
+                    <p className="font-inter text-sm md:text-base text-white/60 leading-relaxed">
+                      Your complete brand transformation. 12 weeks of strategy, tools, and the confidence to charge what you're worth.
+                    </p>
+                    <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/40">
+                      Full Transformation • Best Value
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-2 flex justify-start md:justify-center absolute left-4 top-8 md:relative md:left-auto md:top-auto">
+                  <div className="w-3 h-3 md:w-4 md:h-4 bg-white/50 rounded-full"></div>
+                </div>
+
+                <div className="md:col-span-5"></div>
+              </div>
+            </div>
+
+            {/* Step 4: VIP */}
+            <div className="relative observe-me">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+                <div className="md:col-span-5 order-2 md:order-1"></div>
+
+                <div className="md:col-span-2 flex justify-start md:justify-center order-1 md:order-2 absolute left-4 top-8 md:relative md:left-auto md:top-auto">
+                  <div className="w-4 md:w-6 h-4 md:h-6 bg-white rounded-full relative">
+                    <div className="absolute inset-0 bg-white/20 rounded-full scale-125 md:scale-150"></div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-5 text-left pl-12 md:pl-0 order-3">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="font-playfair italic text-[60px] sm:text-[80px] md:text-[120px] leading-none text-[#F1F1F1] opacity-[0.15]">
+                      04
+                    </div>
+                    <h3 className="font-bodoni text-[28px] sm:text-[32px] md:text-[40px] text-white -mt-12 sm:-mt-16 md:-mt-20">
+                      VIP Automated Brand • Apply
+                    </h3>
+                    <p className="font-inter text-sm md:text-base text-white/60 leading-relaxed">
+                      I'll build your entire system with you. From first selfie to six figures. This is for women ready to go all in.
+                    </p>
+                    <div className="font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/40">
+                      Apply Only • Limited Spots
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* FEATURES GRID - Luxury Flatlays */}
-      <section className="bg-[#FAFAF8] py-24 md:py-32 relative">
-        {/* Section Header with Number */}
-        <div className="text-center mb-20 relative">
-          <div className="lingerie-number text-[200px] md:text-[300px] text-[#171719]/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 select-none">
-            03
-          </div>
-          <h2 className="text-[40px] md:text-[56px] lg:text-[72px] text-[#171719] font-light leading-tight mb-6 relative z-10">
-            Tools that transform
-          </h2>
-          <p className="text-lg text-[#4C4B4B] max-w-2xl mx-auto relative z-10">
-            Because showing up shouldn't feel so hard.
-          </p>
-        </div>
-
-        {/* Features Grid with Flatlays */}
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* The Glow Check */}
-            <div className="group bg-white overflow-hidden cursor-pointer transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-              <div className="relative h-[400px] overflow-hidden">
-                <img 
-                  src="https://i.postimg.cc/LXQsYDmV/cover-Image-Url-flatlay.png" 
-                  alt="The Glow Check"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-white text-sm tracking-[0.2em] mb-2">FORMERLY SELFIE SCORE</p>
-                  <h3 className="text-white text-2xl">The Glow Check™</h3>
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl mb-3 text-[#171719]">
-                  The Glow Check™
-                </h3>
-                <p className="text-[#4C4B4B]">
-                  Like having me in your pocket. I'll tell you what's working and what we can make better.
-                </p>
-              </div>
-            </div>
-
-            {/* Future Self AI */}
-            <div className="group bg-white overflow-hidden cursor-pointer transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-              <div className="relative h-[400px] overflow-hidden">
-                <img 
-                  src="https://i.postimg.cc/wxc1QX0g/3.png" 
-                  alt="Future Self AI"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-white text-sm tracking-[0.2em] mb-2">VISUALIZATION TOOL</p>
-                  <h3 className="text-white text-2xl">Future Self AI</h3>
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl mb-3 text-[#171719]">
-                  Future Self AI
-                </h3>
-                <p className="text-[#4C4B4B]">
-                  See where you're headed. Sometimes we need to visualize it before we can become it.
-                </p>
-              </div>
-            </div>
-
-            {/* Content Calendar */}
-            <div className="group bg-white overflow-hidden cursor-pointer transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-              <div className="relative h-[400px] overflow-hidden">
-                <img 
-                  src="https://i.postimg.cc/yYGsmW47/21.png" 
-                  alt="Content Calendar"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-white text-sm tracking-[0.2em] mb-2">30-DAY STRATEGY</p>
-                  <h3 className="text-white text-2xl">Content Calendar</h3>
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl mb-3 text-[#171719]">
-                  Content Calendar
-                </h3>
-                <p className="text-[#4C4B4B]">
-                  30 days of "post this." No more blank screen panic. Just show up and follow the plan.
-                </p>
-              </div>
-            </div>
+          <div className="text-center mt-20 sm:mt-24 md:mt-32">
+            <Link href="/start-here">
+              <button className="group relative overflow-hidden bg-white text-black px-12 sm:px-16 py-5 md:py-6">
+                <span className="relative z-10 font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase">
+                  Okay, I'm Ready
+                </span>
+                <div className="absolute inset-0 bg-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span className="absolute inset-0 flex items-center justify-center font-inter text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] uppercase text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                  Okay, I'm Ready
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* REAL TESTIMONIALS SECTION */}
-      <section className="bg-white py-24 md:py-32 overflow-hidden relative">
-        {/* Background Number */}
-        <div className="absolute top-0 left-0 lingerie-number text-[400px] md:text-[600px] text-[#171719]/3 select-none">
-          04
-        </div>
-
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 relative z-10">
-          {/* Section Header */}
+      {/* TOOLS Section */}
+      <section id="tools" className="py-32 relative">
+        <div className="editorial-number top-40 right-0 translate-x-1/4">03</div>
+        <div className="container mx-auto px-6 md:px-12">
           <div className="text-center mb-20">
-            <h2 className="text-[40px] md:text-[56px] lg:text-[72px] text-[#171719] font-light">
-              Real people. Real results.
+            <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-6">Your Tools</p>
+            <h2 className="font-bodoni text-5xl md:text-7xl tracking-[-0.04em]">
+              Everything you need<br/>
+              <span className="font-playfair italic">to start showing up.</span>
             </h2>
           </div>
-
-          {/* Testimonials Grid - Instagram Style */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-[#FAFAF8] p-8 transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
-              <div className="mb-4">
-                <svg className="w-8 h-8 text-[#171719]/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-[#4C4B4B] text-lg mb-6 leading-relaxed">
-                Sandra, thank you so much for each of your reels. 90%, it's sound like my life. Inspired by you, I started to take selfies of myself and recorded 3 stories of what I felt and what I did.
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#171719]/10 rounded-full" />
-                <div>
-                  <p className="text-[#171719] font-medium">Maria K.</p>
-                  <p className="text-xs text-[#B5B5B3]">@mariabrand</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* The Glow Check */}
+            <Link href="/tools/glow-check" className="group relative overflow-hidden luxury-hover">
+              <article className="relative h-[600px]">
+                <Image 
+                  src="/images/tools/glow-check.jpg" 
+                  alt="The Glow Check tool interface" 
+                  fill
+                  className="object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719] via-[#171719]/50 to-transparent" />
+                <div className="absolute top-8 left-8 w-16 h-16 border border-white/20 flex items-center justify-center">
+                  <span className="text-xs font-bodoni text-white">01</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="bg-[#FAFAF8] p-8 transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
-              <div className="mb-4">
-                <svg className="w-8 h-8 text-[#171719]/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-[#4C4B4B] text-lg mb-6 leading-relaxed">
-                Love it!!!! You have literally changed my picture taking from boring selfies to professional pictures !!! Thank you ❤️
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#171719]/10 rounded-full" />
-                <div>
-                  <p className="text-[#171719] font-medium">Sarah M.</p>
-                  <p className="text-xs text-[#B5B5B3]">@sarahcreates</p>
+                <div className="absolute bottom-0 left-0 right-0 p-12">
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Get real feedback</p>
+                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">The Glow Check™</h3>
+                  <p className="text-white font-light mb-6">Upload a selfie. Get honest feedback. Actually helpful, not harsh.</p>
+                  <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
                 </div>
-              </div>
-            </div>
-
-            {/* Testimonial 3 */}
-            <div className="bg-[#FAFAF8] p-8 transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
-              <div className="mb-4">
-                <svg className="w-8 h-8 text-[#171719]/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="text-[#4C4B4B] text-lg mb-6 leading-relaxed">
-                I'm so in love with your journey! Today was the day I decided to not use any more filters ever. I will definitely be using your tips for photos.
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#171719]/10 rounded-full" />
-                <div>
-                  <p className="text-[#171719] font-medium">Jessica L.</p>
-                  <p className="text-xs text-[#B5B5B3]">@jessicaleads</p>
+              </article>
+            </Link>
+            {/* Future Self AI */}
+            <Link href="/tools/future-self" className="group relative overflow-hidden luxury-hover">
+              <article className="relative h-[600px]">
+                <Image 
+                  src="/images/tools/future-self.jpg" 
+                  alt="Future Self AI visualization tool" 
+                  fill
+                  className="object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719] via-[#171719]/50 to-transparent" />
+                <div className="absolute top-8 left-8 w-16 h-16 border border-white/20 flex items-center justify-center">
+                  <span className="text-xs font-bodoni text-white">02</span>
                 </div>
-              </div>
-            </div>
+                <div className="absolute bottom-0 left-0 right-0 p-12">
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">See your potential</p>
+                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">Future Self AI</h3>
+                  <p className="text-white font-light mb-6">Visualize where you're going. Sometimes we need to see it to believe it.</p>
+                  <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                </div>
+              </article>
+            </Link>
+            {/* Content Calendar */}
+            <Link href="/tools/content-calendar" className="group relative overflow-hidden luxury-hover">
+              <article className="relative h-[600px]">
+                <Image 
+                  src="/images/tools/content-calendar.jpg" 
+                  alt="Content Calendar tool" 
+                  fill
+                  className="object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171719] via-[#171719]/50 to-transparent" />
+                <div className="absolute top-8 left-8 w-16 h-16 border border-white/20 flex items-center justify-center">
+                  <span className="text-xs font-bodoni text-white">03</span>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-12">
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Plan with ease</p>
+                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">Content Calendar</h3>
+                  <p className="text-white font-light mb-6">Never run out of content ideas. AI-powered planning for real results.</p>
+                  <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                </div>
+              </article>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* VALUE LADDER - Editorial Minimal */}
-      <section className="bg-[#171719] py-24 md:py-32 relative overflow-hidden">
-        {/* Background Design */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/5 to-transparent" />
+      {/* FOOTER CTA SECTION */}
+      <section className="relative bg-white py-24 sm:py-32 md:py-48 overflow-hidden observe-me">
+        <div className="absolute top-0 left-0 font-playfair italic text-[600px] md:text-[800px] text-[#171719]/[0.02] leading-none select-none pointer-events-none">
+          S
         </div>
 
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 relative z-10">
-          {/* Header with Number */}
-          <div className="text-center mb-20 relative">
-            <div className="lingerie-number text-[300px] md:text-[500px] text-white/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 select-none">
-              05
-            </div>
-            <h2 className="text-[40px] md:text-[56px] lg:text-[72px] text-white font-light leading-tight mb-6 relative z-10">
-              Your journey starts here
-            </h2>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto relative z-10">
-              Pick where you want to start. There's no wrong door.
-            </p>
-          </div>
-
-          {/* Value Ladder with Hover Effects */}
-          <div className="space-y-0 max-w-4xl mx-auto">
-            {/* Free Guide */}
-            <div className="border-t border-white/20 pt-8 pb-8 group cursor-pointer transition-all duration-500 hover:pl-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <p className="text-xs tracking-[0.3em] text-white/40 mb-4 group-hover:text-white/60 transition-colors">STEP 01</p>
-                  <h3 className="text-3xl text-white mb-4 group-hover:text-white transition-colors">The Selfie Queen Guide</h3>
-                  <p className="text-white/60 max-w-xl group-hover:text-white/80 transition-colors">My gift to you. Everything I know about taking selfies that convert.</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl text-white/80 mb-4">FREE</p>
-                  <Link href="/free-guide">
-                    <button className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-all group-hover:tracking-[0.3em]">
-                      GET IT NOW →
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Starter Kit */}
-            <div className="border-t border-white/20 pt-8 pb-8 group cursor-pointer transition-all duration-500 hover:pl-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <p className="text-xs tracking-[0.3em] text-white/40 mb-4 group-hover:text-white/60 transition-colors">STEP 02</p>
-                  <h3 className="text-3xl text-white mb-4">The Starter Kit</h3>
-                  <p className="text-white/60 max-w-xl group-hover:text-white/80 transition-colors">Your first month planned out. Show up, follow the prompts, watch what happens.</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl text-white/80 mb-4">$67</p>
-                  <Link href="/products/starter-kit">
-                    <button className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-all group-hover:tracking-[0.3em]">
-                      START NOW →
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Branded */}
-            <div className="border-t border-white/20 pt-8 pb-8 group cursor-pointer transition-all duration-500 hover:pl-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <p className="text-xs tracking-[0.3em] text-white/40 mb-4 group-hover:text-white/60 transition-colors">STEP 03</p>
-                  <h3 className="text-3xl text-white mb-4">Branded by Selfie</h3>
-                  <p className="text-white/60 max-w-xl group-hover:text-white/80 transition-colors">The whole system. When you're done playing small and ready for real change.</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl text-white/80 mb-4">$397</p>
-                  <Link href="/products/branded">
-                    <button className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-all group-hover:tracking-[0.3em]">
-                      TRANSFORM →
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* VIP */}
-            <div className="border-t border-white/20 pt-8 group cursor-pointer transition-all duration-500 hover:pl-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <p className="text-xs tracking-[0.3em] text-white/40 mb-4 group-hover:text-white/60 transition-colors">BY APPLICATION</p>
-                  <h3 className="text-3xl text-white mb-4">VIP</h3>
-                  <p className="text-white/60 max-w-xl group-hover:text-white/80 transition-colors">When you need me personally. Limited spots, unlimited support.</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl text-white/80 mb-4">Apply</p>
-                  <Link href="/vip-application">
-                    <button className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-all group-hover:tracking-[0.3em]">
-                      APPLY →
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA - Magnetic */}
-      <section className="bg-white py-32 text-center relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#171719]/5 rounded-full blur-3xl animate-pulse" />
-        </div>
-
-        <div className="max-w-4xl mx-auto px-8 relative z-10">
-          <h2 className="text-[40px] md:text-[56px] lg:text-[72px] text-[#171719] font-light leading-tight mb-8">
-            One question.
+        <div className="relative max-w-[1000px] mx-auto px-6 sm:px-8 md:px-16 text-center">
+          <h2 className="font-bodoni text-[40px] sm:text-[56px] md:text-[80px] leading-[0.9] text-[#171719] mb-8 md:mb-12">
+            Ready to build your brand<br/>
+            from your camera roll?
           </h2>
-          <p className="text-xl text-[#4C4B4B] mb-12 max-w-2xl mx-auto">
-            Are you tired of waiting to feel ready? Good. That means you already are.
+
+          <p className="font-inter text-lg md:text-xl text-[#4C4B4B] leading-relaxed mb-12 md:mb-16 max-w-2xl mx-auto">
+            I built this platform because I was tired of watching brilliant women hide behind bad photos and borrowed quotes. You have something to say. Let's make sure people listen.
           </p>
-          
-          {/* Email Capture with Animation */}
-          <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4 group">
+
+          <p className="font-inter text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#B5B5B3] mb-8">
+            Join 10,000+ women who stopped waiting for perfect and started showing up as themselves.
+          </p>
+
+          <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto">
+            <div className="relative">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your best email"
-                className="flex-1 bg-transparent border-b-2 border-[#171719]/20 text-[#171719] placeholder-[#B5B5B3] pb-3 focus:outline-none focus:border-[#171719] transition-all text-center sm:text-left"
+                required
+                disabled={isSubmitting}
+                aria-label="Email address"
+                className="w-full px-0 py-4 text-lg bg-transparent border-0 border-b-2 border-[#171719]/20 placeholder:text-[#B5B5B3] focus:border-[#171719] focus:outline-none font-inter transition-colors duration-300 disabled:opacity-50"
               />
-              <button
-                onClick={handleEmailSubmit}
-                className="bg-[#171719] text-white px-8 py-3 text-xs tracking-[0.3em] hover:tracking-[0.4em] transition-all relative overflow-hidden group"
-              >
-                <span className="relative z-10">BEGIN NOW</span>
-                <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <span className="absolute inset-0 flex items-center justify-center text-[#171719] opacity-0 group-hover:opacity-100 transition-opacity duration-500">BEGIN NOW</span>
-              </button>
             </div>
-          </div>
-          
-          <p className="text-xs text-[#B5B5B3] mt-8 tracking-[0.2em]">
-            NO SPAM. JUST REAL TALK AND STRATEGY.
+            
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full mt-8 bg-[#171719] text-white py-5 font-inter text-[11px] uppercase tracking-[0.3em] transition-all duration-500 hover:translate-y-[-2px] hover:shadow-lg disabled:opacity-50 disabled:hover:translate-y-0"
+            >
+              {isSubmitting ? 'SENDING...' : 'YES, SEND ME THE GUIDE'}
+            </button>
+
+            {submitMessage && (
+              <p className={`mt-4 text-sm ${submitMessage.includes('Check') ? 'text-green-600' : 'text-red-600'}`}>
+                {submitMessage}
+              </p>
+            )}
+          </form>
+
+          <p className="mt-6 font-inter text-[10px] uppercase tracking-[0.2em] text-[#B5B5B3]">
+            Join 10,000+ women building real brands
           </p>
         </div>
       </section>
-
-      {/* Footer - Ultra Minimal */}
-      <footer className="bg-[#171719] py-16">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div>
-              <h3 className="text-white tracking-[0.3em] text-xs mb-2">SELFIE AI™</h3>
-              <p className="text-xs text-white/40">© 2025 Let's build something beautiful together</p>
-            </div>
-            
-            <div className="flex gap-8">
-              <Link href="/privacy" className="text-xs text-white/40 hover:text-white/60 transition-colors tracking-[0.2em]">
-                PRIVACY
-              </Link>
-              <Link href="/terms" className="text-xs text-white/40 hover:text-white/60 transition-colors tracking-[0.2em]">
-                TERMS
-              </Link>
-              <Link href="/contact" className="text-xs text-white/40 hover:text-white/60 transition-colors tracking-[0.2em]">
-                CONTACT
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

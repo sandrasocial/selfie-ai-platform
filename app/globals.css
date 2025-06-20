@@ -1,135 +1,313 @@
-/* Import custom fonts for SELFIE AI™ */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,300;1,6..96,400;1,6..96,700;1,6..96,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  /* Lingerie number style using Playfair italic as substitute */
-  .lingerie-number {
-    font-family: 'Playfair Display', serif;
-    font-weight: 900;
-    font-style: italic;
-    letter-spacing: -0.05em;
-  }
-  
-  /* Global font smoothing */
-  html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  /* CRITICAL: No rounded corners ever */
-  * {
-    border-radius: 0 !important;
-  }
+/* CSS Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Custom CSS Variables for SELFIE AI™ Design System */
 :root {
+  /* SELFIE AI™ Luxury Color System */
   --luxury-black: #171719;
   --soft-white: #F1F1F1;
+  --pure-white: #FFFFFF;
   --warm-gray: #B5B5B3;
-  --luxury-text-gray: #8A8A8A;
-}
-
-/* Custom Animations */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite;
-}
-
-/* Typography */
-@font-face {
-  font-family: 'Bodoni Moda';
-  src: url('/fonts/bodoni/BodoniFlf-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Bodoni Moda';
-  src: url('/fonts/bodoni/BodoniFlf-Italic.woff') format('woff');
-  font-weight: normal;
-  font-style: italic;
-}
-
-/* Base Styles */
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: var(--luxury-black);
-  background-color: var(--soft-white);
-}
-
-/* Luxury Design System */
-.luxury-black {
-  color: var(--luxury-black);
-}
-
-.luxury-bg-black {
-  background-color: var(--luxury-black);
-}
-
-.soft-white {
-  color: var(--soft-white);
-}
-
-.soft-bg-white {
-  background-color: var(--soft-white);
-}
-
-.warm-gray {
-  color: var(--warm-gray);
-}
-
-.warm-bg-gray {
-  background-color: var(--warm-gray);
-}
-
-/* Sharp corners - no rounded corners */
-.rounded-none {
-  border-radius: 0;
-}
-
-/* High contrast text */
-.text-high-contrast {
-  color: var(--luxury-black);
-}
-
-.text-high-contrast-white {
-  color: var(--soft-white);
+  --deep-graphite: #4C4B4B;
+  --font-bodoni: 'BodoniFLF', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-lingerie: 'Lingerie', serif;
+  --font-neue: 'NeueEinstellung', sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-.magnetic-hover {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+body {
+  font-family: var(--font-inter);
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--luxury-black);
+  background: var(--pure-white);
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.magnetic-hover:hover {
-  transform: scale(1.05);
+/* CRITICAL: No rounded corners anywhere */
+* {
+  border-radius: 0 !important;
+}
+
+/* Typography Classes */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-bodoni);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.font-bodoni {
+  font-family: var(--font-bodoni) !important;
+}
+
+.font-inter {
+  font-family: var(--font-inter) !important;
+}
+
+/* Luxury Color Classes */
+.luxury-black { color: var(--luxury-black); }
+.bg-luxury-black { background-color: var(--luxury-black); }
+.soft-white { color: var(--soft-white); }
+.bg-soft-white { background-color: var(--soft-white); }
+.warm-gray { color: var(--warm-gray); }
+.bg-warm-gray { background-color: var(--warm-gray); }
+
+/* Text Selection Style */
+::selection {
+  background: var(--luxury-black);
+  color: var(--soft-white);
+}
+
+/* Link Styles */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Focus States for Accessibility */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--luxury-black);
+  outline-offset: 4px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--soft-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--warm-gray);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--luxury-black);
+}
+
+/* Ensure all images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove all old styles that might conflict */
+.gradient { display: none !important; }
+.shadow { box-shadow: none !important; }
+.rounded { border-radius: 0 !important; }
+
+/* Form Elements */
+input, textarea, select {
+  font-family: var(--font-inter);
+  font-size: 16px;
+  border-radius: 0 !important;
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+/* Custom Fonts */
+@font-face {
+  font-family: 'BodoniFLF';
+  src: url('/fonts/bodoni/BodoniFlf-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BodoniFLF';
+  src: url('/fonts/bodoni/BodoniFlf-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BodoniFLF';
+  src: url('/fonts/bodoni/BodoniFlf-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BodoniFLF';
+  src: url('/fonts/bodoni/BodoniFlf-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lingerie';
+  src: url('/fonts/lingerie/Lingerie-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeueEinstellung';
+  src: url('/fonts/neue-einstellung/NeueEinstellung-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes loadingLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes revealUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
 }
 
-.shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-  background-size: 1000px 100%;
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Animation Classes */
+.animate-fadeIn {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-loadingLine {
+  animation: loadingLine 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-shimmer {
   animation: shimmer 3s infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Letter Reveal Animation */
+.letter-reveal span {
+  display: inline-block;
+  opacity: 0;
+  animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--index) * 50ms);
+}
+
+/* Utility Classes */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Film Grain Effect */
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Blur Load Effect */
+.blur-load {
+  filter: blur(20px);
+  transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blur-load.loaded {
+  filter: blur(0);
+}
+
+/* Intersection Observer Animation */
+.observe-me {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.observe-me.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Font Classes */
+.font-lingerie {
+  font-family: var(--font-lingerie);
+}
+
+.font-neue {
+  font-family: var(--font-neue);
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
 }

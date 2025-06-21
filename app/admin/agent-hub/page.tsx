@@ -70,7 +70,7 @@ const agents = [
 export default function AgentHub() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [selectedAgents, setSelectedAgents] = useState<string[]>([])
   const [showWorkflowBuilder, setShowWorkflowBuilder] = useState(false)
   const [formData, setFormData] = useState({
@@ -86,28 +86,59 @@ export default function AgentHub() {
   const [showChangeRequestModal, setShowChangeRequestModal] = useState<string | null>(null)
   const [databaseError, setDatabaseError] = useState<string | null>(null)
 
-  // Fetch tasks and activity logs on component mount
   useEffect(() => {
-    fetchTasks()
-    fetchActivityLogs()
-    
-    // Set up real-time subscription only if tables exist
-    if (!databaseError) {
-      const subscription = supabase
-        .channel('tasks_changes')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_tasks' }, () => {
-          fetchTasks()
-        })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_activity_log' }, () => {
-          fetchActivityLogs()
-        })
-        .subscribe()
+    const checkDatabase = async () => {
+      try {
+        const response = await fetch('/api/test-supabase');
+        if (!response.ok) {
+          throw new Error('Database check failed');
+        }
+        const data = await response.json();
 
-      return () => {
-        subscription.unsubscribe()
+        if (!data.success) {
+          throw new Error(data.error || 'Failed to check database.');
+        }
+
+        const tasksExist = data.tables?.admin_tasks?.exists;
+        const logsExist = data.tables?.agent_activity_log?.exists;
+
+        if (tasksExist && logsExist) {
+          setDatabaseError(null);
+          fetchTasks();
+          fetchActivityLogs();
+        } else {
+          setDatabaseError('Database tables not found. Please follow setup instructions.');
+        }
+      } catch (error) {
+        console.error('Error checking database status:', error);
+        setDatabaseError('Could not connect to the database to verify setup.');
+      } finally {
+        setIsLoading(false);
       }
+    };
+
+    checkDatabase();
+  }, []);
+
+  // Set up real-time subscriptions
+  useEffect(() => {
+    if (isLoading || databaseError) return;
+
+    const tasksSubscription = supabase
+      .channel('admin-tasks')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_tasks' }, fetchTasks)
+      .subscribe();
+      
+    const activitySubscription = supabase
+      .channel('agent-activity-log')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_activity_log' }, fetchActivityLogs)
+      .subscribe();
+
+    return () => {
+      tasksSubscription.unsubscribe();
+      activitySubscription.unsubscribe();
     }
-  }, [databaseError])
+  }, [isLoading, databaseError]);
 
   const fetchTasks = async () => {
     try {
@@ -116,22 +147,11 @@ export default function AgentHub() {
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (error) {
-        if (error.message.includes('does not exist')) {
-          setDatabaseError('Database tables not found. Please set up the admin tables first.')
-        } else {
-          throw error
-        }
-        return
-      }
-      
-      setDatabaseError(null)
+      if (error) throw error;
       setTasks(data || [])
     } catch (error) {
       console.error('Error fetching tasks:', error)
-      setDatabaseError('Failed to connect to database')
-    } finally {
-      setLoading(false)
+      // Optionally set a more specific error for the UI
     }
   }
 
@@ -143,15 +163,7 @@ export default function AgentHub() {
         .order('created_at', { ascending: false })
         .limit(50)
 
-      if (error) {
-        if (error.message.includes('does not exist')) {
-          // This is expected if tables don't exist
-          return
-        } else {
-          throw error
-        }
-      }
-      
+      if (error) throw error;
       setActivityLogs(data || [])
     } catch (error) {
       console.error('Error fetching activity logs:', error)
@@ -329,27 +341,33 @@ export default function AgentHub() {
 
   const getAgentName = (agentId: string) => {
     const agent = agents.find(a => a.id === agentId)
-    return agent ? agent.name : agentId
+    return agent ? agent.name : 'Unknown Agent'
   }
 
-  // Show database setup message if tables don't exist
+  if (isLoading) {
+    return (
+      <div className="flex-1 p-8 bg-soft-white flex items-center justify-center">
+        <div className="text-center">
+          <Database className="mx-auto h-12 w-12 text-warm-gray animate-pulse" />
+          <h2 className="mt-4 text-2xl font-bold text-luxury-black">Connecting to Database...</h2>
+          <p className="mt-2 text-warm-gray">Verifying Agent Hub setup.</p>
+        </div>
+      </div>
+    )
+  }
+
   if (databaseError) {
     return (
-      <div className="min-h-screen bg-soft-white p-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bodoni text-luxury-black mb-2">Agent Central Hub</h1>
-          <p className="text-warm-gray">Let's get your AI squad working on what matters.</p>
-        </div>
-
-        <div className="bg-white p-8 border border-warm-gray/20 text-center">
-          <Database className="w-16 h-16 text-luxury-black mx-auto mb-4" />
-          <h2 className="text-2xl font-bodoni text-luxury-black mb-4">Database Setup Required</h2>
-          <p className="text-warm-gray mb-6 max-w-2xl mx-auto">
+      <div className="flex-1 p-8 bg-soft-white flex items-center justify-center">
+        <div className="text-center">
+          <Database className="mx-auto h-12 w-12 text-warm-gray animate-pulse" />
+          <h2 className="mt-4 text-2xl font-bold text-luxury-black">Database Setup Required</h2>
+          <p className="mt-2 text-warm-gray">
             The Agent Hub requires database tables to be set up before it can function. 
             Please follow these steps to create the necessary tables.
           </p>
           
-          <div className="bg-soft-white p-6 border border-warm-gray/20 text-left max-w-2xl mx-auto">
+          <div className="mt-6">
             <h3 className="font-semibold text-luxury-black mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
               Setup Instructions
@@ -685,7 +703,7 @@ export default function AgentHub() {
           <div>
             <h2 className="text-2xl font-bodoni text-luxury-black mb-6">What's in Progress</h2>
             
-            {loading ? (
+            {isLoading ? (
               <p className="text-warm-gray">Loading tasks...</p>
             ) : activeTasks.length === 0 ? (
               <div className="bg-white p-8 border border-warm-gray/20 text-center">

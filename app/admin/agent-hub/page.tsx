@@ -283,7 +283,7 @@ export default function AgentHub() {
         await logActivity(taskId, 'Sandra', `Requested changes: ${notes}`)
       }
 
-      const response = await fetch(`/api/admin/tasks/${taskId}`, {
+      const response = await fetch(`/api/admin/task?id=${taskId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

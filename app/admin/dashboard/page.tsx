@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   Sparkles
 } from 'lucide-react'
+import PreviewNotificationWidget from '@/components/dashboard/PreviewNotificationWidget'
 
 export default function AdminDashboard() {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null)
@@ -59,6 +60,9 @@ export default function AdminDashboard() {
           <h1 className="text-4xl font-bodoni text-luxury-black mb-2">Admin Dashboard</h1>
           <p className="text-warm-gray">Okay, let's see how things are going today.</p>
         </div>
+
+        {/* Preview Notification Widget */}
+        <PreviewNotificationWidget />
 
         {/* Visual Inspiration Widget - Updated heading */}
         <div className="mb-12">

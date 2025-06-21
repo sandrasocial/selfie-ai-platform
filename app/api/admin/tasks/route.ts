@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/utils/supabase/route-handler';
 
+const logEnvVars = () => {
+  console.log('--- Vercel Environment Debug ---');
+  console.log('NEXT_PUBLIC_SUPABASE_URL exists:', !!process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log('SUPABASE_SERVICE_ROLE_KEY exists:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.log('SUPABASE_SERVICE_ROLE_KEY length:', process.env.SUPABASE_SERVICE_ROLE_KEY.length);
+  }
+  console.log('--- End Debug ---');
+};
+
 export async function GET(req: Request) {
+  logEnvVars();
   try {
     const supabase = createRouteHandlerClient();
     const url = new URL(req.url);
@@ -37,6 +48,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  logEnvVars();
   try {
     const supabase = createRouteHandlerClient();
     const taskData = await req.json();
@@ -72,6 +84,7 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  logEnvVars();
   try {
     const supabase = createRouteHandlerClient();
     const { id, ...updates } = await req.json();
@@ -105,6 +118,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  logEnvVars();
   try {
     const supabase = createRouteHandlerClient();
     const url = new URL(req.url);

@@ -1,43 +1,25 @@
-import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
-
 export async function GET() {
-  try {
-    // Test basic connection
-    const { data: tasks, error: tasksError } = await supabase
-      .from('admin_tasks')
-      .select('count')
-      .limit(1)
-
-    const { data: logs, error: logsError } = await supabase
-      .from('agent_activity_log')
-      .select('count')
-      .limit(1)
-
-    return NextResponse.json({
-      success: true,
-      tables: {
-        admin_tasks: {
-          exists: !tasksError,
-          error: tasksError?.message
-        },
-        agent_activity_log: {
-          exists: !logsError,
-          error: logsError?.message
-        }
-      },
-      supabase_url: process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Set' : 'Missing',
-      supabase_key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Set' : 'Missing'
-    })
-  } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    })
+  const supabaseUrlExists = !!process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKeyExists = !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseServiceKeyExists = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  let serviceKeyLength = 0;
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    serviceKeyLength = process.env.SUPABASE_SERVICE_ROLE_KEY.length;
   }
+
+  const allKeysPresent = supabaseUrlExists && supabaseAnonKeyExists && supabaseServiceKeyExists;
+
+  return NextResponse.json({
+    message: "Environment variable check for production debugging.",
+    allKeysPresent,
+    details: {
+      NEXT_PUBLIC_SUPABASE_URL: supabaseUrlExists ? "FOUND" : "MISSING",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKeyExists ? "FOUND" : "MISSING",
+      SUPABASE_SERVICE_ROLE_KEY: supabaseServiceKeyExists ? "FOUND" : "MISSING",
+      SUPABASE_SERVICE_ROLE_KEY_length: serviceKeyLength
+    }
+  });
 } 

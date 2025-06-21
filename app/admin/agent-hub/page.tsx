@@ -78,6 +78,7 @@ export default function AgentHub() {
   const [changeRequestMessage, setChangeRequestMessage] = useState('')
   const [showChangeRequestModal, setShowChangeRequestModal] = useState<string | null>(null)
   const [databaseError, setDatabaseError] = useState<string | null>(null)
+  const [isProcessingManual, setIsProcessingManual] = useState(false)
 
   useEffect(() => {
     const checkDatabase = async () => {
@@ -357,6 +358,21 @@ export default function AgentHub() {
   const getAgentName = (agentId: string) => {
     const agent = agents.find(a => a.id === agentId)
     return agent ? agent.name : 'Unknown Agent'
+  }
+
+  const handleManualProcessing = async () => {
+    setIsProcessingManual(true);
+    try {
+      const response = await fetch('/api/agents/listen');
+      const data = await response.json();
+      alert(data.message || 'Processing complete.');
+      fetchTasks(); // Refresh tasks list
+    } catch (error) {
+      console.error('Manual processing failed:', error);
+      alert('Failed to start manual processing.');
+    } finally {
+      setIsProcessingManual(false);
+    }
   }
 
   if (isLoading) {
@@ -901,6 +917,28 @@ export default function AgentHub() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-4xl font-bold font-bodoni text-luxury-black">Agent Hub</h1>
+        <button
+          onClick={handleManualProcessing}
+          disabled={isProcessingManual}
+          className="bg-luxury-black text-soft-white px-4 py-2 flex items-center gap-2 hover:bg-opacity-80 disabled:bg-opacity-50"
+        >
+          {isProcessingManual ? (
+            <><Zap className="w-4 h-4 animate-spin" /> Processing...</>
+          ) : (
+            <><Zap className="w-4 h-4" /> Process Pending Tasks</>
+          )}
+        </button>
+      </div>
+
+      {databaseError && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 relative mb-6" role="alert">
+          <strong className="font-bold">Error:</strong>
+          <span className="block sm:inline">{databaseError}</span>
         </div>
       )}
     </div>

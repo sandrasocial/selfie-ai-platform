@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import AdminNavigation from '@/components/admin/AdminNavigation'
+import AgentAutoRunner from '@/components/admin/AgentAutoRunner'
 
 export default function AdminLayout({
   children,
@@ -34,14 +35,12 @@ export default function AdminLayout({
   }, [])
 
   return (
-    <div className="min-h-screen bg-soft-white">
+    <div className="flex min-h-screen bg-soft-white text-luxury-black">
       <AdminNavigation />
-      <main 
-        className="min-h-screen transition-all duration-300 ease-in-out"
-        style={{ marginLeft: sidebarWidth }}
-      >
+      <main className="flex-1">
         {children}
       </main>
+      <AgentAutoRunner />
     </div>
   )
 } 

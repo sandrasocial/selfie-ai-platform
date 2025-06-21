@@ -16,12 +16,6 @@ import {
   Zap
 } from 'lucide-react'
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
-
 type Task = {
   id: string
   created_at: string
@@ -54,6 +48,18 @@ export default function AgentHub() {
     file_path: ''
   })
 
+  // Initialize Supabase client inside component
+  const getSupabaseClient = () => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Supabase environment variables are not configured')
+    }
+    
+    return createClient(supabaseUrl, supabaseKey)
+  }
+
   // Fetch tasks on component mount
   useEffect(() => {
     fetchTasks()
@@ -61,6 +67,7 @@ export default function AgentHub() {
 
   const fetchTasks = async () => {
     try {
+      const supabase = getSupabaseClient()
       const { data, error } = await supabase
         .from('admin_tasks')
         .select('*')
@@ -79,6 +86,7 @@ export default function AgentHub() {
     e.preventDefault()
     
     try {
+      const supabase = getSupabaseClient()
       const { data, error } = await supabase
         .from('admin_tasks')
         .insert([
@@ -109,6 +117,7 @@ export default function AgentHub() {
 
   const updateTaskStatus = async (taskId: string, status: 'active' | 'completed') => {
     try {
+      const supabase = getSupabaseClient()
       const updateData: any = { status }
       if (status === 'completed') {
         updateData.completed_at = new Date().toISOString()

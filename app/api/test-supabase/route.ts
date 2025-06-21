@@ -1,25 +1,37 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@/utils/supabase/route-handler';
 
 export async function GET() {
-  const supabaseUrlExists = !!process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKeyExists = !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const supabaseServiceKeyExists = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
-  
-  let serviceKeyLength = 0;
-  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    serviceKeyLength = process.env.SUPABASE_SERVICE_ROLE_KEY.length;
+  const supabase = createRouteHandlerClient();
+  try {
+    // Test basic connection
+    const { error: tasksError } = await supabase
+      .from('admin_tasks')
+      .select('id')
+      .limit(1);
+
+    const { error: logsError } = await supabase
+      .from('agent_activity_log')
+      .select('id')
+      .limit(1);
+
+    return NextResponse.json({
+      success: true,
+      tables: {
+        admin_tasks: {
+          exists: !tasksError,
+          error: tasksError?.message || null
+        },
+        agent_activity_log: {
+          exists: !logsError,
+          error: logsError?.message || null
+        }
+      }
+    });
+  } catch (error) {
+    return NextResponse.json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown server error',
+    }, { status: 500 });
   }
-
-  const allKeysPresent = supabaseUrlExists && supabaseAnonKeyExists && supabaseServiceKeyExists;
-
-  return NextResponse.json({
-    message: "Environment variable check for production debugging.",
-    allKeysPresent,
-    details: {
-      NEXT_PUBLIC_SUPABASE_URL: supabaseUrlExists ? "FOUND" : "MISSING",
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKeyExists ? "FOUND" : "MISSING",
-      SUPABASE_SERVICE_ROLE_KEY: supabaseServiceKeyExists ? "FOUND" : "MISSING",
-      SUPABASE_SERVICE_ROLE_KEY_length: serviceKeyLength
-    }
-  });
 } 

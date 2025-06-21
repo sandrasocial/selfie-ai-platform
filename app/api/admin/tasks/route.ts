@@ -36,13 +36,17 @@ export async function GET(req: Request) {
       .order('created_at', { ascending: false });
     
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      console.error('Supabase query error in GET /api/admin/tasks:', JSON.stringify(error, null, 2));
+      return NextResponse.json({ error: 'Supabase query failed.', details: error.message }, { status: 500 });
     }
     
     return NextResponse.json(tasks || []);
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Fatal error in GET /api/admin/tasks:', JSON.stringify(error, null, 2));
     return NextResponse.json({ 
-      error: 'Failed to fetch tasks' 
+      error: 'A server error occurred.',
+      details: error.message,
+      stack: error.stack
     }, { status: 500 });
   }
 }

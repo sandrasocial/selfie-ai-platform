@@ -26,6 +26,15 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY! // Use Service Role Key for admin operations
 )
 
+// Add detailed logging for the Anthropic API Key
+if (!process.env.ANTHROPIC_API_KEY) {
+  console.error('CRITICAL: ANTHROPIC_API_KEY is not set in environment variables.');
+  throw new Error('ANTHROPIC_API_KEY is not set in environment variables');
+} else {
+  console.log('ANTHROPIC_API_KEY is loaded.');
+  console.log('Anthropic Key (first 10):', process.env.ANTHROPIC_API_KEY.substring(0, 10) + '...');
+}
+
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!
 })

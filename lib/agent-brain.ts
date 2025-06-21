@@ -39,6 +39,13 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!
 })
 
+if (!process.env.GITHUB_TOKEN) {
+  console.error('CRITICAL: GITHUB_TOKEN is not set in environment variables.');
+  throw new Error('GITHUB_TOKEN is not set in environment variables');
+} else {
+  console.log('GITHUB_TOKEN is loaded.');
+}
+
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN!
 })

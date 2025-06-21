@@ -47,6 +47,64 @@ export interface SupabaseConfig {
   filters?: Record<string, any>
 }
 
+// Module configuration types
+export interface WebhookModuleConfig {
+  type: 'webhook'
+  name: string
+}
+
+export interface EmailModuleConfig {
+  type: 'email'
+  subject: string
+  delay?: number
+}
+
+export interface DelayModuleConfig {
+  type: 'delay'
+  amount: number
+  unit: 'seconds' | 'minutes' | 'hours' | 'days'
+}
+
+export interface SupabaseModuleConfig {
+  type: 'supabase'
+  action: 'insert' | 'update' | 'select'
+  table: string
+}
+
+export interface SlackModuleConfig {
+  type: 'slack'
+  channel: string
+  message: string
+}
+
+export type ModuleConfig = 
+  | WebhookModuleConfig 
+  | EmailModuleConfig 
+  | DelayModuleConfig 
+  | SupabaseModuleConfig 
+  | SlackModuleConfig
+
+// Type guards
+function isWebhookModule(config: ModuleConfig): config is WebhookModuleConfig {
+  return config.type === 'webhook'
+}
+
+function isEmailModule(config: ModuleConfig): config is EmailModuleConfig {
+  return config.type === 'email'
+}
+
+function isDelayModule(config: ModuleConfig): config is DelayModuleConfig {
+  return config.type === 'delay'
+}
+
+function isSupabaseModule(config: ModuleConfig): config is SupabaseModuleConfig {
+  return config.type === 'supabase'
+}
+
+function isSlackModule(config: ModuleConfig): config is SlackModuleConfig {
+  return config.type === 'slack'
+}
+
 // Configuration
 const MAKE_API_BASE = 'https://eu2.make.com/api/v2'
 const ORGANIZATION_ID = '4272101'
@@ -369,33 +427,33 @@ export const scenarioTemplates = {
     name: 'Free Guide Email Sequence',
     description: 'Automated email sequence for free guide downloads',
     modules: [
-      { type: 'webhook', name: 'New Lead Trigger' },
-      { type: 'email', subject: 'Your Free Selfie Guide is Here!', delay: 0 },
-      { type: 'delay', amount: 2, unit: 'days' as const },
-      { type: 'email', subject: 'Quick tip from your guide', delay: 0 },
-      { type: 'delay', amount: 3, unit: 'days' as const },
-      { type: 'email', subject: 'Ready for the next level?', delay: 0 }
-    ]
+      { type: 'webhook' as const, name: 'New Lead Trigger' },
+      { type: 'email' as const, subject: 'Your Free Selfie Guide is Here!', delay: 0 },
+      { type: 'delay' as const, amount: 2, unit: 'days' as const },
+      { type: 'email' as const, subject: 'Quick tip from your guide', delay: 0 },
+      { type: 'delay' as const, amount: 3, unit: 'days' as const },
+      { type: 'email' as const, subject: 'Ready for the next level?', delay: 0 }
+    ] as ModuleConfig[]
   },
   'new-purchase': {
     name: 'New Purchase Automation',
     description: 'Handle new purchases from Stripe',
     modules: [
-      { type: 'webhook', name: 'Stripe Purchase Webhook' },
-      { type: 'supabase', action: 'update' as const, table: 'users' },
-      { type: 'email', subject: 'Welcome to SELFIE AI™!' },
-      { type: 'slack', channel: '#purchases', message: 'New purchase: {{email}}' }
-    ]
+      { type: 'webhook' as const, name: 'Stripe Purchase Webhook' },
+      { type: 'supabase' as const, action: 'update' as const, table: 'users' },
+      { type: 'email' as const, subject: 'Welcome to SELFIE AI™!' },
+      { type: 'slack' as const, channel: '#purchases', message: 'New purchase: {{email}}' }
+    ] as ModuleConfig[]
   },
   'vip-application': {
     name: 'VIP Application Handler',
     description: 'Process VIP applications',
     modules: [
-      { type: 'webhook', name: 'VIP Application' },
-      { type: 'email', subject: 'VIP Application Received' },
-      { type: 'slack', channel: '#vip', message: 'New VIP applicant: {{name}}' },
-      { type: 'supabase', action: 'insert' as const, table: 'vip_applications' }
-    ]
+      { type: 'webhook' as const, name: 'VIP Application' },
+      { type: 'email' as const, subject: 'VIP Application Received' },
+      { type: 'slack' as const, channel: '#vip', message: 'New VIP applicant: {{name}}' },
+      { type: 'supabase' as const, action: 'insert' as const, table: 'vip_applications' }
+    ] as ModuleConfig[]
   }
 }
 
@@ -435,44 +493,64 @@ export async function createAutomationFromTemplate(
 
       switch (moduleConfig.type) {
         case 'webhook':
-          module = await addWebhookModule(scenario.id, moduleConfig.name)
+          if (isWebhookModule(moduleConfig)) {
+            module = await addWebhookModule(scenario.id, moduleConfig.name)
+          } else {
+            throw new MakeAPIError('Invalid webhook module configuration')
+          }
           break
           
         case 'email':
-          module = await addEmailModule(scenario.id, {
-            to: '{{email}}', // Using variable from webhook
-            subject: moduleConfig.subject!,
-            html: generateEmailTemplate(moduleConfig.subject!),
-            from: 'Sandra <sandra@selfie-ai.com>'
-          })
+          if (isEmailModule(moduleConfig)) {
+            module = await addEmailModule(scenario.id, {
+              to: '{{email}}', // Using variable from webhook
+              subject: moduleConfig.subject,
+              html: generateEmailTemplate(moduleConfig.subject),
+              from: 'Sandra <sandra@selfie-ai.com>'
+            })
+          } else {
+            throw new MakeAPIError('Invalid email module configuration')
+          }
           break
           
         case 'delay':
-          module = await addDelayModule(scenario.id, {
-            amount: moduleConfig.amount!,
-            unit: moduleConfig.unit!
-          })
+          if (isDelayModule(moduleConfig)) {
+            module = await addDelayModule(scenario.id, {
+              amount: moduleConfig.amount,
+              unit: moduleConfig.unit
+            })
+          } else {
+            throw new MakeAPIError('Invalid delay module configuration')
+          }
           break
           
         case 'supabase':
-          module = await addSupabaseModule(
-            scenario.id,
-            moduleConfig.action!,
-            moduleConfig.table!,
-            moduleConfig.action === 'update' ? { subscription_status: 'active' } : {}
-          )
+          if (isSupabaseModule(moduleConfig)) {
+            module = await addSupabaseModule(
+              scenario.id,
+              moduleConfig.action,
+              moduleConfig.table,
+              moduleConfig.action === 'update' ? { subscription_status: 'active' } : {}
+            )
+          } else {
+            throw new MakeAPIError('Invalid supabase module configuration')
+          }
           break
           
         case 'slack':
-          module = await addSlackModule(
-            scenario.id,
-            moduleConfig.channel!,
-            moduleConfig.message!
-          )
+          if (isSlackModule(moduleConfig)) {
+            module = await addSlackModule(
+              scenario.id,
+              moduleConfig.channel,
+              moduleConfig.message
+            )
+          } else {
+            throw new MakeAPIError('Invalid slack module configuration')
+          }
           break
           
         default:
-          throw new MakeAPIError(`Unknown module type: ${moduleConfig.type}`)
+          throw new MakeAPIError(`Unknown module type: ${(moduleConfig as any).type}`)
       }
 
       modules.push(module)

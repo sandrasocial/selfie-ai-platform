@@ -21,7 +21,9 @@ import {
   ThumbsDown,
   Users,
   ChevronRight,
-  User
+  User,
+  Database,
+  Settings
 } from 'lucide-react'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 
@@ -82,27 +84,30 @@ export default function AgentHub() {
   const [expandedTask, setExpandedTask] = useState<string | null>(null)
   const [changeRequestMessage, setChangeRequestMessage] = useState('')
   const [showChangeRequestModal, setShowChangeRequestModal] = useState<string | null>(null)
+  const [databaseError, setDatabaseError] = useState<string | null>(null)
 
   // Fetch tasks and activity logs on component mount
   useEffect(() => {
     fetchTasks()
     fetchActivityLogs()
     
-    // Set up real-time subscription
-    const subscription = supabase
-      .channel('tasks_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_tasks' }, () => {
-        fetchTasks()
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_activity_log' }, () => {
-        fetchActivityLogs()
-      })
-      .subscribe()
+    // Set up real-time subscription only if tables exist
+    if (!databaseError) {
+      const subscription = supabase
+        .channel('tasks_changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_tasks' }, () => {
+          fetchTasks()
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_activity_log' }, () => {
+          fetchActivityLogs()
+        })
+        .subscribe()
 
-    return () => {
-      subscription.unsubscribe()
+      return () => {
+        subscription.unsubscribe()
+      }
     }
-  }, [])
+  }, [databaseError])
 
   const fetchTasks = async () => {
     try {
@@ -111,10 +116,20 @@ export default function AgentHub() {
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('does not exist')) {
+          setDatabaseError('Database tables not found. Please set up the admin tables first.')
+        } else {
+          throw error
+        }
+        return
+      }
+      
+      setDatabaseError(null)
       setTasks(data || [])
     } catch (error) {
       console.error('Error fetching tasks:', error)
+      setDatabaseError('Failed to connect to database')
     } finally {
       setLoading(false)
     }
@@ -128,7 +143,15 @@ export default function AgentHub() {
         .order('created_at', { ascending: false })
         .limit(50)
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('does not exist')) {
+          // This is expected if tables don't exist
+          return
+        } else {
+          throw error
+        }
+      }
+      
       setActivityLogs(data || [])
     } catch (error) {
       console.error('Error fetching activity logs:', error)
@@ -149,6 +172,11 @@ export default function AgentHub() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (databaseError) {
+      alert('Please set up the database tables first')
+      return
+    }
     
     try {
       const taskData = {
@@ -189,6 +217,11 @@ export default function AgentHub() {
   }
 
   const updateTaskStatus = async (taskId: string, status: Task['status'], notes?: string) => {
+    if (databaseError) {
+      alert('Please set up the database tables first')
+      return
+    }
+    
     try {
       const task = tasks.find(t => t.id === taskId)
       if (!task) return
@@ -297,6 +330,66 @@ export default function AgentHub() {
   const getAgentName = (agentId: string) => {
     const agent = agents.find(a => a.id === agentId)
     return agent ? agent.name : agentId
+  }
+
+  // Show database setup message if tables don't exist
+  if (databaseError) {
+    return (
+      <div className="min-h-screen bg-soft-white p-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bodoni text-luxury-black mb-2">Agent Central Hub</h1>
+          <p className="text-warm-gray">Let's get your AI squad working on what matters.</p>
+        </div>
+
+        <div className="bg-white p-8 border border-warm-gray/20 text-center">
+          <Database className="w-16 h-16 text-luxury-black mx-auto mb-4" />
+          <h2 className="text-2xl font-bodoni text-luxury-black mb-4">Database Setup Required</h2>
+          <p className="text-warm-gray mb-6 max-w-2xl mx-auto">
+            The Agent Hub requires database tables to be set up before it can function. 
+            Please follow these steps to create the necessary tables.
+          </p>
+          
+          <div className="bg-soft-white p-6 border border-warm-gray/20 text-left max-w-2xl mx-auto">
+            <h3 className="font-semibold text-luxury-black mb-4 flex items-center gap-2">
+              <Settings className="w-5 h-5" />
+              Setup Instructions
+            </h3>
+            <ol className="space-y-2 text-sm text-warm-gray">
+              <li className="flex items-start gap-2">
+                <span className="bg-luxury-black text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mt-0.5">1</span>
+                <span>Go to your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-luxury-black hover:underline">Supabase dashboard</a></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="bg-luxury-black text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mt-0.5">2</span>
+                <span>Navigate to the <strong>SQL Editor</strong> section</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="bg-luxury-black text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mt-0.5">3</span>
+                <span>Run the migration files from <code className="bg-warm-gray/20 px-1 rounded">supabase/migrations/</code></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="bg-luxury-black text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mt-0.5">4</span>
+                <span>Start with <code className="bg-warm-gray/20 px-1 rounded">admin_tasks.sql</code></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="bg-luxury-black text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mt-0.5">5</span>
+                <span>Then run <code className="bg-warm-gray/20 px-1 rounded">20250621_agent_collaboration.sql</code></span>
+              </li>
+            </ol>
+          </div>
+
+          <button
+            onClick={() => {
+              setDatabaseError(null)
+              fetchTasks()
+            }}
+            className="mt-6 bg-luxury-black text-white px-6 py-3 hover:bg-warm-gray transition-colors"
+          >
+            Refresh After Setup
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (

@@ -148,35 +148,7 @@ input, textarea, select {
 }
 @font-face {
   font-family: 'Lingerie';
-  src: url('/fonts/lingerie/lingerie-full-bold-plain.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lingerie';
-  src: url('/fonts/lingerie/lingerie-full-regular-diamond-3.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lingerie';
-  src: url('/fonts/lingerie/lingerie-full-regular-exit-1.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lingerie';
-  src: url('/fonts/lingerie/lingerie-full-regular-plain-1.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lingerie';
-  src: url('/fonts/lingerie/lingerie-full-regular-white-1.ttf') format('truetype');
+  src: url('/fonts/lingerie/Lingerie-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -185,64 +157,8 @@ input, textarea, select {
 /* Neue Einstellung */
 @font-face {
   font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-ExtraLight.ttf') format('truetype');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Regular.ttf') format('truetype');
+  src: url('/fonts/neue-einstellung/NeueEinstellung-Regular.woff2') format('woff2');
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Einstellung';
-  src: url('/fonts/neue-einstellung/NeueEinstellung-Thin.ttf') format('truetype');
-  font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
@@ -250,30 +166,16 @@ input, textarea, select {
 /* BodoniFLF */
 @font-face {
   font-family: 'BodoniFLF';
-  src: url('/fonts/bodoni/BodoniFLF-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'BodoniFLF';
-  src: url('/fonts/bodoni/BodoniFLF-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'BodoniFLF';
-  src: url('/fonts/bodoni/BodoniFLF-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'BodoniFLF';
-  src: url('/fonts/bodoni/BodoniFLF-Roman.ttf') format('truetype');
+  src: url('/fonts/bodoni/BodoniFlf-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BodoniFLF';
+  src: url('/fonts/bodoni/BodoniFlf-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 

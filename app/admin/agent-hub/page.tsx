@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { 
   Bot, 
   CheckCircle, 
@@ -48,17 +48,8 @@ export default function AgentHub() {
     file_path: ''
   })
 
-  // Initialize Supabase client inside component
-  const getSupabaseClient = () => {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Supabase environment variables are not configured')
-    }
-    
-    return createClient(supabaseUrl, supabaseKey)
-  }
+  // Use the proper Supabase client for client components
+  const supabase = createClientComponentClient()
 
   // Fetch tasks on component mount
   useEffect(() => {
@@ -67,7 +58,6 @@ export default function AgentHub() {
 
   const fetchTasks = async () => {
     try {
-      const supabase = getSupabaseClient()
       const { data, error } = await supabase
         .from('admin_tasks')
         .select('*')
@@ -86,7 +76,6 @@ export default function AgentHub() {
     e.preventDefault()
     
     try {
-      const supabase = getSupabaseClient()
       const { data, error } = await supabase
         .from('admin_tasks')
         .insert([
@@ -117,7 +106,6 @@ export default function AgentHub() {
 
   const updateTaskStatus = async (taskId: string, status: 'active' | 'completed') => {
     try {
-      const supabase = getSupabaseClient()
       const updateData: any = { status }
       if (status === 'completed') {
         updateData.completed_at = new Date().toISOString()

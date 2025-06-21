@@ -13,6 +13,7 @@ export async function commitFile(
   agent: string
 ) {
   const octokit = getOctokit();
+  
   try {
     // Get current file (if exists) to get SHA
     let sha: string | undefined;
@@ -33,7 +34,7 @@ export async function commitFile(
       console.log(`Creating new file: ${path}`);
     }
     
-    await octokit.repos.createOrUpdateFileContents({
+    const result = await octokit.repos.createOrUpdateFileContents({
       owner: 'sandrasocial',
       repo: 'selfie-ai-platform',
       path,
@@ -43,10 +44,10 @@ export async function commitFile(
       branch: 'v4-rebuild'
     });
     
-    return { success: true, message: 'File committed successfully' };
+    return { success: true, message: 'File committed successfully', data: result.data };
   } catch (error) {
     console.error('GitHub commit error:', error);
-    return { success: false, error: error.message };
+    throw error; // Re-throw to let the API route handle it
   }
 }
 

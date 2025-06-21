@@ -1,9 +1,9 @@
-import { createClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
+import { createRouteHandlerClient } from '@/utils/supabase/route-handler'
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const supabase = createClient()
+    const supabase = createRouteHandlerClient()
     
     const { data: logs, error } = await supabase
       .from('agent_activity_log')
@@ -23,7 +23,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const supabase = createClient()
+    const supabase = createRouteHandlerClient()
     const logData = await req.json()
     
     // Ensure required fields

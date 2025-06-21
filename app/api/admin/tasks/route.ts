@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { createRouteHandlerClient } from '@/utils/supabase/route-handler';
 
 export async function GET(req: Request) {
   try {
-    const supabase = createClient();
+    const supabase = createRouteHandlerClient();
     const url = new URL(req.url);
     const agent = url.searchParams.get('agent');
     const status = url.searchParams.get('status');
@@ -38,7 +38,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const supabase = createClient();
+    const supabase = createRouteHandlerClient();
     const taskData = await req.json();
     
     // Ensure required fields
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    const supabase = createClient();
+    const supabase = createRouteHandlerClient();
     const { id, ...updates } = await req.json();
     
     if (!id) {
@@ -106,7 +106,7 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const supabase = createClient();
+    const supabase = createRouteHandlerClient();
     const url = new URL(req.url);
     const id = url.searchParams.get('id');
     

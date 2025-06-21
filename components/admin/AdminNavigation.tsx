@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
 import {
   LayoutDashboard,
   Target,
@@ -26,11 +25,6 @@ import {
   Settings,
   LogOut
 } from 'lucide-react'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 interface NavSection {
   title: string
@@ -109,31 +103,20 @@ export default function AdminNavigation({ className = '' }: AdminNavigationProps
   useEffect(() => {
     fetchReadyTaskCount()
     
-    // Set up real-time subscription
-    const subscription = supabase
-      .channel('ready_tasks_nav')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'admin_tasks', filter: 'ready_for_review=eq.true' }, 
-        () => {
-          fetchReadyTaskCount()
-        }
-      )
-      .subscribe()
+    // Set up polling instead of real-time subscription
+    const interval = setInterval(fetchReadyTaskCount, 30000) // Poll every 30 seconds
 
     return () => {
-      subscription.unsubscribe()
+      clearInterval(interval)
     }
   }, [])
 
   const fetchReadyTaskCount = async () => {
     try {
-      const { count, error } = await supabase
-        .from('admin_tasks')
-        .select('*', { count: 'exact', head: true })
-        .eq('ready_for_review', true)
-
-      if (!error && count !== null) {
-        setReadyTaskCount(count)
+      const response = await fetch('/api/admin/tasks?status=ready_for_preview')
+      if (response.ok) {
+        const tasks = await response.json()
+        setReadyTaskCount(tasks.length)
       }
     } catch (error) {
       console.error('Error fetching ready task count:', error)

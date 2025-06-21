@@ -1,14 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import { Eye, ThumbsUp, ThumbsDown, Users, Clock } from 'lucide-react'
 import Link from 'next/link'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 type ReadyTask = {
   id: string
@@ -25,32 +19,21 @@ export default function PreviewNotificationWidget() {
   useEffect(() => {
     fetchReadyTasks()
     
-    // Set up real-time subscription
-    const subscription = supabase
-      .channel('ready_tasks')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'admin_tasks', filter: 'ready_for_review=eq.true' }, 
-        () => {
-          fetchReadyTasks()
-        }
-      )
-      .subscribe()
+    // Set up polling instead of real-time subscription
+    const interval = setInterval(fetchReadyTasks, 30000) // Poll every 30 seconds
 
     return () => {
-      subscription.unsubscribe()
+      clearInterval(interval)
     }
   }, [])
 
   const fetchReadyTasks = async () => {
     try {
-      const { data, error } = await supabase
-        .from('admin_tasks')
-        .select('id, title, workflow, preview_url, created_at')
-        .eq('ready_for_review', true)
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setReadyTasks(data || [])
+      const response = await fetch('/api/admin/tasks?status=ready_for_preview')
+      if (response.ok) {
+        const data = await response.json()
+        setReadyTasks(data || [])
+      }
     } catch (error) {
       console.error('Error fetching ready tasks:', error)
     } finally {
@@ -72,33 +55,36 @@ export default function PreviewNotificationWidget() {
 
   const handleQuickApprove = async (taskId: string) => {
     try {
-      await supabase
-        .from('admin_tasks')
-        .update({ 
-          status: 'approved',
-          ready_for_review: false 
-        })
-        .eq('id', taskId)
-      
-      // Also mark as completed
-      await supabase
-        .from('admin_tasks')
-        .update({ 
+      // Update task status
+      const updateResponse = await fetch('/api/admin/tasks', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: taskId,
           status: 'completed',
+          ready_for_review: false,
           completed_at: new Date().toISOString()
         })
-        .eq('id', taskId)
-      
-      // Log activity
-      await supabase
-        .from('agent_activity_log')
-        .insert({
-          task_id: taskId,
-          agent_name: 'Sandra',
-          activity: 'Approved and deployed from dashboard'
+      })
+
+      if (updateResponse.ok) {
+        // Log activity
+        await fetch('/api/admin/activity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            task_id: taskId,
+            agent_name: 'Sandra',
+            activity: 'Approved and deployed from dashboard'
+          })
         })
-      
-      fetchReadyTasks()
+        
+        fetchReadyTasks()
+      }
     } catch (error) {
       console.error('Error approving task:', error)
     }

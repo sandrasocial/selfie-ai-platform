@@ -89,7 +89,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://i.postimg.cc" />
         <link rel="dns-prefetch" href="https://i.postimg.cc" />
-        <link rel="preload" href="/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body>
         {children}

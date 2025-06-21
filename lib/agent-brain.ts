@@ -237,6 +237,13 @@ async function handleMayaTask(task: Task, analysis: string) {
     const owner = process.env.GITHUB_OWNER!
     const repo = process.env.GITHUB_REPO!
     
+    // --- GITHUB DEBUG LOGGING ---
+    console.log(`[MAYA-DEBUG] Attempting to commit to:`);
+    console.log(`[MAYA-DEBUG] Owner: ${owner}`);
+    console.log(`[MAYA-DEBUG] Repo: ${repo}`);
+    console.log(`[MAYA-DEBUG] File Path: ${filePath}`);
+    // --- END DEBUG LOGGING ---
+    
     let currentFileSha: string | undefined;
     try {
       const { data: currentFile } = await octokit.repos.getContent({ owner, repo, path: filePath });

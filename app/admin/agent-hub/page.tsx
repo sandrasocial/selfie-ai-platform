@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import { 
   Bot, 
   CheckCircle, 
@@ -26,19 +25,6 @@ import {
   Settings
 } from 'lucide-react'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  {
-    realtime: {
-      params: {
-        eventsPerSecond: 10
-      }
-    }
-  }
-)
 
 type Task = {
   id: string
@@ -127,34 +113,13 @@ export default function AgentHub() {
     checkDatabase();
   }, []);
 
-  // Set up real-time subscriptions
-  useEffect(() => {
-    if (isLoading || databaseError) return;
-
-    const tasksSubscription = supabase
-      .channel('admin-tasks')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_tasks' }, fetchTasks)
-      .subscribe();
-      
-    const activitySubscription = supabase
-      .channel('agent-activity-log')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'agent_activity_log' }, fetchActivityLogs)
-      .subscribe();
-
-    return () => {
-      tasksSubscription.unsubscribe();
-      activitySubscription.unsubscribe();
-    }
-  }, [isLoading, databaseError]);
-
   const fetchTasks = async () => {
     try {
-      const { data, error } = await supabase
-        .from('admin_tasks')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) throw error;
+      const response = await fetch('/api/admin/tasks')
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
       setTasks(data || [])
     } catch (error) {
       console.error('Error fetching tasks:', error)
@@ -164,13 +129,11 @@ export default function AgentHub() {
 
   const fetchActivityLogs = async () => {
     try {
-      const { data, error } = await supabase
-        .from('agent_activity_log')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(50)
-
-      if (error) throw error;
+      const response = await fetch('/api/admin/activity')
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
       setActivityLogs(data || [])
     } catch (error) {
       console.error('Error fetching activity logs:', error)
@@ -179,11 +142,20 @@ export default function AgentHub() {
 
   const logActivity = async (taskId: string, agentName: string, activity: string) => {
     try {
-      await supabase.from('agent_activity_log').insert({
-        task_id: taskId,
-        agent_name: agentName,
-        activity
+      const response = await fetch('/api/admin/activity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          task_id: taskId,
+          agent_name: agentName,
+          activity
+        })
       })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
     } catch (error) {
       console.error('Error logging activity:', error)
     }
@@ -202,32 +174,41 @@ export default function AgentHub() {
       alert('Please set up the database tables first')
       return
     }
-    
+
+    if (!formData.title || !formData.description || selectedAgents.length === 0) {
+      alert('Please fill in all required fields and select at least one agent')
+      return
+    }
+
     try {
       const taskData = {
-        ...formData,
-        status: 'pending' as const,
+        title: formData.title,
+        description: formData.description,
+        agent: selectedAgents[0], // Use first selected agent as primary
+        priority: formData.priority,
+        file_path: formData.file_path,
         workflow: selectedAgents,
-        agent: selectedAgents.length > 0 ? selectedAgents[0] : formData.agent
+        status: 'pending'
       }
 
       console.log('Task data to insert:', taskData)
 
-      const { data, error } = await supabase
-        .from('admin_tasks')
-        .insert([taskData])
-        .select()
+      const response = await fetch('/api/admin/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskData)
+      })
 
-      if (error) {
-        console.error('Supabase insert error:', error)
-        throw error
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Supabase insert error:', errorData)
+        throw new Error(errorData.error || 'Failed to create task')
       }
 
-      console.log('Task created successfully:', data)
-
-      if (data && data[0]) {
-        await logActivity(data[0].id, 'System', `Task created with workflow: ${selectedAgents.join(' → ')}`)
-      }
+      const newTask = await response.json()
+      console.log('Task created successfully:', newTask)
 
       // Reset form
       setFormData({
@@ -239,16 +220,17 @@ export default function AgentHub() {
         workflow: []
       })
       setSelectedAgents([])
-      setShowWorkflowBuilder(false)
 
-      // Refresh tasks
+      // Refresh tasks list
       fetchTasks()
+
+      // Log activity
+      await logActivity(newTask.id, 'Director AI', 'Task created')
+
     } catch (error) {
       console.error('Error creating task:', error)
-      console.error('Error details:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined
-      })
+      console.error('Error details:', error)
+      alert('Failed to create task. Please try again.')
     }
   }
 
@@ -301,15 +283,24 @@ export default function AgentHub() {
         await logActivity(taskId, 'Sandra', `Requested changes: ${notes}`)
       }
 
-      const { error } = await supabase
-        .from('admin_tasks')
-        .update(updateData)
-        .eq('id', taskId)
+      const response = await fetch(`/api/admin/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData)
+      })
 
-      if (error) throw error
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      // Refresh tasks list
       fetchTasks()
+
     } catch (error) {
-      console.error('Error updating task:', error)
+      console.error('Error updating task status:', error)
+      alert('Failed to update task status. Please try again.')
     }
   }
 

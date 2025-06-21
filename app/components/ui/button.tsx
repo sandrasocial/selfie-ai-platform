@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonProps {
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  children: JSX.Element | string;
+  children: React.ReactNode;
   className?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';

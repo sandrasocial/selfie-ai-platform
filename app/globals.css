@@ -443,3 +443,21 @@ input, textarea, select {
   .story-highlight { font-size: 16px; padding-left: 16px; margin: 24px 0; }
   .image-section { order: -1; margin-bottom: 32px; }
 }
+
+/* Admin Dashboard Gallery Scroll Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}

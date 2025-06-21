@@ -5,6 +5,16 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'bg-soft-white',
+    'text-luxury-black',
+    'text-warm-gray',
+    'font-bodoni',
+    'border-warm-gray',
+    'bg-luxury-black',
+    'text-soft-white',
+    'animate-scroll'
+  ],
   theme: {
     extend: {
       fontFamily: {

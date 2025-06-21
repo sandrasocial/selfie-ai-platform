@@ -60,6 +60,12 @@ export function middleware(request: NextRequest) {
     }
   }
   
+  // Admin routes protection (we'll add auth later)
+  if (pathname.startsWith('/admin')) {
+    // For now, just pass through
+    return NextResponse.next();
+  }
+  
   return NextResponse.next();
 }
 

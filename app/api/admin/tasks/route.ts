@@ -13,7 +13,7 @@ export async function GET(req: Request) {
       .select('*');
     
     if (agent) {
-      query = query.eq('assigned_to', agent);
+      query = query.eq('agent', agent);
     }
     
     if (status) {
@@ -45,10 +45,10 @@ export async function POST(req: Request) {
     const task = {
       title: taskData.title,
       description: taskData.description,
-      assigned_to: taskData.assigned_to,
+      agent: taskData.agent,
       priority: taskData.priority || 'medium',
       status: 'pending',
-      created_by: 'director',
+      created_by: null,
       created_at: new Date().toISOString(),
       ...taskData
     };

@@ -30,7 +30,14 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 // Initialize Supabase client
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    realtime: {
+      params: {
+        eventsPerSecond: 10
+      }
+    }
+  }
 )
 
 type Task = {
@@ -185,6 +192,12 @@ export default function AgentHub() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Add detailed logging as requested
+    console.log('Attempting to create task:', formData)
+    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+    console.log('Selected agents:', selectedAgents)
+    console.log('Database error state:', databaseError)
+    
     if (databaseError) {
       alert('Please set up the database tables first')
       return
@@ -198,12 +211,19 @@ export default function AgentHub() {
         agent: selectedAgents.length > 0 ? selectedAgents[0] : formData.agent
       }
 
+      console.log('Task data to insert:', taskData)
+
       const { data, error } = await supabase
         .from('admin_tasks')
         .insert([taskData])
         .select()
 
-      if (error) throw error
+      if (error) {
+        console.error('Supabase insert error:', error)
+        throw error
+      }
+
+      console.log('Task created successfully:', data)
 
       if (data && data[0]) {
         await logActivity(data[0].id, 'System', `Task created with workflow: ${selectedAgents.join(' → ')}`)
@@ -225,6 +245,10 @@ export default function AgentHub() {
       fetchTasks()
     } catch (error) {
       console.error('Error creating task:', error)
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      })
     }
   }
 

@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server'
+import { createRouteHandlerClient } from '@/utils/supabase/route-handler'
 import { NextResponse } from 'next/server'
 
 export async function PATCH(
@@ -6,7 +6,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = createRouteHandlerClient()
     const updateData = await req.json()
     
     const { data, error } = await supabase

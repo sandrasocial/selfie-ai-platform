@@ -1,6 +1,7 @@
 import { createRouteHandlerClient } from '@/utils/supabase/route-handler'
 import { NextResponse } from 'next/server'
 
+// Force rebuild
 export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }

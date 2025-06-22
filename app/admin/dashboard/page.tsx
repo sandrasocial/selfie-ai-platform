@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   Sparkles
 } from 'lucide-react'
+import AdminLayout from '@/app/components/admin/AdminLayout'
 import PreviewNotificationWidget from '@/components/dashboard/PreviewNotificationWidget'
 
 export default function AdminDashboard() {
@@ -53,12 +54,12 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      <div className="p-8">
+    <AdminLayout>
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bodoni text-luxury-black mb-2">Admin Dashboard</h1>
-          <p className="text-warm-gray">Okay, let's see how things are going today.</p>
+          <h1 className="text-4xl font-bodoni text-[#171719] mb-2">Admin Dashboard</h1>
+          <p className="text-[#B5B5B3]">Okay, let's see how things are going today.</p>
         </div>
 
         {/* Preview Notification Widget */}
@@ -66,7 +67,7 @@ export default function AdminDashboard() {
 
         {/* Visual Inspiration Widget - Updated heading */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bodoni text-luxury-black mb-4">Today's Vibe</h2>
+          <h2 className="text-2xl font-bodoni text-[#171719] mb-4">Today's Vibe</h2>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-0.5">
             {coastalImages.map((image) => (
               <div
@@ -260,6 +261,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   )
 } 

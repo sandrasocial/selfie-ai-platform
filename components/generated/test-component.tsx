@@ -4,16 +4,32 @@ tsx
 import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, className = '', children }) => {
+const Button = ({ onClick, children, variant = 'primary', size = 'md', disabled = false }: ButtonProps) => {
+  const variantClasses = {
+    primary: 'bg-blue-500 text-white hover:bg-blue-600',
+    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+  };
+
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg',
+  };
+
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${className}`}
+      className={`rounded font-semibold ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
+      disabled={disabled}
     >
       {children}
     </button>

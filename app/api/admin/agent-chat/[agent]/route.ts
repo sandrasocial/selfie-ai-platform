@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@/utils/supabase/route-handler';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 import { getAgentSystemPrompt } from '@/lib/agents/personalities';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -147,40 +148,65 @@ function detectHandoffSuggestion(content: string) {
   return null;
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { agent: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { agent: string } }) {
   try {
-    const { message, conversationId, handoffContext } = await request.json();
-    const agentName = params.agent;
-    const supabase = createRouteHandlerClient();
+    const { agent } = params;
+    const body = await request.json();
+    const { message, context } = body;
 
-    // Get or create conversation
-    let conversation = conversationId;
+    // Initialize Supabase client
+    const supabase = createRouteHandlerClient({ cookies });
+
+    // Get current user
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Validate agent parameter
+    const validAgents = ['diana', 'maya', 'victoria', 'rachel', 'quinn', 'ava'];
+    if (!validAgents.includes(agent)) {
+      return NextResponse.json({ error: 'Invalid agent' }, { status: 400 });
+    }
+
+    // Get or create conversation for this user and agent
+    let { data: conversation, error: convError } = await supabase
+      .from('agent_conversations')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('agent_name', agent)
+      .eq('status', 'active')
+      .single();
+
+    if (convError && convError.code !== 'PGRST116') {
+      console.error('Error fetching conversation:', convError);
+      return NextResponse.json({ error: 'Failed to get conversation' }, { status: 500 });
+    }
+
+    // Create new conversation if none exists
     if (!conversation) {
-      const { data, error } = await supabase
+      const { data: newConv, error: createError } = await supabase
         .from('agent_conversations')
         .insert({
-          agent_name: agentName,
-          user_id: 'admin', // Replace with actual user ID when auth is implemented
+          user_id: user.id,
+          agent_name: agent,
+          status: 'active'
         })
-        .select()
+        .select('id')
         .single();
-      
-      if (error) {
-        console.error('Error creating conversation:', error);
+
+      if (createError) {
+        console.error('Error creating conversation:', createError);
         return NextResponse.json({ error: 'Failed to create conversation' }, { status: 500 });
       }
-      
-      conversation = data?.id;
+      conversation = newConv;
     }
 
     // Get conversation history
     const { data: messages, error: historyError } = await supabase
       .from('agent_messages')
       .select('*')
-      .eq('conversation_id', conversation)
+      .eq('conversation_id', conversation.id)
       .order('created_at', { ascending: true });
 
     if (historyError) {
@@ -195,7 +221,7 @@ export async function POST(
     })) || [];
 
     // Get AI response
-    const aiResponse = await getAIResponse(agentName, message, messageHistory, handoffContext);
+    const aiResponse = await getAIResponse(agent, message, messageHistory, context);
 
     // Extract any code blocks or deliverables
     const deliverables = extractDeliverables(aiResponse);
@@ -203,16 +229,17 @@ export async function POST(
     // Save messages to database
     const { error: saveError } = await supabase.from('agent_messages').insert([
       {
-        conversation_id: conversation,
+        conversation_id: conversation.id,
         role: 'user',
         content: message,
-        agent_name: agentName,
+        agent_name: agent,
+        metadata: context || {}
       },
       {
-        conversation_id: conversation,
+        conversation_id: conversation.id,
         role: 'assistant',
         content: aiResponse,
-        agent_name: agentName,
+        agent_name: agent,
         deliverables: deliverables,
       }
     ]);
@@ -227,49 +254,80 @@ export async function POST(
 
     return NextResponse.json({
       response: aiResponse,
-      conversationId: conversation,
+      conversationId: conversation.id,
       deliverables: deliverables,
       handoffSuggestion: handoffSuggestion,
     });
 
   } catch (error) {
     console.error('Agent chat error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process message' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { agent: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { agent: string } }) {
   try {
+    const { agent } = params;
     const { searchParams } = new URL(request.url);
-    const conversationId = searchParams.get('conversationId');
-    const supabase = createRouteHandlerClient();
+    const limit = parseInt(searchParams.get('limit') || '50');
 
-    if (!conversationId) {
-      return NextResponse.json({ error: 'Conversation ID required' }, { status: 400 });
+    // Initialize Supabase client
+    const supabase = createRouteHandlerClient({ cookies });
+
+    // Get current user
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get conversation messages
+    // Validate agent parameter
+    const validAgents = ['diana', 'maya', 'victoria', 'rachel', 'quinn', 'ava'];
+    if (!validAgents.includes(agent)) {
+      return NextResponse.json({ error: 'Invalid agent' }, { status: 400 });
+    }
+
+    // Get conversation for this user and agent
+    const { data: conversation, error: convError } = await supabase
+      .from('agent_conversations')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('agent_name', agent)
+      .eq('status', 'active')
+      .single();
+
+    if (convError && convError.code !== 'PGRST116') {
+      console.error('Error fetching conversation:', convError);
+      return NextResponse.json({ error: 'Failed to get conversation' }, { status: 500 });
+    }
+
+    if (!conversation) {
+      return NextResponse.json({
+        success: true,
+        messages: []
+      });
+    }
+
+    // Get chat history for this conversation
     const { data: messages, error } = await supabase
       .from('agent_messages')
       .select('*')
-      .eq('conversation_id', conversationId)
-      .order('created_at', { ascending: true });
+      .eq('conversation_id', conversation.id)
+      .order('created_at', { ascending: true })
+      .limit(limit);
 
     if (error) {
-      console.error('Error fetching messages:', error);
-      return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
+      console.error('Error fetching chat history:', error);
+      return NextResponse.json({ error: 'Failed to fetch chat history' }, { status: 500 });
     }
 
-    return NextResponse.json({ messages });
+    return NextResponse.json({
+      success: true,
+      messages: messages,
+      conversationId: conversation.id
+    });
 
   } catch (error) {
-    console.error('Error fetching conversation:', error);
-    return NextResponse.json({ error: 'Failed to fetch conversation' }, { status: 500 });
+    console.error('Agent chat history error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

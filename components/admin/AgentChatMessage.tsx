@@ -1,6 +1,6 @@
 'use client';
 
-import { Copy, User } from 'lucide-react';
+import { Copy, User, Settings } from 'lucide-react';
 
 type Agent = {
   name: string;
@@ -12,7 +12,7 @@ type Agent = {
 
 type Message = {
   id: string;
-  type: 'user' | 'agent';
+  type: 'user' | 'agent' | 'system';
   content: string;
   timestamp: Date;
   agent?: string;
@@ -28,6 +28,7 @@ interface AgentChatMessageProps {
 
 export function AgentChatMessage({ message, agent, onCopy }: AgentChatMessageProps) {
   const isUser = message.type === 'user';
+  const isSystem = message.type === 'system';
   const isCode = message.isCode || message.content.includes('```');
   const isCopyable = message.isCopy || isCode;
 
@@ -42,6 +43,18 @@ export function AgentChatMessage({ message, agent, onCopy }: AgentChatMessagePro
   const handleCopy = () => {
     onCopy(formatContent(message.content));
   };
+
+  // Don't render system messages in the same way as user/agent messages
+  if (isSystem) {
+    return (
+      <div className="flex items-center justify-center my-4">
+        <div className="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm flex items-center gap-2">
+          <Settings className="w-4 h-4" />
+          {message.content}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>

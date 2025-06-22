@@ -22,7 +22,7 @@ export async function POST() {
         // We select 'id' to get a count, but we must enable `returning: 'representation'`
         // or `returning: 'minimal'` if we want the actual data. For a count, this is sufficient.
         const { error, count } = await supabase
-            .from('admin_tasks')
+            .from('agent_tasks')
             .update({ 
                 status: 'cancelled',
                 // This is the correct way to merge with existing JSONB data

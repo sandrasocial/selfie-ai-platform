@@ -1,10 +1,4 @@
 {
-  "crons": [
-    {
-      "path": "/api/agents/listen",
-      "schedule": "*/5 * * * *"
-    }
-  ],
   "framework": "nextjs",
   "buildCommand": "next build",
   "devCommand": "next dev",

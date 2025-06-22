@@ -6,23 +6,40 @@ import React from 'react';
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  className?: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
-  className = '',
+  variant = 'primary',
+  size = 'md',
   disabled = false,
 }) => {
+  const variantClasses = {
+    primary: 'bg-blue-500 text-white hover:bg-blue-600',
+    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+  };
+
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg',
+  };
+
   return (
     <button
-      className={`px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
       onClick={onClick}
       disabled={disabled}
+      className={`rounded font-semibold transition-colors duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
     >
       {children}
     </button>
   );
 };
+
+export default Button;

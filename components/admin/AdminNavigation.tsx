@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import {
   LayoutDashboard,
   Target,
@@ -80,6 +81,8 @@ interface AdminNavigationProps {
 
 export default function AdminNavigation({ className = '' }: AdminNavigationProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const supabase = createClientComponentClient()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [collapsedSections, setCollapsedSections] = useState<string[]>([])
   const [readyTaskCount, setReadyTaskCount] = useState(0)
@@ -101,6 +104,17 @@ export default function AdminNavigation({ className = '' }: AdminNavigationProps
     
     // Dispatch custom event for layout to listen to
     window.dispatchEvent(new CustomEvent('admin-nav-toggle'))
+  }
+
+  // Handle sign out
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut()
+      router.push('/admin/login')
+      router.refresh()
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   // Fetch ready task count
@@ -364,7 +378,7 @@ export default function AdminNavigation({ className = '' }: AdminNavigationProps
                   
                   <button
                     onClick={() => {
-                      // Handle sign out
+                      handleSignOut()
                       closeMobileMenu()
                     }}
                     className="w-full flex items-center gap-3 px-3 py-2 text-sm text-soft-white/80 hover:text-soft-white hover:bg-soft-white/5 transition-colors"

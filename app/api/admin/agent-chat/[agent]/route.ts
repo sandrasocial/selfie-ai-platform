@@ -18,39 +18,39 @@ interface AgentModelConfig {
 function getModelForAgent(agentName: string): AgentModelConfig {
   const configs: Record<string, AgentModelConfig> = {
     diana: {
-      model: 'claude-3-opus-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.5,
       maxTokens: 1000
     },
     maya: {
-      model: 'claude-3-opus-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.3,
       maxTokens: 2000
     },
     victoria: {
-      model: 'claude-3-sonnet-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.7,
       maxTokens: 1000
     },
     rachel: {
-      model: 'claude-3-sonnet-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.8,
       maxTokens: 1500
     },
     quinn: {
-      model: 'claude-3-opus-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.2,
       maxTokens: 1000
     },
     ava: {
-      model: 'claude-3-sonnet-20240229',
+      model: 'claude-3-5-sonnet-20241022',
       temperature: 0.4,
       maxTokens: 1000
     }
   };
 
   return configs[agentName] || {
-    model: 'claude-3-sonnet-20240229',
+    model: 'claude-3-5-sonnet-20241022',
     temperature: 0.7,
     maxTokens: 1000
   };

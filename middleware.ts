@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 
 // Redirect rules for old routes to new structure
 const redirectRules = [
@@ -19,7 +20,7 @@ const redirectRules = [
   { from: /^\/dev-login$/i, to: '/login' },
   { from: /^\/dev-auth$/i, to: '/login' },
   { from: /^\/test-login$/i, to: '/login' },
-  { from: /^\/admin-login$/i, to: '/login' },
+  { from: /^\/admin-login$/i, to: '/admin/login' },
   
   // Old dashboard routes
   { from: /^\/admin-dashboard$/i, to: '/dashboard' },
@@ -45,10 +46,10 @@ const redirectRules = [
   { from: /^\/vip-thank-you$/i, to: '/checkout/success' }
 ];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Check if pathname matches any redirect rules
+  // Check if pathname matches any redirect rules first
   for (const rule of redirectRules) {
     if (rule.from.test(pathname)) {
       const newPath = pathname.replace(rule.from, rule.to);
@@ -60,10 +61,27 @@ export function middleware(request: NextRequest) {
     }
   }
   
-  // Admin routes protection (we'll add auth later)
-  if (pathname.startsWith('/admin')) {
-    // For now, just pass through
-    return NextResponse.next();
+  // Admin routes protection
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+    const res = NextResponse.next();
+    const supabase = createMiddlewareClient({ req: request, res });
+    
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/admin/login';
+        return NextResponse.redirect(url);
+      }
+    } catch (error) {
+      // If there's an error with auth, redirect to login
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
+    }
+    
+    return res;
   }
   
   return NextResponse.next();

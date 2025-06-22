@@ -24,7 +24,8 @@ import {
   Trophy,
   Target,
   Zap,
-  Coffee
+  Coffee,
+  Lock
 } from 'lucide-react'
 
 // Complete course data structure - Fully migrated from client_backup
@@ -288,6 +289,7 @@ const AESTHETIC_COLLECTIONS = [
 interface User {
   id: string
   email: string
+  tier: string
 }
 
 export default function SelfieStarterKit() {
@@ -356,9 +358,17 @@ export default function SelfieStarterKit() {
     try {
       const { data: { user: authUser } } = await supabase.auth.getUser()
       if (authUser) {
+        // Get user profile to check tier
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('tier')
+          .eq('id', authUser.id)
+          .single()
+        
         setUser({
           id: authUser.id,
-          email: authUser.email || ''
+          email: authUser.email || '',
+          tier: profile?.tier || 'free'
         })
       }
     } catch (error) {
@@ -481,6 +491,35 @@ export default function SelfieStarterKit() {
           >
             Sign In
           </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // Check if user has access to starter kit (requires starter tier or higher)
+  if (user.tier === 'free') {
+    return (
+      <div className="min-h-screen bg-[#F8F8F8] flex items-center justify-center">
+        <div className="text-center max-w-md px-6">
+          <Lock className="w-16 h-16 mx-auto mb-6 text-[#171719]" />
+          <h1 className="text-4xl font-cormorant text-[#171719] mb-4 font-light">STARTER KIT ACCESS</h1>
+          <p className="text-[#4C4B4B] mb-8 font-light leading-relaxed">
+            This is premium content from the Selfie Starter Kit. Ready to unlock your magnetic personal brand?
+          </p>
+          <div className="space-y-4">
+            <Link 
+              href="/products/starter-kit"
+              className="block bg-[#171719] text-white px-8 py-3 font-light hover:bg-[#2A2A2A] transition-all duration-300 tracking-wide"
+            >
+              Get Starter Kit Access
+            </Link>
+            <Link 
+              href="/dashboard"
+              className="block border border-[#171719] text-[#171719] px-8 py-3 font-light hover:bg-[#171719] hover:text-white transition-all duration-300 tracking-wide"
+            >
+              Back to Dashboard
+            </Link>
+          </div>
         </div>
       </div>
     )

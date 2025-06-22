@@ -30,7 +30,7 @@ export default function StartHerePage() {
         'Brand foundation worksheet'
       ],
       cta: 'Get Free Guide',
-      link: '/guide/selfie-basics',
+      link: '/freebie/selfie-guide',
       bgImage: 'https://i.postimg.cc/7Z08QgRY/80.png',
       price: 'FREE',
       ideal: 'New to personal branding'
@@ -47,7 +47,7 @@ export default function StartHerePage() {
         'Basic brand kit creation'
       ],
       cta: 'Start Building',
-      link: '/tools/starter-kit',
+      link: '/products/starter-kit',
       bgImage: 'https://i.postimg.cc/Bbn4rXK7/3.png',
       price: '$47',
       ideal: 'Ready to create consistently'
@@ -64,7 +64,7 @@ export default function StartHerePage() {
         'Feed design mastery'
       ],
       cta: 'Transform Now',
-      link: '/courses/branded',
+      link: '/products/branded-by-selfie',
       bgImage: 'https://i.postimg.cc/nhDpf8Xx/35.png',
       price: '$297',
       ideal: 'Serious about building your empire'
@@ -81,7 +81,7 @@ export default function StartHerePage() {
         'Priority support & feedback'
       ],
       cta: 'Apply for VIP',
-      link: '/vip',
+      link: '/vip/apply',
       bgImage: 'https://i.postimg.cc/V673b4J4/81.png',
       price: '$997',
       ideal: 'Want personalized guidance'

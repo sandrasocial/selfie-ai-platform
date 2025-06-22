@@ -4,20 +4,50 @@ tsx
 import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  children: React.ReactNode;
+  text: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }
 
-export default function Button({ children, onClick, className = '', disabled = false }: ButtonProps) {
+const Button = ({ text, onClick, variant = 'primary', size = 'medium', disabled = false }: ButtonProps) => {
+  const baseClasses = 'rounded font-semibold transition-colors duration-200';
+  let variantClasses = '';
+  let sizeClasses = '';
+
+  switch (variant) {
+    case 'primary':
+      variantClasses = 'bg-blue-500 hover:bg-blue-600 text-white';
+      break;
+    case 'secondary':
+      variantClasses = 'bg-gray-200 hover:bg-gray-300 text-gray-800';
+      break;
+  }
+
+  switch (size) {
+    case 'small':
+      sizeClasses = 'px-3 py-1 text-sm';
+      break;
+    case 'medium':
+      sizeClasses = 'px-4 py-2 text-base';
+      break;
+    case 'large':
+      sizeClasses = 'px-6 py-3 text-lg';
+      break;
+  }
+
+  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-md';
+
   return (
     <button
-      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      className={`${baseClasses} ${variantClasses} ${sizeClasses} ${disabledClasses}`}
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      {text}
     </button>
   );
-}
+};
+
+export default Button;

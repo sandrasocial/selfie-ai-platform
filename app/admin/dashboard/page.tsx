@@ -59,7 +59,7 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bodoni text-[#171719] mb-2">Admin Dashboard</h1>
-          <p className="text-[#B5B5B3]">Okay, let's see how things are going today.</p>
+          <p className="text-[#B5B5B3]">Okay, let's see how things are going today</p>
         </div>
 
         {/* Preview Notification Widget */}
@@ -139,12 +139,12 @@ export default function AdminDashboard() {
                   <p className="text-sm text-warm-gray">Get help from your digital team</p>
                 </div>
                 <div className="bg-white p-4 border border-warm-gray/20 hover:border-luxury-black transition-colors duration-300 cursor-pointer">
-                  <h4 className="font-medium text-luxury-black mb-1">How to keep it gorgeous</h4>
+                  <h4 className="font-medium text-luxury-black mb-1">Keep it gorgeous</h4>
                   <p className="text-sm text-warm-gray">Design rules and visual standards</p>
                 </div>
                 <div className="bg-white p-4 border border-warm-gray/20 hover:border-luxury-black transition-colors duration-300 cursor-pointer">
                   <h4 className="font-medium text-luxury-black mb-1">Sound like you, always</h4>
-                  <p className="text-sm text-warm-gray">Voice guidelines and copy rules</p>
+                  <p className="text-sm text-warm-gray">Voice guidelines and copy that works</p>
                 </div>
               </div>
             </div>

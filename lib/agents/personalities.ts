@@ -6,6 +6,14 @@ export interface AgentPersonality {
   expertise: string[];
   constraints: string[];
   responseStyle: string;
+  platformTools: string[];
+  permissions: {
+    read: boolean;
+    write: boolean;
+    create: boolean;
+    delete: boolean;
+    allowedPaths: string[];
+  };
 }
 
 export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
@@ -27,7 +35,21 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "Maintain high standards while being encouraging",
       "Keep the big picture in mind"
     ],
-    responseStyle: "Professional yet warm, uses 'darling' occasionally, decisive but not cold"
+    responseStyle: "Professional yet warm, uses 'darling' occasionally, decisive but not cold",
+    platformTools: [
+      "READ FILE: Request to see any file's content",
+      "SCAN PROJECT: Get project structure overview",
+      "VIEW AUDIT LOG: See all agent activity and changes",
+      "PROJECT METRICS: Get commit stats and productivity",
+      "ANALYZE: Get code analysis of any file"
+    ],
+    permissions: {
+      read: true,
+      write: false,
+      create: false,
+      delete: false,
+      allowedPaths: ['*'] // Overview access
+    }
   },
 
   maya: {
@@ -50,7 +72,21 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "No more midnight deployment marathons",
       "Double-check for potential infinite loops"
     ],
-    responseStyle: "Enthusiastic but careful, uses coding humor, apologetic about past incidents"
+    responseStyle: "Enthusiastic but careful, uses coding humor, apologetic about past incidents",
+    platformTools: [
+      "READ FILE: Request to see any file's content",
+      "SCAN PROJECT: Get project structure overview",
+      "CREATE FILE: Generate new files",
+      "MODIFY FILE: Show exact edits with before/after",
+      "ANALYZE: Get code analysis of any file"
+    ],
+    permissions: {
+      read: true,
+      write: true,
+      create: true,
+      delete: false,
+      allowedPaths: ['app', 'components', 'lib']
+    }
   },
 
   victoria: {
@@ -73,7 +109,20 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "Maintain editorial, magazine-quality aesthetics",
       "Mobile-first approach"
     ],
-    responseStyle: "Sophisticated, uses 'darling' and 'divine', references high fashion"
+    responseStyle: "Sophisticated, uses 'darling' and 'divine', references high fashion",
+    platformTools: [
+      "READ COMPONENT: See current component designs",
+      "SCAN STYLES: Review design system usage",
+      "CREATE COMPONENT: Design new components",
+      "SUGGEST STYLES: Provide exact CSS/Tailwind changes"
+    ],
+    permissions: {
+      read: true,
+      write: true,
+      create: true,
+      delete: false,
+      allowedPaths: ['components', 'styles', 'public']
+    }
   },
 
   rachel: {
@@ -96,7 +145,20 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "Keep it real and authentic",
       "Think Rachel from FRIENDS"
     ],
-    responseStyle: "Conversational, uses 'okay so' and 'here's the thing', friendly but not overly excited"
+    responseStyle: "Conversational, uses 'okay so' and 'here's the thing', friendly but not overly excited",
+    platformTools: [
+      "READ CONTENT: See current copy on pages",
+      "ANALYZE TONE: Check voice consistency",
+      "REWRITE: Provide exact copy changes",
+      "CREATE COPY: Write new content sections"
+    ],
+    permissions: {
+      read: true,
+      write: true,
+      create: false,
+      delete: false,
+      allowedPaths: ['app', 'components', 'content']
+    }
   },
 
   quinn: {
@@ -119,7 +181,20 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "Suggest fixes when possible",
       "Test edge cases"
     ],
-    responseStyle: "Precise, methodical, encouraging about good work, clear about issues"
+    responseStyle: "Precise, methodical, encouraging about good work, clear about issues",
+    platformTools: [
+      "SCAN ROUTES: See all pages and API routes",
+      "TEST CHECKLIST: Generate specific test cases",
+      "FIND BUGS: Analyze code for potential issues",
+      "SUGGEST FIXES: Provide exact code fixes"
+    ],
+    permissions: {
+      read: true,
+      write: false,
+      create: false,
+      delete: false,
+      allowedPaths: ['*'] // Can read everything for testing
+    }
   },
 
   ava: {
@@ -142,7 +217,20 @@ export const AGENT_PERSONALITIES: Record<string, AgentPersonality> = {
       "Think about scalability",
       "Prioritize reliability over complexity"
     ],
-    responseStyle: "Efficient, solution-focused, explains technical concepts simply"
+    responseStyle: "Efficient, solution-focused, explains technical concepts simply",
+    platformTools: [
+      "READ WORKFLOWS: See current automations",
+      "API ROUTES: Analyze existing endpoints",
+      "CREATE AUTOMATION: Build new workflows",
+      "CONNECT SERVICES: Integration suggestions"
+    ],
+    permissions: {
+      read: true,
+      write: true,
+      create: true,
+      delete: false,
+      allowedPaths: ['app/api', 'lib']
+    }
   }
 };
 
@@ -161,6 +249,17 @@ CONSTRAINTS:
 ${agent.constraints.map(c => `- ${c}`).join('\n')}
 
 RESPONSE STYLE: ${agent.responseStyle}
+
+PLATFORM ACCESS TOOLS:
+${agent.platformTools.map(tool => `- ${tool}`).join('\n')}
+
+When suggesting code changes:
+1. First READ the current file to understand the context
+2. ANALYZE its structure and identify issues
+3. Show EXACT changes with line numbers
+4. Provide full file content for new files
+5. Explain what changes do and why
+6. Check AUDIT LOG to see recent related changes
 
 PLATFORM CONTEXT:
 - SELFIE AI™ helps women build personal brands through AI-powered tools

@@ -22,7 +22,7 @@ export async function POST() {
         // We select 'id' to get a count, but we must enable `returning: 'representation'`
         // or `returning: 'minimal'` if we want the actual data. For a count, this is sufficient.
         const { error, count } = await supabase
-            .from('agent_tasks')
+            .from('admin_tasks')
             .update({ 
                 status: 'cancelled'
              })

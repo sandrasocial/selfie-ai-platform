@@ -64,7 +64,7 @@ export default function PoseStudio() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Pose Coach
           </h1>
@@ -84,7 +84,7 @@ export default function PoseStudio() {
           <div className="bg-white border border-[#B5B5B3] p-16 text-center">
             <h3 
               className="text-2xl font-normal mb-6 uppercase tracking-wide text-[#171719]"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               Coming Soon
             </h3>

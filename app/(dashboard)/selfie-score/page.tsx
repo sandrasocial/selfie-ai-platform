@@ -48,7 +48,7 @@ export default function SelfieScorePage() {
 
       if (!response.ok) {
         if (response.status === 429) {
-          setError(data.message || 'Rate limit exceeded. Upgrade to Pro for unlimited scores!');
+          setError(data.message || 'Rate limit reached. Upgrade to Pro for unlimited scores.');
         } else {
           setError(data.error || 'Failed to analyze selfie');
         }

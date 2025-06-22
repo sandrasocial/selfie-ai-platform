@@ -75,13 +75,13 @@ export default function PresetBundles() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 
             className="text-5xl lg:text-6xl xl:text-7xl mb-8 leading-tight text-[#171719] font-normal"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Lightroom Preset Collection
           </h1>
           <p 
             className="text-xl lg:text-2xl text-[#4C4B4B] mb-12 max-w-3xl mx-auto leading-relaxed font-light"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Professional-grade presets designed to give your photos that signature editorial look in one click. Used by thousands of content creators worldwide.
           </p>
@@ -93,7 +93,7 @@ export default function PresetBundles() {
             </div>
             <span 
               className="text-sm text-[#4C4B4B] font-light"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               4.9/5 from 12,847 customers
             </span>
@@ -115,19 +115,19 @@ export default function PresetBundles() {
             >
               <h3 
                 className="text-2xl mb-3 text-[#171719] font-normal"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Individual Presets
               </h3>
               <p 
                 className="text-[#4C4B4B] mb-4 font-light"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Choose your favorite bundles separately
               </p>
               <div 
                 className="text-3xl font-normal text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 $5 each
               </div>
@@ -143,32 +143,32 @@ export default function PresetBundles() {
             >
               <div 
                 className="absolute -top-3 -right-3 bg-[#171719] text-white px-4 py-2 text-xs font-normal uppercase tracking-wide"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Save ${savings}
               </div>
               <h3 
                 className="text-2xl mb-3 text-[#171719] font-normal"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Complete Collection
               </h3>
               <p 
                 className="text-[#4C4B4B] mb-4 font-light"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 All 4 preset bundles included
               </p>
               <div className="flex items-baseline gap-3">
                 <span 
                   className="text-lg text-[#B5B5B3] line-through font-light"
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   ${totalValue}
                 </span>
                 <span 
                   className="text-3xl font-normal text-[#171719]"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   ${bundlePrice}
                 </span>
@@ -183,7 +183,7 @@ export default function PresetBundles() {
         <div className="max-w-6xl mx-auto">
           <h2 
             className="text-4xl lg:text-5xl text-center mb-16 text-[#171719] font-normal"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Choose Your Style
           </h2>
@@ -199,7 +199,7 @@ export default function PresetBundles() {
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                     <span 
                       className="text-white font-light text-sm uppercase tracking-wide"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Preview
                     </span>
@@ -208,13 +208,13 @@ export default function PresetBundles() {
                 <div className="p-6">
                   <h3 
                     className="text-xl mb-2 text-[#171719] font-normal"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className="font-cormorant"
                   >
                     {preset.name}
                   </h3>
                   <p 
                     className="text-sm text-[#4C4B4B] mb-6 font-light leading-relaxed"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     {preset.description}
                   </p>
@@ -224,7 +224,7 @@ export default function PresetBundles() {
                         <Check className="w-4 h-4 text-[#4C4B4B] flex-shrink-0" />
                         <span 
                           className="text-sm text-[#4C4B4B] font-light"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {feature}
                         </span>
@@ -235,7 +235,7 @@ export default function PresetBundles() {
                     <Link href={`/checkout/preset-${preset.id}`}>
                       <Button 
                         className="w-full bg-[#171719] text-white hover:bg-[#4C4B4B] font-normal uppercase tracking-wide text-sm py-3 transition-colors duration-300"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         Buy Now - ${preset.price}
                       </Button>
@@ -252,7 +252,7 @@ export default function PresetBundles() {
                 <Button 
                   size="lg" 
                   className="bg-[#171719] text-white hover:bg-[#4C4B4B] px-12 py-4 text-lg font-normal uppercase tracking-wide transition-colors duration-300"
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Get All Presets for ${bundlePrice}
                 </Button>
@@ -267,7 +267,7 @@ export default function PresetBundles() {
         <div className="max-w-4xl mx-auto">
           <h2 
             className="text-4xl lg:text-5xl text-center mb-16 text-[#171719] font-normal"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             See The Transformation
           </h2>
@@ -276,13 +276,13 @@ export default function PresetBundles() {
               <div className="aspect-square bg-[#B5B5B3] rounded-sm mb-6"></div>
               <h3 
                 className="text-xl mb-2 text-[#171719] font-normal"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Before
               </h3>
               <p 
                 className="text-[#4C4B4B] text-sm font-light"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Raw, unedited photo
               </p>
@@ -291,13 +291,13 @@ export default function PresetBundles() {
               <div className="aspect-square bg-[#B5B5B3] rounded-sm mb-6"></div>
               <h3 
                 className="text-xl mb-2 text-[#171719] font-normal"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 After
               </h3>
               <p 
                 className="text-[#4C4B4B] text-sm font-light"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 With Glow Bundle applied
               </p>
@@ -311,7 +311,7 @@ export default function PresetBundles() {
         <div className="max-w-4xl mx-auto">
           <h2 
             className="text-4xl lg:text-5xl text-center mb-16 text-[#171719] font-normal"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             What Creators Are Saying
           </h2>
@@ -325,13 +325,13 @@ export default function PresetBundles() {
                 </div>
                 <blockquote 
                   className="text-lg mb-6 leading-relaxed text-[#4C4B4B] italic font-normal"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   "{testimonial.content}"
                 </blockquote>
                 <div 
                   className="font-normal text-[#171719]"
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   {testimonial.name}
                 </div>
@@ -346,13 +346,13 @@ export default function PresetBundles() {
         <div className="max-w-2xl mx-auto text-center">
           <h2 
             className="text-4xl lg:text-5xl mb-8 font-normal"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Transform Your Photos Today
           </h2>
           <p 
             className="text-xl text-white/80 mb-12 font-light leading-relaxed"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Join thousands of creators who've elevated their content with our presets.
           </p>
@@ -361,14 +361,14 @@ export default function PresetBundles() {
               <Button 
                 size="lg" 
                 className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] px-12 py-4 text-lg font-normal uppercase tracking-wide transition-all duration-300"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Get Complete Collection - ${bundlePrice}
               </Button>
             </Link>
             <div 
               className="text-sm text-white/60 font-light"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               ✓ Instant download • ✓ 30-day guarantee • ✓ Works with Lightroom & Lightroom Mobile
             </div>

@@ -3,35 +3,44 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/app/components/ui/button';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Play, Download, Sparkles } from 'lucide-react';
 
 export default function SelfieStarterKit() {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
 
-  const features = [
-    '30+ caption templates that actually convert',
-    'The 5-minute daily content system',
-    'Mirror selfie pose guide (no more awkward)',
-    'Ring light setup that works with any phone',
-    'Edit-in-30-seconds workflow',
-    'Personal brand workbook',
-    'Content calendar template',
-    'Hashtag strategy guide'
+  const whatYouGet = [
+    {
+      title: 'Lighting Like a Pro',
+      description: 'Natural and artificial light setups that make every selfie editorial-worthy'
+    },
+    {
+      title: 'Confident Poses That Convert',
+      description: 'Body language decoded—never feel awkward in front of the camera again'
+    },
+    {
+      title: 'The 5-Stage Edit Workflow',
+      description: 'From phone to professional, create consistency across all your content'
+    },
+    {
+      title: 'Caption Psychology',
+      description: 'Storytelling formulas that turn scrollers into engaged followers'
+    },
+    {
+      title: 'Personal Brand System',
+      description: 'Your visual DNA—create cohesive content that builds recognition'
+    },
+    {
+      title: 'Selfie Glow-Up Presets',
+      description: '7 custom Lightroom presets for an instant editorial look'
+    }
   ];
 
-  const transformations = [
-    {
-      before: 'Posting randomly, hoping something sticks',
-      after: 'Strategic content that builds your brand daily'
-    },
-    {
-      before: 'Taking 100 selfies to get one good one',
-      after: 'Confident poses that work every single time'
-    },
-    {
-      before: 'Captions that sound like everyone else',
-      after: 'Your unique voice that connects and converts'
-    }
+  const bonusResources = [
+    'Caption Templates Bank (50+ proven formulas)',
+    'Ring Light Setup Guide (every budget covered)',
+    'Personal Brand Workbook (AI-powered exercises)',
+    'Content Calendar Template',
+    'Hashtag Strategy Guide'
   ];
 
   const handleImageError = (imageId: string) => {
@@ -41,38 +50,19 @@ export default function SelfieStarterKit() {
   return (
     <div className="min-h-screen bg-[#F1F1F1]">
       {/* Hero Section */}
-      <section className="relative px-6 py-32 overflow-hidden">
-        {/* Editorial Number */}
+      <section className="relative min-h-screen flex items-center justify-center px-6">
+        {/* Background Image */}
         <div 
-          className="absolute -top-20 right-10 text-[#171719] pointer-events-none"
-          style={{ 
-            fontFamily: 'Bodoni Moda, serif',
-            fontSize: '300px',
-            fontWeight: '700',
-            opacity: '0.03',
-            lineHeight: '1'
-          }}
-        >
-          01
-        </div>
-        
-        <div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: !imageError.hero 
-              ? 'url(https://i.postimg.cc/bwYKyKCW/122.png)' 
-              : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.1
+              ? 'url(https://i.postimg.cc/wMP7QtTN/IMG-8435-jpg.jpg)' 
+              : `linear-gradient(135deg, #171719 0%, #4C4B4B 100%)`
           }}
         >
-          {imageError.hero && (
-            <div className="w-full h-full bg-[#B5B5B3]" />
-          )}
           {!imageError.hero && (
             <img 
-              src="https://i.postimg.cc/bwYKyKCW/122.png" 
+              src="https://i.postimg.cc/wMP7QtTN/IMG-8435-jpg.jpg" 
               alt="" 
               className="hidden"
               onError={() => handleImageError('hero')}
@@ -80,82 +70,231 @@ export default function SelfieStarterKit() {
           )}
         </div>
         
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-40" />
+        
+        {/* Content */}
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <h1 
-            className="text-7xl md:text-8xl mb-8 text-[#171719]"
-            style={{ 
-              fontFamily: 'Bodoni Moda, serif',
-              fontWeight: '300',
-              letterSpacing: '-0.04em',
-              lineHeight: '0.9'
-            }}
+            className="text-6xl lg:text-8xl mb-8 text-white leading-tight font-normal tracking-tight font-cormorant"
           >
-            The Selfie<br />Starter Kit
+            Selfie smarter.<br />
+            Show up bolder.
           </h1>
           
           <p 
-            className="text-xl md:text-2xl mb-8 text-[#171719] max-w-2xl mx-auto"
-            style={{ 
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: '200'
-            }}
+            className="text-xl lg:text-2xl mb-12 text-white font-light max-w-3xl mx-auto leading-relaxed opacity-90 font-neue"
           >
-            Your personal brand emergency kit. Templates, scripts, and tools 
-            that actually make sense. Like having me in your pocket.
+            The exact system I use to create selfies that build brands, boost confidence, and convert followers into clients.
           </p>
           
-          <div className="text-5xl mb-12 text-[#171719]" style={{ fontFamily: 'Bodoni Moda, serif' }}>
-            $67
-          </div>
-          
-          <Link href="/checkout/starter-kit">
+          <Link href="#checkout">
             <Button 
-              className="bg-[#171719] text-[#F1F1F1] hover:bg-[#171719]/90 text-lg px-12 py-6 h-auto uppercase tracking-widest rounded-none"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] text-lg px-12 py-4 font-normal uppercase tracking-wide transition-all duration-300 font-neue"
             >
-              GET THE KIT
+              Get the Kit – $67
             </Button>
           </Link>
         </div>
       </section>
 
-      {/* What's Inside Section */}
-      <section className="px-6 py-32 bg-white relative">
-        {/* Editorial Number */}
-        <div 
-          className="absolute -top-20 left-10 text-[#171719] pointer-events-none"
-          style={{ 
-            fontFamily: 'Bodoni Moda, serif',
-            fontSize: '300px',
-            fontWeight: '700',
-            opacity: '0.03',
-            lineHeight: '1'
-          }}
-        >
-          02
+      {/* Before & After Transformation */}
+      <section className="px-6 py-24 bg-[#F1F1F1]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+            <div className="text-center">
+              <div className="mb-8">
+                {!imageError.before ? (
+                  <img 
+                    src="https://i.postimg.cc/XNt6zt4j/1.png" 
+                    alt="Before the kit"
+                    className="w-full max-w-md mx-auto"
+                    onError={() => handleImageError('before')}
+                  />
+                ) : (
+                  <div className="w-full max-w-md mx-auto aspect-square bg-[#B5B5B3] flex items-center justify-center">
+                    <span 
+                      className="text-white text-lg font-neue"
+                    >
+                      IMAGE COMING SOON
+                    </span>
+                  </div>
+                )}
+              </div>
+              <h3 
+                className="text-2xl mb-4 text-[#4C4B4B] font-light font-cormorant"
+              >
+                Before: overwhelmed, hiding, unsure
+              </h3>
+            </div>
+            
+            <div className="text-center">
+              <div className="mb-8">
+                {!imageError.after ? (
+                  <img 
+                    src="https://i.postimg.cc/d05zmx5K/2.png" 
+                    alt="After the kit"
+                    className="w-full max-w-md mx-auto"
+                    onError={() => handleImageError('after')}
+                  />
+                ) : (
+                  <div className="w-full max-w-md mx-auto aspect-square bg-[#B5B5B3] flex items-center justify-center">
+                    <span 
+                      className="text-white text-lg font-neue"
+                      className="font-neue"
+                    >
+                      IMAGE COMING SOON
+                    </span>
+                  </div>
+                )}
+              </div>
+              <h3 
+                className="text-2xl mb-4 text-[#4C4B4B] font-light"
+                className="font-cormorant"
+              >
+                After: branded, bold, booked.
+              </h3>
+            </div>
+          </div>
+
+          {/* Quote */}
+          <div className="text-center">
+            <blockquote 
+              className="text-3xl lg:text-4xl text-[#171719] italic leading-relaxed font-light max-w-4xl mx-auto"
+              className="font-cormorant"
+            >
+              "Your camera roll tells your story. Let's rewrite it."
+            </blockquote>
+          </div>
         </div>
-        
-        <div className="max-w-4xl mx-auto relative z-10">
+      </section>
+
+      {/* What's Inside the Kit */}
+      <section className="px-6 py-24 bg-[#171719] text-white">
+        <div className="max-w-6xl mx-auto">
           <h2 
-            className="text-7xl mb-16 text-center text-[#171719]"
-            style={{ 
-              fontFamily: 'Bodoni Moda, serif',
-              fontWeight: '300',
-              letterSpacing: '-0.04em',
-              lineHeight: '0.9'
-            }}
+            className="text-5xl lg:text-6xl text-center mb-20 font-light leading-tight"
+            className="font-cormorant"
           >
-            What You Get
+            What's Inside Your Kit
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-start space-x-3">
-                <CheckCircle2 className="w-6 h-6 text-[#171719] mt-1 flex-shrink-0" />
-                <p 
-                  className="text-lg text-[#171719]"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {whatYouGet.map((item, index) => (
+              <div 
+                key={index}
+                className="group cursor-pointer transition-transform hover:scale-105 duration-300"
+              >
+                <div className="bg-[#4C4B4B] p-8 h-full transition-all duration-300 group-hover:bg-[#2A2A2A]">
+                  <div className="mb-6">
+                    <Play className="w-8 h-8 text-white opacity-75" />
+                  </div>
+                  <h3 
+                    className="text-xl mb-4 font-light leading-tight"
+                    className="font-cormorant"
+                  >
+                    {item.title}
+                  </h3>
+                  <p 
+                    className="text-[#B5B5B3] font-light leading-relaxed"
+                    className="font-neue"
+                  >
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Your Story Matters */}
+      <section className="px-6 py-24 bg-[#F1F1F1]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Image */}
+            <div className="relative">
+              {!imageError.story ? (
+                <img 
+                  src="https://i.postimg.cc/0jv5My39/final-Quote-Image-1.png" 
+                  alt="Your story matters"
+                  className="w-full"
+                  onError={() => handleImageError('story')}
+                />
+              ) : (
+                <div className="w-full aspect-[4/5] bg-[#B5B5B3] flex items-center justify-center">
+                  <span 
+                    className="text-white text-lg"
+                    className="font-neue"
+                  >
+                    IMAGE COMING SOON
+                  </span>
+                </div>
+              )}
+              <div className="absolute inset-0 bg-black bg-opacity-20" />
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <h3 
+                  className="text-white text-2xl lg:text-3xl text-center leading-tight font-light"
+                  className="font-cormorant"
                 >
-                  {feature}
+                  "I started with one mirror selfie at 11PM—just to feel something again."
+                </h3>
+              </div>
+            </div>
+
+            {/* Text */}
+            <div className="space-y-8">
+              <p 
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
+                className="font-neue"
+              >
+                What came next wasn't magic—it was small steps. Lighting tricks. Posing hacks. Finally pressing POST.
+              </p>
+              <p 
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
+                className="font-neue"
+              >
+                That's what this kit gives you: a way back to yourself, one selfie at a time.
+              </p>
+              <p 
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
+                className="font-neue"
+              >
+                You don't need to become someone else. You just need to remember who you already are.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bonus Resources */}
+      <section className="px-6 py-24 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-12">
+            <Sparkles className="w-12 h-12 mx-auto mb-6 text-[#4C4B4B]" />
+            <h2 
+              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight"
+              className="font-cormorant"
+            >
+              Plus These Bonuses
+            </h2>
+            <p 
+              className="text-xl text-[#4C4B4B] font-light max-w-2xl mx-auto leading-relaxed"
+              className="font-neue"
+            >
+              Everything you need to implement what you learn, from presets to templates.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 text-left">
+            {bonusResources.map((resource, index) => (
+              <div key={index} className="flex items-start space-x-4 p-6">
+                <Download className="w-6 h-6 text-[#171719] mt-1 flex-shrink-0" />
+                <p 
+                  className="text-lg text-[#171719] font-light"
+                  className="font-neue"
+                >
+                  {resource}
                 </p>
               </div>
             ))}
@@ -163,78 +302,12 @@ export default function SelfieStarterKit() {
         </div>
       </section>
 
-      {/* Transformation Section */}
-      <section className="px-6 py-20 bg-[#171719]">
-        <div className="max-w-4xl mx-auto">
-          <h2 
-            className="text-5xl mb-16 text-center text-[#F1F1F1]"
-            style={{ fontFamily: 'Bodoni Moda, serif' }}
-          >
-            Your Transformation
-          </h2>
-          
-          <div className="space-y-12">
-            {transformations.map((item, index) => (
-              <div key={index} className="grid md:grid-cols-2 gap-8">
-                <div className="text-center md:text-right">
-                  <p 
-                    className="text-sm uppercase tracking-widest text-[#B5B5B3] mb-2"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    Before
-                  </p>
-                  <p 
-                    className="text-xl text-[#F1F1F1]/70"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    {item.before}
-                  </p>
-                </div>
-                <div className="text-center md:text-left">
-                  <p 
-                    className="text-sm uppercase tracking-widest text-[#B5B5B3] mb-2"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    After
-                  </p>
-                  <p 
-                    className="text-xl text-[#F1F1F1]"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    {item.after}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial Section */}
-      <section className="px-6 py-20 bg-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <blockquote 
-            className="text-2xl md:text-3xl mb-8 text-[#171719] italic"
-            style={{ fontFamily: 'Bodoni Moda, serif' }}
-          >
-            "I went from posting maybe once a month to showing up daily. 
-            The templates make it so easy, I actually enjoy creating content now."
-          </blockquote>
-          <p 
-            className="text-lg text-[#B5B5B3]"
-            style={{ fontFamily: 'Inter, sans-serif' }}
-          >
-            — Sarah M., Starter Kit Member
-          </p>
-        </div>
-      </section>
-
-      {/* Social Proof Grid */}
-      <section className="px-6 py-24 bg-[#171719]">
+      {/* Social Proof */}
+      <section className="px-6 py-24 bg-[#171719] text-white">
         <div className="max-w-6xl mx-auto text-center">
           <h2 
-            className="text-5xl mb-12 text-[#F1F1F1] font-light"
-            style={{ fontFamily: 'Bodoni Moda, serif' }}
+            className="text-4xl lg:text-5xl mb-12 font-light leading-tight"
+            className="font-cormorant"
           >
             Real moments. Real confidence. Real content.
           </h2>
@@ -278,101 +351,180 @@ export default function SelfieStarterKit() {
             </div>
           </div>
 
-          <Link href="/checkout/starter-kit">
-            <Button 
-              className="bg-transparent border-2 border-[#F1F1F1] text-[#F1F1F1] hover:bg-[#F1F1F1] hover:text-[#171719] text-lg px-12 py-6 h-auto uppercase tracking-widest transition-all duration-300 rounded-none"
+          <div className="max-w-3xl mx-auto mb-12">
+            <blockquote 
+              className="text-2xl lg:text-3xl italic font-light leading-relaxed mb-6"
+              className="font-cormorant"
             >
-              Start Your Kit → $67
+              "I went from taking 100 selfies to get one good one, to nailing it in 3 shots every time. This kit changed everything."
+            </blockquote>
+            <p 
+              className="text-[#B5B5B3] font-light"
+              className="font-neue"
+            >
+              — Maria K., Life Coach & Starter Kit Graduate
+            </p>
+          </div>
+
+          <Link href="#checkout">
+            <Button 
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] text-lg px-12 py-4 font-normal uppercase tracking-wide transition-all duration-300 font-['Neue_Einstellung']"
+            >
+              Start Yours → $67
             </Button>
           </Link>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="px-6 py-20 bg-white">
-        <div className="max-w-3xl mx-auto">
+      <section className="px-6 py-24 bg-[#F1F1F1]">
+        <div className="max-w-4xl mx-auto">
           <h2 
-            className="text-5xl mb-12 text-center text-[#171719]"
-            style={{ fontFamily: 'Bodoni Moda, serif' }}
+            className="text-4xl lg:text-5xl mb-16 text-center font-light text-[#171719] leading-tight"
+            className="font-cormorant"
           >
-            Questions?
+            Questions I Always Get
           </h2>
           
-          <div className="space-y-8">
+          <div className="space-y-12">
             <div>
               <h3 
-                className="text-2xl mb-3 text-[#171719]"
-                style={{ fontFamily: 'Bodoni Moda, serif' }}
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
+                className="font-cormorant"
               >
-                How do I access everything?
+                "But I'm not photogenic..."
               </h3>
               <p 
-                className="text-lg text-[#171719]"
-                style={{ fontFamily: 'Inter, sans-serif' }}
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
+                className="font-neue"
               >
-                You get instant access to your member portal right after purchase. 
-                Everything downloads straight to your phone or computer.
+                Neither was I. "Photogenic" is a skill, not a gift. The pose guides, lighting tricks, and editing workflow in this kit will have you looking like yourself—but elevated. That's all this is.
               </p>
             </div>
             
             <div>
               <h3 
-                className="text-2xl mb-3 text-[#171719]"
-                style={{ fontFamily: 'Bodoni Moda, serif' }}
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
+                className="font-cormorant"
               >
-                Is this for beginners?
+                "Is this for beginners?"
               </h3>
               <p 
-                className="text-lg text-[#171719]"
-                style={{ fontFamily: 'Inter, sans-serif' }}
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
+                className="font-neue"
               >
-                Absolutely. The kit is designed for women who want to show up online 
-                but don't know where to start. Everything is step-by-step.
+                Yes. This is for women who want to show up online but don't know where to start. Everything is step-by-step, no experience needed. I built it for the version of me that was hiding behind her phone.
               </p>
             </div>
             
             <div>
               <h3 
-                className="text-2xl mb-3 text-[#171719]"
-                style={{ fontFamily: 'Bodoni Moda, serif' }}
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
+                className="font-cormorant"
               >
-                What if I'm not photogenic?
+                "How quickly will I see results?"
               </h3>
               <p 
-                className="text-lg text-[#171719]"
-                style={{ fontFamily: 'Inter, sans-serif' }}
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
+                className="font-neue"
               >
-                Here's the thing - being photogenic is a skill, not a gift. 
-                The pose guides and lighting tips will have you looking amazing in every shot.
+                You'll feel different after your first selfie using the lighting and pose guides. Your confidence will shift immediately. Building a consistent brand takes time, but the tools work from day one.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="px-6 py-24 bg-[#F1F1F1]">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* Final CTA Section */}
+      <section id="checkout" className="px-6 py-24 bg-[#171719] text-white">
+        <div className="max-w-4xl mx-auto text-center">
           <h2 
-            className="text-5xl mb-6 text-[#171719]"
-            style={{ fontFamily: 'Bodoni Moda, serif' }}
+            className="text-5xl lg:text-6xl mb-8 font-light leading-tight"
+            className="font-cormorant"
           >
-            Ready to show up?
+            Ready to Stop Hiding?
           </h2>
+          
           <p 
-            className="text-xl mb-12 text-[#171719]"
-            style={{ fontFamily: 'Inter, sans-serif' }}
+            className="text-xl lg:text-2xl mb-12 font-light max-w-3xl mx-auto leading-relaxed opacity-90"
+            className="font-neue"
           >
-            Join thousands of women who are building their brands with confidence.
+            Join thousands of women who've transformed their relationship with the camera—and with themselves.
           </p>
+          
+          <div className="mb-12">
+            <div 
+              className="text-5xl lg:text-6xl mb-4 font-light"
+              className="font-cormorant"
+            >
+              $67
+            </div>
+            <p 
+              className="text-[#B5B5B3] font-light"
+              className="font-neue"
+            >
+              One-time payment • Lifetime access • 30-day guarantee
+            </p>
+          </div>
           
           <Link href="/checkout/starter-kit">
             <Button 
-              className="bg-[#171719] text-[#F1F1F1] hover:bg-[#171719]/90 text-lg px-12 py-6 h-auto uppercase tracking-widest rounded-none"
+              className="bg-white border-2 border-white text-[#171719] hover:bg-transparent hover:text-white text-lg px-12 py-6 font-normal uppercase tracking-wide transition-all duration-300 mb-8 font-['Neue_Einstellung']"
             >
-              Get The Starter Kit - $67
+              Get The Complete Kit
             </Button>
           </Link>
+          
+          <div className="border-t border-[#4C4B4B] pt-8">
+            <p 
+              className="text-[#B5B5B3] font-light italic text-lg"
+              className="font-cormorant"
+            >
+              "Your face is your brand. Show it boldly."
+            </p>
+            <p 
+              className="text-[#B5B5B3] font-light mt-2"
+              className="font-neue"
+            >
+              — Sandra, SELFIE AI™ Founder
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Level Teaser */}
+      <section className="px-6 py-24 bg-[#4C4B4B] text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <Sparkles className="w-12 h-12 mx-auto mb-6 opacity-75" />
+          
+          <h2 
+            className="text-4xl lg:text-5xl mb-6 font-light leading-tight"
+            className="font-cormorant"
+          >
+            Ready for the Next Level?
+          </h2>
+          
+          <p 
+            className="text-xl mb-8 font-light max-w-2xl mx-auto leading-relaxed opacity-90"
+            className="font-neue"
+          >
+            Branded by Selfie takes this foundation and scales it into a premium personal brand system.
+          </p>
+          
+          <Link href="/products/branded-by-selfie">
+            <Button 
+              className="bg-transparent border border-white text-white hover:bg-white hover:text-[#4C4B4B] px-8 py-3 font-light uppercase tracking-wide transition-all duration-300 font-['Neue_Einstellung']"
+            >
+              Explore Branded by Selfie
+            </Button>
+          </Link>
+          
+          <p 
+            className="text-sm font-light opacity-75 mt-4"
+            className="font-neue"
+          >
+            Complete brand strategy + premium AI tools
+          </p>
         </div>
       </section>
     </div>

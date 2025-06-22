@@ -203,7 +203,7 @@ export default function FeedDesigner() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Feed Designer
           </h1>
@@ -351,7 +351,7 @@ export default function FeedDesigner() {
                       >
                         <span 
                           className="text-xs uppercase tracking-wide text-[#4C4B4B] group-hover:text-[#171719] transition-colors text-center"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           Add Content
                         </span>
@@ -367,7 +367,7 @@ export default function FeedDesigner() {
             <div className="bg-white border border-[#B5B5B3] p-6">
               <h3 
                 className="text-xl font-normal mb-6 text-center text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Calendar View
               </h3>
@@ -376,7 +376,7 @@ export default function FeedDesigner() {
                   <div 
                     key={day}
                     className="text-center text-sm font-medium text-[#4C4B4B] p-2"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     {day}
                   </div>
@@ -398,7 +398,7 @@ export default function FeedDesigner() {
                   >
                     <span 
                       className="text-xs text-[#4C4B4B] group-hover:text-[#171719] transition-colors"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       +
                     </span>
@@ -412,7 +412,7 @@ export default function FeedDesigner() {
             <div className="text-center py-20">
               <p 
                 className="text-lg text-[#4C4B4B] mb-4"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 No images uploaded yet
               </p>

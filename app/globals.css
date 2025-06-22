@@ -356,3 +356,78 @@ input, textarea, select {
 .animate-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Brand Font Utilities - Per SELFIE AI Design System */
+.font-cormorant {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+}
+
+.font-neue {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+}
+
+.font-bordoni {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+}
+
+/* Brand Color Utilities */
+.text-luxury-black {
+  color: #171719;
+}
+
+.text-soft-white {
+  color: #F1F1F1;
+}
+
+.text-warm-gray {
+  color: #B5B5B3;
+}
+
+.text-deep-graphite {
+  color: #4C4B4B;
+}
+
+.bg-luxury-black {
+  background-color: #171719;
+}
+
+.bg-soft-white {
+  background-color: #F1F1F1;
+}
+
+/* Typography Scale per Brand Bible */
+.editorial-h1 {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.editorial-h2 {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.editorial-body {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.editorial-button {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .editorial-h1 {
+    font-size: 36px;
+  }
+}

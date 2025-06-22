@@ -186,7 +186,7 @@ export default function SummerCollabs() {
             <div className="order-2 lg:order-1">
               <h2 
                 className="text-5xl md:text-6xl mb-8 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Hi, I'm Sandra.
               </h2>
@@ -233,7 +233,7 @@ export default function SummerCollabs() {
             <div className="bg-white/90 p-8 text-center">
               <h3 
                 className="text-4xl font-normal mb-2 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 55,000+
               </h3>
@@ -248,7 +248,7 @@ export default function SummerCollabs() {
             <div className="bg-white/90 p-8 text-center">
               <h3 
                 className="text-4xl font-normal mb-2 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 73,600+
               </h3>
@@ -263,7 +263,7 @@ export default function SummerCollabs() {
             <div className="bg-white/90 p-8 text-center">
               <h3 
                 className="text-4xl font-normal mb-2 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 1.7M+
               </h3>
@@ -278,7 +278,7 @@ export default function SummerCollabs() {
             <div className="bg-white/90 p-8 text-center">
               <h3 
                 className="text-4xl font-normal mb-2 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 High
               </h3>
@@ -319,7 +319,7 @@ export default function SummerCollabs() {
         <div className="max-w-6xl mx-auto">
           <h2 
             className="text-5xl md:text-6xl text-center mb-16 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             What brand storytelling looks like with me.
           </h2>
@@ -386,7 +386,7 @@ export default function SummerCollabs() {
         <div className="max-w-6xl mx-auto text-center">
           <h2 
             className="text-4xl md:text-5xl mb-4 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Brands I've partnered with:
           </h2>
@@ -500,7 +500,7 @@ export default function SummerCollabs() {
         <div className="max-w-6xl mx-auto relative z-10">
           <h2 
             className="text-5xl md:text-6xl text-center mb-16 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             What I Offer
           </h2>
@@ -509,7 +509,7 @@ export default function SummerCollabs() {
             <div className="border border-[#B5B5B3] p-8 bg-white/90">
               <h3 
                 className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Content Feature
               </h3>
@@ -524,7 +524,7 @@ export default function SummerCollabs() {
             <div className="border border-[#B5B5B3] p-8 bg-white/90">
               <h3 
                 className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Editorial Set
               </h3>
@@ -539,7 +539,7 @@ export default function SummerCollabs() {
             <div className="border border-[#B5B5B3] p-8 bg-white/90">
               <h3 
                 className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Full Campaign
               </h3>
@@ -554,7 +554,7 @@ export default function SummerCollabs() {
             <div className="border border-[#B5B5B3] p-8 bg-white/90">
               <h3 
                 className="text-2xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 VIP Co-Creation
               </h3>
@@ -584,7 +584,7 @@ export default function SummerCollabs() {
         <div className="max-w-2xl mx-auto">
           <h2 
             className="text-5xl md:text-6xl text-center mb-4 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Let's Collaborate — Summer '25
           </h2>
@@ -667,7 +667,7 @@ export default function SummerCollabs() {
             <div className="text-center py-12">
               <h3 
                 className="text-3xl mb-4 text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Thank you for your inquiry!
               </h3>
@@ -695,26 +695,26 @@ export default function SummerCollabs() {
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <blockquote 
             className="text-4xl md:text-5xl mb-12 italic text-white"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             "Let's co-create something unforgettable."
           </blockquote>
           <p 
             className="text-xl mb-12 text-white"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             — Sandra
           </p>
 
           <div className="flex justify-center space-x-8 text-lg">
             <Link href="/" className="hover:text-[#B5B5B3] transition-colors text-white">
-              <span style={{ fontFamily: 'Cormorant Garamond, serif' }}>Back to Selfie AI</span>
+              <span className="font-cormorant">Back to Selfie AI</span>
             </Link>
             <a href="#" className="hover:text-[#B5B5B3] transition-colors text-white">
-              <span style={{ fontFamily: 'Cormorant Garamond, serif' }}>Instagram</span>
+              <span className="font-cormorant">Instagram</span>
             </a>
             <a href="#" className="hover:text-[#B5B5B3] transition-colors text-white">
-              <span style={{ fontFamily: 'Cormorant Garamond, serif' }}>Email Me</span>
+              <span className="font-cormorant">Email Me</span>
             </a>
           </div>
         </div>

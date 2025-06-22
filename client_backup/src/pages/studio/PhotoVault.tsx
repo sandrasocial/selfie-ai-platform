@@ -130,7 +130,7 @@ export default function PhotoVault() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Photo Vault
           </h1>
@@ -238,7 +238,7 @@ export default function PhotoVault() {
             <div className="text-center py-20">
               <p 
                 className="text-lg text-[#4C4B4B] mb-4"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 {vaultImages && vaultImages.length > 0 
                   ? 'No images match your current filters' 
@@ -247,7 +247,7 @@ export default function PhotoVault() {
               </p>
               <p 
                 className="text-sm text-[#4C4B4B]"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Upload images through the Visual Studio Editor to see them here
               </p>

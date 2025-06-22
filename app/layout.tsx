@@ -1,18 +1,27 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
-import { Playfair_Display } from 'next/font/google'
+import { Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import GlobalFooter from './components/GlobalFooter'
 
-// Load Inter font
+// Load Inter font (Neue Einstellung substitute)
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter'
 })
 
-// Load local Bodoni font
+// Load Cormorant Garamond (brand primary serif)
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant'
+})
+
+// Load local Bodoni font as backup
 const bodoni = localFont({
   src: [
     {
@@ -27,13 +36,6 @@ const bodoni = localFont({
     }
   ],
   variable: '--font-bodoni'
-})
-
-// Load Playfair Display font
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-playfair'
 })
 
 export const metadata = {
@@ -85,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${bodoni.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${bodoni.variable}`}>
       <head>
         <link rel="preconnect" href="https://i.postimg.cc" />
         <link rel="dns-prefetch" href="https://i.postimg.cc" />

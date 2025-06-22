@@ -163,13 +163,13 @@ export default function SandraChat({ user }: SandraChatProps) {
         <CardHeader className="border-b border-[#B5B5B3] pb-6">
           <CardTitle 
             className="text-[#171719] text-[24px] font-normal mb-2"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Sandra — AI Chat Mentor
           </CardTitle>
           <p 
             className="text-[#4C4B4B] text-[14px] leading-relaxed"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Empowering guidance, whenever you need it most.
           </p>
@@ -180,7 +180,7 @@ export default function SandraChat({ user }: SandraChatProps) {
           <div className="space-y-4">
             <p 
               className="text-[14px] font-medium text-[#171719]"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               What would you like to talk about?
             </p>
@@ -238,7 +238,7 @@ export default function SandraChat({ user }: SandraChatProps) {
                   <p className="whitespace-pre-line">{message.message}</p>
                   <span 
                     className="text-[12px] opacity-60 mt-2 block text-right"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
@@ -274,7 +274,7 @@ export default function SandraChat({ user }: SandraChatProps) {
           <div className="space-y-4">
             <p 
               className="text-[14px] font-medium text-[#4C4B4B]"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               Need inspiration? Try these:
             </p>
@@ -338,7 +338,7 @@ export default function SandraChat({ user }: SandraChatProps) {
         <CardContent className="pt-6">
           <div 
             className="flex items-center justify-between text-[14px] text-[#4C4B4B]"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             <span>Messages today: {messages.filter(m => m.isUser).length}</span>
             <span>Sandra is here for you 24/7</span>

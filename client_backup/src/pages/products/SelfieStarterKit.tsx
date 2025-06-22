@@ -6,7 +6,7 @@ import Footer from '@/components/layout/Footer';
 
 export default function SelfieStarterKit() {
   return (
-    <div className="min-h-screen bg-[#F1F1F1]" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+    <div className="min-h-screen bg-[#F1F1F1]" className="font-neue">
       <Header />
 
       {/* HERO SECTION */}
@@ -17,7 +17,7 @@ export default function SelfieStarterKit() {
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <h1 className="text-6xl lg:text-8xl mb-12 text-white leading-tight font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          <h1 className="text-6xl lg:text-8xl mb-12 text-white leading-tight font-light" className="font-cormorant">
             Selfie smarter.<br />
             Show up bolder.
           </h1>
@@ -41,7 +41,7 @@ export default function SelfieStarterKit() {
                   className="w-full max-w-md mx-auto"
                 />
               </div>
-              <h3 className="text-2xl mb-4 text-[#4C4B4B] font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <h3 className="text-2xl mb-4 text-[#4C4B4B] font-light" className="font-cormorant">
                 Before: overwhelmed, hiding, unsure
               </h3>
             </div>
@@ -53,7 +53,7 @@ export default function SelfieStarterKit() {
                   className="w-full max-w-md mx-auto"
                 />
               </div>
-              <h3 className="text-2xl mb-4 text-[#4C4B4B] font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <h3 className="text-2xl mb-4 text-[#4C4B4B] font-light" className="font-cormorant">
                 After: branded, bold, booked.
               </h3>
             </div>
@@ -61,7 +61,7 @@ export default function SelfieStarterKit() {
 
           {/* Overlay Quote */}
           <div className="text-center mt-20">
-            <blockquote className="text-3xl text-[#171719] italic leading-relaxed font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            <blockquote className="text-3xl text-[#171719] italic leading-relaxed font-light" className="font-cormorant">
               "Your camera roll tells your story. Let's rewrite it."
             </blockquote>
           </div>
@@ -71,7 +71,7 @@ export default function SelfieStarterKit() {
       {/* WHAT'S INSIDE THE KIT */}
       <section className="px-6 py-24 bg-[#4C4B4B]">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl text-center mb-20 text-white font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          <h2 className="text-5xl text-center mb-20 text-white font-light" className="font-cormorant">
             What's Inside The Kit
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -83,7 +83,7 @@ export default function SelfieStarterKit() {
               >
                 <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-white text-2xl text-center font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                  <h3 className="text-white text-2xl text-center font-light" className="font-cormorant">
                     Lighting Setup
                   </h3>
                 </div>
@@ -98,7 +98,7 @@ export default function SelfieStarterKit() {
               >
                 <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-white text-2xl text-center font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                  <h3 className="text-white text-2xl text-center font-light" className="font-cormorant">
                     Caption Scripts
                   </h3>
                 </div>
@@ -113,7 +113,7 @@ export default function SelfieStarterKit() {
               >
                 <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-white text-2xl text-center font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                  <h3 className="text-white text-2xl text-center font-light" className="font-cormorant">
                     Preset Formulas
                   </h3>
                 </div>
@@ -136,7 +136,7 @@ export default function SelfieStarterKit() {
               />
               <div className="absolute inset-0 bg-black bg-opacity-40" />
               <div className="absolute inset-0 flex items-center justify-center p-8">
-                <h3 className="text-white text-3xl lg:text-4xl text-center leading-tight font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                <h3 className="text-white text-3xl lg:text-4xl text-center leading-tight font-light" className="font-cormorant">
                   "I started with one mirror selfie at 11PM—just to feel something again."
                 </h3>
               </div>
@@ -144,10 +144,10 @@ export default function SelfieStarterKit() {
 
             {/* Text */}
             <div className="space-y-8">
-              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light" className="font-neue">
                 What came next wasn't magic—it was small steps. Lighting tricks. Posing hacks. Finally pressing POST.
               </p>
-              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+              <p className="text-xl text-[#4C4B4B] leading-relaxed font-light" className="font-neue">
                 That's what this kit gives you: a way back to yourself, one selfie at a time.
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function SelfieStarterKit() {
       {/* MIRROR SELFIE SOCIAL PROOF GRID */}
       <section className="px-6 py-24 bg-[#171719]">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl mb-12 text-white font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          <h2 className="text-5xl mb-12 text-white font-light" className="font-cormorant">
             Real moments. Real confidence. Real content.
           </h2>
 

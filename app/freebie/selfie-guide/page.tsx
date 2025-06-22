@@ -1,0 +1,381 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import { createClient } from '@/utils/supabase/client'
+
+export default function SelfieGuidePage() {
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [elementsLoaded, setElementsLoaded] = useState(false)
+
+  const supabase = createClient()
+
+  useEffect(() => {
+    const timer = setTimeout(() => setElementsLoaded(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) {
+      alert('Please enter your email address')
+      return
+    }
+
+    console.log('Form submission started:', { email, name })
+    setIsSubmitting(true)
+
+    try {
+      // Save to Supabase
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          {
+            email: email,
+            name: name || '',
+            source: 'selfie_guide',
+            created_at: new Date().toISOString()
+          }
+        ])
+
+      if (error) {
+        console.error('Supabase error:', error)
+        throw error
+      }
+
+      // Primary automation via Make.com webhook
+      console.log('Triggering Make.com automation...')
+      const webhookResponse = await fetch('https://hook.eu2.make.com/cuswnmn5rvse3u7mtc4b60pdus3ku7oe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name || '',
+          email: email
+        })
+      })
+
+      if (webhookResponse.ok) {
+        console.log('Make.com webhook triggered successfully')
+        // Redirect to thank you page
+        window.location.href = '/freebie/selfie-guide/thank-you'
+      } else {
+        console.warn('Make.com webhook failed, but lead saved to Supabase')
+        window.location.href = '/freebie/selfie-guide/thank-you'
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      // Still redirect to thank you page since we likely saved to Supabase
+      window.location.href = '/freebie/selfie-guide/thank-you'
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Font imports */}
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@100;200;300;400;500&display=swap" 
+        rel="stylesheet" 
+      />
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        .font-bordoni { font-family: 'Bodoni Moda', serif; }
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-neue { font-family: 'Inter', sans-serif; }
+
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+
+        @keyframes fadeInScale {
+          from { 
+            opacity: 0; 
+            transform: scale(0.95);
+          }
+          to { 
+            opacity: 1; 
+            transform: scale(1);
+          }
+        }
+
+        .animate-shimmer {
+          animation: shimmer 3s infinite;
+        }
+
+        .animate-fadeInScale {
+          animation: fadeInScale 0.8s ease-out forwards;
+        }
+      `}</style>
+
+      {/* Premium loading line */}
+      <div className="fixed top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#171719]/20 to-transparent animate-shimmer z-50"></div>
+
+      {/* Hero Section - Editorial Impact */}
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
+        {/* Background gradient for luxury depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F1F1F1] via-white to-[#F1F1F1]"></div>
+
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.015]" 
+          style={{ 
+            backgroundImage: 'repeating-linear-gradient(45deg, #171719 0, #171719 1px, transparent 1px, transparent 20px)' 
+          }}
+        ></div>
+
+        {/* Large decorative number */}
+        <div className="absolute -right-20 top-0 font-cormorant text-[400px] md:text-[600px] leading-none text-[#171719]/[0.02] select-none pointer-events-none">
+          01
+        </div>
+
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              {/* Small accent */}
+              <div className={`mb-8 transition-all duration-1000 ease-out transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="font-neue text-[11px] uppercase tracking-[0.35em] text-[#4C4B4B]">
+                  Free Guide — Start Today
+                </p>
+              </div>
+
+              {/* Headline */}
+              <h1 className={`font-cormorant text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.9] text-[#171719] mb-8 transition-all duration-1000 ease-out delay-200 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                Not loving your selfies?
+                <span className="block font-bordoni italic font-light text-[#4C4B4B]/80 text-[40px] sm:text-[56px] md:text-[72px] lg:text-[88px] mt-2">
+                  Let's change that.
+                </span>
+              </h1>
+
+              {/* What they'll get */}
+              <div className={`space-y-6 mb-12 transition-all duration-1000 ease-out delay-400 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="font-neue text-[18px] md:text-[20px] leading-[1.6] text-[#171719]/80">
+                  This free guide shows you how to take better selfies—with just your phone. No filters. No weird angles. No second guessing.
+                </p>
+
+                <div className="space-y-4 ml-0 md:ml-8">
+                  <p className="font-neue text-[16px] md:text-[18px] text-[#4C4B4B] mb-6">
+                    Inside, I'll show you:
+                  </p>
+
+                  {[
+                    'The camera settings that make a big difference',
+                    'How to get good lighting (yes, even indoors)',
+                    'Easy editing tips to make your photos pop',
+                    'A 7-day challenge to boost your confidence'
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-4 group">
+                      <span className="font-neue text-[14px] text-[#171719]/40 mt-1">✓</span>
+                      <p className="font-neue text-[16px] md:text-[17px] leading-relaxed text-[#171719]/70 group-hover:text-[#171719] transition-colors duration-300">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="font-bordoni text-[22px] md:text-[26px] text-[#171719] mt-8 italic">
+                  It's simple. It works. And you'll actually like how you look.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Content - Form */}
+            <div className="lg:col-span-5">
+              <div className={`bg-[#F1F1F1] p-8 md:p-12 border border-[#171719]/10 transition-all duration-1000 ease-out delay-600 transform ${elementsLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                {/* Mini about */}
+                <div className="mb-10">
+                  <div className="w-16 h-px bg-[#171719]/20 mb-6"></div>
+                  <p className="font-neue text-[15px] md:text-[16px] leading-relaxed text-[#4C4B4B]">
+                    I created this because I used to hate every photo of myself. Now? I take selfies I'm proud to post—and help other women do the same. This is where we start.
+                  </p>
+                </div>
+
+                {/* Form */}
+                {!showSuccess ? (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your first name"
+                        className="w-full px-0 py-4 text-[18px] bg-transparent border-0 border-b-2 border-[#171719]/20 placeholder:text-[#B5B5B3] focus:border-[#171719] focus:outline-none font-neue transition-colors duration-300"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Your best email"
+                        required
+                        className="w-full px-0 py-4 text-[18px] bg-transparent border-0 border-b-2 border-[#171719]/20 placeholder:text-[#B5B5B3] focus:border-[#171719] focus:outline-none font-neue transition-colors duration-300"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#171719] text-white py-5 font-neue text-[11px] uppercase tracking-[0.3em] transition-all duration-500 hover:bg-[#171719]/90 disabled:opacity-50 relative overflow-hidden group"
+                    >
+                      <span className="relative z-10">
+                        {isSubmitting ? 'SENDING...' : 'GET INSTANT ACCESS'}
+                      </span>
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </button>
+                  </form>
+                ) : (
+                  <div className="text-center py-8 animate-fadeInScale">
+                    <div className="w-16 h-16 bg-[#171719] flex items-center justify-center mx-auto mb-6">
+                      <span className="text-white text-2xl">✓</span>
+                    </div>
+                    <p className="font-bordoni text-[24px] text-[#171719] mb-2">
+                      Check your inbox!
+                    </p>
+                    <p className="font-neue text-[14px] text-[#4C4B4B]">
+                      Your guide is on its way.
+                    </p>
+                  </div>
+                )}
+
+                {/* Trust elements */}
+                <div className="mt-8 pt-8 border-t border-[#171719]/10">
+                  <p className="font-neue text-[11px] text-[#B5B5B3] text-center uppercase tracking-[0.2em]">
+                    Join 20,000+ women building personal brands with confidence
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#171719]/10 to-transparent"></div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F1F1F1]/50 to-transparent"></div>
+
+        <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24">
+          {/* Section header */}
+          <div className="text-center mb-16 md:mb-24">
+            <div className="font-cormorant text-[120px] md:text-[180px] leading-none text-[#171719]/[0.03] select-none">
+              Love
+            </div>
+            <h2 className="font-bordoni text-[36px] md:text-[48px] text-[#171719] -mt-16 md:-mt-24">
+              What They're Saying
+            </h2>
+          </div>
+
+          {/* Testimonials Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#171719]/10 max-w-6xl mx-auto">
+            {[
+              '"I\'ve taken some of my best selfies thanks to you."',
+              '"You made me stop using filters. I actually like what I see now."',
+              '"Your tips turned my boring selfies into real photos I\'m proud of."',
+              '"Love how you show the actual camera settings—so helpful"',
+              '"This gave me the push to show up more."'
+            ].map((quote, index) => (
+              <div key={index} className="bg-white p-8 md:p-10 group hover:bg-[#F1F1F1] transition-all duration-500">
+                <p className="font-neue text-[16px] md:text-[18px] leading-relaxed text-[#171719]/70 group-hover:text-[#171719] transition-colors duration-300">
+                  {quote}
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#171719]/10"></div>
+                  <div className="font-neue text-[11px] uppercase tracking-[0.2em] text-[#B5B5B3]">
+                    Verified
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Empty cell for layout on desktop */}
+            <div className="hidden lg:block bg-[#171719] p-10 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+              <div className="relative z-10">
+                <p className="font-bordoni text-[28px] text-white italic">
+                  Join them.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Step Teaser */}
+      <section className="py-24 md:py-40 bg-[#171719] text-white relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E")` 
+          }}
+        ></div>
+
+        {/* Large background text */}
+        <div className="absolute -left-20 top-1/2 transform -translate-y-1/2 font-cormorant text-[300px] md:text-[500px] leading-none text-white/[0.02] select-none pointer-events-none">
+          AI
+        </div>
+
+        <div className="relative z-10 max-w-[1000px] mx-auto px-6 sm:px-8 md:px-16 text-center">
+          <div className="mb-8">
+            <p className="font-neue text-[11px] uppercase tracking-[0.35em] text-white/60 mb-8">
+              What Happens Next
+            </p>
+
+            <h3 className="font-bordoni text-[32px] sm:text-[40px] md:text-[56px] leading-tight mb-8">
+              Your selfie transformation
+              <span className="block font-bordoni italic font-light">starts here</span>
+            </h3>
+
+            <p className="font-neue text-[18px] md:text-[20px] leading-relaxed text-white/80 max-w-2xl mx-auto">
+              Once you master the guide, you'll unlock AI-powered tools to turn your selfies into a personal brand that gets noticed, trusted, and followed.
+            </p>
+          </div>
+
+          {/* Visual element */}
+          <div className="mt-16 flex justify-center">
+            <div className="relative">
+              <div className="w-32 h-32 border border-white/20 rotate-45 animate-spin-slow"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-white"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simple Footer */}
+      <footer className="py-12 bg-white border-t border-[#171719]/10">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 lg:px-24 text-center">
+          <img 
+            src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" 
+            alt="SELFIE AI™" 
+            className="h-8 mx-auto mb-6 opacity-80 invert"
+          />
+          <p className="font-neue text-[11px] uppercase tracking-[0.2em] text-[#B5B5B3]">
+            © 2024 Selfie AI™ by Sandra Sigurjonsdottir
+          </p>
+        </div>
+      </footer>
+
+      <style>{`
+        @keyframes spin-slow {
+          from { transform: rotate(45deg); }
+          to { transform: rotate(405deg); }
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}</style>
+    </div>
+  )
+}

@@ -398,7 +398,7 @@ export default function MonthlyDrops() {
                             <Calendar className="w-8 h-8 mx-auto mb-2" />
                             <p 
                               className="text-sm uppercase tracking-wide"
-                              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                              className="font-neue"
                             >
                               Coming {drop.availableFrom.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </p>
@@ -408,7 +408,7 @@ export default function MonthlyDrops() {
                             <Lock className="w-8 h-8 mx-auto mb-2" />
                             <p 
                               className="text-sm uppercase tracking-wide"
-                              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                              className="font-neue"
                             >
                               Unlock with Plan
                             </p>

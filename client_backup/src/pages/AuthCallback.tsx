@@ -39,13 +39,13 @@ export default function AuthCallback() {
         <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#171719]" />
         <h2 
           className="text-2xl font-normal text-[#171719]" 
-          style={{ fontFamily: 'Cormorant Garamond, serif' }}
+          className="font-cormorant"
         >
           Signing you in...
         </h2>
         <p 
           className="text-[#4C4B4B] font-light leading-relaxed" 
-          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+          className="font-neue"
         >
           Please wait while we complete your authentication.
         </p>

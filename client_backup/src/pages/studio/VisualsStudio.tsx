@@ -74,7 +74,7 @@ export default function VisualsStudio() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Selfie Editor
           </h1>

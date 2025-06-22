@@ -147,7 +147,7 @@ export default function Calendar() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#171719] mx-auto"></div>
           <p 
             className="text-sm text-[#4C4B4B]"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Loading calendar...
           </p>
@@ -174,14 +174,14 @@ export default function Calendar() {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 
             className="text-6xl md:text-7xl font-normal text-white leading-tight mb-6"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Plan Your Empire, Day by Day
           </h1>
           <div className="w-24 h-px bg-[#4C4B4B] mx-auto mb-8" />
           <p 
             className="text-lg font-light text-white max-w-3xl mx-auto leading-relaxed"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             A visual flow for building consistency and confidence. Your content calendar becomes your strategic advantage.
           </p>
@@ -193,7 +193,7 @@ export default function Calendar() {
         <div className="container mx-auto px-4">
           <h2 
             className="text-4xl font-normal italic text-[#171719] mb-8"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Consistency is your new superpower.
           </h2>
@@ -210,7 +210,7 @@ export default function Calendar() {
               <CardHeader className="text-center pb-8">
                 <CardTitle 
                   className="text-3xl font-normal text-[#171719] mb-4"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Select Date
                 </CardTitle>
@@ -232,7 +232,7 @@ export default function Calendar() {
                 <div className="flex items-center justify-between">
                   <CardTitle 
                     className="text-3xl font-normal text-[#171719]"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className="font-cormorant"
                   >
                     Quick Actions
                   </CardTitle>
@@ -256,7 +256,7 @@ export default function Calendar() {
                       <DialogHeader>
                         <DialogTitle 
                           className="text-xl font-normal text-[#171719]"
-                          style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                          className="font-cormorant"
                         >
                           Add New Entry
                         </DialogTitle>
@@ -266,7 +266,7 @@ export default function Calendar() {
                           <Label 
                             htmlFor="day" 
                             className="text-sm font-medium text-[#171719]"
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             Day
                           </Label>
@@ -286,7 +286,7 @@ export default function Calendar() {
                           <Label 
                             htmlFor="content" 
                             className="text-sm font-medium text-[#171719]"
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             Content
                           </Label>
@@ -304,7 +304,7 @@ export default function Calendar() {
                           <Label 
                             htmlFor="hook" 
                             className="text-sm font-medium text-[#171719]"
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             Hook (Optional)
                           </Label>
@@ -321,7 +321,7 @@ export default function Calendar() {
                           <Label 
                             htmlFor="hashtags" 
                             className="text-sm font-medium text-[#171719]"
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             Hashtags (Optional)
                           </Label>
@@ -373,7 +373,7 @@ export default function Calendar() {
                 <div className="text-center py-8">
                   <p 
                     className="text-[#4C4B4B] font-light leading-relaxed"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Use the button above to add new content to your calendar
                   </p>
@@ -391,14 +391,14 @@ export default function Calendar() {
             <div className="text-center mb-20">
               <h2 
                 className="text-4xl font-normal text-white mb-8"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Your Content Week
               </h2>
               <div className="w-32 h-px bg-[#4C4B4B] mx-auto mb-8" />
               <p 
                 className="text-lg font-light text-white max-w-2xl mx-auto leading-relaxed"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Your weekly editorial calendar, designed for strategic consistency.
               </p>
@@ -414,7 +414,7 @@ export default function Calendar() {
                   <CardHeader className="pb-4">
                     <CardTitle 
                       className="text-xl text-center uppercase tracking-wide text-[#171719]"
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       {day}
                     </CardTitle>
@@ -433,21 +433,21 @@ export default function Calendar() {
                               <Button
                                 onClick={() => deleteEntry(entry.id)}
                                 className="text-[#4C4B4B] hover:text-[#171719] h-auto p-1 bg-transparent"
-                                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                                className="font-neue"
                               >
                                 ×
                               </Button>
                             </div>
                             <p 
                               className="text-sm leading-relaxed mb-3 text-[#171719]"
-                              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                              className="font-neue"
                             >
                               {entry.contentText}
                             </p>
                             {entry.hookText && (
                               <p 
                                 className="text-xs font-medium italic mb-2 text-[#171719]"
-                                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                                className="font-neue"
                               >
                                 Hook: {entry.hookText}
                               </p>
@@ -455,7 +455,7 @@ export default function Calendar() {
                             {entry.hashtags && (
                               <p 
                                 className="text-xs text-[#4C4B4B]"
-                                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                                className="font-neue"
                               >
                                 {entry.hashtags}
                               </p>
@@ -467,7 +467,7 @@ export default function Calendar() {
                       <div className="text-center py-8">
                         <p 
                           className="text-sm text-[#4C4B4B] font-light"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           No content planned
                         </p>
@@ -487,21 +487,21 @@ export default function Calendar() {
           <div className="container mx-auto">
             <h3 
               className="text-4xl font-normal text-[#171719] mb-8"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               Your Calendar Awaits
             </h3>
             <div className="w-32 h-px bg-[#4C4B4B] mx-auto mb-8" />
             <p 
               className="text-lg text-[#4C4B4B] max-w-lg mx-auto mb-12 leading-relaxed"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               Start planning your content strategy by adding your first entry above. Your future self will thank you.
             </p>
             <div className="mt-12">
               <p 
                 className="text-sm italic text-[#4C4B4B]"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Build your empire, one post at a time
               </p>

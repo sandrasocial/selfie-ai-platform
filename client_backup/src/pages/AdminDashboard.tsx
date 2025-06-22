@@ -105,20 +105,20 @@ export default function AdminDashboard() {
           <Crown className="w-16 h-16 mx-auto mb-4 text-[#171719]" />
           <h2 
             className="text-3xl font-normal text-[#171719] mb-2" 
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Access Denied
           </h2>
           <p 
             className="text-[#4C4B4B] mb-6 font-light" 
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             This area is restricted to authorized personnel only.
           </p>
           <Button 
             onClick={() => window.location.href = '/temp-admin'}
             className="bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white uppercase tracking-wide"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Admin Login
           </Button>
@@ -146,26 +146,26 @@ export default function AdminDashboard() {
               <div>
                 <h1 
                   className="text-5xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Welcome back, Sandra <Crown className="inline w-8 h-8 ml-2" />
                 </h1>
                 <p 
                   className="text-[#4C4B4B] mt-2 text-lg font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   {today}
                 </p>
                 <p 
                   className="text-[#171719] mt-1 italic font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   "Today you're building an empire, not just a business."
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   <div 
                     className="flex items-center gap-2 text-sm text-[#4C4B4B] font-light" 
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     <CalendarIcon className="w-4 h-4" />
                     <span>Current Range: {customDateRange.start} to {customDateRange.end}</span>
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
                     size="sm"
                     onClick={() => setShowCustomDates(!showCustomDates)}
                     className="text-xs border-[#B5B5B3] text-[#4C4B4B] hover:border-[#171719] hover:text-[#171719] uppercase tracking-wide"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     <CalendarIcon className="w-3 h-3 mr-1" />
                     Custom Dates
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                     variant={timeframe === 'week' ? 'default' : 'outline'}
                     onClick={() => setTimeframe('week')}
                     className={`${timeframe === 'week' ? 'bg-[#171719] text-white' : 'bg-transparent text-[#171719] border-[#B5B5B3]'} hover:bg-[#171719] hover:text-white uppercase tracking-wide`}
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Week
                   </Button>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                     variant={timeframe === 'month' ? 'default' : 'outline'}
                     onClick={() => setTimeframe('month')}
                     className={`${timeframe === 'month' ? 'bg-[#171719] text-white' : 'bg-transparent text-[#171719] border-[#B5B5B3]'} hover:bg-[#171719] hover:text-white uppercase tracking-wide`}
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Month
                   </Button>
@@ -204,7 +204,7 @@ export default function AdminDashboard() {
                     variant={timeframe === 'quarter' ? 'default' : 'outline'}
                     onClick={() => setTimeframe('quarter')}
                     className={`${timeframe === 'quarter' ? 'bg-[#171719] text-white' : 'bg-transparent text-[#171719] border-[#B5B5B3]'} hover:bg-[#171719] hover:text-white uppercase tracking-wide`}
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Quarter
                   </Button>
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                       'bg-transparent border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white'} 
                     text-white transition-colors duration-200 uppercase tracking-wide border-2
                   `}
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   {syncStatus === 'syncing' && <RefreshCw className="w-4 h-4 mr-2 animate-spin" />}
                   {syncStatus === 'success' && <CheckCircle className="w-4 h-4 mr-2" />}
@@ -238,7 +238,7 @@ export default function AdminDashboard() {
                     <Label 
                       htmlFor="start-date" 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Start Date
                     </Label>
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
                     <Label 
                       htmlFor="end-date" 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       End Date
                     </Label>
@@ -272,7 +272,7 @@ export default function AdminDashboard() {
                       setShowCustomDates(false);
                     }}
                     className="bg-[#171719] text-white hover:bg-[#4C4B4B] uppercase tracking-wide"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Apply Dates
                   </Button>
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle 
                   className="text-sm font-light text-[#4C4B4B] uppercase tracking-wide" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Total Revenue
                 </CardTitle>
@@ -298,13 +298,13 @@ export default function AdminDashboard() {
               <CardContent>
                 <div 
                   className="text-2xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   ${dashboardData?.revenue?.total || 0}
                 </div>
                 <p 
                   className="text-xs text-[#4C4B4B] font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   +{dashboardData?.revenue?.growth || 0}% from last {timeframe}
                 </p>
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle 
                   className="text-sm font-light text-[#4C4B4B] uppercase tracking-wide" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Selfie Starter Kit
                 </CardTitle>
@@ -324,13 +324,13 @@ export default function AdminDashboard() {
               <CardContent>
                 <div 
                   className="text-2xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   ${dashboardData?.revenue?.starterkit || 0}
                 </div>
                 <p 
                   className="text-xs text-[#4C4B4B] font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Starter kit sales this {timeframe}
                 </p>
@@ -341,7 +341,7 @@ export default function AdminDashboard() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle 
                   className="text-sm font-light text-[#4C4B4B] uppercase tracking-wide" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Lightroom Presets
                 </CardTitle>
@@ -350,13 +350,13 @@ export default function AdminDashboard() {
               <CardContent>
                 <div 
                   className="text-2xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   ${dashboardData?.revenue?.presets || 0}
                 </div>
                 <p 
                   className="text-xs text-[#4C4B4B] font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Preset pack sales this {timeframe}
                 </p>
@@ -367,7 +367,7 @@ export default function AdminDashboard() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle 
                   className="text-sm font-light text-[#4C4B4B] uppercase tracking-wide" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Branded by Selfie
                 </CardTitle>
@@ -376,13 +376,13 @@ export default function AdminDashboard() {
               <CardContent>
                 <div 
                   className="text-2xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   ${dashboardData?.revenue?.SelfietoCEO || 0}
                 </div>
                 <p 
                   className="text-xs text-[#4C4B4B] font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   Premium course sales this {timeframe}
                 </p>
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
               <CardHeader>
                 <CardTitle 
                   className="text-2xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Financial Overview
                 </CardTitle>
@@ -406,13 +406,13 @@ export default function AdminDashboard() {
                   <div>
                     <p 
                       className="text-sm text-[#4C4B4B] uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Total Revenue
                     </p>
                     <p 
                       className="text-2xl font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       ${dashboardData?.financials?.totalRevenue || 0}
                     </p>
@@ -420,13 +420,13 @@ export default function AdminDashboard() {
                   <div>
                     <p 
                       className="text-sm text-[#4C4B4B] uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       VAT to Pay
                     </p>
                     <p 
                       className="text-2xl font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       ${dashboardData?.financials?.vatToPay || 0}
                     </p>
@@ -434,13 +434,13 @@ export default function AdminDashboard() {
                   <div>
                     <p 
                       className="text-sm text-[#4C4B4B] uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Tax Reserve
                     </p>
                     <p 
                       className="text-2xl font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       ${dashboardData?.financials?.taxReserve || 0}
                     </p>
@@ -448,13 +448,13 @@ export default function AdminDashboard() {
                   <div>
                     <p 
                       className="text-sm text-[#4C4B4B] uppercase tracking-wide font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Net Profit
                     </p>
                     <p 
                       className="text-2xl font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       ${dashboardData?.financials?.netProfit || 0}
                     </p>
@@ -467,7 +467,7 @@ export default function AdminDashboard() {
               <CardHeader>
                 <CardTitle 
                   className="text-xl font-normal text-[#171719] flex items-center" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   Upcoming Payments
@@ -481,13 +481,13 @@ export default function AdminDashboard() {
                         <div>
                           <p 
                             className="font-light text-[#171719]" 
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             {payment.description}
                           </p>
                           <p 
                             className="text-sm text-[#4C4B4B] font-light" 
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             {payment.dueDate}
                           </p>
@@ -501,7 +501,7 @@ export default function AdminDashboard() {
                 ) : (
                   <p 
                     className="text-[#4C4B4B] font-light" 
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     No upcoming payments
                   </p>
@@ -515,7 +515,7 @@ export default function AdminDashboard() {
             <CardHeader>
               <CardTitle 
                 className="text-xl font-normal text-[#171719] flex items-center" 
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 <AlertTriangle className="w-5 h-5 mr-2 text-[#4C4B4B]" />
                 Unpaid Invoices
@@ -529,13 +529,13 @@ export default function AdminDashboard() {
                       <div>
                         <p 
                           className="font-light text-[#171719]" 
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {invoice.customerName}
                         </p>
                         <p 
                           className="text-sm text-[#4C4B4B] font-light" 
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           Due: {invoice.dueDate}
                         </p>
@@ -549,7 +549,7 @@ export default function AdminDashboard() {
               ) : (
                 <p 
                   className="text-[#4C4B4B] font-light" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   All invoices are paid
                 </p>
@@ -563,7 +563,7 @@ export default function AdminDashboard() {
               <CardHeader>
                 <CardTitle 
                   className="text-xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Content Performance
                 </CardTitle>
@@ -573,13 +573,13 @@ export default function AdminDashboard() {
                   <div className="flex justify-between">
                     <span 
                       className="text-[#4C4B4B] font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Total Posts Generated
                     </span>
                     <span 
                       className="font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       {dashboardData?.content?.totalPosts || 0}
                     </span>
@@ -587,13 +587,13 @@ export default function AdminDashboard() {
                   <div className="flex justify-between">
                     <span 
                       className="text-[#4C4B4B] font-light" 
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Average Engagement
                     </span>
                     <span 
                       className="font-normal text-[#171719]" 
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       {dashboardData?.content?.avgEngagement || 0}%
                     </span>
@@ -606,7 +606,7 @@ export default function AdminDashboard() {
               <CardHeader>
                 <CardTitle 
                   className="text-xl font-normal text-[#171719]" 
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Quick Actions
                 </CardTitle>
@@ -624,7 +624,7 @@ export default function AdminDashboard() {
                       variant="outline"
                       className="h-16 flex flex-col items-center justify-center border-[#B5B5B3] hover:border-[#171719] text-[#4C4B4B] hover:text-[#171719] uppercase tracking-wide"
                       onClick={() => window.open(link.url, '_blank')}
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       <ExternalLink className="w-4 h-4 mb-1" />
                       <span className="text-sm">{link.name}</span>
@@ -640,7 +640,7 @@ export default function AdminDashboard() {
             <CardHeader>
               <CardTitle 
                 className="text-xl font-normal text-[#171719]" 
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Recent Activity
               </CardTitle>
@@ -654,13 +654,13 @@ export default function AdminDashboard() {
                       <div>
                         <p 
                           className="font-light text-[#171719]" 
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {activity.action}
                         </p>
                         <p 
                           className="text-sm text-[#4C4B4B] font-light" 
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {activity.timestamp}
                         </p>
@@ -673,7 +673,7 @@ export default function AdminDashboard() {
                 ) : (
                   <p 
                     className="text-[#4C4B4B] font-light" 
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     No recent activity
                   </p>

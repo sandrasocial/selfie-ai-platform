@@ -208,13 +208,13 @@ export default function BrandNotes() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 
             className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-[#171719]"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Brand Notes
           </h1>
           <p 
             className="text-lg text-[#4C4B4B] mb-8 max-w-2xl mx-auto"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Capture your brand insights with intelligent auto-tagging. 
             Organize thoughts, strategies, and creative sparks in one centralized space.
@@ -336,7 +336,7 @@ export default function BrandNotes() {
                 {/* Auto-suggested Tags */}
                 {autoSuggestedTags.length > 0 && (
                   <div>
-                    <p className="text-sm text-[#4C4B4B] mb-2" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+                    <p className="text-sm text-[#4C4B4B] mb-2" className="font-neue">
                       Suggested tags:
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
@@ -468,7 +468,7 @@ export default function BrandNotes() {
                       <div className="flex justify-between items-start mb-3">
                         <h3 
                           className="text-lg font-medium text-[#171719] line-clamp-2"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {note.title}
                         </h3>
@@ -494,7 +494,7 @@ export default function BrandNotes() {
                       
                       <p 
                         className="text-[#4C4B4B] text-sm mb-4 line-clamp-4"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         {note.content}
                       </p>
@@ -525,7 +525,7 @@ export default function BrandNotes() {
             <div className="text-center py-20">
               <p 
                 className="text-lg text-[#4C4B4B] mb-4"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 {searchQuery || categoryFilter !== 'all' || tagFilter !== 'all' 
                   ? 'No notes match your current filters' 
@@ -534,7 +534,7 @@ export default function BrandNotes() {
               </p>
               <p 
                 className="text-sm text-[#4C4B4B]"
-                style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                className="font-neue"
               >
                 Start capturing your brand insights and watch the auto-tagging magic happen
               </p>

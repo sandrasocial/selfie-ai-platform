@@ -233,7 +233,7 @@ const BrandHubOnboarding = () => {
                       <div>
                         <div 
                           className="font-medium mb-1"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {option.value}
                         </div>
@@ -270,7 +270,7 @@ const BrandHubOnboarding = () => {
                       <div>
                         <div 
                           className="font-medium mb-1"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {option.value}
                         </div>
@@ -336,7 +336,7 @@ const BrandHubOnboarding = () => {
                       <div>
                         <div 
                           className="font-medium"
-                          style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                          className="font-neue"
                         >
                           {option.value}
                         </div>

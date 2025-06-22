@@ -89,13 +89,13 @@ export default function VIPApplication() {
         <div className="max-w-4xl mx-auto">
           <h1 
             className="text-5xl lg:text-6xl font-normal text-[#171719] mb-6" 
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Empire Builder VIP Application
           </h1>
           <p 
             className="text-xl text-[#4C4B4B] font-light max-w-2xl mx-auto leading-relaxed" 
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Submit your details below and tell us about the empire you're building. We'll review your application and follow up personally.
           </p>
@@ -109,7 +109,7 @@ export default function VIPApplication() {
             <CardHeader className="text-center pb-8">
               <CardTitle 
                 className="text-3xl font-normal text-[#171719]" 
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Tell Us About Your Brand
               </CardTitle>
@@ -122,7 +122,7 @@ export default function VIPApplication() {
                     <Label 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                       htmlFor="fullName"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Full Name *
                     </Label>
@@ -138,7 +138,7 @@ export default function VIPApplication() {
                     <Label 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                       htmlFor="email"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Email Address *
                     </Label>
@@ -158,7 +158,7 @@ export default function VIPApplication() {
                     <Label 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                       htmlFor="instagram"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Instagram Handle
                     </Label>
@@ -174,7 +174,7 @@ export default function VIPApplication() {
                     <Label 
                       className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                       htmlFor="website"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Website (Optional)
                     </Label>
@@ -192,7 +192,7 @@ export default function VIPApplication() {
                   <Label 
                     className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                     htmlFor="currentBusiness"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Your Current Brand *
                   </Label>
@@ -209,7 +209,7 @@ export default function VIPApplication() {
                   <Label 
                     className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                     htmlFor="whyVIP"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Why VIP Mentorship? *
                   </Label>
@@ -226,7 +226,7 @@ export default function VIPApplication() {
                   <Label 
                     className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                     htmlFor="goals"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Your 6–12 Month Goals *
                   </Label>
@@ -243,7 +243,7 @@ export default function VIPApplication() {
                   <Label 
                     className="text-[#4C4B4B] text-sm uppercase tracking-wide font-normal" 
                     htmlFor="budget"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Investment Range *
                   </Label>
@@ -264,7 +264,7 @@ export default function VIPApplication() {
                     type="submit"
                     disabled={applicationMutation.isPending}
                     className="w-full bg-transparent border-2 border-[#171719] text-[#171719] hover:bg-[#171719] hover:text-white text-sm uppercase tracking-wide py-4 font-light transition-all duration-300"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     {applicationMutation.isPending ? "SUBMITTING..." : "SEND MY APPLICATION"}
                   </Button>
@@ -272,7 +272,7 @@ export default function VIPApplication() {
 
                 <p 
                   className="text-center text-sm text-[#4C4B4B] font-light pt-4 leading-relaxed" 
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   We'll review your application and contact you within 48 hours if accepted.
                 </p>

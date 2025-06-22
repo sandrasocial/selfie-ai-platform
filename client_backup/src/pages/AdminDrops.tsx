@@ -238,7 +238,7 @@ export default function AdminDrops() {
                       onChange={(e) => handleInputChange('title', e.target.value)}
                       placeholder="Visual Confidence Templates"
                       className="border-0 border-b border-gray-300 rounded-none bg-transparent px-0 py-3 focus:border-black"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ export default function AdminDrops() {
                       placeholder="Instagram story templates designed to boost your camera confidence..."
                       rows={4}
                       className="border border-gray-300 rounded-none resize-none"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     />
                   </div>
 
@@ -347,7 +347,7 @@ export default function AdminDrops() {
                     {uploadedFile && (
                       <p 
                         className="text-sm text-green-600"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         File selected: {uploadedFile.name}
                       </p>
@@ -369,7 +369,7 @@ export default function AdminDrops() {
                       onChange={(e) => handleInputChange('notionUrl', e.target.value)}
                       placeholder="https://notion.so/your-drop-url"
                       className="border-0 border-b border-gray-300 rounded-none bg-transparent px-0 py-3 focus:border-black"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     />
                   </div>
                 </div>
@@ -448,7 +448,7 @@ export default function AdminDrops() {
                       value={formData.releaseDate}
                       onChange={(e) => handleInputChange('releaseDate', e.target.value)}
                       className="border-0 border-b border-gray-300 rounded-none bg-transparent px-0 py-3 focus:border-black"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     />
                   </div>
 
@@ -522,7 +522,7 @@ export default function AdminDrops() {
                         {formData.description && (
                           <p 
                             className="text-sm text-gray-600"
-                            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                            className="font-neue"
                           >
                             {formData.description}
                           </p>
@@ -531,7 +531,7 @@ export default function AdminDrops() {
                         {formData.releaseDate && (
                           <div className="flex items-center gap-2 text-sm text-gray-500">
                             <Calendar className="w-4 h-4" />
-                            <span style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+                            <span className="font-neue">
                               {new Date(formData.releaseDate).toLocaleDateString()}
                             </span>
                           </div>

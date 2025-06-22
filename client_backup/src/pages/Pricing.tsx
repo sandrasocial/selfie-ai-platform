@@ -130,10 +130,10 @@ export default function Pricing() {
               <Card key={index} className="border border-black">
                 <CardHeader className="p-10">
                   <div className="text-center">
-                    <div className="text-4xl font-light mb-2 text-black" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <div className="text-4xl font-light mb-2 text-black" className="font-cormorant">
                       {plan.price}
                     </div>
-                    <div className="text-sm text-gray-500 uppercase tracking-wide mb-6" style={{ fontFamily: 'Neue Einstellung, sans-serif' }}>
+                    <div className="text-sm text-gray-500 uppercase tracking-wide mb-6" className="font-neue">
                       {plan.period}
                     </div>
                     <CardTitle className="font-['Cormorant Garamond'] text-2xl uppercase mb-4 tracking-wide">

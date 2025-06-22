@@ -76,7 +76,7 @@ export default function DailyBoost() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Daily Upload Boost
           </h1>
@@ -98,14 +98,14 @@ export default function DailyBoost() {
               <div className="p-12">
                 <h3 
                   className="text-3xl mb-6 uppercase tracking-wide text-[#171719]"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Daily Inspiration
                 </h3>
                 <div className="w-16 h-px mb-8 bg-[#171719]"></div>
                 <blockquote 
                   className="text-xl mb-8 italic leading-relaxed text-[#4C4B4B]"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   "{currentQuote}"
                 </blockquote>
@@ -136,7 +136,7 @@ export default function DailyBoost() {
             </p>
             <div 
               className="text-4xl mb-2 text-[#171719]"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               7 Days
             </div>

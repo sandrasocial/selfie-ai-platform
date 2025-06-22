@@ -194,7 +194,7 @@ function Home() {
         body: JSON.stringify({ email, source: 'homepage' }),
       });
       if (response.ok) {
-        setSubmitMessage('Check your email for your free guide!');
+        setSubmitMessage('Check your email for your free guide.');
         setEmail('');
         gtag('event', 'conversion', {
           send_to: 'SELFIE_AI/homepage_signup',
@@ -385,11 +385,11 @@ function Home() {
               <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="SELFIE AI Logo" className="h-8" />
             </div>
             <div className="hidden md:flex items-center gap-12">
-              <a href="/about" className="font-inter text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">About</a>
-              <a href="/tools" className="font-inter text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">Tools</a>
-              <a href="/stories" className="font-inter text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">Stories</a>
+              <a href="/about" className="font-neue text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">About</a>
+              <a href="/tools" className="font-neue text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">Tools</a>
+              <a href="/stories" className="font-neue text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">Stories</a>
             </div>
-            <a href="/start-here" className="hidden md:inline-block bg-white text-[#171719] px-8 py-3 font-inter text-[11px] uppercase tracking-[0.3em] hover:bg-[#F1F1F1] transition-colors" aria-label="Navigate to start page">
+            <a href="/start-here" className="hidden md:inline-block bg-white text-[#171719] px-8 py-3 font-neue text-[11px] uppercase tracking-[0.3em] hover:bg-[#F1F1F1] transition-colors" aria-label="Navigate to start page">
               Let's Begin
             </a>
             {/* Hamburger for mobile */}
@@ -433,17 +433,17 @@ function Home() {
               </p>
 
               {/* Main headline with proper typography */}
-              <h1 className="font-bodoni text-[48px] sm:text-[72px] md:text-[96px] lg:text-[144px] leading-[0.85] text-white mb-8">
+              <h1 className="font-cormorant text-[48px] sm:text-[72px] md:text-[96px] lg:text-[144px] leading-[0.85] text-white mb-8">
                 Your selfie<br className="hidden sm:block"/>
                 is your brand
               </h1>
 
               {/* Subheadline with better spacing */}
               <div className="space-y-4 mb-12 max-w-2xl">
-                <p className="font-inter text-[20px] leading-relaxed text-white/80 italic">
+                <p className="font-neue text-[20px] leading-relaxed text-white/80 italic">
                   You don't need another course telling you to "just be yourself."
                 </p>
-                <p className="font-inter text-[20px] leading-relaxed text-white/80">
+                <p className="font-neue text-[20px] leading-relaxed text-white/80">
                   You need a strategy that works with who you already are.
                 </p>
               </div>

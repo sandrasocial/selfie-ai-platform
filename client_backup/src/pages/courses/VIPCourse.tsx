@@ -148,7 +148,7 @@ export default function VIPCourse() {
       <section className="py-20 px-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-light italic text-[#171719] mb-6" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            <h2 className="text-5xl font-light italic text-[#171719] mb-6" className="font-cormorant">
               Your Empire Building Journey
             </h2>
             <p className="text-lg text-[#4C4B4B] max-w-3xl mx-auto" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300 }}>
@@ -206,7 +206,7 @@ export default function VIPCourse() {
                     <div className="text-4xl mb-4">{stage.icon}</div>
                     <CardTitle 
                       className="text-xl text-[#171719] font-light"
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       {stage.title}
                     </CardTitle>
@@ -248,7 +248,7 @@ export default function VIPCourse() {
             <div className="mt-16 text-center">
               <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg p-8 max-w-2xl mx-auto">
                 <Crown className="w-12 h-12 text-[#B5B5B3] mx-auto mb-4" />
-                <h3 className="text-2xl font-light text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                <h3 className="text-2xl font-light text-[#171719] mb-4" className="font-cormorant">
                   Application Under Review
                 </h3>
                 <p className="text-[#4C4B4B]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300 }}>
@@ -263,7 +263,7 @@ export default function VIPCourse() {
             <div className="mt-16 text-center">
               <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg p-8 max-w-2xl mx-auto">
                 <Crown className="w-12 h-12 text-[#4C4B4B] mx-auto mb-4" />
-                <h3 className="text-2xl font-light text-[#171719] mb-4" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                <h3 className="text-2xl font-light text-[#171719] mb-4" className="font-cormorant">
                   Ready to Build Your Empire?
                 </h3>
                 <p className="text-[#4C4B4B] mb-6" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300 }}>
@@ -288,7 +288,7 @@ export default function VIPCourse() {
         <div className="fixed bottom-0 left-0 right-0 bg-[#171719] text-white p-4 shadow-lg z-50">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <div>
-              <h4 className="font-medium" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <h4 className="font-medium" className="font-cormorant">
                 Ready to Build Your Empire?
               </h4>
               <p className="text-sm text-white/80" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300 }}>

@@ -226,7 +226,7 @@ export default function VisualStrategy() {
           <Link 
             href="/studio"
             className="inline-flex items-center text-[#4C4B4B] hover:text-[#171719] transition-colors mb-4"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Studio
@@ -255,7 +255,7 @@ export default function VisualStrategy() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             AI Visual Strategy
           </h1>
@@ -275,7 +275,7 @@ export default function VisualStrategy() {
           <div className="bg-white border border-black p-8 mb-8">
             <h2 
               className="text-2xl mb-6 text-black"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               Create Your Strategy
             </h2>
@@ -357,7 +357,7 @@ export default function VisualStrategy() {
               <div className="flex items-center justify-between mb-6">
                 <h2 
                   className="text-2xl text-black"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Your Visual Strategy
                 </h2>
@@ -496,7 +496,7 @@ export default function VisualStrategy() {
             <div className="bg-white border border-black p-8">
               <h2 
                 className="text-2xl mb-6 text-black"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Your Saved Strategies
               </h2>

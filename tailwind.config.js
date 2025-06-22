@@ -19,7 +19,9 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['var(--font-inter)'],
+        'neue': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         bodoni: ['var(--font-bodoni)'],
+        'cormorant': ['Cormorant Garamond', 'serif'],
         playfair: ['Playfair Display', 'serif'],
       },
       colors: {

@@ -51,14 +51,14 @@ export default function Checkout() {
         <div className="text-center mb-20">
           <h1 
             className="text-5xl md:text-6xl font-normal text-[#171719] leading-tight mb-6"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Complete Your Order
           </h1>
           <div className="w-24 h-px bg-[#4C4B4B] mx-auto mb-8" />
           <p 
             className="text-lg font-light text-[#4C4B4B] max-w-2xl mx-auto leading-relaxed"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Join SELFIE PRO and transform your content strategy with Sandra's AI-powered system.
           </p>
@@ -70,7 +70,7 @@ export default function Checkout() {
             <CardHeader className="pb-8">
               <CardTitle 
                 className="text-3xl font-normal text-[#171719] mb-4"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Order Summary
               </CardTitle>
@@ -82,13 +82,13 @@ export default function Checkout() {
                   <div>
                     <h3 
                       className="text-xl font-normal text-[#171719] mb-2"
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       SELFIE PRO
                     </h3>
                     <p 
                       className="text-sm font-light text-[#4C4B4B]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Monthly subscription
                     </p>
@@ -96,13 +96,13 @@ export default function Checkout() {
                   <div className="text-right">
                     <div 
                       className="text-2xl font-normal text-[#171719]"
-                      style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                      className="font-cormorant"
                     >
                       $47.00
                     </div>
                     <div 
                       className="text-sm font-light text-[#4C4B4B]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       per month
                     </div>
@@ -114,13 +114,13 @@ export default function Checkout() {
                 <div className="flex justify-between items-center">
                   <span 
                     className="text-xl font-normal text-[#171719]"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className="font-cormorant"
                   >
                     Total
                   </span>
                   <span 
                     className="text-xl font-normal text-[#171719]"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className="font-cormorant"
                   >
                     $47.00/month
                   </span>
@@ -130,7 +130,7 @@ export default function Checkout() {
               <div className="space-y-4">
                 <h4 
                   className="text-lg font-normal text-[#171719]"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   What's Included:
                 </h4>
@@ -146,7 +146,7 @@ export default function Checkout() {
                       <div className="w-2 h-2 bg-[#171719]" />
                       <span 
                         className="text-sm font-light text-[#4C4B4B]"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         {feature}
                       </span>
@@ -162,7 +162,7 @@ export default function Checkout() {
             <CardHeader className="pb-8">
               <CardTitle 
                 className="text-3xl font-normal text-[#171719] mb-4"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Payment Information
               </CardTitle>
@@ -174,7 +174,7 @@ export default function Checkout() {
                   <Label 
                     htmlFor="name"
                     className="text-sm font-medium text-[#171719]"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Full Name
                   </Label>
@@ -192,7 +192,7 @@ export default function Checkout() {
                   <Label 
                     htmlFor="email"
                     className="text-sm font-medium text-[#171719]"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Email Address
                   </Label>
@@ -211,7 +211,7 @@ export default function Checkout() {
                   <Label 
                     htmlFor="cardNumber"
                     className="text-sm font-medium text-[#171719]"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Card Number
                   </Label>
@@ -230,7 +230,7 @@ export default function Checkout() {
                     <Label 
                       htmlFor="expiryDate"
                       className="text-sm font-medium text-[#171719]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       Expiry Date
                     </Label>
@@ -247,7 +247,7 @@ export default function Checkout() {
                     <Label 
                       htmlFor="cvv"
                       className="text-sm font-medium text-[#171719]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       CVV
                     </Label>
@@ -266,7 +266,7 @@ export default function Checkout() {
                   <Label 
                     htmlFor="billingAddress"
                     className="text-sm font-medium text-[#171719]"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Billing Address
                   </Label>
@@ -285,7 +285,7 @@ export default function Checkout() {
                     <Label 
                       htmlFor="city"
                       className="text-sm font-medium text-[#171719]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       City
                     </Label>
@@ -302,7 +302,7 @@ export default function Checkout() {
                     <Label 
                       htmlFor="zipCode"
                       className="text-sm font-medium text-[#171719]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       ZIP Code
                     </Label>
@@ -335,7 +335,7 @@ export default function Checkout() {
                 <div className="text-center mt-6">
                   <p 
                     className="text-xs font-light text-[#4C4B4B] italic"
-                    style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                    className="font-neue"
                   >
                     Powered by Stripe. Your information is secure and encrypted.
                   </p>
@@ -345,7 +345,7 @@ export default function Checkout() {
                     </div>
                     <span 
                       className="text-xs font-light text-[#4C4B4B]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       256-bit SSL encryption
                     </span>

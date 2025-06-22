@@ -64,7 +64,7 @@ export default function ChatStudio() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Chat with Sandra
           </h1>
@@ -84,7 +84,7 @@ export default function ChatStudio() {
           <div className="bg-white border border-[#171719] py-20 px-12 text-center">
             <h3 
               className="text-3xl mb-6 uppercase tracking-wide text-[#171719]"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               Sandra AI Studio Chat
             </h3>

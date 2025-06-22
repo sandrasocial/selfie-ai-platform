@@ -169,7 +169,7 @@ export default function SandraAIAssistant() {
           >
             <span 
               className="text-lg font-normal"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               S.
             </span>
@@ -272,7 +272,7 @@ export default function SandraAIAssistant() {
           >
             <span 
               className="text-lg font-normal"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               S.
             </span>

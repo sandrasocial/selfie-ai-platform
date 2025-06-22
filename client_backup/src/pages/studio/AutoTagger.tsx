@@ -76,7 +76,7 @@ export default function AutoTagger() {
         <div className="max-w-6xl mx-auto text-center">
           <h1 
             className="text-5xl md:text-6xl font-normal mb-8 uppercase tracking-wide text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Auto Tagger
           </h1>
@@ -105,7 +105,7 @@ export default function AutoTagger() {
               </div>
               <h3 
                 className="text-2xl mb-4 uppercase tracking-wide text-[#171719]"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Upload for AI Analysis
               </h3>
@@ -131,7 +131,7 @@ export default function AutoTagger() {
         <div className="max-w-6xl mx-auto">
           <h2 
             className="text-3xl mb-12 text-[#171719]"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Recently Tagged
           </h2>
@@ -151,7 +151,7 @@ export default function AutoTagger() {
                     <div>
                       <h4 
                         className="text-[12px] font-medium mb-2 uppercase tracking-wide text-[#4C4B4B]"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         Mood
                       </h4>
@@ -170,7 +170,7 @@ export default function AutoTagger() {
                     <div>
                       <h4 
                         className="text-[12px] font-medium mb-2 uppercase tracking-wide text-[#4C4B4B]"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         Lighting
                       </h4>
@@ -189,7 +189,7 @@ export default function AutoTagger() {
                     <div>
                       <h4 
                         className="text-[12px] font-medium mb-2 uppercase tracking-wide text-[#4C4B4B]"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         Tone
                       </h4>

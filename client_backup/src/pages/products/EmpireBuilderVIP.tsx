@@ -69,26 +69,26 @@ export default function EmpireBuilderVIP() {
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <h1 
             className="text-6xl md:text-7xl font-normal mb-4 text-white leading-tight"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Build Your Brand.
           </h1>
           <h2 
             className="text-4xl md:text-5xl font-normal italic mb-8 text-white leading-tight"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Step Into Empire Energy.
           </h2>
           <p 
             className="text-lg text-white/90 mb-12 max-w-2xl mx-auto font-light leading-relaxed"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Personalized mentorship for the woman ready to lead with her story, strategy, and presence.
           </p>
           <Button 
             onClick={() => setLocation('/vip/apply')} 
             className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] font-normal uppercase tracking-wide px-8 py-3 text-sm transition-all duration-300"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             APPLY NOW
           </Button>
@@ -101,13 +101,13 @@ export default function EmpireBuilderVIP() {
           <div className="text-center mb-16">
             <h2 
               className="text-5xl md:text-6xl font-normal mb-6 text-[#171719]"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              className="font-cormorant"
             >
               What's Inside Empire Builder VIP
             </h2>
             <p 
               className="text-lg text-[#4C4B4B] max-w-3xl mx-auto font-light"
-              style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+              className="font-neue"
             >
               Everything you need to build an empire-level personal brand that attracts premium opportunities.
             </p>
@@ -117,7 +117,7 @@ export default function EmpireBuilderVIP() {
             <div>
               <h3 
                 className="text-3xl font-normal text-[#171719] mb-8"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                className="font-cormorant"
               >
                 Your VIP Experience Includes:
               </h3>
@@ -127,7 +127,7 @@ export default function EmpireBuilderVIP() {
                     <Check className="w-5 h-5 text-[#4C4B4B] mt-1 flex-shrink-0" />
                     <span 
                       className="text-base text-[#4C4B4B] font-light"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       {feature}
                     </span>
@@ -140,13 +140,13 @@ export default function EmpireBuilderVIP() {
               <CardContent className="p-8">
                 <h4 
                   className="text-2xl font-normal text-[#171719] mb-4"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   Premium Mentorship
                 </h4>
                 <p 
                   className="text-[#4C4B4B] leading-relaxed font-light"
-                  style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                  className="font-neue"
                 >
                   This isn't just coaching—it's a complete transformation. You'll work directly with Sandra to build 
                   an empire-level brand that positions you as the go-to expert in your field.
@@ -162,7 +162,7 @@ export default function EmpireBuilderVIP() {
         <div className="max-w-6xl mx-auto">
           <h2 
             className="text-5xl md:text-6xl font-normal text-[#171719] text-center mb-16"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Is Empire Builder VIP Right For You?
           </h2>
@@ -173,7 +173,7 @@ export default function EmpireBuilderVIP() {
               <CardContent className="p-8">
                 <h3 
                   className="text-3xl font-normal text-[#171719] mb-8 text-center"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   This Is For You If:
                 </h3>
@@ -183,7 +183,7 @@ export default function EmpireBuilderVIP() {
                       <Check className="w-5 h-5 text-[#4C4B4B] mt-1 flex-shrink-0" />
                       <span 
                         className="text-[#4C4B4B] font-light"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         {item}
                       </span>
@@ -198,7 +198,7 @@ export default function EmpireBuilderVIP() {
               <CardContent className="p-8">
                 <h3 
                   className="text-3xl font-normal text-white mb-8 text-center"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  className="font-cormorant"
                 >
                   This Is NOT For You If:
                 </h3>
@@ -208,7 +208,7 @@ export default function EmpireBuilderVIP() {
                       <X className="w-5 h-5 text-white/60 mt-1 flex-shrink-0" />
                       <span 
                         className="text-white/80 font-light"
-                        style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                        className="font-neue"
                       >
                         {item}
                       </span>
@@ -226,7 +226,7 @@ export default function EmpireBuilderVIP() {
         <div className="max-w-6xl mx-auto">
           <h2 
             className="text-5xl md:text-6xl font-normal text-[#171719] text-center mb-16"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Empire Builder Success Stories
           </h2>
@@ -237,20 +237,20 @@ export default function EmpireBuilderVIP() {
                 <CardContent className="p-8">
                   <blockquote 
                     className="text-[#4C4B4B] leading-relaxed mb-6 italic font-normal text-lg"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className="font-cormorant"
                   >
                     "{testimonial.quote}"
                   </blockquote>
                   <div>
                     <p 
                       className="font-normal text-[#171719]"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       {testimonial.author}
                     </p>
                     <p 
                       className="text-[#B5B5B3] text-sm font-light"
-                      style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+                      className="font-neue"
                     >
                       {testimonial.title}
                     </p>
@@ -267,26 +267,26 @@ export default function EmpireBuilderVIP() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 
             className="text-5xl md:text-6xl font-normal text-white mb-8"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             Investment In Your Empire
           </h2>
           <p 
             className="text-xl text-white/80 mb-8 max-w-2xl mx-auto font-light"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             Starts at $3,000. Full pricing shared during discovery call.
           </p>
           <p 
             className="text-white/60 mb-12 font-light"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             This is a premium mentorship experience designed for serious entrepreneurs ready to invest in their empire.
           </p>
           <Button 
             onClick={() => setLocation('/vip/apply')} 
             className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#171719] font-normal uppercase tracking-wide px-8 py-3 text-sm transition-all duration-300"
-            style={{ fontFamily: 'Neue Einstellung, sans-serif' }}
+            className="font-neue"
           >
             APPLY NOW
           </Button>

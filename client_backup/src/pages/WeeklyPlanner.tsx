@@ -363,7 +363,7 @@ export default function WeeklyPlanner() {
 
           <h1 
             className="text-4xl md:text-5xl font-normal text-luxury-white mb-6 uppercase tracking-wide leading-tight"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            className="font-cormorant"
           >
             This Week's Content
           </h1>

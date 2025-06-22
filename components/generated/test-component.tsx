@@ -4,27 +4,40 @@ tsx
 import React from 'react';
 
 interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  children,
+  label,
   onClick,
-  className = '',
+  variant = 'primary',
+  size = 'medium',
   disabled = false,
 }) => {
+  const variantClasses = {
+    primary: 'bg-blue-500 hover:bg-blue-600 text-white',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700',
+  };
+
+  const sizeClasses = {
+    small: 'py-1 px-2 text-sm',
+    medium: 'py-2 px-4 text-base',
+    large: 'py-3 px-6 text-lg',
+  };
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      } ${className}`}
+      className={`rounded font-semibold ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+      }`}
     >
-      {children}
+      {label}
     </button>
   );
 };

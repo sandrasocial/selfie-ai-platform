@@ -19,25 +19,34 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
 }) => {
   const baseClasses = 'font-semibold rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
-  const variantClasses = {
-    primary: 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500',
-    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400',
-  };
-  const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-5 py-2.5 text-lg',
-  };
-  const disabledClasses = 'opacity-50 cursor-not-allowed';
+  let variantClasses = '';
+  let sizeClasses = '';
+
+  switch (variant) {
+    case 'primary':
+      variantClasses = 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500';
+      break;
+    case 'secondary':
+      variantClasses = 'bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400';
+      break;
+  }
+
+  switch (size) {
+    case 'sm':
+      sizeClasses = 'px-3 py-1 text-sm';
+      break;
+    case 'md':
+      sizeClasses = 'px-4 py-2 text-base';
+      break;
+    case 'lg':
+      sizeClasses = 'px-6 py-3 text-lg';
+      break;
+  }
+
+  const classes = `${baseClasses} ${variantClasses} ${sizeClasses}`;
 
   return (
-    <button
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${
-        disabled ? disabledClasses : ''
-      }`}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button className={classes} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );

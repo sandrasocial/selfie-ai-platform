@@ -24,9 +24,7 @@ export async function POST() {
         const { error, count } = await supabase
             .from('agent_tasks')
             .update({ 
-                status: 'cancelled',
-                // This is the correct way to merge with existing JSONB data
-                agent_notes: { 'system_alert': 'Emergency stop triggered by user.' }
+                status: 'cancelled'
              })
             .in('status', statusesToCancel);
 

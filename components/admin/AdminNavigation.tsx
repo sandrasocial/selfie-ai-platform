@@ -23,7 +23,8 @@ import {
   Plus,
   Eye,
   Settings,
-  LogOut
+  LogOut,
+  MessageCircle
 } from 'lucide-react'
 
 interface NavSection {
@@ -43,7 +44,8 @@ const navigationSections: NavSection[] = [
     items: [
       { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
       { label: 'Command Center', href: '/admin/command-center', icon: Target },
-      { label: 'Agent Hub', href: '/admin/agent-hub', icon: Users }
+      { label: 'Agent Hub', href: '/admin/agent-hub', icon: Users },
+      { label: 'Agent Chat', href: '/admin/agent-chat', icon: MessageCircle }
     ]
   },
   {

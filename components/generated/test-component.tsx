@@ -4,47 +4,50 @@ tsx
 import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
+  label: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  children: React.ReactNode;
   variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }
 
-export default function Button({ 
-  onClick, 
-  children, 
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-}: ButtonProps) {
-  const baseClasses = 'font-semibold rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
-  const variantClasses = {
-    primary: 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'text-blue-700 bg-blue-100 hover:bg-blue-200 focus:ring-blue-500',
-  };
+const Button = ({ label, onClick, variant = 'primary', size = 'medium', disabled = false }: ButtonProps) => {
+  const baseClasses = 'rounded font-bold transition-colors duration-200';
+  let variantClasses = '';
+  let sizeClasses = '';
 
-  const sizeClasses = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
-  };
+  switch (variant) {
+    case 'primary':
+      variantClasses = 'bg-blue-500 hover:bg-blue-600 text-white';
+      break;
+    case 'secondary':
+      variantClasses = 'bg-gray-200 hover:bg-gray-300 text-gray-700';
+      break;
+  }
 
-  const disabledClasses = 'opacity-50 cursor-not-allowed';
+  switch (size) {
+    case 'small':
+      sizeClasses = 'text-sm py-1 px-2';
+      break;
+    case 'medium':
+      sizeClasses = 'text-base py-2 px-4';
+      break;
+    case 'large':
+      sizeClasses = 'text-lg py-3 px-6';
+      break;
+  }
+
+  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
 
   return (
-    <button 
+    <button
+      className={`${baseClasses} ${variantClasses} ${sizeClasses} ${disabledClasses}`}
       onClick={onClick}
       disabled={disabled}
-      className={`
-        ${baseClasses}
-        ${variantClasses[variant]}
-        ${sizeClasses[size]}
-        ${disabled ? disabledClasses : ''}
-      `}
     >
-      {children}
+      {label}
     </button>
   );
-}
+};
+
+export default Button;

@@ -149,10 +149,14 @@ function detectHandoffSuggestion(content: string) {
 }
 
 export async function POST(request: NextRequest, { params }: { params: { agent: string } }) {
+  console.log('POST request received for agent:', params.agent);
+  
   try {
     const { agent } = params;
     const body = await request.json();
     const { message, context } = body;
+
+    console.log('Request body:', { message, context });
 
     // Initialize Supabase client
     const supabase = createRouteHandlerClient({ cookies });
@@ -160,12 +164,16 @@ export async function POST(request: NextRequest, { params }: { params: { agent: 
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
+      console.log('Auth error:', authError);
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    console.log('User authenticated:', user.id);
 
     // Validate agent parameter
     const validAgents = ['diana', 'maya', 'victoria', 'rachel', 'quinn', 'ava'];
     if (!validAgents.includes(agent)) {
+      console.log('Invalid agent:', agent);
       return NextResponse.json({ error: 'Invalid agent' }, { status: 400 });
     }
 

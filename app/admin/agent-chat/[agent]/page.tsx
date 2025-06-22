@@ -122,8 +122,7 @@ export default function AgentChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: inputValue,
-          conversationId: conversationId,
-          handoffContext: handoffContext
+          context: handoffContext
         })
       });
 

@@ -8,7 +8,6 @@ interface ButtonProps {
   onClick: () => void;
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,8 +15,9 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   variant = 'primary',
   size = 'medium',
-  disabled = false,
 }) => {
+  const baseClasses = 'rounded font-semibold transition duration-200 ease-in-out';
+  
   const variantClasses = {
     primary: 'bg-blue-500 text-white hover:bg-blue-600',
     secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
@@ -31,11 +31,8 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`rounded font-semibold transition duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      }`}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`}
       onClick={onClick}
-      disabled={disabled}
     >
       {label}
     </button>

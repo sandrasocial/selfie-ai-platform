@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { AgentKillSwitch } from '@/components/admin/AgentKillSwitch'
 import { 
   Bot, 
   CheckCircle, 
@@ -356,24 +357,24 @@ export default function AgentHub() {
   }
 
   const getAgentName = (agentId: string) => {
-    const agent = agents.find(a => a.id === agentId)
-    return agent ? agent.name : 'Unknown Agent'
+    return agents.find(a => a.id === agentId)?.name || agentId
   }
 
   const handleManualProcessing = async () => {
     setIsProcessingManual(true);
     try {
-      const response = await fetch('/api/agents/listen');
-      const data = await response.json();
-      alert(data.message || 'Processing complete.');
-      fetchTasks(); // Refresh tasks list
+      await fetch('/api/agents/auto-check');
+      // Give some time for tasks to be picked up and then refresh
+      setTimeout(() => {
+        fetchTasks();
+        fetchActivityLogs();
+        setIsProcessingManual(false);
+      }, 3000);
     } catch (error) {
-      console.error('Manual processing failed:', error);
-      alert('Failed to start manual processing.');
-    } finally {
+      console.error('Failed to trigger manual processing:', error);
       setIsProcessingManual(false);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -443,10 +444,14 @@ export default function AgentHub() {
 
   return (
     <div className="min-h-screen bg-soft-white p-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bodoni text-luxury-black mb-2">Agent Central Hub</h1>
-        <p className="text-warm-gray">Let's get your AI squad working on what matters.</p>
+      <div className="p-8">
+        <AgentKillSwitch />
+
+        <div className="mt-8">
+          <h1 className="text-4xl font-bodoni">Agent Hub</h1>
+          <p className="text-warm-gray mt-2">Create, manage, and monitor AI agent tasks.</p>
+        </div>
+
       </div>
 
       {/* Ready for Review Alert - Only show if there are tasks */}

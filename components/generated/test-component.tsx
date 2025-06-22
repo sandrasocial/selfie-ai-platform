@@ -1,4 +1,3 @@
-tsx
 'use client';
 
 import { MouseEventHandler } from 'react';

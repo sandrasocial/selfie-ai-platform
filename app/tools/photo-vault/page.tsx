@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from '@/components/ui/button';
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from '@/app/components/ui/button';
+import { Badge } from "@/app/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
+import { Input } from "@/app/components/ui/input";
+import { Textarea } from "@/app/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Upload,
@@ -493,12 +493,12 @@ export default function PhotoVault() {
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
                             <div className="flex gap-2">
-                              <Button size="sm" variant="secondary" onClick={() => setSelectedPhoto(photo)}>
+                              <Button size="sm" variant="outline" onClick={() => setSelectedPhoto(photo)}>
                                 <Eye className="h-4 w-4" />
                               </Button>
                               <Button 
                                 size="sm" 
-                                variant="secondary"
+                                variant="ghost"
                                 onClick={() => updatePhoto(photo.id, { is_favorite: !photo.is_favorite })}
                               >
                                 <Heart className={`h-4 w-4 ${photo.is_favorite ? 'fill-red-500 text-red-500' : ''}`} />
@@ -749,7 +749,7 @@ export default function PhotoVault() {
                       <Heart className={`h-4 w-4 mr-2 ${selectedPhoto.is_favorite ? 'fill-red-500 text-red-500' : ''}`} />
                       {selectedPhoto.is_favorite ? 'Remove from Favorites' : 'Add to Favorites'}
                     </Button>
-                    <Button variant="destructive" onClick={() => {
+                    <Button variant="outline" onClick={() => {
                       deletePhoto(selectedPhoto.id);
                       setSelectedPhoto(null);
                     }}>

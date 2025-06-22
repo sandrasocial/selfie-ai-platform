@@ -141,7 +141,6 @@ export default function SelfieStarterKit() {
                   <div className="w-full max-w-md mx-auto aspect-square bg-[#B5B5B3] flex items-center justify-center">
                     <span 
                       className="text-white text-lg font-neue"
-                      className="font-neue"
                     >
                       IMAGE COMING SOON
                     </span>
@@ -149,8 +148,7 @@ export default function SelfieStarterKit() {
                 )}
               </div>
               <h3 
-                className="text-2xl mb-4 text-[#4C4B4B] font-light"
-                className="font-cormorant"
+                className="text-2xl mb-4 text-[#4C4B4B] font-light font-cormorant"
               >
                 After: branded, bold, booked.
               </h3>
@@ -160,8 +158,7 @@ export default function SelfieStarterKit() {
           {/* Quote */}
           <div className="text-center">
             <blockquote 
-              className="text-3xl lg:text-4xl text-[#171719] italic leading-relaxed font-light max-w-4xl mx-auto"
-              className="font-cormorant"
+              className="text-3xl lg:text-4xl text-[#171719] italic leading-relaxed font-light max-w-4xl mx-auto font-cormorant"
             >
               "Your camera roll tells your story. Let's rewrite it."
             </blockquote>
@@ -173,8 +170,7 @@ export default function SelfieStarterKit() {
       <section className="px-6 py-24 bg-[#171719] text-white">
         <div className="max-w-6xl mx-auto">
           <h2 
-            className="text-5xl lg:text-6xl text-center mb-20 font-light leading-tight"
-            className="font-cormorant"
+            className="text-5xl lg:text-6xl text-center mb-20 font-light leading-tight font-cormorant"
           >
             What's Inside Your Kit
           </h2>
@@ -190,14 +186,12 @@ export default function SelfieStarterKit() {
                     <Play className="w-8 h-8 text-white opacity-75" />
                   </div>
                   <h3 
-                    className="text-xl mb-4 font-light leading-tight"
-                    className="font-cormorant"
+                    className="text-xl mb-4 font-light leading-tight font-cormorant"
                   >
                     {item.title}
                   </h3>
                   <p 
-                    className="text-[#B5B5B3] font-light leading-relaxed"
-                    className="font-neue"
+                    className="text-[#B5B5B3] font-light leading-relaxed font-neue"
                   >
                     {item.description}
                   </p>
@@ -224,8 +218,7 @@ export default function SelfieStarterKit() {
               ) : (
                 <div className="w-full aspect-[4/5] bg-[#B5B5B3] flex items-center justify-center">
                   <span 
-                    className="text-white text-lg"
-                    className="font-neue"
+                    className="text-white text-lg font-neue"
                   >
                     IMAGE COMING SOON
                   </span>
@@ -234,8 +227,7 @@ export default function SelfieStarterKit() {
               <div className="absolute inset-0 bg-black bg-opacity-20" />
               <div className="absolute inset-0 flex items-center justify-center p-8">
                 <h3 
-                  className="text-white text-2xl lg:text-3xl text-center leading-tight font-light"
-                  className="font-cormorant"
+                  className="text-white text-2xl lg:text-3xl text-center leading-tight font-light font-cormorant"
                 >
                   "I started with one mirror selfie at 11PM—just to feel something again."
                 </h3>
@@ -245,20 +237,17 @@ export default function SelfieStarterKit() {
             {/* Text */}
             <div className="space-y-8">
               <p 
-                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light font-neue"
               >
                 What came next wasn't magic—it was small steps. Lighting tricks. Posing hacks. Finally pressing POST.
               </p>
               <p 
-                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light font-neue"
               >
                 That's what this kit gives you: a way back to yourself, one selfie at a time.
               </p>
               <p 
-                className="text-xl text-[#4C4B4B] leading-relaxed font-light"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] leading-relaxed font-light font-neue"
               >
                 You don't need to become someone else. You just need to remember who you already are.
               </p>
@@ -273,14 +262,12 @@ export default function SelfieStarterKit() {
           <div className="mb-12">
             <Sparkles className="w-12 h-12 mx-auto mb-6 text-[#4C4B4B]" />
             <h2 
-              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight"
-              className="font-cormorant"
+              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight font-cormorant"
             >
               Plus These Bonuses
             </h2>
             <p 
-              className="text-xl text-[#4C4B4B] font-light max-w-2xl mx-auto leading-relaxed"
-              className="font-neue"
+              className="text-xl text-[#4C4B4B] font-light max-w-2xl mx-auto leading-relaxed font-neue"
             >
               Everything you need to implement what you learn, from presets to templates.
             </p>
@@ -291,8 +278,7 @@ export default function SelfieStarterKit() {
               <div key={index} className="flex items-start space-x-4 p-6">
                 <Download className="w-6 h-6 text-[#171719] mt-1 flex-shrink-0" />
                 <p 
-                  className="text-lg text-[#171719] font-light"
-                  className="font-neue"
+                  className="text-lg text-[#171719] font-light font-neue"
                 >
                   {resource}
                 </p>
@@ -306,8 +292,7 @@ export default function SelfieStarterKit() {
       <section className="px-6 py-24 bg-[#171719] text-white">
         <div className="max-w-6xl mx-auto text-center">
           <h2 
-            className="text-4xl lg:text-5xl mb-12 font-light leading-tight"
-            className="font-cormorant"
+            className="text-4xl lg:text-5xl mb-12 font-light leading-tight font-cormorant"
           >
             Real moments. Real confidence. Real content.
           </h2>
@@ -353,14 +338,12 @@ export default function SelfieStarterKit() {
 
           <div className="max-w-3xl mx-auto mb-12">
             <blockquote 
-              className="text-2xl lg:text-3xl italic font-light leading-relaxed mb-6"
-              className="font-cormorant"
+              className="text-2xl lg:text-3xl italic font-light leading-relaxed mb-6 font-cormorant"
             >
               "I went from taking 100 selfies to get one good one, to nailing it in 3 shots every time. This kit changed everything."
             </blockquote>
             <p 
-              className="text-[#B5B5B3] font-light"
-              className="font-neue"
+              className="text-[#B5B5B3] font-light font-neue"
             >
               — Maria K., Life Coach & Starter Kit Graduate
             </p>
@@ -380,8 +363,7 @@ export default function SelfieStarterKit() {
       <section className="px-6 py-24 bg-[#F1F1F1]">
         <div className="max-w-4xl mx-auto">
           <h2 
-            className="text-4xl lg:text-5xl mb-16 text-center font-light text-[#171719] leading-tight"
-            className="font-cormorant"
+            className="text-4xl lg:text-5xl mb-16 text-center font-light text-[#171719] leading-tight font-cormorant"
           >
             Questions I Always Get
           </h2>
@@ -389,14 +371,12 @@ export default function SelfieStarterKit() {
           <div className="space-y-12">
             <div>
               <h3 
-                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
-                className="font-cormorant"
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719] font-cormorant"
               >
                 "But I'm not photogenic..."
               </h3>
               <p 
-                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed font-neue"
               >
                 Neither was I. "Photogenic" is a skill, not a gift. The pose guides, lighting tricks, and editing workflow in this kit will have you looking like yourself—but elevated. That's all this is.
               </p>
@@ -404,14 +384,12 @@ export default function SelfieStarterKit() {
             
             <div>
               <h3 
-                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
-                className="font-cormorant"
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719] font-cormorant"
               >
                 "Is this for beginners?"
               </h3>
               <p 
-                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed font-neue"
               >
                 Yes. This is for women who want to show up online but don't know where to start. Everything is step-by-step, no experience needed. I built it for the version of me that was hiding behind her phone.
               </p>
@@ -419,14 +397,12 @@ export default function SelfieStarterKit() {
             
             <div>
               <h3 
-                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719]"
-                className="font-cormorant"
+                className="text-2xl lg:text-3xl mb-4 font-light text-[#171719] font-cormorant"
               >
                 "How quickly will I see results?"
               </h3>
               <p 
-                className="text-xl text-[#4C4B4B] font-light leading-relaxed"
-                className="font-neue"
+                className="text-xl text-[#4C4B4B] font-light leading-relaxed font-neue"
               >
                 You'll feel different after your first selfie using the lighting and pose guides. Your confidence will shift immediately. Building a consistent brand takes time, but the tools work from day one.
               </p>
@@ -439,29 +415,25 @@ export default function SelfieStarterKit() {
       <section id="checkout" className="px-6 py-24 bg-[#171719] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 
-            className="text-5xl lg:text-6xl mb-8 font-light leading-tight"
-            className="font-cormorant"
+            className="text-5xl lg:text-6xl mb-8 font-light leading-tight font-cormorant"
           >
             Ready to Stop Hiding?
           </h2>
           
           <p 
-            className="text-xl lg:text-2xl mb-12 font-light max-w-3xl mx-auto leading-relaxed opacity-90"
-            className="font-neue"
+            className="text-xl lg:text-2xl mb-12 font-light max-w-3xl mx-auto leading-relaxed opacity-90 font-neue"
           >
             Join thousands of women who've transformed their relationship with the camera—and with themselves.
           </p>
           
           <div className="mb-12">
             <div 
-              className="text-5xl lg:text-6xl mb-4 font-light"
-              className="font-cormorant"
+              className="text-5xl lg:text-6xl mb-4 font-light font-cormorant"
             >
               $67
             </div>
             <p 
-              className="text-[#B5B5B3] font-light"
-              className="font-neue"
+              className="text-[#B5B5B3] font-light font-neue"
             >
               One-time payment • Lifetime access • 30-day guarantee
             </p>
@@ -477,14 +449,12 @@ export default function SelfieStarterKit() {
           
           <div className="border-t border-[#4C4B4B] pt-8">
             <p 
-              className="text-[#B5B5B3] font-light italic text-lg"
-              className="font-cormorant"
+              className="text-[#B5B5B3] font-light italic text-lg font-cormorant"
             >
               "Your face is your brand. Show it boldly."
             </p>
             <p 
-              className="text-[#B5B5B3] font-light mt-2"
-              className="font-neue"
+              className="text-[#B5B5B3] font-light mt-2 font-neue"
             >
               — Sandra, SELFIE AI™ Founder
             </p>
@@ -498,15 +468,13 @@ export default function SelfieStarterKit() {
           <Sparkles className="w-12 h-12 mx-auto mb-6 opacity-75" />
           
           <h2 
-            className="text-4xl lg:text-5xl mb-6 font-light leading-tight"
-            className="font-cormorant"
+            className="text-4xl lg:text-5xl mb-6 font-light leading-tight font-cormorant"
           >
             Ready for the Next Level?
           </h2>
           
           <p 
-            className="text-xl mb-8 font-light max-w-2xl mx-auto leading-relaxed opacity-90"
-            className="font-neue"
+            className="text-xl mb-8 font-light max-w-2xl mx-auto leading-relaxed opacity-90 font-neue"
           >
             Branded by Selfie takes this foundation and scales it into a premium personal brand system.
           </p>
@@ -520,8 +488,7 @@ export default function SelfieStarterKit() {
           </Link>
           
           <p 
-            className="text-sm font-light opacity-75 mt-4"
-            className="font-neue"
+            className="text-sm font-light opacity-75 mt-4 font-neue"
           >
             Complete brand strategy + premium AI tools
           </p>

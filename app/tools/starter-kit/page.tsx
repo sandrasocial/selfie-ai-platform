@@ -141,7 +141,7 @@ export default function StarterKitTools() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center">
-        <div className="animate-pulse text-[#171719]" className="font-neue">
+        <div className="animate-pulse text-[#171719] font-neue">
           Loading your kit...
         </div>
       </div>
@@ -153,12 +153,12 @@ export default function StarterKitTools() {
       <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center px-6">
         <Card className="w-full max-w-md bg-white border-[#171719]">
           <CardHeader>
-            <CardTitle className="text-[#171719]" className="font-cormorant">
+            <CardTitle className="text-[#171719] font-cormorant">
               Access Required
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-[#4C4B4B] mb-6" className="font-neue">
+            <p className="text-[#4C4B4B] mb-6 font-neue">
               Please sign in to access your Starter Kit.
             </p>
             <Link href="/auth/login">
@@ -185,14 +185,12 @@ export default function StarterKitTools() {
         )}
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <h1 
-            className="text-5xl lg:text-7xl mb-6 font-normal leading-tight tracking-tight"
-            className="font-cormorant"
+            className="text-5xl lg:text-7xl mb-6 font-normal leading-tight tracking-tight font-cormorant"
           >
             Your Selfie Starter Kit
           </h1>
           <p 
-            className="text-xl lg:text-2xl mb-8 font-light max-w-3xl mx-auto leading-relaxed opacity-90"
-            className="font-neue"
+            className="text-xl lg:text-2xl mb-8 font-light max-w-3xl mx-auto leading-relaxed opacity-90 font-neue"
           >
             Master the art of confident selfies that build your personal brand. 
             {!hasAccess && ' Unlock now to access all modules and bonuses.'}
@@ -219,42 +217,36 @@ export default function StarterKitTools() {
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <div 
-                  className="text-4xl font-light mb-2 text-[#171719]"
-                  className="font-cormorant"
+                  className="text-4xl font-light mb-2 text-[#171719] font-cormorant"
                 >
                   6
                 </div>
                 <p 
-                  className="text-[#4C4B4B] font-light"
-                  className="font-neue"
+                  className="text-[#4C4B4B] font-light font-neue"
                 >
                   Video Modules
                 </p>
               </div>
               <div>
                 <div 
-                  className="text-4xl font-light mb-2 text-[#171719]"
-                  className="font-cormorant"
+                  className="text-4xl font-light mb-2 text-[#171719] font-cormorant"
                 >
                   4
                 </div>
                 <p 
-                  className="text-[#4C4B4B] font-light"
-                  className="font-neue"
+                  className="text-[#4C4B4B] font-light font-neue"
                 >
                   Bonus Resources
                 </p>
               </div>
               <div>
                 <div 
-                  className="text-4xl font-light mb-2 text-[#171719]"
-                  className="font-cormorant"
+                  className="text-4xl font-light mb-2 text-[#171719] font-cormorant"
                 >
                   ∞
                 </div>
                 <p 
-                  className="text-[#4C4B4B] font-light"
-                  className="font-neue"
+                  className="text-[#4C4B4B] font-light font-neue"
                 >
                   Lifetime Access
                 </p>
@@ -269,14 +261,12 @@ export default function StarterKitTools() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 
-              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight"
-              className="font-cormorant"
+              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight font-cormorant"
             >
               What's Inside Your Kit
             </h2>
             <p 
-              className="text-xl text-[#4C4B4B] font-light max-w-3xl mx-auto leading-relaxed"
-              className="font-neue"
+              className="text-xl text-[#4C4B4B] font-light max-w-3xl mx-auto leading-relaxed font-neue"
             >
               A step-by-step system to transform your selfies from random to strategic. 
               Build confidence, create content, grow your brand.
@@ -307,14 +297,12 @@ export default function StarterKitTools() {
                         </div>
                         <div>
                           <h3 
-                            className="text-2xl font-light text-[#171719] mb-1"
-                            className="font-cormorant"
+                            className="text-2xl font-light text-[#171719] mb-1 font-cormorant"
                           >
                             {module.title}
                           </h3>
                           <p 
-                            className="text-[#4C4B4B] font-light italic"
-                            className="font-neue"
+                            className="text-[#4C4B4B] font-light italic font-neue"
                           >
                             {module.subtitle}
                           </p>
@@ -322,8 +310,7 @@ export default function StarterKitTools() {
                       </div>
                       
                       <p 
-                        className="text-[#4C4B4B] mb-4 leading-relaxed font-light"
-                        className="font-neue"
+                        className="text-[#4C4B4B] mb-4 leading-relaxed font-light font-neue"
                       >
                         {module.description}
                       </p>
@@ -341,8 +328,7 @@ export default function StarterKitTools() {
                         <div className="flex items-center text-[#B5B5B3]">
                           <Lock className="w-5 h-5 mr-2" />
                           <span 
-                            className="text-sm font-light"
-                            className="font-neue"
+                            className="text-sm font-light font-neue"
                           >
                             Locked
                           </span>
@@ -367,14 +353,12 @@ export default function StarterKitTools() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 
-              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight"
-              className="font-cormorant"
+              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight font-cormorant"
             >
               Bonus Resources
             </h2>
             <p 
-              className="text-xl text-[#4C4B4B] font-light max-w-3xl mx-auto leading-relaxed"
-              className="font-neue"
+              className="text-xl text-[#4C4B4B] font-light max-w-3xl mx-auto leading-relaxed font-neue"
             >
               Everything you need to implement what you learn, from presets to templates.
             </p>
@@ -393,14 +377,12 @@ export default function StarterKitTools() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h3 
-                        className="text-xl font-light text-[#171719] mb-2"
-                        className="font-cormorant"
+                        className="text-xl font-light text-[#171719] mb-2 font-cormorant"
                       >
                         {resource.title}
                       </h3>
                       <p 
-                        className="text-[#4C4B4B] font-light leading-relaxed"
-                        className="font-neue"
+                        className="text-[#4C4B4B] font-light leading-relaxed font-neue"
                       >
                         {resource.description}
                       </p>
@@ -411,8 +393,7 @@ export default function StarterKitTools() {
                         <div className="flex items-center text-[#B5B5B3]">
                           <Lock className="w-5 h-5 mr-2" />
                           <span 
-                            className="text-sm font-light"
-                            className="font-neue"
+                            className="text-sm font-light font-neue"
                           >
                             Locked
                           </span>
@@ -438,14 +419,12 @@ export default function StarterKitTools() {
       <section className="px-6 py-24 bg-[#171719] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <blockquote 
-            className="text-3xl lg:text-4xl italic font-light leading-relaxed mb-8"
-            className="font-cormorant"
+            className="text-3xl lg:text-4xl italic font-light leading-relaxed mb-8 font-cormorant"
           >
             "Your camera roll tells your story. Let's rewrite it."
           </blockquote>
           <div 
-            className="text-lg font-light opacity-75"
-            className="font-neue"
+            className="text-lg font-light opacity-75 font-neue"
           >
             — Sandra, SELFIE AI™ Founder
           </div>
@@ -457,14 +436,12 @@ export default function StarterKitTools() {
         <section className="px-6 py-24 bg-[#F1F1F1]">
           <div className="max-w-4xl mx-auto text-center">
             <h2 
-              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight"
-              className="font-cormorant"
+              className="text-4xl lg:text-5xl mb-6 font-light text-[#171719] leading-tight font-cormorant"
             >
               Ready to Transform Your Selfies?
             </h2>
             <p 
-              className="text-xl text-[#4C4B4B] font-light mb-12 max-w-2xl mx-auto leading-relaxed"
-              className="font-neue"
+              className="text-xl text-[#4C4B4B] font-light mb-12 max-w-2xl mx-auto leading-relaxed font-neue"
             >
               Join thousands of women who've stopped hiding and started building their brands with confidence.
             </p>
@@ -478,8 +455,7 @@ export default function StarterKitTools() {
                 </Button>
               </Link>
               <div 
-                className="text-sm text-[#4C4B4B] font-light"
-                className="font-neue"
+                className="text-sm text-[#4C4B4B] font-light font-neue"
               >
                 One-time payment • Lifetime access • 30-day guarantee
               </div>
@@ -494,14 +470,12 @@ export default function StarterKitTools() {
           <div className="max-w-4xl mx-auto text-center">
             <Sparkles className="w-12 h-12 mx-auto mb-6 opacity-75" />
             <h2 
-              className="text-4xl lg:text-5xl mb-6 font-light leading-tight"
-              className="font-cormorant"
+              className="text-4xl lg:text-5xl mb-6 font-light leading-tight font-cormorant"
             >
               Ready for the Next Level?
             </h2>
             <p 
-              className="text-xl font-light mb-8 max-w-2xl mx-auto leading-relaxed opacity-90"
-              className="font-neue"
+              className="text-xl font-light mb-8 max-w-2xl mx-auto leading-relaxed opacity-90 font-neue"
             >
               Branded by Selfie takes this foundation and scales it into a premium personal brand system.
             </p>
@@ -515,8 +489,7 @@ export default function StarterKitTools() {
                 </Button>
               </Link>
               <div 
-                className="text-sm font-light opacity-75"
-                className="font-neue"
+                className="text-sm font-light opacity-75 font-neue"
               >
                 Complete brand strategy + premium AI tools
               </div>

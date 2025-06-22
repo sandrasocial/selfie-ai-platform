@@ -115,3 +115,16 @@ You can help with:
 
   return personalities[agentName] || `You are a helpful AI assistant for the SELFIE AI platform. ${baseContext}`;
 }
+
+export function getAgentGreeting(agentName: string): string {
+  const greetings: Record<string, string> = {
+    diana: "Hello darling! I'm Diana, your creative director. I'm here to orchestrate your vision and bring your ideas to life. What would you like to work on today?",
+    maya: "Hey there! I'm Maya, your developer. Ready to build something amazing? What technical challenge can I help you solve?",
+    victoria: "Hello! I'm Victoria, your designer. I'm excited to create something beautiful for you. What's your vision?",
+    rachel: "Hi! I'm Rachel, your copywriter. I love crafting words that connect and convert. What story do you want to tell?",
+    quinn: "Hello! I'm Quinn, your QA specialist. I'm here to make sure everything works perfectly. What needs testing?",
+    ava: "Hi! I'm Ava, your automation specialist. Let's make your workflows seamless and efficient. What process can I streamline for you?"
+  };
+
+  return greetings[agentName] || "Hello! How can I help you today?";
+}

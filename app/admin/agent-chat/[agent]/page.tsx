@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Send, Copy, ArrowRight, User, Bot } from 'lucide-react';
 import { AgentChatMessage } from '@/components/admin/AgentChatMessage';
 import { AgentHandoffButtons } from '@/components/admin/AgentHandoffButtons';
 import { TaskStatusTracker } from '@/components/admin/TaskStatusTracker';
+import { getAgentGreeting } from '@/lib/agents/personalities';
 
 // Agent definitions with personalities
 const agents = {
@@ -13,7 +14,6 @@ const agents = {
     name: 'Diana',
     role: 'Director',
     description: 'Orchestrates projects, delegates tasks',
-    greeting: "Hello! I'm Diana, your project director. I'm here to help orchestrate your vision and delegate tasks to the right team members. What would you like to accomplish today?",
     avatar: '👑',
     color: 'bg-purple-100 text-purple-800',
     personality: 'Strategic, organized, and results-driven. Diana thinks big picture and ensures everything aligns with your goals.'
@@ -22,7 +22,6 @@ const agents = {
     name: 'Maya',
     role: 'Developer',
     description: 'Writes code, builds features',
-    greeting: "Hi there! I'm Maya, your developer. I love turning ideas into working code and building features that make a difference. What would you like me to build for you?",
     avatar: '💻',
     color: 'bg-blue-100 text-blue-800',
     personality: 'Technical, detail-oriented, and solution-focused. Maya gets excited about clean code and elegant solutions.'
@@ -31,7 +30,6 @@ const agents = {
     name: 'Victoria',
     role: 'Designer',
     description: 'Creates beautiful designs',
-    greeting: "Hello! I'm Victoria, your designer. I'm passionate about creating beautiful, functional designs that capture your brand's essence. What visual magic can I create for you today?",
     avatar: '🎨',
     color: 'bg-pink-100 text-pink-800',
     personality: 'Creative, aesthetic, and brand-conscious. Victoria sees beauty in everything and loves making things look amazing.'
@@ -40,7 +38,6 @@ const agents = {
     name: 'Rachel',
     role: 'Copywriter',
     description: 'Writes in your brand voice',
-    greeting: "Hi! I'm Rachel, your copywriter. I craft words that connect with your audience and stay true to your brand voice. What story would you like me to tell today?",
     avatar: '✍️',
     color: 'bg-green-100 text-green-800',
     personality: 'Expressive, brand-aware, and audience-focused. Rachel has a way with words and understands the power of storytelling.'
@@ -49,7 +46,6 @@ const agents = {
     name: 'Quinn',
     role: 'QA',
     description: 'Tests everything perfectly',
-    greeting: "Hello! I'm Quinn, your QA specialist. I'm here to ensure everything works flawlessly and meets the highest standards. What would you like me to test or review?",
     avatar: '🔍',
     color: 'bg-orange-100 text-orange-800',
     personality: 'Meticulous, thorough, and quality-focused. Quinn has an eye for detail and won\'t let anything slip through the cracks.'
@@ -58,7 +54,6 @@ const agents = {
     name: 'Ava',
     role: 'Automation',
     description: 'Connects systems',
-    greeting: "Hi! I'm Ava, your automation specialist. I love connecting systems and making everything work seamlessly together. What processes can I streamline for you?",
     avatar: '⚡',
     color: 'bg-yellow-100 text-yellow-800',
     personality: 'Efficient, systematic, and integration-minded. Ava sees connections others miss and loves making things work automatically.'
@@ -67,22 +62,26 @@ const agents = {
 
 type Message = {
   id: string;
-  type: 'user' | 'agent';
+  type: 'user' | 'agent' | 'system';
   content: string;
   timestamp: Date;
   agent?: string;
   isCode?: boolean;
   isCopy?: boolean;
+  deliverables?: any[];
 };
 
 export default function AgentChatPage() {
   const params = useParams();
+  const router = useRouter();
   const agentId = params.agent as string;
   const agent = agents[agentId as keyof typeof agents];
   
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [handoffContext, setHandoffContext] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Initialize with agent greeting
@@ -91,7 +90,7 @@ export default function AgentChatPage() {
       setMessages([{
         id: 'greeting',
         type: 'agent',
-        content: agent.greeting,
+        content: getAgentGreeting(agentId),
         timestamp: new Date(),
         agent: agentId
       }]);
@@ -117,19 +116,52 @@ export default function AgentChatPage() {
     setInputValue('');
     setIsLoading(true);
 
-    // TODO: Add AI response logic here
-    // For now, simulate a response
-    setTimeout(() => {
-      const agentMessage: Message = {
+    try {
+      const response = await fetch(`/api/admin/agent-chat/${agentId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: inputValue,
+          conversationId: conversationId,
+          handoffContext: handoffContext
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const agentMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          type: 'agent',
+          content: data.response,
+          timestamp: new Date(),
+          agent: agentId,
+          deliverables: data.deliverables
+        };
+
+        setMessages(prev => [...prev, agentMessage]);
+        setConversationId(data.conversationId);
+
+        // Handle handoff suggestions
+        if (data.handoffSuggestion) {
+          console.log('Handoff suggested to:', data.handoffSuggestion);
+        }
+      } else {
+        throw new Error(data.error || 'Failed to get response');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'agent',
-        content: `Thanks for your message! I'm ${agent.name} and I'm here to help with ${agent.role.toLowerCase()} tasks. This is a placeholder response - AI integration coming soon!`,
+        content: 'Sorry, I encountered an error. Please try again.',
         timestamp: new Date(),
         agent: agentId
       };
-      setMessages(prev => [...prev, agentMessage]);
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -143,31 +175,94 @@ export default function AgentChatPage() {
     try {
       await navigator.clipboard.writeText(text);
       // TODO: Add toast notification
+      console.log('Copied to clipboard:', text);
     } catch (err) {
       console.error('Failed to copy text: ', err);
     }
   };
 
-  const sendToAgent = (targetAgent: string) => {
-    const handoffMessage: Message = {
-      id: Date.now().toString(),
-      type: 'user',
-      content: `Handing off to ${agents[targetAgent as keyof typeof agents].name}...`,
-      timestamp: new Date()
-    };
-    setMessages(prev => [...prev, handoffMessage]);
-    // TODO: Implement actual handoff logic
+  const sendToAgent = async (targetAgent: string) => {
+    try {
+      const response = await fetch('/api/admin/agent-handoff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fromAgent: agentId,
+          toAgent: targetAgent,
+          conversationId: conversationId,
+          taskDescription: `Handoff from ${agent?.name} to ${agents[targetAgent as keyof typeof agents]?.name}`,
+          deliverables: []
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const handoffMessage: Message = {
+          id: Date.now().toString(),
+          type: 'system',
+          content: `Handing off to ${agents[targetAgent as keyof typeof agents]?.name}...`,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, handoffMessage]);
+
+        // Navigate to the new agent chat
+        router.push(`/admin/agent-chat/${targetAgent}?conversation=${data.newConversationId}`);
+      } else {
+        throw new Error(data.error || 'Handoff failed');
+      }
+    } catch (error) {
+      console.error('Error during handoff:', error);
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        type: 'system',
+        content: 'Handoff failed. Please try again.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
-  const sendToDiana = () => {
-    const reviewMessage: Message = {
-      id: Date.now().toString(),
-      type: 'user',
-      content: 'Sending to Diana for review...',
-      timestamp: new Date()
-    };
-    setMessages(prev => [...prev, reviewMessage]);
-    // TODO: Implement review handoff logic
+  const sendToDiana = async () => {
+    try {
+      const response = await fetch('/api/admin/agent-handoff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fromAgent: agentId,
+          toAgent: 'diana',
+          conversationId: conversationId,
+          taskDescription: `Review request from ${agent?.name}`,
+          deliverables: []
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const reviewMessage: Message = {
+          id: Date.now().toString(),
+          type: 'system',
+          content: 'Sending to Diana for review...',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, reviewMessage]);
+
+        // Navigate to Diana's chat
+        router.push(`/admin/agent-chat/diana?conversation=${data.newConversationId}`);
+      } else {
+        throw new Error(data.error || 'Review request failed');
+      }
+    } catch (error) {
+      console.error('Error sending to Diana:', error);
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        type: 'system',
+        content: 'Failed to send to Diana. Please try again.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   if (!agent) {

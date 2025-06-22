@@ -1,43 +1,47 @@
 tsx
 'use client';
 
-import React from 'react';
+import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  label: string;
-  onClick: () => void;
+  text: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  variant = 'primary',
-  size = 'medium',
-  disabled = false,
-}) => {
-  const variantClasses = {
-    primary: 'bg-blue-500 hover:bg-blue-600 text-white',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700',
-  };
+const Button = ({ text, onClick, variant = 'primary', size = 'medium', disabled = false }: ButtonProps) => {
+  const baseClasses = 'rounded font-semibold transition-colors duration-200';
+  let variantClasses = '';
+  let sizeClasses = '';
 
-  const sizeClasses = {
-    small: 'py-1 px-2 text-sm',
-    medium: 'py-2 px-4 text-base',
-    large: 'py-3 px-6 text-lg',
-  };
+  switch (variant) {
+    case 'primary':
+      variantClasses = 'bg-blue-500 hover:bg-blue-600 text-white';
+      break;
+    case 'secondary':
+      variantClasses = 'bg-gray-200 hover:bg-gray-300 text-gray-800';
+      break;
+  }
+
+  switch (size) {
+    case 'small':
+      sizeClasses = 'px-3 py-1 text-sm';
+      break;
+    case 'medium':
+      sizeClasses = 'px-4 py-2 text-base';
+      break;
+    case 'large':
+      sizeClasses = 'px-6 py-3 text-lg';
+      break;
+  }
+
+  const className = `${baseClasses} ${variantClasses} ${sizeClasses} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
 
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`rounded font-semibold ${variantClasses[variant]} ${sizeClasses[size]} ${
-        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-      }`}
-    >
-      {label}
+    <button className={className} onClick={onClick} disabled={disabled}>
+      {text}
     </button>
   );
 };

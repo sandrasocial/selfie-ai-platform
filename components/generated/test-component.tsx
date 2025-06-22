@@ -8,12 +8,21 @@ interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
 }
 
-const Button = ({ text, onClick, variant = 'primary', size = 'md' }: ButtonProps) => {
+export default function Button({ 
+  text, 
+  onClick, 
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+}: ButtonProps) {
+  const baseClasses = 'font-bold rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
   const variantClasses = {
-    primary: 'bg-blue-500 text-white hover:bg-blue-600',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
+    primary: 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-500',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700 focus:ring-gray-500',
   };
 
   const sizeClasses = {
@@ -22,14 +31,17 @@ const Button = ({ text, onClick, variant = 'primary', size = 'md' }: ButtonProps
     lg: 'px-8 py-4 text-lg',
   };
 
+  const disabledClasses = 'opacity-50 cursor-not-allowed';
+
   return (
     <button
       onClick={onClick}
-      className={`rounded font-semibold transition-colors duration-200 ${variantClasses[variant]} ${sizeClasses[size]}`}
+      disabled={disabled}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? disabledClasses : ''
+      }`}
     >
       {text}
     </button>
   );
-};
-
-export default Button;
+}

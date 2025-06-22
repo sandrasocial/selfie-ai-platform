@@ -1,21 +1,47 @@
 tsx
 'use client';
 
-import { MouseEventHandler } from 'react';
+import React from 'react';
 
 interface ButtonProps {
-  text: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+  children: React.ReactNode;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
 }
 
-const Button = ({ text, onClick, className = '' }: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  onClick,
+  variant = 'primary',
+  size = 'medium',
+  disabled = false,
+}) => {
+  const baseClasses = 'font-semibold rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
+  const variantClasses = {
+    primary: 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-500',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700 focus:ring-gray-400',
+  };
+  
+  const sizeClasses = {
+    small: 'px-3 py-1.5 text-xs',
+    medium: 'px-4 py-2 text-sm',
+    large: 'px-6 py-3 text-base',
+  };
+  
+  const disabledClasses = 'opacity-50 cursor-not-allowed';
+  
   return (
     <button
-      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${className}`}
       onClick={onClick}
+      disabled={disabled}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? disabledClasses : ''
+      }`}
     >
-      {text}
+      {children}
     </button>
   );
 };

@@ -1,26 +1,20 @@
 tsx
 'use client';
 
-import React from 'react';
+import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
   label: string;
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  variant = 'primary',
-  size = 'medium',
-  disabled = false,
-}) => {
+const Button = ({ label, onClick, variant = 'primary', size = 'medium', disabled = false }: ButtonProps) => {
   const variantClasses = {
     primary: 'bg-blue-500 hover:bg-blue-600 text-white',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700',
   };
 
   const sizeClasses = {
@@ -31,11 +25,11 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      className={`rounded font-semibold transition duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-md font-semibold transition-colors duration-200 ${
-        variantClasses[variant]
-      } ${sizeClasses[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       {label}
     </button>

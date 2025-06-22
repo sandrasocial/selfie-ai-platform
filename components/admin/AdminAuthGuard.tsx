@@ -27,45 +27,77 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   }, [])
 
   const checkUserAuth = async () => {
+    console.log('🔍 AdminAuthGuard: Starting auth check...')
+    
     try {
       // Get the current user
       const { data: { user: authUser }, error: authError } = await supabase.auth.getUser()
+      console.log('🔍 Auth user check:', { user: authUser?.email, error: authError?.message })
       
       if (authError || !authUser) {
+        console.log('❌ No auth user, redirecting to login')
         // Not authenticated - redirect to admin login
         router.push('/admin/login')
         return
       }
 
-      // Get user profile to check if they have admin/VIP access
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('tier, email')
-        .eq('id', authUser.id)
-        .single()
-
-      if (profileError || !profile) {
-        setError('Unable to verify admin access. Please contact support.')
+      // Check if user has admin email patterns (temporary solution)
+      const adminEmails = ['sandra@selfieai.co', 'ssa@ssasocial.com']
+      const isAdminEmail = adminEmails.includes(authUser.email || '')
+      console.log('🔍 Admin email check:', { email: authUser.email, isAdmin: isAdminEmail })
+      
+      if (!isAdminEmail) {
+        console.log('❌ Not admin email, denying access')
+        setError('Access denied. Admin email required.')
         setLoading(false)
         return
       }
 
-      // Check if user has admin access (VIP tier for now)
-      if (profile.tier !== 'vip') {
-        setError('Access denied. Admin privileges required.')
+      // Try to get user profile, but don't fail if it doesn't work due to RLS
+      try {
+        console.log('🔍 Attempting profile query...')
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('tier, email')
+          .eq('id', authUser.id)
+          .single()
+
+        console.log('🔍 Profile query result:', { profile, error: profileError?.message })
+
+        // If profile exists and has VIP tier, great
+        if (!profileError && profile && profile.tier === 'vip') {
+          console.log('✅ Profile found with VIP tier, granting access')
+          setUser({
+            id: authUser.id,
+            email: authUser.email || profile.email,
+            tier: profile.tier
+          })
+          setLoading(false)
+          return
+        }
+      } catch (profileErr) {
+        // Profile query failed, but that's okay for admin emails
+        console.log('⚠️ Profile query failed:', profileErr)
+      }
+
+      // For admin emails, allow access even without profile check
+      if (isAdminEmail) {
+        console.log('✅ Admin email detected, granting access without profile check')
+        setUser({
+          id: authUser.id,
+          email: authUser.email || '',
+          tier: 'admin'
+        })
         setLoading(false)
         return
       }
 
-      // User is authenticated and has admin access
-      setUser({
-        id: authUser.id,
-        email: authUser.email || profile.email,
-        tier: profile.tier
-      })
+      // If we get here, deny access
+      console.log('❌ Denying access - no valid admin credentials')
+      setError('Access denied. Admin privileges required.')
       
     } catch (err) {
-      console.error('Admin auth check failed:', err)
+      console.error('❌ Admin auth check failed:', err)
       setError('Authentication error. Please try logging in again.')
     } finally {
       setLoading(false)

@@ -30,17 +30,21 @@ CREATE UNIQUE INDEX IF NOT EXISTS user_profiles_user_id_idx ON public.user_profi
 -- Enable RLS
 ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
 
--- Create policies
-CREATE POLICY IF NOT EXISTS "Service role full access on user_profiles" ON public.user_profiles
+-- Create policies (drop first if exists, then create)
+DROP POLICY IF EXISTS "Service role full access on user_profiles" ON public.user_profiles;
+CREATE POLICY "Service role full access on user_profiles" ON public.user_profiles
   FOR ALL USING (true) WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "Users can read own profile" ON public.user_profiles
+DROP POLICY IF EXISTS "Users can read own profile" ON public.user_profiles;
+CREATE POLICY "Users can read own profile" ON public.user_profiles
   FOR SELECT USING (auth.uid() = user_id);
 
-CREATE POLICY IF NOT EXISTS "Users can update own profile" ON public.user_profiles
+DROP POLICY IF EXISTS "Users can update own profile" ON public.user_profiles;
+CREATE POLICY "Users can update own profile" ON public.user_profiles
   FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY IF NOT EXISTS "Admins can read all profiles" ON public.user_profiles
+DROP POLICY IF EXISTS "Admins can read all profiles" ON public.user_profiles;
+CREATE POLICY "Admins can read all profiles" ON public.user_profiles
   FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.user_profiles 

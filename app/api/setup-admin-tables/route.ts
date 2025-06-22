@@ -8,32 +8,86 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function POST() {
   try {
-    console.log('Running admin table setup and agent safety migration...')
+    console.log('🚀 SELFIE AI™ Admin System Setup via API...')
 
-    // First, run the original admin table setup
-    const { error: adminError } = await supabase.rpc('setup_admin_tables')
-    
-    if (adminError) {
-      console.error('Admin table setup error:', adminError)
-      return NextResponse.json({ error: adminError.message }, { status: 500 })
+    // Check if user_profiles table already exists
+    const { data: existingData, error: checkError } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .limit(1)
+
+    if (!checkError) {
+      console.log('✅ user_profiles table already exists!')
+      
+      // Check for admin user
+      const { data: adminData, error: adminError } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('email', 'ssa@ssasocial.com')
+        .single()
+
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Admin tables already exist!',
+        adminExists: !!adminData,
+        tableExists: true
+      })
     }
 
-    // Now run the agent safety migration
-    const { error: migrationError } = await supabase.rpc('run_agent_safety_migration')
-    
-    if (migrationError) {
-      console.error('Agent safety migration error:', migrationError)
-      return NextResponse.json({ error: migrationError.message }, { status: 500 })
-    }
+    console.log('🔧 Table does not exist, attempting to create via data operations...')
 
-    console.log('Admin table setup and agent safety migration completed successfully')
+    // Since we can't execute raw SQL, let's try to create the table by attempting an insert
+    // This will fail but might give us insight into the table structure
+    const { error: insertError } = await supabase
+      .from('user_profiles')
+      .insert({
+        user_id: '00000000-0000-0000-0000-000000000000',
+        email: 'test@example.com',
+        full_name: 'Test User',
+        role: 'user',
+        is_admin: false
+      })
+
+    console.log('📊 Insert attempt result:', insertError)
+
     return NextResponse.json({ 
-      success: true, 
-      message: 'Admin tables and agent safety features setup completed' 
+      success: false, 
+      message: 'Table creation requires manual SQL execution',
+      error: insertError?.message,
+      instructions: {
+        method1: {
+          title: 'Manual SQL (Recommended)',
+          steps: [
+            'Go to https://supabase.com/dashboard/project/usrustscragennskanfh',
+            'Navigate to SQL Editor',
+            'Copy SQL from admin-setup.sql file',
+            'Run the SQL',
+            'Sign up at /admin/login with ssa@ssasocial.com'
+          ]
+        },
+        method2: {
+          title: 'Direct Link',
+          url: 'https://supabase.com/dashboard/project/usrustscragennskanfh/sql/new'
+        }
+      }
     })
 
   } catch (error) {
-    console.error('Setup error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    console.error('❌ Setup error:', error)
+    return NextResponse.json({ 
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
   }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    message: 'SELFIE AI™ Admin Table Setup API',
+    instructions: 'Send a POST request to this endpoint to setup admin tables',
+    manualSetup: {
+      supabaseUrl: 'https://supabase.com/dashboard/project/usrustscragennskanfh/sql/new',
+      sqlFile: 'Use the SQL from admin-setup.sql in the project root'
+    }
+  })
 } 

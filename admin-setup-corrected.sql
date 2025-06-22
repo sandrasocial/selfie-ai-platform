@@ -1,4 +1,4 @@
--- SELFIE AI™ Admin System Setup
+-- SELFIE AI™ Admin System Setup - CORRECTED VERSION
 -- Run this SQL in your Supabase SQL Editor
 
 -- Create user_profiles table

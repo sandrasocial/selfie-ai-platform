@@ -4,32 +4,32 @@ tsx
 import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  label: string;
+  text: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
 }
 
-const Button = ({ label, onClick, variant = 'primary', size = 'medium', disabled = false }: ButtonProps) => {
-  const variantClasses = {
-    primary: 'bg-blue-500 text-white hover:bg-blue-600',
-    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+const Button = ({ text, onClick, variant = 'primary', size = 'medium' }: ButtonProps) => {
+  const baseStyles = 'font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
+  const variantStyles = {
+    primary: 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-500',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700 focus:ring-gray-500',
   };
 
-  const sizeClasses = {
-    small: 'px-4 py-2 text-sm',
-    medium: 'px-6 py-3 text-base',
-    large: 'px-8 py-4 text-lg',
+  const sizeStyles = {
+    small: 'px-3 py-1 text-sm',
+    medium: 'px-4 py-2 text-base',
+    large: 'px-6 py-3 text-lg',
   };
-
-  const className = `rounded font-semibold transition-colors duration-200 ${
-    variantClasses[variant]
-  } ${sizeClasses[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
 
   return (
-    <button className={className} onClick={onClick} disabled={disabled}>
-      {label}
+    <button 
+      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]}`}
+      onClick={onClick}
+    >
+      {text}
     </button>
   );
 };

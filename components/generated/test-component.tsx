@@ -9,7 +9,7 @@ interface ButtonProps {
   className?: string;
 }
 
-const Button = ({ text, onClick, className = '' }: ButtonProps) => {
+export default function Button({ text, onClick, className = '' }: ButtonProps) {
   return (
     <button
       className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
@@ -18,6 +18,4 @@ const Button = ({ text, onClick, className = '' }: ButtonProps) => {
       {text}
     </button>
   );
-};
-
-export default Button;
+}

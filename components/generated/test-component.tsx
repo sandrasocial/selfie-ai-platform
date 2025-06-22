@@ -1,40 +1,43 @@
 tsx
 'use client';
 
-import React from 'react';
+import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  label: string;
-  onClick: () => void;
+  children: React.ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  label, 
+const Button = ({ 
+  children, 
   onClick, 
   variant = 'primary',
   size = 'md',
-}) => {
-  const baseStyles = 'font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
-  const variantStyles = {
-    primary: 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-500',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700 focus:ring-gray-500',
+  disabled = false,
+}: ButtonProps) => {
+  const variantClasses = {
+    primary: 'bg-blue-500 text-white hover:bg-blue-600',
+    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
   };
 
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-sm',
     md: 'px-4 py-2 text-base',
-    lg: 'px-5 py-2.5 text-lg',
+    lg: 'px-6 py-3 text-lg',
   };
 
   return (
     <button
-      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]}`}
       onClick={onClick}
+      disabled={disabled}
+      className={`rounded font-semibold ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
     >
-      {label}
+      {children}
     </button>
   );
 };

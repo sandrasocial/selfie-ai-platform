@@ -3,21 +3,41 @@ tsx
 
 import { MouseEventHandler } from 'react';
 
-interface ButtonProps {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+type ButtonProps = {
+  onClick: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
-}
+  variant?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+};
 
-const Button = ({ onClick, className, children }: ButtonProps) => {
+export default function Button({
+  onClick,
+  children,
+  variant = 'primary',
+  size = 'medium',
+  disabled = false,
+}: ButtonProps) {
+  const variantClasses = {
+    primary: 'bg-blue-500 text-white hover:bg-blue-600',
+    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+  };
+
+  const sizeClasses = {
+    small: 'px-2 py-1 text-sm',
+    medium: 'px-4 py-2 text-base',
+    large: 'px-6 py-3 text-lg',
+  };
+
   return (
     <button
       onClick={onClick}
-      className={`bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${className}`}
+      className={`rounded font-semibold transition-colors duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
+      disabled={disabled}
     >
       {children}
     </button>
   );
-};
-
-export default Button;
+}

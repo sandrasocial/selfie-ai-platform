@@ -1,55 +1,23 @@
 tsx
 'use client';
 
-import React from 'react';
+import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
-  label: string;
-  onClick: () => void;
-  variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-}) => {
-  const baseClasses = 'font-semibold rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
-  let variantClasses = '';
-  let sizeClasses = '';
-
-  switch (variant) {
-    case 'primary':
-      variantClasses = 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500';
-      break;
-    case 'secondary':
-      variantClasses = 'bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-400';
-      break;
-  }
-
-  switch (size) {
-    case 'sm':
-      sizeClasses = 'px-3 py-1 text-sm';
-      break;
-    case 'md':
-      sizeClasses = 'px-4 py-2 text-base';
-      break;
-    case 'lg':
-      sizeClasses = 'px-6 py-3 text-lg';
-      break;
-  }
-
-  const classes = `${baseClasses} ${variantClasses} ${sizeClasses}`;
-
+export default function Button({ children, onClick, className = '', disabled = false }: ButtonProps) {
   return (
-    <button className={classes} onClick={onClick} disabled={disabled}>
-      {label}
+    <button
+      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
     </button>
   );
-};
-
-export default Button;
+}

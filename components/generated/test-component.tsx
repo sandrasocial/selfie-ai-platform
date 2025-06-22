@@ -14,7 +14,9 @@ export default function Button({ onClick, children, className = '', disabled = f
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      className={`px-4 py-2 font-semibold text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${
+        disabled ? 'opacity-50 cursor-not-allowed' : ''
+      } ${className}`}
       disabled={disabled}
     >
       {children}

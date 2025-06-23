@@ -3,6 +3,9 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { logger } from '@/lib/utils/logger';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // In-memory rate limiting (per IP)
 const RATE_LIMIT_WINDOW = 10 * 60 * 1000; // 10 minutes
 const RATE_LIMIT_MAX = 5;
@@ -109,4 +112,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

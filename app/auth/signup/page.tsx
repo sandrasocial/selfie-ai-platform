@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { validateEmail } from '@/lib/email-validation'
 
 export default function AuthSignupPage() {
   const [email, setEmail] = useState('')
@@ -35,7 +36,15 @@ export default function AuthSignupPage() {
     setError('')
     setSuccess('')
 
-    // Validation
+    // Email validation to prevent bounces
+    const emailValidation = validateEmail(email)
+    if (!emailValidation.isValid) {
+      setError(emailValidation.error || 'Please enter a valid email address')
+      setIsLoading(false)
+      return
+    }
+
+    // Password validation
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       setIsLoading(false)

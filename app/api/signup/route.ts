@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { logger } from '@/lib/utils/logger';
+import { validateEmail } from '@/lib/email-validation';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -38,11 +39,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // Comprehensive email validation to prevent bounces
+    const validation = validateEmail(email);
+    if (!validation.isValid) {
+      logger.warn(`Signup blocked - invalid email: ${email} - ${validation.error}`);
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: validation.error },
         { status: 400 }
       );
     }

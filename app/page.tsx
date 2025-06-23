@@ -178,12 +178,19 @@ function Home() {
     e.preventDefault();
     setSubmitMessage('');
     setEmailError(null);
-    // Validate email before submitting
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address.');
+    
+    // Import validation function dynamically to avoid SSR issues
+    const { validateEmail, logEmailValidation } = await import('@/lib/email-validation');
+    
+    // Comprehensive email validation to prevent bounces
+    const validation = validateEmail(email);
+    logEmailValidation(email, validation.isValid, validation.error);
+    
+    if (!validation.isValid) {
+      setEmailError(validation.error || 'Please enter a valid email address.');
       return;
     }
+    
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/signup', {

@@ -370,26 +370,23 @@ function Home() {
       )}
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen overflow-hidden">
-        {/* Full-bleed background image with overlay */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero-background.jpg"
-            alt="Sandra hero image"
-            fill
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#171719]">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://i.postimg.cc/BbhKRQM7/out-1-15.webp"
+            alt="Sandra - SELFIE Founder"
             className="w-full h-full object-cover"
-            priority
-            sizes="100vw"
           />
-          {/* Gradient overlay for text readability (lighter for more image visibility) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#171719]/60 via-[#171719]/30 to-transparent"></div>
+          {/* Add a subtle dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-[#171719]/50" />
         </div>
 
         {/* Navigation - absolute positioned */}
         <nav className="absolute top-0 left-0 right-0 z-50 px-6 md:px-16 lg:px-24 py-8">
           <div className="flex items-center justify-between">
             <div className="text-white">
-              <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="SELFIE AI Logo" className="h-8" />
+              <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="SELFIE Logo" className="h-8" />
             </div>
             <div className="hidden md:flex items-center gap-12">
               <a href="/about" className="font-neue text-[11px] uppercase tracking-[0.3em] text-white/80 hover:text-white transition-colors">About</a>
@@ -430,53 +427,52 @@ function Home() {
           )}
         </nav>
 
-        {/* Hero Content */}
-        <div className="relative z-10 min-h-screen flex items-center">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 w-full">
-            <div className="max-w-4xl">
-              {/* Small accent text */}
-              <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-white/60 mb-8">
-                The personal brand platform that works
-              </p>
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+          <div className="max-w-3xl">
+            {/* Small accent text - responsive sizing */}
+            <p 
+              className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-white/80 mb-6 sm:mb-8 font-inter font-light"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+            >
+              Stop hiding. Start posting. Watch it grow.
+            </p>
+            
+            {/* Main headline - mobile-first responsive */}
+            <h1 
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bodoni font-light leading-[1.1] mb-6 sm:mb-8 text-white"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+            >
+              Build your entire personal brand<br/>from your phone
+            </h1>
+            
+            {/* Subheadline - responsive sizing */}
+            <p 
+              className="text-lg sm:text-xl lg:text-2xl font-inter font-light italic text-white/90 mb-8 sm:mb-12 leading-relaxed"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+            >
+              The same system that took me from zero to 120K.<br/>
+              Now with AI tools that make it even easier.
+            </p>
 
-              {/* Main headline with proper typography */}
-              <h1 className="font-cormorant text-[48px] sm:text-[72px] md:text-[96px] lg:text-[144px] leading-[0.85] text-white mb-8">
-                Your selfie<br className="hidden sm:block"/>
-                is your brand
-              </h1>
-
-              {/* Subheadline with better spacing */}
-              <div className="space-y-4 mb-12 max-w-2xl">
-                <p className="font-neue text-[20px] leading-relaxed text-white/80 italic">
-                  You don't need another course telling you to "just be yourself."
-                </p>
-                <p className="font-neue text-[20px] leading-relaxed text-white/80">
-                  You need a strategy that works with who you already are.
-                </p>
-              </div>
-
-              {/* CTA Buttons with proper styling */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="/start-here" className="group relative overflow-hidden bg-white text-[#171719] px-10 py-4 font-inter text-[11px] uppercase tracking-[0.3em] hover:bg-[#F1F1F1] transition-all duration-300">
-                  <span className="relative z-10">Let's Do This Together</span>
-                </a>
-                <a href="/stories" className="group relative border border-white/30 text-white px-10 py-4 font-inter text-[11px] uppercase tracking-[0.3em] hover:bg-white hover:text-[#171719] transition-all duration-300">
-                  <span className="relative z-10">Here's What Happened</span>
-                </a>
-              </div>
+            {/* CTA Buttons - Mobile-first: stacked → inline */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              {/* Primary Button */}
+              <Link
+                href="/free-guide"
+                className="w-full sm:w-auto inline-block bg-white text-[#171719] px-8 py-5 sm:px-12 sm:py-4 font-inter text-sm uppercase tracking-wider hover:bg-white/90 transition-colors font-medium text-center min-h-[44px] flex items-center justify-center"
+              >
+                Get The Free Guide
+              </Link>
+              
+              {/* Secondary Button */}
+              <Link
+                href="/tools"
+                className="w-full sm:w-auto inline-block bg-transparent text-white px-8 py-5 sm:px-12 sm:py-4 font-inter text-sm uppercase tracking-wider border border-white hover:bg-white hover:text-[#171719] transition-all duration-300 font-medium text-center min-h-[44px] flex items-center justify-center"
+              >
+                Show Me Everything
+              </Link>
             </div>
-          </div>
-        </div>
-
-        {/* Editorial number accent */}
-        <div className="absolute bottom-20 right-20 pointer-events-none">
-          <span className="font-bodoni italic text-[400px] text-white/[0.02] leading-none">01</span>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="w-px h-16 bg-white/20 relative">
-            <div className="absolute top-0 w-px h-8 bg-white animate-scroll"></div>
           </div>
         </div>
       </section>
@@ -494,23 +490,25 @@ function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
             {/* Story Content */}
             <div className="lg:col-span-7 relative z-10">
-              <h3 className="story-opener">"I just needed a way to show up."</h3>
+              <h3 className="story-opener">"Okay, here's what actually happened..."</h3>
               <div className="space-y-6">
                 <p className="story-body">
-                  Three years ago, I was sitting in my car after my divorce, scrolling through Instagram, wondering how everyone else made it look so easy.
+                  One year ago my marriage ended. Single mom, three kids, zero plan.
                 </p>
                 <p className="story-body">
-                  I had an iPhone, three kids, and zero confidence. But I also had this feeling that I was meant for more. That my story could help someone else going through the same thing.
+                  But I had a phone. And I figured out that was all I needed.
+                </p>
+                <p className="story-body">
+                  90 days later: 120K followers. 
+                  Today: A business that actually works.
+                  Now: Teaching you exactly how I did it.
+                </p>
+                <p className="story-body">
+                  No fancy equipment. No design degree. Just strategy that actually works.
                 </p>
                 <div className="story-highlight">
-                  "I figured out the light, the angles, the editing. More importantly, I figured out how to stop hiding."
+                  "Your mess is your message. Let's turn it into money."
                 </div>
-                <p className="story-body">
-                  So I started taking selfies. Bad ones at first. Really bad. But I kept going. I figured out the light, the angles, the editing. More importantly, I figured out how to stop hiding.
-                </p>
-                <p className="story-body">
-                  Now I help women build their entire personal brand from their camera roll. Because honestly? Your phone is all you need.
-                </p>
               </div>
               <div className="mt-12">
                 <p className="story-cta">Let's build something real together...</p>
@@ -518,7 +516,7 @@ function Home() {
               </div>
               {/* CTA Button */}
               <a href="/start-here" className="inline-flex items-center justify-center mt-8 px-8 py-4 bg-[#171719] text-white font-inter text-[11px] uppercase tracking-[0.2em] hover:bg-[#171719]/90 transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-[#171719]">
-                Start Your Journey
+                Start Where You Are
               </a>
             </div>
             {/* Image Section */}
@@ -527,7 +525,7 @@ function Home() {
               <div className="relative">
                 <Image
                   src="/images/sandra-portrait.jpg"
-                  alt="Sandra - Founder of SELFIE AI™"
+                  alt="Sandra - Founder of SELFIE"
                   width={600}
                   height={800}
                   className="w-full h-auto"
@@ -622,6 +620,7 @@ function Home() {
               <h2 className="font-bodoni text-[36px] sm:text-[48px] md:text-[64px] tracking-tight">
                 Who Shows Up Here
               </h2>
+              <p className="font-inter text-[14px] text-[#B5B5B3] mt-2">(Women ready to be seen)</p>
               <div className="w-24 md:w-32 h-px bg-black mt-3 md:mt-4 mx-auto sm:mx-0"></div>
             </div>
           </div>
@@ -648,11 +647,11 @@ function Home() {
               </div>
 
               <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
-                You know your stuff. Now let's make sure everyone else does too.
+                Your clients need to see YOU, not another stock photo.
               </h3>
 
               <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
-                Your expertise deserves better than another Canva template.
+                Let's fix that camera shyness once and for all.
               </p>
             </div>
 
@@ -677,11 +676,11 @@ function Home() {
               </div>
 
               <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
-                You've got the vision. You've got the phone. Let's put them together.
+                You've been creating content for everyone else.
               </h3>
 
               <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
-                Turn those random photos into a brand that pays.
+                Time to build something that's actually yours.
               </p>
             </div>
 
@@ -706,11 +705,11 @@ function Home() {
               </div>
 
               <h3 className="font-bodoni text-[28px] md:text-[32px] leading-tight mb-4 md:mb-6">
-                You're building something bigger than yourself.
+                You're running an empire from your phone anyway.
               </h3>
 
               <p className="font-inter text-[15px] md:text-base leading-relaxed opacity-80">
-                Let me help you look the part without the photoshoot budget.
+                Might as well look the part.
               </p>
             </div>
           </div>
@@ -722,10 +721,10 @@ function Home() {
         <div className="editorial-number top-40 right-0 translate-x-1/4">03</div>
         <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-20">
-            <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-6">Your Tools</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-6">The stuff I wish I had when I started</p>
             <h2 className="font-bodoni text-5xl md:text-7xl tracking-[-0.04em]">
-              Everything you need<br/>
-              <span className="font-playfair italic">to start showing up.</span>
+              Real tools that actually work<br/>
+              <span className="font-playfair italic">(not more courses to watch)</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -744,9 +743,9 @@ function Home() {
                   <span className="text-xs font-bodoni text-white">01</span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-12">
-                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Get real feedback</p>
-                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">The Glow Check™</h3>
-                  <p className="text-white font-light mb-6">Upload a selfie. Get honest feedback. Actually helpful, not harsh.</p>
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Upload a selfie. Get instant feedback. Fix it. Post it.</p>
+                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">The Glow Check</h3>
+                  <p className="text-white font-light mb-6">Like having me look at your selfie and tell you exactly what to fix.</p>
                   <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
                 </div>
               </article>
@@ -766,9 +765,9 @@ function Home() {
                   <span className="text-xs font-bodoni text-white">02</span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-12">
-                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">See your potential</p>
-                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">Future Self AI</h3>
-                  <p className="text-white font-light mb-6">Visualize where you're going. Sometimes we need to see it to believe it.</p>
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">See yourself living the life you want</p>
+                  <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">Future Self Vision Board</h3>
+                  <p className="text-white font-light mb-6">The house. The trips. The confidence. Sometimes you need to see it first.</p>
                   <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
                 </div>
               </article>
@@ -788,9 +787,9 @@ function Home() {
                   <span className="text-xs font-bodoni text-white">03</span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-12">
-                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Plan with ease</p>
+                  <p className="text-xs tracking-[0.3em] uppercase text-white mb-4">Never stare at a blank screen again</p>
                   <h3 className="font-bodoni text-3xl tracking-[-0.02em] mb-4 text-white">Content Calendar</h3>
-                  <p className="text-white font-light mb-6">Never run out of content ideas. AI-powered planning for real results.</p>
+                  <p className="text-white font-light mb-6">30 days of "post this." Because decision fatigue is real.</p>
                   <div className="w-full h-px bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
                 </div>
               </article>
@@ -810,16 +809,20 @@ function Home() {
 
         <div className="relative max-w-[1000px] mx-auto px-4 sm:px-8 md:px-16 text-center">
           <h2 className="font-bodoni text-[40px] sm:text-[56px] md:text-[80px] leading-[0.9] text-[#171719] mb-8 md:mb-12">
-            Ready to build your brand<br/>
-            from your camera roll?
+            Ready to stop hiding and<br/>
+            start building something real?
           </h2>
 
           <p className="font-inter text-lg md:text-xl text-[#4C4B4B] leading-relaxed mb-12 md:mb-16 max-w-2xl mx-auto">
-            I built this platform because I was tired of watching brilliant women hide behind bad photos and borrowed quotes. You have something to say. Let's make sure people listen.
+            I get it. You've been taking photos, deleting them, taking more. Watching everyone else blow up while you're still trying to find your "good side."
+          </p>
+
+          <p className="font-inter text-lg md:text-xl text-[#4C4B4B] leading-relaxed mb-12 md:mb-16 max-w-2xl mx-auto">
+            Here's the truth: I started with terrible selfies too. The difference? I kept going. And I figured out the system.
           </p>
 
           <p className="font-inter text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#B5B5B3] mb-8">
-            Join 10,000+ women who stopped waiting for perfect and started showing up as themselves.
+            Start where you are. With whatever photos you have.
           </p>
 
           <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto">
@@ -843,7 +846,7 @@ function Home() {
               disabled={isSubmitting}
               className="w-full mt-8 bg-[#171719] text-white py-5 font-inter text-[11px] uppercase tracking-[0.3em] transition-all duration-500 hover:translate-y-[-2px] hover:shadow-lg disabled:opacity-50 disabled:hover:translate-y-0"
             >
-              {isSubmitting ? 'SENDING...' : 'YES, SEND ME THE GUIDE'}
+                            {isSubmitting ? 'SENDING...' : 'SEND ME THE FREE GUIDE'}
             </button>
 
             {submitMessage && (
@@ -864,7 +867,7 @@ function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "SELFIE AI™",
+          "name": "SELFIE",
           "description": "Personal brand platform helping women show up confidently online",
           "url": "https://selfie-ai.com",
           "logo": "https://selfie-ai.com/logo.png",

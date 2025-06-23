@@ -5,36 +5,27 @@ const offers = [
     number: '01',
     name: 'Free Selfie Guide',
     price: '',
-    description: 'The basics that changed everything. Five poses, proper lighting, and why your bathroom mirror is lying to you.',
+    description: 'The guide that started it all. Real tips that work with whatever phone you have. No apps to buy. Just you looking like you on a really good day.',
     features: ['5 Poses', 'Lighting Guide', 'Instant Download'],
     cta: 'Start Here',
     href: '/free-guide',
   },
   {
     number: '02',
-    name: 'Selfie Starter Kit',
-    price: '• $67',
-    description: '30 days of showing up. Daily poses, caption templates, and the exact editing workflow I use. No more second-guessing.',
-    features: ['30 Day Plan', 'Caption Templates', 'Editing Workflow'],
-    cta: 'Level Up',
-    href: '/starter-kit',
+    name: 'SELFIE Collective',
+    price: '• $67/month',
+    description: 'Stop taking 100 selfies to post none. Get your personal AI coach, see your future self, and actually start showing up. This is how I built 120K followers.',
+    features: ['Personal AI Coach', 'Future Self Vision', 'Content Calendar'],
+    cta: 'Join Now',
+    href: '/collective',
   },
   {
     number: '03',
-    name: 'Branded By Selfie',
-    price: '• $397',
-    description: `Your complete brand transformation. 12 weeks of strategy, tools, and the confidence to charge what you're worth.`,
-    features: ['Full Transformation', '12 Week Program', 'Best Value'],
-    cta: 'Transform Now',
-    href: '/branded',
-  },
-  {
-    number: '04',
-    name: 'VIP Automated Brand',
-    price: '• Apply',
-    description: `I'll build your entire system with you. From first selfie to six figures. This is for women ready to go all in.`,
-    features: ['Apply Only', 'Limited Spots', '1:1 Support'],
-    cta: `Okay, I'm Ready`,
+    name: 'VIP Empire Builder',
+    price: '• Apply Only',
+    description: 'Ready to build something bigger than followers? We\'ll create your entire automated business together. Real revenue. Real freedom. Limited spots.',
+    features: ['Apply Only', 'Limited Spots', 'Automated Business'],
+    cta: `I'm Ready`,
     href: '/apply',
     vip: true,
   },
@@ -103,7 +94,7 @@ export default function OfferLadderSection() {
     <section className="offers-section relative bg-[#171719] text-white">
       {/* Section Header (above scrollable area) */}
       <div ref={headerRef} className="section-header flex flex-col items-center justify-center text-center max-w-2xl mx-auto px-6 pt-24 pb-12">
-        <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="SELFIE AI Logo" className="w-32 mb-8 mx-auto" />
+        <img src="https://i.postimg.cc/L88db1fc/White-transperent-logo.png" alt="SELFIE Logo" className="w-32 mb-8 mx-auto" />
         <h2 className="font-bodoni text-[40px] md:text-[64px] font-light leading-[1.1] mb-6 opacity-0 translate-y-8 animate-fadeInUp">Your Path to Showing Up</h2>
         <p className="text-[18px] text-white/60 leading-[1.6] opacity-0 translate-y-4 animate-fadeInUp animation-delay-200">Choose your path. Each step builds on the last, creating your complete transformation.</p>
       </div>

@@ -10,8 +10,8 @@ const testimonials = [
     name: 'Rachel, Dublin',
   },
   {
-    text: 'This gave me the push to show up more confidently online.',
-    name: 'Sophie, Berlin',
+    text: '90% of your posts sound exactly like my life. Finally someone gets it.',
+    name: 'Maria, Barcelona',
   },
 ];
 

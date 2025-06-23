@@ -21,11 +21,7 @@ function getModelForAgent(agentName: string): AgentModelConfig {
       temperature: 0.5,
       maxTokens: 1000
     },
-    maya: {
-      model: 'claude-3-5-sonnet-20241022',
-      temperature: 0.3,
-      maxTokens: 2000
-    },
+
     victoria: {
       model: 'claude-3-5-sonnet-20241022',
       temperature: 0.7,
@@ -90,20 +86,11 @@ async function getAIResponse(agentName: string, message: string, conversationHis
     // Fallback to mock response if Claude fails
     const mockResponses = {
       diana: `Hello darling! I'm Diana, your creative director. I understand you want to ${message.toLowerCase()}. Let me orchestrate this perfectly for you. I'll break this down into clear steps and delegate to the right team members. What's your vision for this project?`,
-      maya: `Hi there! I'm Maya, your developer. I can definitely help you with ${message.toLowerCase()}. Let me write some clean, efficient code for this. I'll make sure to test everything thoroughly and avoid any midnight deployment marathons!`,
       victoria: `Hello! I'm Victoria, your designer. I'm excited to create something divine for you. For ${message.toLowerCase()}, I'll use our luxury design system with sharp edges and editorial aesthetics. What's your vision?`,
       rachel: `Hi! I'm Rachel, your copywriter. Okay so, you want to ${message.toLowerCase()}. Here's the thing - I'll craft copy that sounds exactly like you, no corporate buzzwords, just real talk that connects with your audience.`,
       quinn: `Hello! I'm Quinn, your QA specialist. I'll thoroughly test ${message.toLowerCase()} to ensure everything works flawlessly. Let me create a comprehensive testing plan and check all the edge cases.`,
       ava: `Hi! I'm Ava, your automation specialist. I can definitely streamline ${message.toLowerCase()} for you. I'll build in proper error handling and make sure everything connects seamlessly.`
     };
-
-    // Check if it's nighttime for Maya
-    if (agentName === 'maya') {
-      const hour = new Date().getHours();
-      if (hour >= 22 || hour < 6) {
-        return "Hey! It's past 10 PM... I have a strict bedtime now (learned that the hard way 😅). Can we continue this in the morning? I promise to tackle it first thing!";
-      }
-    }
 
     return mockResponses[agentName as keyof typeof mockResponses] || "Hello! How can I help you today?";
   }

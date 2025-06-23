@@ -13,16 +13,6 @@ const agents = [
     color: 'bg-purple-100 text-purple-800',
     personality: 'Strategic, organized, and results-driven'
   },
-  // Maya temporarily disabled due to deployment conflicts
-  // {
-  //   id: 'maya',
-  //   name: 'Maya',
-  //   role: 'Developer',
-  //   description: 'Writes code, builds features',
-  //   avatar: '💻',
-  //   color: 'bg-blue-100 text-blue-800',
-  //   personality: 'Technical, detail-oriented, and solution-focused'
-  // },
   {
     id: 'victoria',
     name: 'Victoria',

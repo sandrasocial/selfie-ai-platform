@@ -18,15 +18,6 @@ const agents = {
     color: 'bg-purple-100 text-purple-800',
     personality: 'Strategic, organized, and results-driven. Diana thinks big picture and ensures everything aligns with your goals.'
   },
-  // Maya temporarily disabled due to deployment conflicts
-  // maya: {
-  //   name: 'Maya',
-  //   role: 'Developer',
-  //   description: 'Writes code, builds features',
-  //   avatar: '💻',
-  //   color: 'bg-blue-100 text-blue-800',
-  //   personality: 'Technical, detail-oriented, and solution-focused. Maya gets excited about clean code and elegant solutions.'
-  // },
   victoria: {
     name: 'Victoria',
     role: 'Designer',

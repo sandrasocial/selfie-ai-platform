@@ -52,25 +52,6 @@ export default function ProjectOverview() {
         'Access payment systems'
       ]
     },
-    // Maya temporarily disabled due to deployment conflicts
-    // {
-    //   id: 'MAYA',
-    //   name: 'Dev AI (MAYA)',
-    //   role: 'Technical Implementation',
-    //   responsibilities: [
-    //     'Builds React components and features',
-    //     'Implements API endpoints',
-    //     'Manages database operations',
-    //     'Writes TypeScript code',
-    //     'Handles technical integrations'
-    //   ],
-    //   cannotDo: [
-    //     'Change design without VICTORIA\'s input',
-    //     'Modify copy without RACHEL\'s approval',
-    //     'Skip testing phase',
-    //     'Deploy without QUINN\'s review'
-    //   ]
-    // },
     {
       id: 'VICTORIA',
       name: 'UX AI (VICTORIA)',
@@ -148,7 +129,7 @@ export default function ProjectOverview() {
   const workflowPatterns = [
     {
       name: 'Feature Build',
-      workflow: ['VICTORIA', 'RACHEL', 'QUINN'], // Maya temporarily disabled
+      workflow: ['VICTORIA', 'RACHEL', 'QUINN'],
       description: 'Complete feature development from code to deployment-ready',
       example: 'Building a new AI tool or dashboard component'
     },
@@ -166,13 +147,13 @@ export default function ProjectOverview() {
     },
     {
       name: 'Bug Fix',
-      workflow: ['QUINN'], // Maya temporarily disabled - manual fix required
+      workflow: ['QUINN'], // Manual fix required
       description: 'Technical fixes that need validation',
       example: 'Fixing the Safari download bug'
     },
     {
       name: 'Full Stack Feature',
-      workflow: ['VICTORIA', 'RACHEL', 'AVA', 'QUINN'], // Maya temporarily disabled
+      workflow: ['VICTORIA', 'RACHEL', 'AVA', 'QUINN'],
       description: 'Complex features touching all systems',
       example: 'Implementing a new pricing tier with automation'
     }
@@ -523,10 +504,10 @@ export default function ProjectOverview() {
                       <h4 className="font-semibold mb-2">Example Good Handoff Note:</h4>
                       <div className="bg-white p-4 border border-warm-gray/20 text-sm">
                         <p className="mb-2">
-                          <strong>MAYA to VICTORIA:</strong> "Homepage hero section complete. 
-                          Implemented responsive grid at /app/(marketing)/page.tsx. Used new 
-                          coastal images from today's vibe. Need your eye on mobile breakpoint 
-                          - text might need size adjustment. Preview at localhost:3000"
+                          <strong>QUINN to VICTORIA:</strong> "Homepage hero section tested and ready. 
+                          Verified responsive grid at /app/(marketing)/page.tsx. All viewport sizes 
+                          working correctly. Mobile breakpoint text sizing looks good. Ready for 
+                          your final design review. Preview at localhost:3000"
                         </p>
                       </div>
                     </div>

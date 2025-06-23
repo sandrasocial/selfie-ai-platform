@@ -53,7 +53,6 @@ export async function POST(request: NextRequest) {
       // Fallback response
       const fallbackResponses = {
         diana: `Hello! I'm Diana, your creative director. I understand you want to ${message.toLowerCase()}. Let me orchestrate this perfectly for you!`,
-        maya: `Hi there! I'm Maya, your developer. I can definitely help you with ${message.toLowerCase()}. Let me write some clean code for this!`,
         victoria: `Hello! I'm Victoria, your designer. I'm excited to create something beautiful for ${message.toLowerCase()}!`,
         rachel: `Hi! I'm Rachel, your copywriter. I'll craft amazing copy for ${message.toLowerCase()} that really connects with your audience!`,
         quinn: `Hello! I'm Quinn, your QA specialist. I'll thoroughly test ${message.toLowerCase()} to ensure everything works perfectly!`,

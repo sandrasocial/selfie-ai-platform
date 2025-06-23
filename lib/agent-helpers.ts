@@ -129,11 +129,6 @@ export const agents = {
     token: process.env.AGENT_RACHEL_TOKEN!
   }),
   
-  maya: new AgentHelper({
-    name: 'maya',
-    token: process.env.AGENT_MAYA_TOKEN!
-  }),
-  
   quinn: new AgentHelper({
     name: 'quinn',
     token: process.env.AGENT_QUINN_TOKEN!
@@ -211,18 +206,6 @@ export const agentScripts = {
       task: {
         title: `Update ${pagePath} copy`,
         description: `Rewrite in Sandra's voice - Rachel from FRIENDS style`
-      }
-    });
-  },
-  
-  // Maya (Dev Agent) example: Add API endpoint
-  mayaCreateAPI: async (endpoint: string, code: string) => {
-    return agents.maya.commit({
-      filePath: `app/api/${endpoint}/route.ts`,
-      content: code,
-      task: {
-        title: `Create ${endpoint} API`,
-        description: `New API endpoint with proper error handling and types`
       }
     });
   },

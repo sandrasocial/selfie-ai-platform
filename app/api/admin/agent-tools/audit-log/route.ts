@@ -58,7 +58,6 @@ export async function GET(request: NextRequest) {
 function extractAgentFromCommit(commit: any): string {
   // Logic to identify which agent made the commit
   const message = commit.commit.message.toLowerCase();
-  if (message.includes('maya') || message.includes('fix') || message.includes('implement')) return 'maya';
   if (message.includes('victoria') || message.includes('design') || message.includes('style')) return 'victoria';
   if (message.includes('rachel') || message.includes('copy') || message.includes('content')) return 'rachel';
   if (message.includes('quinn') || message.includes('test')) return 'quinn';

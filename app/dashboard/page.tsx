@@ -1,462 +1,381 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
-import { Button } from '@/app/components/ui/button';
-import { Badge } from "@/app/components/ui/badge";
-import { 
-  Calendar,
-  Camera, 
-  FileText, 
-  MessageCircle, 
-  Crown, 
-  Sparkles,
-  ArrowRight,
-  Upload,
-  Edit3,
-  Target,
-  TrendingUp,
-  CheckCircle2,
-  Download,
-  Play,
-  Lock,
-  Star,
-  Clock,
-  Gift,
-  Archive,
-  Bot,
-  User,
-  AlertCircle
-} from 'lucide-react';
-import Link from 'next/link';
-import { useOnboardingStatus } from '@/hooks/useProfile';
+import { useState, useEffect } from 'react'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import Link from 'next/link'
+import Image from 'next/image'
+import { FutureSelfHero } from '@/app/components/dashboard/FutureSelfHero'
+import { SandraAIMessage } from '@/app/components/dashboard/SandraAIMessage'
+import { QuickActions } from '@/app/components/dashboard/QuickActions'
+import { ProgressTracker } from '@/app/components/dashboard/ProgressTracker'
+import { ContentCalendar } from '@/app/components/dashboard/ContentCalendar'
+import { RealtimeNotifications } from '@/app/components/dashboard/RealtimeNotifications'
+import { DashboardLayout } from '@/app/components/dashboard/DashboardLayout'
+import { ProgressAnimation } from '@/app/components/dashboard/ProgressAnimations'
+import { DashboardSearch } from '@/app/components/dashboard/DashboardSearch'
+import { PerformanceMonitor, InteractionTracker } from '@/app/components/dashboard/PerformanceMonitor'
+import { DashboardInsights } from '@/app/components/dashboard/DashboardInsights'
+import type { UserProfile, FutureSelfImage, UserProgress } from '@/types/user'
 
-interface UserData {
-  id: string;
-  email: string;
-  tier: 'free' | 'starter' | 'branded' | 'vip';
-  created_at: string;
-  subscription_status?: string;
+interface DashboardData {
+  user: any
+  profile: UserProfile | null
+  futureSelf: FutureSelfImage | null
+  progress: UserProgress | null
+  todaysContent: any[]
+  stats: {
+    newFollowers: number
+    confidenceScore: number
+    postsThisMonth: number
+    monthlyGrowth: string
+  }
+  sandraMessage: {
+    message: string
+    type: 'motivation' | 'tip' | 'celebration' | 'reminder'
+    timestamp: string
+  }
 }
 
-export default function Dashboard() {
-  const { user, profile, loading, signOut } = useAuth();
-  const { hasProfile, isComplete, completionPercentage, profile: onboardingProfile, loading: profileLoading } = useOnboardingStatus();
+export default function PersonalizedDashboard() {
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState<DashboardData | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const supabase = createClientComponentClient()
 
-  if (loading || profileLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-100 flex items-center justify-center">
-        <div className="animate-pulse text-rose-600">Loading your dashboard...</div>
-      </div>
-    );
+  useEffect(() => {
+    fetchDashboardData()
+    
+    // Keyboard shortcut for search
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      // Fetch user profile
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+
+      // Fetch future self image
+      const { data: futureSelf } = await supabase
+        .from('future_self_images')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+
+      // Fetch user progress
+      const { data: progress } = await supabase
+        .from('user_progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .single()
+
+      // Mock data for today's content (replace with real data)
+      const todaysContent = [
+        {
+          id: 1,
+          title: "The Power of Quiet Confidence",
+          content: "I used to think being seen meant being loud. Then I realized the most magnetic people in the room are often the ones who speak with intention, not volume...",
+          platform: "Instagram",
+          engagement_prediction: 8.2,
+          hashtag_set: "Authority Builder",
+          scheduled_time: "10:30 AM",
+          image_url: "/images/todays-post.jpg"
+        }
+      ]
+
+      // Calculate stats
+      const stats = {
+        newFollowers: 847,
+        confidenceScore: progress?.confidence_score || 89,
+        postsThisMonth: 47,
+        monthlyGrowth: '3x'
+      }
+
+      // Generate Sandra AI message
+      const sandraMessage = {
+        message: `${profile?.full_name?.split(' ')[0] || 'Beautiful'}, your confidence score jumped 12 points this week! Your "expertise without ego" content is resonating powerfully. Ready for today's breakthrough moment?`,
+        type: 'celebration' as const,
+        timestamp: new Date().toISOString()
+      }
+
+      setData({
+        user,
+        profile,
+        futureSelf,
+        progress,
+        todaysContent,
+        stats,
+        sandraMessage
+      })
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  if (!user) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-100 flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Access Required</CardTitle>
-            <CardDescription>Please sign in to access your dashboard</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/auth/login">
-              <Button className="w-full">Sign In</Button>
-            </Link>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-soft-white flex items-center justify-center">
+        <div className="text-luxury-black font-serif text-2xl">Loading your personalized HQ...</div>
       </div>
-    );
+    )
   }
 
-  // Get user tier from profile or default to free
-  const userTier = profile?.tier || 'free';
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-soft-white flex items-center justify-center">
+        <div className="text-luxury-black">Unable to load dashboard. Please try again.</div>
+      </div>
+    )
+  }
 
-  const offerLadderCards = [
-    {
-      id: 'freebie',
-      title: 'Free Guide',
-      subtitle: 'Show Your Face™',
-      tagline: 'Start showing up with confidence—even if you\'ve been hiding.',
-      cta: 'Download Guide',
-      link: '/freebie/selfie-guide',
-      status: 'open',
-      bgImage: '/images/free-guide-bg.jpg',
-      tier: 'free',
-      price: 'FREE'
-    },
-    {
-      id: 'starter-kit',
-      title: 'Selfie Starter Kit',
-      subtitle: 'Essential Tools',
-      tagline: 'Master confident selfies that build your personal brand.',
-      cta: userTier !== 'free' ? 'Access Kit' : 'Unlock Kit',
-      link: userTier !== 'free' ? '/tools/starter-kit' : '/products/starter-kit',
-      status: userTier !== 'free' ? 'open' : 'locked',
-      bgImage: '/images/starter-kit-bg.jpg',
-      tier: 'starter',
-      price: '$67'
-    },
-    {
-      id: 'branded-by-selfie',
-      title: 'Branded by Selfie',
-      subtitle: 'Complete Brand Kit',
-      tagline: 'Build a cohesive brand that attracts your dream clients.',
-      cta: 'Access Studio',
-      link: '/studio',
-      status: ['branded', 'vip'].includes(userTier) ? 'open' : 'locked',
-      bgImage: '/images/branded-bg.jpg',
-      tier: 'branded',
-      price: '$397'
-    },
-    {
-      id: 'vip',
-      title: 'VIP Experience',
-      subtitle: 'Personal Brand Mastery',
-      tagline: 'White-glove service to build your empire.',
-      cta: 'Enter VIP',
-      link: '/vip',
-      status: userTier === 'vip' ? 'open' : 'locked',
-      bgImage: '/images/vip-bg.jpg',
-      tier: 'vip',
-      price: 'Apply'
-    }
-  ];
-
-  const quickAccessTools = [
-    {
-      title: 'Photo Vault',
-      description: 'Upload, organize, and enhance your photos',
-      icon: Camera,
-      href: '/tools/photo-vault',
-      tier: 'starter',
-      color: 'bg-pink-500'
-    },
-    {
-      title: 'Photo Studio',
-      description: 'AI-powered photo editing and enhancement',
-      icon: Edit3,
-      href: '/tools/photo-studio',
-      tier: 'starter',
-      color: 'bg-blue-500'
-    },
-    {
-      title: 'Caption Generator',
-      description: 'AI-powered captions that convert',
-      icon: MessageCircle,
-      href: '/tools/caption-generator',
-      tier: 'free',
-      color: 'bg-purple-500'
-    },
-    {
-      title: 'Brand Kit',
-      description: 'Colors, fonts, and style guide',
-      icon: Sparkles,
-      href: '/tools/brand-kit',
-      tier: 'branded',
-      color: 'bg-rose-500'
-    },
-    {
-      title: 'Content Calendar',
-      description: 'Plan and schedule your content',
-      icon: Calendar,
-      href: '/tools/content-calendar',
-      tier: 'starter',
-      color: 'bg-indigo-500'
-    },
-    {
-      title: 'Sandra AI Chat',
-      description: 'Personal brand coaching',
-      icon: Bot,
-      href: '/chat/sandra',
-      tier: 'branded',
-      color: 'bg-emerald-500'
-    },
-    {
-      title: 'Analytics',
-      description: 'Track your growth and engagement',
-      icon: TrendingUp,
-      href: '/tools/analytics',
-      tier: 'starter',
-      color: 'bg-orange-500'
-    }
-  ];
-
-  const getTierAccess = (toolTier: string) => {
-    const tierLevels = { free: 0, starter: 1, branded: 2, vip: 3 };
-    const userLevel = tierLevels[userTier as keyof typeof tierLevels];
-    const toolLevel = tierLevels[toolTier as keyof typeof tierLevels];
-    return userLevel >= toolLevel;
-  };
-
-  const getTierBadge = (tier: string) => {
-    const badges = {
-      free: { label: 'Free', color: 'bg-gray-100 text-gray-800' },
-      starter: { label: 'Starter Kit', color: 'bg-blue-100 text-blue-800' },
-      branded: { label: 'Branded', color: 'bg-rose-100 text-rose-800' },
-      vip: { label: 'VIP', color: 'bg-purple-100 text-purple-800' }
-    };
-    return badges[tier as keyof typeof badges] || badges.free;
-  };
+  const userName = data.profile?.full_name?.split(' ')[0] || data.user?.user_metadata?.full_name?.split(' ')[0] || 'Beautiful'
+  const userInitial = userName.charAt(0).toUpperCase()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-100">
-      {/* Header */}
-      <div className="border-b bg-white/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                Selfie AI
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Badge className={getTierBadge(userTier).color}>
-                {getTierBadge(userTier).label}
-              </Badge>
-              <Button variant="outline" size="sm" onClick={() => signOut()}>
-                Sign Out
-              </Button>
+    <InteractionTracker>
+      <DashboardLayout userId={data.user.id}>
+        <div className="min-h-screen bg-soft-white">
+          {/* Performance Monitor */}
+          <PerformanceMonitor />
+
+          {/* Real-time Notifications */}
+          <RealtimeNotifications userId={data.user.id} />
+
+          {/* Dashboard Insights */}
+          <DashboardInsights userId={data.user.id} />
+
+        {/* Navigation */}
+        <nav className="absolute top-0 left-0 right-0 z-50 px-6 md:px-15 py-5 flex justify-between items-center">
+          <Link href="/" className="font-serif text-xl md:text-2xl text-luxury-black tracking-wider">
+            SELFIE AI™
+          </Link>
+          
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
+            <Link href="/dashboard" className="text-luxury-black hover:text-warm-gray transition-colors text-sm tracking-wider uppercase">
+              Dashboard
+            </Link>
+            <Link href="/tools" className="text-luxury-black hover:text-warm-gray transition-colors text-sm tracking-wider uppercase">
+              Tools
+            </Link>
+            <Link href="/content" className="text-luxury-black hover:text-warm-gray transition-colors text-sm tracking-wider uppercase">
+              Content
+            </Link>
+            <Link href="/learn" className="text-luxury-black hover:text-warm-gray transition-colors text-sm tracking-wider uppercase">
+              Learn
+            </Link>
+            
+            {/* Search Button */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 text-warm-gray hover:text-luxury-black transition-colors text-sm tracking-wider uppercase"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+              <span className="text-xs">⌘K</span>
+            </button>
+            
+            <div className="w-10 h-10 bg-luxury-black text-soft-white flex items-center justify-center font-semibold">
+              {userInitial}
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back
-          </h1>
-          <p className="text-gray-600">
-            Ready to create content that converts? Let's make today amazing.
-          </p>
-        </div>
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden flex flex-col gap-1 p-2"
+          >
+            <span className="w-6 h-0.5 bg-luxury-black transition-all" />
+            <span className="w-6 h-0.5 bg-luxury-black transition-all" />
+            <span className="w-6 h-0.5 bg-luxury-black transition-all" />
+          </button>
+        </nav>
 
-        {/* Brand Profile Onboarding */}
-        {!profileLoading && !isComplete && (
-          <div className="mb-8">
-            <Card className="border-2 border-rose-200 bg-gradient-to-r from-rose-50 to-pink-50">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-rose-100 rounded-lg">
-                    <User className="h-5 w-5 text-rose-600" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-rose-900">Complete Your Brand Profile</CardTitle>
-                    <CardDescription className="text-rose-700">
-                      {hasProfile 
-                        ? `${completionPercentage}% complete - Unlock personalized AI tools` 
-                        : 'Get AI-powered content tailored to your unique brand'
-                      }
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-rose-600">
-                    {hasProfile 
-                      ? 'Complete your profile to unlock fully personalized AI recommendations'
-                      : 'Just 4 quick steps to get your personalized AI experience'
-                    }
-                  </div>
-                  <Link href="/onboarding/brand-hub">
-                    <Button className="bg-rose-600 hover:bg-rose-700 text-white">
-                      {hasProfile ? 'Complete Profile' : 'Start Setup'}
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
+        {/* Search Modal */}
+        <DashboardSearch 
+          isOpen={searchOpen} 
+          onClose={() => setSearchOpen(false)} 
+        />
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 bg-luxury-black/90 z-40 md:hidden">
+            <div className="flex flex-col h-full">
+              <div className="flex justify-between items-center p-6 border-b border-warm-gray/20">
+                <span className="font-serif text-xl text-soft-white tracking-wider">
+                  SELFIE AI™
+                </span>
+                <button 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-soft-white text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <nav className="flex-1 p-6">
+                <div className="space-y-6">
+                  <Link 
+                    href="/dashboard" 
+                    className="block text-soft-white text-lg tracking-wider uppercase border-b border-warm-gray/20 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    href="/tools" 
+                    className="block text-soft-white text-lg tracking-wider uppercase border-b border-warm-gray/20 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Tools
+                  </Link>
+                  <Link 
+                    href="/content" 
+                    className="block text-soft-white text-lg tracking-wider uppercase border-b border-warm-gray/20 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Content
+                  </Link>
+                  <Link 
+                    href="/learn" 
+                    className="block text-soft-white text-lg tracking-wider uppercase border-b border-warm-gray/20 pb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Learn
                   </Link>
                 </div>
-                {hasProfile && completionPercentage > 0 && (
-                  <div className="mt-4">
-                    <div className="w-full bg-rose-200 rounded-full h-2">
-                      <div 
-                        className="bg-rose-600 h-2 rounded-full transition-all duration-300" 
-                        style={{ width: `${completionPercentage}%` }}
-                      />
+                
+                {/* Mobile User Profile */}
+                <div className="mt-8 p-4 border border-warm-gray/20">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-soft-white text-luxury-black flex items-center justify-center font-semibold">
+                      {userInitial}
                     </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {/* Personalized Recommendations */}
-        {isComplete && profile && (
-          <div className="mb-8">
-            <Card className="border-2 border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <Sparkles className="h-5 w-5 text-green-600" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-green-900">
-                      Personalized for {onboardingProfile?.visual_aesthetic || 'Your Brand'}
-                    </CardTitle>
-                    <CardDescription className="text-green-700">
-                      AI tools now know your {onboardingProfile?.tone_voice?.toLowerCase() || 'authentic'} voice and {onboardingProfile?.industry?.toLowerCase() || 'personal brand'} focus
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm text-green-600">
-                  All your AI tools are now personalized to your brand mission: "{onboardingProfile?.brand_mission?.slice(0, 80) || 'Building your authentic personal brand'}..."
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {/* Quick Access Tools */}
-        <div className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            Quick Access {isComplete && <Badge variant="secondary" className="ml-2">Personalized</Badge>}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {quickAccessTools.map((tool) => {
-              const hasAccess = getTierAccess(tool.tier);
-              const Icon = tool.icon;
-              const isPersonalized = isComplete && ['Caption Generator', 'Brand Kit', 'Sandra AI Chat'].includes(tool.title);
-              
-              return (
-                <Card key={tool.title} className={`transition-all duration-200 hover:shadow-lg ${hasAccess ? 'cursor-pointer hover:scale-105' : 'opacity-60'}`}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className={`p-2 rounded-lg ${tool.color} text-white flex items-center gap-2`}>
-                        <Icon className="h-5 w-5" />
-                        {isPersonalized && <Sparkles className="h-3 w-3" />}
+                    <div>
+                      <div className="text-soft-white font-medium">
+                        {userName}
                       </div>
-                      {!hasAccess && <Lock className="h-4 w-4 text-gray-400" />}
+                      <div className="text-warm-gray text-sm">
+                        {data.stats.confidenceScore}% Confidence
+                      </div>
                     </div>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      {tool.title}
-                      {isPersonalized && (
-                        <Badge variant="secondary" className="text-xs">
-                          AI
-                        </Badge>
-                      )}
-                    </CardTitle>
-                    <CardDescription>
-                      {isPersonalized 
-                        ? `${tool.description} - tailored to your ${onboardingProfile?.visual_aesthetic?.toLowerCase() || 'brand'} style`
-                        : tool.description
-                      }
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {hasAccess ? (
-                      <Link href={tool.href}>
-                        <Button className="w-full" size="sm">
-                          {isPersonalized ? 'Open Personalized Tool' : 'Open Tool'}
-                        </Button>
-                      </Link>
-                    ) : (
-                      <Button variant="outline" className="w-full" size="sm" disabled>
-                        Upgrade to Access
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        )}
+
+        {/* Future Self Hero */}
+        <FutureSelfHero 
+          userName={userName}
+          futureSelfImage={data.futureSelf}
+          confidenceScore={data.stats.confidenceScore}
+        />
+
+        {/* Sandra AI Message */}
+        <SandraAIMessage message={data.sandraMessage} />
+
+        {/* Personal Milestone Strip */}
+        <div className="bg-luxury-black text-soft-white px-6 md:px-15 py-8 flex flex-col md:flex-row justify-between items-center gap-5">
+          <div className="text-center md:text-left">
+            <div className="text-xl mb-2">You've posted <ProgressAnimation targetValue={data.stats.postsThisMonth} /> times this month. That's {data.stats.monthlyGrowth} more than last month!</div>
+            <div className="text-warm-gray text-sm tracking-wider uppercase">Your consistency is paying off</div>
+          </div>
+          <div className="text-center">
+            <span className="font-serif text-4xl block">+<ProgressAnimation targetValue={data.stats.newFollowers} /></span>
+            <span className="text-xs tracking-wider uppercase text-warm-gray">New followers this month</span>
           </div>
         </div>
 
-        {/* Offer Ladder */}
-        <div className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Your Journey</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {offerLadderCards.map((offer, index) => (
-              <Card key={offer.id} className={`relative overflow-hidden transition-all duration-200 ${offer.status === 'open' ? 'hover:shadow-xl cursor-pointer' : 'opacity-70'}`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-pink-500/10" />
-                <CardHeader className="relative z-10">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="text-xs">
-                      {offer.price}
-                    </Badge>
-                    {offer.status === 'open' ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    ) : (
-                      <Lock className="h-5 w-5 text-gray-400" />
-                    )}
-                  </div>
-                  <CardTitle className="text-lg">{offer.title}</CardTitle>
-                  <CardDescription className="text-sm font-medium text-rose-600">
-                    {offer.subtitle}
-                  </CardDescription>
-                  <CardDescription className="text-xs">
-                    {offer.tagline}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="relative z-10">
-                  {offer.status === 'open' ? (
-                    <Link href={offer.link}>
-                      <Button className="w-full" size="sm">
-                        {offer.cta}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button variant="outline" className="w-full" size="sm">
-                      Coming Soon
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+        {/* Main Dashboard Grid */}
+        <div className="grid lg:grid-cols-[1fr_380px] gap-0">
+          {/* Main Content Area */}
+          <main className="p-8 md:p-15">
+            {/* Content Calendar */}
+            <ContentCalendar content={data.todaysContent} />
 
-        {/* Recent Activity */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Recent Activity
-            </CardTitle>
-            <CardDescription>
-              Your latest actions and achievements
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-                <div>
-                  <p className="font-medium text-sm">Welcome to Selfie AI</p>
-                  <p className="text-xs text-gray-600">Account created successfully</p>
-                </div>
-              </div>
-              {userTier !== 'free' && (
-                <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                  <Star className="h-5 w-5 text-blue-500" />
-                  <div>
-                    <p className="font-medium text-sm">Tier Upgrade</p>
-                    <p className="text-xs text-gray-600">Now have access to {getTierBadge(userTier).label} features</p>
+            {/* Progress Tracker */}
+            <ProgressTracker progress={data.progress} />
+          </main>
+
+          {/* Sidebar */}
+          <aside className="bg-white border-t lg:border-t-0 lg:border-l border-warm-gray/20 p-8 md:p-10">
+            {/* Quick Actions */}
+            <QuickActions />
+
+            {/* Stats */}
+            <div className="mb-15">
+              <h3 className="font-serif text-3xl mb-8">Your Impact</h3>
+              
+              <div className="space-y-5">
+                <div className="bg-[#FAFAFA] p-8 hover:bg-luxury-black hover:text-soft-white transition-all duration-300 cursor-pointer">
+                  <div className="font-serif text-5xl mb-1">
+                    <ProgressAnimation targetValue={data.stats.newFollowers} />
                   </div>
+                  <div className="text-xs tracking-wider uppercase opacity-70">New Connections</div>
                 </div>
-              )}
-              <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-                <Sparkles className="h-5 w-5 text-purple-500" />
-                <div className="flex-1">
-                  <p className="font-medium text-sm">See Personalization in Action</p>
-                  <p className="text-xs text-gray-600">Demo how AI adapts to your unique brand</p>
+                
+                <div className="bg-[#FAFAFA] p-8 hover:bg-luxury-black hover:text-soft-white transition-all duration-300 cursor-pointer">
+                  <div className="font-serif text-5xl mb-1">
+                    <ProgressAnimation targetValue={data.stats.confidenceScore} suffix="%" />
+                  </div>
+                  <div className="text-xs tracking-wider uppercase opacity-70">Confidence Score</div>
                 </div>
-                <Link href="/personalization-demo">
-                  <Button size="sm" variant="outline">
-                    View Demo
-                  </Button>
-                </Link>
+                
+                <div className="bg-[#FAFAFA] p-8 hover:bg-luxury-black hover:text-soft-white transition-all duration-300 cursor-pointer">
+                  <div className="font-serif text-5xl mb-1">
+                    <ProgressAnimation targetValue={data.stats.postsThisMonth} />
+                  </div>
+                  <div className="text-xs tracking-wider uppercase opacity-70">Posts This Month</div>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Daily Affirmation */}
+            <div className="bg-[#FAFAFA] p-10">
+              <p className="font-serif italic text-2xl mb-5">"You're not building a brand. You're revealing who you've always been."</p>
+              <p className="text-right text-warm-gray text-sm">— Your Future Self</p>
+            </div>
+          </aside>
+        </div>
+
+        {/* Floating Action Button */}
+        <Link href="/tools/selfie">
+          <button className="fixed bottom-5 md:bottom-10 right-5 md:right-10 w-14 h-14 md:w-16 md:h-16 bg-luxury-black text-soft-white flex items-center justify-center hover:scale-110 transition-transform shadow-2xl group">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span className="absolute right-20 bg-luxury-black text-soft-white px-4 py-2 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
+              Take Today's Selfie
+            </span>
+          </button>
+        </Link>
       </div>
-    </div>
-  );
+    </DashboardLayout>
+  </InteractionTracker>
+  )
 }

@@ -3,12 +3,16 @@ import { UserProfile, UserProfileInsert } from '@/types/user'
 
 // Server-side auth utilities
 export class ServerAuthService {
-  private supabase = createServerClient()
+  // Create client lazily to avoid build-time cookies() call
+  private getSupabase() {
+    return createServerClient()
+  }
 
   // Get current user from session
   async getCurrentUser() {
     try {
-      const { data: { user }, error } = await this.supabase.auth.getUser()
+      const supabase = this.getSupabase()
+      const { data: { user }, error } = await supabase.auth.getUser()
       if (error) throw error
       return user
     } catch (error) {
@@ -20,7 +24,8 @@ export class ServerAuthService {
   // Check if user is admin
   async isAdmin(userId: string): Promise<boolean> {
     try {
-      const { data: profile, error } = await this.supabase
+      const supabase = this.getSupabase()
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .select('is_admin, role')
         .eq('user_id', userId)
@@ -37,7 +42,8 @@ export class ServerAuthService {
   // Get user profile
   async getUserProfile(userId: string): Promise<UserProfile | null> {
     try {
-      const { data: profile, error } = await this.supabase
+      const supabase = this.getSupabase()
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('user_id', userId)
@@ -54,11 +60,15 @@ export class ServerAuthService {
 
 // Server-side user profile service
 export class ServerUserProfileService {
-  private supabase = createServerClient()
+  // Create client lazily to avoid build-time cookies() call
+  private getSupabase() {
+    return createServerClient()
+  }
 
   async getUserProfile(userId: string): Promise<UserProfile | null> {
     try {
-      const { data: profile, error } = await this.supabase
+      const supabase = this.getSupabase()
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('user_id', userId)
@@ -81,7 +91,8 @@ export class ServerUserProfileService {
 
   async updateUserProfile(userId: string, updates: Partial<UserProfileInsert>): Promise<UserProfile | null> {
     try {
-      const { data: profile, error } = await this.supabase
+      const supabase = this.getSupabase()
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .update({
           ...updates,
@@ -101,7 +112,8 @@ export class ServerUserProfileService {
 
   async createUserProfile(profileData: UserProfileInsert): Promise<UserProfile | null> {
     try {
-      const { data: profile, error } = await this.supabase
+      const supabase = this.getSupabase()
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .insert(profileData)
         .select()
@@ -116,6 +128,19 @@ export class ServerUserProfileService {
   }
 }
 
-// Export instances
-export const serverAuthService = new ServerAuthService()
-export const serverUserProfileService = new ServerUserProfileService()
+// Export factory functions instead of instances to avoid build-time cookies() calls
+export const getServerAuthService = () => new ServerAuthService()
+export const getServerUserProfileService = () => new ServerUserProfileService()
+
+// Export instances for backwards compatibility (but these should be avoided)
+export const serverAuthService = {
+  getCurrentUser: () => getServerAuthService().getCurrentUser(),
+  isAdmin: (userId: string) => getServerAuthService().isAdmin(userId),
+  getUserProfile: (userId: string) => getServerAuthService().getUserProfile(userId),
+}
+
+export const serverUserProfileService = {
+  getUserProfile: (userId: string) => getServerUserProfileService().getUserProfile(userId),
+  updateUserProfile: (userId: string, updates: any) => getServerUserProfileService().updateUserProfile(userId, updates),
+  createUserProfile: (profileData: any) => getServerUserProfileService().createUserProfile(profileData),
+}

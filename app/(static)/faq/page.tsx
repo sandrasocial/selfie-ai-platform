@@ -1,164 +1,143 @@
+// ========================================
+// FAQ PAGE
+// app/(static)/faq/page.tsx
+// ========================================
+
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, HelpCircle, Cog, Users, CreditCard } from 'lucide-react'
-import Link from 'next/link'
-
-const faqCategories = [
-  {
-    name: "Getting Started",
-    icon: <HelpCircle className="w-5 h-5" />,
-    questions: [
-      {
-        question: "What is SELFIE and how does it work?",
-        answer: `SELFIE is an AI-powered personal branding platform that helps you build your online presence from your phone. Our system combines proven growth strategies with AI tools to make content creation and brand building easier than ever.
-
-We provide:
-- AI-powered content suggestions
-- Personal branding templates
-- Growth strategy guidance
-- Analytics and insights
-- Community support`
-      },
-      {
-        question: "How do I get started with SELFIE?",
-        answer: `Getting started is simple:
-
-1. Sign up for a free account
-2. Complete your profile setup
-3. Take our brand assessment
-4. Start with our free guide
-5. Begin creating content with AI assistance
-
-Our onboarding process takes just a few minutes and includes step-by-step guidance to help you create your first post.`
-      }
-    ]
-  },
-  {
-    name: "AI Tools & Features",
-    icon: <Cog className="w-5 h-5" />,
-    questions: [
-      {
-        question: "How does the AI content generation work?",
-        answer: `Our AI learns your unique voice, style, and preferences to create personalized content suggestions:
-
-- Analyzes your existing content and engagement
-- Generates posts that match your brand voice
-- Suggests trending topics in your niche
-- Creates multiple variations for A/B testing
-- Provides optimization recommendations
-
-The AI gets smarter as you use it, creating increasingly personalized suggestions.`
-      }
-    ]
-  }
-]
+import { ChevronDown } from 'lucide-react'
 
 export default function FAQPage() {
-  const [openQuestion, setOpenQuestion] = useState<string | null>(null)
-  const [searchTerm, setSearchTerm] = useState('')
+  const [openItems, setOpenItems] = useState<string[]>([])
 
-  const filteredCategories = faqCategories.map(category => ({
-    ...category,
-    questions: category.questions.filter(
-      q => q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           q.answer.toLowerCase().includes(searchTerm.toLowerCase())
+  const toggleItem = (id: string) => {
+    setOpenItems(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     )
-  })).filter(category => category.questions.length > 0)
+  }
+
+  const faqSections = [
+    {
+      title: 'Getting Started',
+      items: [
+        {
+          id: 'right-for-me',
+          question: 'Is SSELFIE right for me?',
+          answer: "If you're tired of hiding behind your phone and ready to build a real personal brand, then yes. Doesn't matter if you're starting from zero or already have followers. We meet you where you are."
+        },
+        {
+          id: 'tech-savvy',
+          question: 'Do I need to be tech-savvy?',
+          answer: "Nope. If you can take a selfie and post on Instagram, you can use SSELFIE. Everything is designed to be simple. Plus, we have tutorials for everything."
+        },
+        {
+          id: 'see-results',
+          question: 'How long until I see results?',
+          answer: "Most women see changes in their confidence within days. Follower growth? Usually within 30 days if you follow the system. I built 120K in 90 days, but everyone's journey is different."
+        }
+      ]
+    },
+    {
+      title: 'Tools & Features',
+      items: [
+        {
+          id: 'glow-check',
+          question: "What's The Glow Check?",
+          answer: "It's our AI tool that analyzes your selfies and gives you honest feedback about lighting, angles, and style. Think of it as your personal photo coach. No harsh judgments, just helpful tips."
+        },
+        {
+          id: 'ai-work',
+          question: 'How does the AI work?',
+          answer: "Our AI is trained specifically for personal branding. It analyzes what works in your photos and content, then gives you personalized recommendations. It's like having me look at every selfie, but faster."
+        }
+      ]
+    },
+    {
+      title: 'Pricing & Payment',
+      items: [
+        {
+          id: 'try-before-buy',
+          question: 'Can I try before I buy?',
+          answer: "The Glow Check is free to try. You can also grab our free guide to get a feel for what we're about. When you're ready for the full transformation, the paid programs are there."
+        },
+        {
+          id: 'refunds',
+          question: 'Do you offer refunds?',
+          answer: "Because you get instant access to all digital content, we don't offer refunds. But I'm confident in what we've built. If you do the work, you'll see results."
+        }
+      ]
+    },
+    {
+      title: 'Support',
+      items: [
+        {
+          id: 'get-stuck',
+          question: 'What if I get stuck?',
+          answer: "Email hello@sselfie.ai and we'll help you out. Usually within 24 hours. Plus, our community is amazing at helping each other."
+        }
+      ]
+    }
+  ]
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-luxury-black to-deep-graphite text-soft-white">
-        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto">
-            Everything you need to know about SELFIE and building your personal brand
+    <div className="min-h-screen bg-soft-white py-20">
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        {/* Header */}
+        <div className="text-center mb-20 relative">
+          <div className="absolute -top-20 left-1/2 -translate-x-1/2 text-[15rem] font-playfair italic opacity-[0.03] pointer-events-none">
+            ?
+          </div>
+          <h1 className="font-bodoni text-5xl md:text-6xl mb-6">Common Questions</h1>
+          <p className="text-xl text-warm-gray max-w-2xl mx-auto">
+            The stuff everyone asks, answered honestly. No corporate speak, just real talk.
           </p>
         </div>
-      </div>
 
-      {/* FAQ Categories */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="space-y-8">
-          {filteredCategories.map((category) => (
-            <div key={category.name} className="bg-soft-white rounded-lg shadow-sm border border-warm-gray/10">
-              <div className="p-6 border-b border-warm-gray/10">
-                <div className="flex items-center space-x-3">
-                  <div className="text-luxury-black">
-                    {category.icon}
+        {/* FAQ Sections */}
+        <div className="space-y-12">
+          {faqSections.map((section) => (
+            <div key={section.title}>
+              <h2 className="font-bodoni text-3xl mb-8">{section.title}</h2>
+              <div className="space-y-4">
+                {section.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border-b border-warm-gray/20 pb-6"
+                  >
+                    <button
+                      onClick={() => toggleItem(item.id)}
+                      className="w-full flex justify-between items-center text-left hover:opacity-70 transition-opacity"
+                    >
+                      <span className="text-lg pr-4">{item.question}</span>
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform ${
+                          openItems.includes(item.id) ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                    {openItems.includes(item.id) && (
+                      <div className="mt-4 text-warm-gray">
+                        <p>{item.answer}</p>
+                      </div>
+                    )}
                   </div>
-                  <h2 className="text-2xl font-bold text-luxury-black">
-                    {category.name}
-                  </h2>
-                </div>
-              </div>
-              
-              <div className="divide-y divide-warm-gray/10">
-                {category.questions.map((faq, index) => {
-                  const questionId = `${category.name}-${index}`
-                  const isOpen = openQuestion === questionId
-                  
-                  return (
-                    <div key={index} className="p-6">
-                      <button
-                        onClick={() => setOpenQuestion(isOpen ? null : questionId)}
-                        className="flex items-start justify-between w-full text-left group"
-                      >
-                        <div className="flex items-start space-x-3 flex-1">
-                          <div className="mt-1">
-                            <HelpCircle className="w-5 h-5 text-deep-graphite flex-shrink-0" />
-                          </div>
-                          <h3 className="text-lg font-semibold text-luxury-black group-hover:text-deep-graphite transition-colors">
-                            {faq.question}
-                          </h3>
-                        </div>
-                        <ChevronDown
-                          className={`w-5 h-5 text-warm-gray transition-transform flex-shrink-0 ml-4 ${
-                            isOpen ? 'transform rotate-180' : ''
-                          }`}
-                        />
-                      </button>
-                      
-                      {isOpen && (
-                        <div className="mt-4 ml-8 text-warm-gray whitespace-pre-line">
-                          {faq.answer}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
+                ))}
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="bg-gradient-to-r from-luxury-black to-deep-graphite text-soft-white">
-        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Still have questions?
-          </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Our support team is here to help you succeed with your personal branding journey.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link
-              href="/contact"
-              className="bg-soft-white text-luxury-black px-8 py-4 rounded-lg font-semibold hover:bg-warm-gray/10 transition-colors"
-            >
-              Contact Support
-            </Link>
-            <Link
-              href="/community"
-              className="border border-soft-white text-soft-white px-8 py-4 rounded-lg font-semibold hover:bg-soft-white/10 transition-colors"
-            >
-              Join Community
-            </Link>
-          </div>
+        {/* Contact CTA */}
+        <div className="mt-20 text-center p-12 bg-white border border-warm-gray/20">
+          <h3 className="font-bodoni text-3xl mb-4">Still have questions?</h3>
+          <p className="text-lg mb-6">Let's chat. No question is too small.</p>
+          <a
+            href="mailto:hello@sselfie.ai"
+            className="inline-block px-12 py-4 bg-luxury-black text-soft-white text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+          >
+            Email Us
+          </a>
         </div>
       </div>
     </div>

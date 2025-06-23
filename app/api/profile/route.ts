@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { serverAuthService, serverUserProfileService } from '@/lib/server-auth'
+import { getServerAuthService, getServerUserProfileService } from '@/lib/server-auth'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await serverAuthService.getCurrentUser()
+    const authService = getServerAuthService()
+    const user = await authService.getCurrentUser()
     
     if (!user) {
       return NextResponse.json(
@@ -16,7 +17,8 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const profile = await serverUserProfileService.getUserProfile(user.id)
+    const userProfileService = getServerUserProfileService()
+    const profile = await userProfileService.getUserProfile(user.id)
 
     if (!profile) {
       return NextResponse.json(
@@ -41,7 +43,8 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const user = await serverAuthService.getCurrentUser()
+    const authService = getServerAuthService()
+    const user = await authService.getCurrentUser()
     
     if (!user) {
       return NextResponse.json(
@@ -72,7 +75,8 @@ export async function PUT(request: NextRequest) {
       Object.entries(allowedUpdates).filter(([_, value]) => value !== undefined)
     )
     
-    const result = await serverUserProfileService.updateUserProfile(user.id, cleanUpdates)
+    const userProfileService = getServerUserProfileService()
+    const result = await userProfileService.updateUserProfile(user.id, cleanUpdates)
     
     if (!result) {
       return NextResponse.json(

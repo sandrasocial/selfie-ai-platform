@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { serverAuthService } from '@/lib/server-auth'
+import { getServerAuthService } from '@/lib/server-auth'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export async function PUT(request: NextRequest) {
   try {
-    const user = await serverAuthService.getCurrentUser()
+    const authService = getServerAuthService()
+    const user = await authService.getCurrentUser()
     
     if (!user) {
       return NextResponse.json(

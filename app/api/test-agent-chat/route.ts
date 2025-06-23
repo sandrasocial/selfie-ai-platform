@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     
     console.log('Test request:', { agent, message });
 
-    // Validate agent parameter - Maya temporarily disabled due to deployment conflicts
+    // Validate agent parameter - Maya permanently removed for security
     const validAgents = ['diana', 'victoria', 'rachel', 'quinn', 'ava'];
     if (!validAgents.includes(agent)) {
       return NextResponse.json({ error: 'Invalid agent' }, { status: 400 });

@@ -156,7 +156,7 @@ export async function POST(request: NextRequest, { params }: { params: { agent: 
 
     console.log('User authenticated:', user.id);
 
-    // Validate agent parameter - Maya temporarily disabled due to deployment conflicts
+    // Validate agent parameter - Maya permanently removed for security
     const validAgents = ['diana', 'victoria', 'rachel', 'quinn', 'ava'];
     if (!validAgents.includes(agent)) {
       console.log('Invalid agent:', agent);
@@ -274,7 +274,7 @@ export async function GET(request: NextRequest, { params }: { params: { agent: s
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Validate agent parameter - Maya temporarily disabled due to deployment conflicts
+    // Validate agent parameter - Maya permanently removed for security
     const validAgents = ['diana', 'victoria', 'rachel', 'quinn', 'ava'];
     if (!validAgents.includes(agent)) {
       return NextResponse.json({ error: 'Invalid agent' }, { status: 400 });

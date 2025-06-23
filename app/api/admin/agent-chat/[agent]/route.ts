@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 import { getAgentSystemPrompt } from '@/lib/agents/personalities';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -159,7 +158,7 @@ export async function POST(request: NextRequest, { params }: { params: { agent: 
     console.log('Request body:', { message, context });
 
     // Initialize Supabase client
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createClient();
 
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -280,7 +279,7 @@ export async function GET(request: NextRequest, { params }: { params: { agent: s
     const limit = parseInt(searchParams.get('limit') || '50');
 
     // Initialize Supabase client
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createClient();
 
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();

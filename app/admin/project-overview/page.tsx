@@ -52,24 +52,25 @@ export default function ProjectOverview() {
         'Access payment systems'
       ]
     },
-    {
-      id: 'MAYA',
-      name: 'Dev AI (MAYA)',
-      role: 'Technical Implementation',
-      responsibilities: [
-        'Builds React components and features',
-        'Implements API endpoints',
-        'Manages database operations',
-        'Writes TypeScript code',
-        'Handles technical integrations'
-      ],
-      cannotDo: [
-        'Change design without VICTORIA\'s input',
-        'Modify copy without RACHEL\'s approval',
-        'Skip testing phase',
-        'Deploy without QUINN\'s review'
-      ]
-    },
+    // Maya temporarily disabled due to deployment conflicts
+    // {
+    //   id: 'MAYA',
+    //   name: 'Dev AI (MAYA)',
+    //   role: 'Technical Implementation',
+    //   responsibilities: [
+    //     'Builds React components and features',
+    //     'Implements API endpoints',
+    //     'Manages database operations',
+    //     'Writes TypeScript code',
+    //     'Handles technical integrations'
+    //   ],
+    //   cannotDo: [
+    //     'Change design without VICTORIA\'s input',
+    //     'Modify copy without RACHEL\'s approval',
+    //     'Skip testing phase',
+    //     'Deploy without QUINN\'s review'
+    //   ]
+    // },
     {
       id: 'VICTORIA',
       name: 'UX AI (VICTORIA)',
@@ -147,7 +148,7 @@ export default function ProjectOverview() {
   const workflowPatterns = [
     {
       name: 'Feature Build',
-      workflow: ['MAYA', 'VICTORIA', 'RACHEL', 'QUINN'],
+      workflow: ['VICTORIA', 'RACHEL', 'QUINN'], // Maya temporarily disabled
       description: 'Complete feature development from code to deployment-ready',
       example: 'Building a new AI tool or dashboard component'
     },
@@ -165,13 +166,13 @@ export default function ProjectOverview() {
     },
     {
       name: 'Bug Fix',
-      workflow: ['MAYA', 'QUINN'],
+      workflow: ['QUINN'], // Maya temporarily disabled - manual fix required
       description: 'Technical fixes that need validation',
       example: 'Fixing the Safari download bug'
     },
     {
       name: 'Full Stack Feature',
-      workflow: ['MAYA', 'VICTORIA', 'RACHEL', 'AVA', 'QUINN'],
+      workflow: ['VICTORIA', 'RACHEL', 'AVA', 'QUINN'], // Maya temporarily disabled
       description: 'Complex features touching all systems',
       example: 'Implementing a new pricing tier with automation'
     }

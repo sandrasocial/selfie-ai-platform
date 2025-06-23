@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import { Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import GlobalFooter from './components/GlobalFooter'
+import { AuthProvider } from '@/hooks/useAuth'
 
 // Load Inter font (Neue Einstellung substitute)
 const inter = Inter({ 
@@ -93,8 +94,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://i.postimg.cc" />
       </head>
       <body>
-        {children}
-        <GlobalFooter />
+        <AuthProvider>
+          {children}
+          <GlobalFooter />
+        </AuthProvider>
       </body>
     </html>
   )

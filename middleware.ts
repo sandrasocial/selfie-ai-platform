@@ -2,6 +2,20 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 
+// Protected routes that require authentication
+const protectedRoutes = [
+  '/dashboard',
+  '/tools',
+  '/learn',
+  '/profile',
+  '/settings'
+]
+
+// Admin routes that require admin access
+const adminRoutes = [
+  '/admin'
+]
+
 // Redirect rules for old routes to new structure
 const redirectRules = [
   // Old module routes to new learn structure
@@ -17,9 +31,9 @@ const redirectRules = [
   { from: /^\/vip-course$/i, to: '/learn/vip' },
   
   // Old auth routes
-  { from: /^\/dev-login$/i, to: '/login' },
-  { from: /^\/dev-auth$/i, to: '/login' },
-  { from: /^\/test-login$/i, to: '/login' },
+  { from: /^\/dev-login$/i, to: '/auth/login' },
+  { from: /^\/dev-auth$/i, to: '/auth/login' },
+  { from: /^\/test-login$/i, to: '/auth/login' },
   { from: /^\/admin-login$/i, to: '/admin/login' },
   
   // Old dashboard routes
@@ -61,36 +75,77 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // Admin routes protection - temporarily disabled for debugging
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    // Temporarily allow access to debug auth issues
-    console.log('Admin route accessed:', pathname)
-    return NextResponse.next()
-    
-    /* Commented out for debugging
-    const res = NextResponse.next();
-    const supabase = createMiddlewareClient({ req: request, res });
-    
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+  // Skip auth checks for auth routes and static files
+  if (pathname.startsWith('/auth') || 
+      pathname.startsWith('/_next') || 
+      pathname.startsWith('/api') || 
+      pathname.startsWith('/static') ||
+      pathname.includes('.')) {
+    return NextResponse.next();
+  }
+
+  // Create supabase client
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req: request, res });
+
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    // Check if route requires authentication
+    const requiresAuth = protectedRoutes.some(route => pathname.startsWith(route));
+    const requiresAdmin = adminRoutes.some(route => pathname.startsWith(route)) && pathname !== '/admin/login';
+
+    if (requiresAuth && !session) {
+      // Redirect to login for protected routes
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/login';
+      url.searchParams.set('redirectTo', pathname);
+      return NextResponse.redirect(url);
+    }
+
+    if (requiresAdmin) {
       if (!session) {
+        // Redirect to admin login for admin routes
         const url = request.nextUrl.clone();
         url.pathname = '/admin/login';
         return NextResponse.redirect(url);
       }
-    } catch (error) {
-      // If there's an error with auth, redirect to login
+
+      // Check if user is admin
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('is_admin, role')
+        .eq('user_id', session.user.id)
+        .single();
+
+      if (!profile?.is_admin) {
+        // Redirect non-admin users to dashboard
+        const url = request.nextUrl.clone();
+        url.pathname = '/dashboard';
+        return NextResponse.redirect(url);
+      }
+    }
+
+    // If user is logged in and trying to access auth pages, redirect to dashboard
+    if (session && pathname.startsWith('/auth')) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin/login';
+      url.pathname = '/dashboard';
       return NextResponse.redirect(url);
     }
-    
-    return res;
-    */
+
+  } catch (error) {
+    console.error('Middleware auth error:', error);
+    // On auth error, allow the request to continue
+    // but redirect to login for protected routes
+    const requiresAuth = protectedRoutes.some(route => pathname.startsWith(route));
+    if (requiresAuth) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/login';
+      return NextResponse.redirect(url);
+    }
   }
   
-  return NextResponse.next();
+  return res;
 }
 
 export const config = {
@@ -105,4 +160,4 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
   ],
-}; 
+} 

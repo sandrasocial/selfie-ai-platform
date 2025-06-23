@@ -34,7 +34,7 @@ export function useUserProfile() {
   const fetchProfile = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/user-profiles', {
+      const response = await fetch('/api/profile', {
         credentials: 'include'
       });
       
@@ -43,7 +43,7 @@ export function useUserProfile() {
       }
       
       const data = await response.json();
-      setProfile(data.profile);
+      setProfile(data.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
@@ -53,7 +53,7 @@ export function useUserProfile() {
 
   const updateProfile = async (profileData: Partial<UserProfile>) => {
     try {
-      const response = await fetch('/api/user-profiles', {
+      const response = await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profileData),
@@ -65,8 +65,8 @@ export function useUserProfile() {
       }
       
       const data = await response.json();
-      setProfile(data.profile);
-      return data.profile;
+      setProfile(data.data);
+      return data.data;
     } catch (err) {
       throw new Error(err instanceof Error ? err.message : 'Unknown error');
     }

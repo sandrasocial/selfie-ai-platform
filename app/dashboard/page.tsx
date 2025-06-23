@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useAuth } from '@/hooks/useAuth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Button } from '@/app/components/ui/button';
 import { Badge } from "@/app/components/ui/badge";
@@ -41,43 +41,10 @@ interface UserData {
 }
 
 export default function Dashboard() {
-  const [user, setUser] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const supabase = createClientComponentClient();
-  const { hasProfile, isComplete, completionPercentage, profile, loading: profileLoading } = useOnboardingStatus();
+  const { user, profile, loading, signOut } = useAuth();
+  const { hasProfile, isComplete, completionPercentage, profile: onboardingProfile, loading: profileLoading } = useOnboardingStatus();
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const { data: { user: authUser } } = await supabase.auth.getUser();
-        
-        if (authUser) {
-          // Get user profile data
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', authUser.id)
-            .single();
-
-          setUser({
-            id: authUser.id,
-            email: authUser.email || '',
-            tier: profile?.tier || 'free',
-            created_at: authUser.created_at,
-            subscription_status: profile?.subscription_status
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getUser();
-  }, [supabase]);
-
-  if (loading) {
+  if (loading || profileLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-100 flex items-center justify-center">
         <div className="animate-pulse text-rose-600">Loading your dashboard...</div>
@@ -103,6 +70,9 @@ export default function Dashboard() {
     );
   }
 
+  // Get user tier from profile or default to free
+  const userTier = profile?.tier || 'free';
+
   const offerLadderCards = [
     {
       id: 'freebie',
@@ -121,9 +91,9 @@ export default function Dashboard() {
       title: 'Selfie Starter Kit',
       subtitle: 'Essential Tools',
       tagline: 'Master confident selfies that build your personal brand.',
-      cta: user.tier !== 'free' ? 'Access Kit' : 'Unlock Kit',
-      link: user.tier !== 'free' ? '/tools/starter-kit' : '/products/starter-kit',
-      status: user.tier !== 'free' ? 'open' : 'locked',
+      cta: userTier !== 'free' ? 'Access Kit' : 'Unlock Kit',
+      link: userTier !== 'free' ? '/tools/starter-kit' : '/products/starter-kit',
+      status: userTier !== 'free' ? 'open' : 'locked',
       bgImage: '/images/starter-kit-bg.jpg',
       tier: 'starter',
       price: '$67'
@@ -135,7 +105,7 @@ export default function Dashboard() {
       tagline: 'Build a cohesive brand that attracts your dream clients.',
       cta: 'Access Studio',
       link: '/studio',
-      status: ['branded', 'vip'].includes(user.tier) ? 'open' : 'locked',
+      status: ['branded', 'vip'].includes(userTier) ? 'open' : 'locked',
       bgImage: '/images/branded-bg.jpg',
       tier: 'branded',
       price: '$397'
@@ -147,7 +117,7 @@ export default function Dashboard() {
       tagline: 'White-glove service to build your empire.',
       cta: 'Enter VIP',
       link: '/vip',
-      status: user.tier === 'vip' ? 'open' : 'locked',
+      status: userTier === 'vip' ? 'open' : 'locked',
       bgImage: '/images/vip-bg.jpg',
       tier: 'vip',
       price: 'Apply'
@@ -215,7 +185,7 @@ export default function Dashboard() {
 
   const getTierAccess = (toolTier: string) => {
     const tierLevels = { free: 0, starter: 1, branded: 2, vip: 3 };
-    const userLevel = tierLevels[user.tier as keyof typeof tierLevels];
+    const userLevel = tierLevels[userTier as keyof typeof tierLevels];
     const toolLevel = tierLevels[toolTier as keyof typeof tierLevels];
     return userLevel >= toolLevel;
   };
@@ -242,10 +212,10 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Badge className={getTierBadge(user.tier).color}>
-                {getTierBadge(user.tier).label}
+              <Badge className={getTierBadge(userTier).color}>
+                {getTierBadge(userTier).label}
               </Badge>
-              <Button variant="outline" size="sm" onClick={() => supabase.auth.signOut()}>
+              <Button variant="outline" size="sm" onClick={() => signOut()}>
                 Sign Out
               </Button>
             </div>
@@ -325,17 +295,17 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <CardTitle className="text-green-900">
-                      Personalized for {profile.visual_aesthetic || 'Your Brand'}
+                      Personalized for {onboardingProfile?.visual_aesthetic || 'Your Brand'}
                     </CardTitle>
                     <CardDescription className="text-green-700">
-                      AI tools now know your {profile.tone_voice?.toLowerCase()} voice and {profile.industry?.toLowerCase()} focus
+                      AI tools now know your {onboardingProfile?.tone_voice?.toLowerCase() || 'authentic'} voice and {onboardingProfile?.industry?.toLowerCase() || 'personal brand'} focus
                     </CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="text-sm text-green-600">
-                  All your AI tools are now personalized to your brand mission: "{profile.brand_mission?.slice(0, 80)}..."
+                  All your AI tools are now personalized to your brand mission: "{onboardingProfile?.brand_mission?.slice(0, 80) || 'Building your authentic personal brand'}..."
                 </div>
               </CardContent>
             </Card>
@@ -373,7 +343,7 @@ export default function Dashboard() {
                     </CardTitle>
                     <CardDescription>
                       {isPersonalized 
-                        ? `${tool.description} - tailored to your ${profile?.visual_aesthetic?.toLowerCase() || 'brand'} style`
+                        ? `${tool.description} - tailored to your ${onboardingProfile?.visual_aesthetic?.toLowerCase() || 'brand'} style`
                         : tool.description
                       }
                     </CardDescription>
@@ -462,12 +432,12 @@ export default function Dashboard() {
                   <p className="text-xs text-gray-600">Account created successfully</p>
                 </div>
               </div>
-              {user.tier !== 'free' && (
+              {userTier !== 'free' && (
                 <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
                   <Star className="h-5 w-5 text-blue-500" />
                   <div>
                     <p className="font-medium text-sm">Tier Upgrade</p>
-                    <p className="text-xs text-gray-600">Now have access to {getTierBadge(user.tier).label} features</p>
+                    <p className="text-xs text-gray-600">Now have access to {getTierBadge(userTier).label} features</p>
                   </div>
                 </div>
               )}

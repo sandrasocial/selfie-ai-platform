@@ -5,9 +5,12 @@ import { z } from 'zod';
 // Import workflow definitions
 import { 
   WelcomeWorkflow,
+  BrandedWelcomeWorkflow,
+  StarterWelcomeWorkflow,
   CourseProgressWorkflow,
+  VIPApplicationWorkflow,
   SubscriptionWorkflow,
-  ReminderWorkflow,
+  AbandonedCartWorkflow,
   WorkflowDefinition
 } from './workflows';
 
@@ -46,11 +49,15 @@ interface WorkflowResult {
 // Available workflows registry
 const WORKFLOWS: Record<string, WorkflowDefinition> = {
   welcome_new_purchase: WelcomeWorkflow,
+  branded_welcome_sequence: BrandedWelcomeWorkflow,
+  starter_welcome_sequence: StarterWelcomeWorkflow,
   course_progress_milestone: CourseProgressWorkflow,
+  vip_application_received: VIPApplicationWorkflow,
   subscription_renewal: SubscriptionWorkflow,
-  abandoned_cart: ReminderWorkflow,
+  abandoned_cart_recovery: AbandonedCartWorkflow,
   payment_failed: {
     name: 'payment_failed',
+    description: 'Handle failed payment recovery and notifications',
     steps: [
       { id: 'notify_user', type: 'email', retryable: true },
       { id: 'update_subscription', type: 'database', retryable: false },

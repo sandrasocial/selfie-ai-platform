@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { leadTrackingService } from '@/lib/auth'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -10,39 +9,31 @@ export async function POST(request: NextRequest) {
     const { email, magnetType, source, metadata } = await request.json()
 
     if (!email || !magnetType) {
-      return NextResponse.json(
-        { error: 'Email and magnet type are required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Email and magnet type are required' }, { status: 400 })
     }
 
-    // Track the lead magnet download
-    const { data, error } = await leadTrackingService.trackLeadMagnet(
-      email,
-      magnetType,
-      source,
-      metadata
-    )
+    const supabase = createClient()
+
+    // Track the lead magnet download directly
+    const { data, error } = await supabase.rpc('track_lead_magnet', {
+      email_input: email,
+      magnet_type_input: magnetType,
+      source_input: source || 'direct',
+      metadata_input: metadata || {}
+    })
 
     if (error) {
       console.error('Error tracking lead magnet:', error)
-      return NextResponse.json(
-        { error: 'Failed to track lead magnet' },
-        { status: 500 }
-      )
+      return NextResponse.json({ error: 'Failed to track lead magnet' }, { status: 500 })
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      leadId: data
+      leadId: data,
     })
-
   } catch (error) {
     console.error('Lead tracking API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
@@ -71,22 +62,15 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Error fetching lead magnets:', error)
-      return NextResponse.json(
-        { error: 'Failed to fetch lead magnets' },
-        { status: 500 }
-      )
+      return NextResponse.json({ error: 'Failed to fetch lead magnets' }, { status: 500 })
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      data
+      data,
     })
-
   } catch (error) {
     console.error('Lead magnets fetch API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

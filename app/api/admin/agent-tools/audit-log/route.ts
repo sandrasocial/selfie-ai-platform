@@ -1,73 +1,160 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Octokit } from '@octokit/rest';
-
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-});
+import { NextRequest, NextResponse } from 'next/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const agent = searchParams.get('agent');
-    const days = parseInt(searchParams.get('days') || '7');
-    
-    // Get audit log events
-    const { data } = await octokit.rest.repos.listCommits({
-      owner: 'sandrasocial',
-      repo: 'selfie-ai-platform',
-      since: new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString(),
-      per_page: 100
-    });
-    
-    // Filter by agent if specified
-    const filteredData = agent 
-      ? data.filter(commit => commit.commit.author?.name?.includes(agent))
-      : data;
-    
-    // Format for agent consumption
-    const auditEvents = filteredData.map(commit => ({
-      timestamp: commit.commit.author?.date,
-      agent: extractAgentFromCommit(commit),
-      action: 'code_change',
-      message: commit.commit.message,
-      files: commit.files?.map(f => f.filename) || [],
-      sha: commit.sha
-    }));
-    
+    const supabase = createRouteHandlerClient({ cookies })
+
+    // Check if user is authenticated and has admin access
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Check admin access
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError || profile?.role !== 'admin') {
+      return NextResponse.json({ error: 'Admin access required' }, { status: 403 })
+    }
+
+    // Get query parameters
+    const { searchParams } = new URL(request.url)
+    const limit = parseInt(searchParams.get('limit') || '50')
+    const offset = parseInt(searchParams.get('offset') || '0')
+    const agentType = searchParams.get('agent_type')
+    const userId = searchParams.get('user_id')
+
+    // Build query
+    let query = supabase
+      .from('admin_agent_logs')
+      .select(
+        `
+        *,
+        user_profiles(name, email)
+      `
+      )
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1)
+
+    if (agentType) {
+      query = query.eq('agent_type', agentType)
+    }
+
+    if (userId) {
+      query = query.eq('user_id', userId)
+    }
+
+    const { data: logs, error: logsError } = await query
+
+    if (logsError) {
+      console.error('Error fetching audit logs:', logsError)
+      return NextResponse.json({ error: 'Failed to fetch audit logs' }, { status: 500 })
+    }
+
+    // Get total count for pagination
+    let countQuery = supabase.from('admin_agent_logs').select('*', { count: 'exact', head: true })
+
+    if (agentType) {
+      countQuery = countQuery.eq('agent_type', agentType)
+    }
+
+    if (userId) {
+      countQuery = countQuery.eq('user_id', userId)
+    }
+
+    const { count, error: countError } = await countQuery
+
+    if (countError) {
+      console.error('Error counting audit logs:', countError)
+    }
+
     return NextResponse.json({
-      events: auditEvents,
-      summary: {
-        total: auditEvents.length,
-        byAgent: groupByAgent(auditEvents),
-        timeRange: `${days} days`
-      }
-    });
-    
+      success: true,
+      data: logs || [],
+      pagination: {
+        total: count || 0,
+        limit,
+        offset,
+        hasMore: (count || 0) > offset + limit,
+      },
+    })
   } catch (error) {
-    console.error('Audit log error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch audit log' },
-      { status: 500 }
-    );
+    console.error('Audit log error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
-function extractAgentFromCommit(commit: any): string {
-  // Logic to identify which agent made the commit
-  const message = commit.commit.message.toLowerCase();
-  if (message.includes('victoria') || message.includes('design') || message.includes('style')) return 'victoria';
-  if (message.includes('rachel') || message.includes('copy') || message.includes('content')) return 'rachel';
-  if (message.includes('quinn') || message.includes('test')) return 'quinn';
-  if (message.includes('ava') || message.includes('automat')) return 'ava';
-  return 'unknown';
-}
+export async function POST(request: NextRequest) {
+  try {
+    const supabase = createRouteHandlerClient({ cookies })
 
-function groupByAgent(events: any[]): Record<string, number> {
-  return events.reduce((acc, event) => {
-    acc[event.agent] = (acc[event.agent] || 0) + 1;
-    return acc;
-  }, {});
-} 
+    // Check if user is authenticated and has admin access
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Check admin access
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError || profile?.role !== 'admin') {
+      return NextResponse.json({ error: 'Admin access required' }, { status: 403 })
+    }
+
+    const { action, target_user_id, details } = await request.json()
+
+    if (!action) {
+      return NextResponse.json({ error: 'Action is required' }, { status: 400 })
+    }
+
+    // Create audit log entry
+    const { data: logEntry, error: logError } = await supabase
+      .from('admin_agent_logs')
+      .insert({
+        user_id: user.id,
+        agent_type: 'admin_tools',
+        message: action,
+        response: 'Manual admin action',
+        context: {
+          action,
+          target_user_id,
+          details: details || {},
+          timestamp: new Date().toISOString(),
+        },
+        created_at: new Date().toISOString(),
+      })
+      .select()
+      .single()
+
+    if (logError) {
+      console.error('Error creating audit log:', logError)
+      return NextResponse.json({ error: 'Failed to create audit log' }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: logEntry,
+    })
+  } catch (error) {
+    console.error('Audit log creation error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}

@@ -20,15 +20,46 @@ export type Task = {
   ready_for_review?: boolean;
 };
 
-// Initialize clients
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Initialize clients with lazy loading
+let supabase: any = null;
+let anthropic: any = null;
+let octokit: any = null;
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+function getSupabaseClient() {
+  if (!supabase) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Supabase environment variables are required');
+    }
+    
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
+
+function getAnthropicClient() {
+  if (!anthropic) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('ANTHROPIC_API_KEY environment variable is required');
+    }
+    anthropic = new Anthropic({ apiKey });
+  }
+  return anthropic;
+}
+
+function getOctokitClient() {
+  if (!octokit) {
+    const token = process.env.GITHUB_TOKEN;
+    if (!token) {
+      throw new Error('GITHUB_TOKEN environment variable is required');
+    }
+    octokit = new Octokit({ auth: token });
+  }
+  return octokit;
+}
 
 const OWNER = "sandrasocial";
 const REPO = "selfie-ai-platform";

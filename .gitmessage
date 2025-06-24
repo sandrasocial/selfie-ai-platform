@@ -1,0 +1,24 @@
+# [type]: [brief description]
+#
+# Longer description (if needed)
+# - Explain the motivation
+# - Reference issues/tickets
+#
+# Types:
+# feat: new feature
+# fix: bug fix
+# docs: documentation
+# style: formatting, missing semicolons, etc.
+# refactor: code change that neither fixes bug nor adds feature
+# test: adding/updating tests
+# chore: updating build tasks, package manager configs, etc.
+# perf: performance improvements
+# ci: continuous integration changes
+# build: build system changes
+#
+# Examples:
+# feat: add luxury vision board component
+# fix: resolve authentication redirect loop
+# docs: update agent instruction documentation
+#
+# Co-authored-by: GitHub Copilot <noreply@github.com>

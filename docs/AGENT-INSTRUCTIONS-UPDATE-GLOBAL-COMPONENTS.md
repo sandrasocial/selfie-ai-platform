@@ -1,0 +1,210 @@
+# AGENT INSTRUCTIONS UPDATE - GLOBAL COMPONENTS LIBRARY
+
+## 🎯 CRITICAL UPDATE FOR ALL AGENTS
+
+A comprehensive Global Components Library has been created at `@/components/global`. All agents MUST use these components to ensure platform consistency.
+
+## 📍 LOCATION
+```
+/components/global/index.tsx
+```
+
+## 🔧 FOR DEV AI (MAYA)
+
+**UPDATE YOUR WORKFLOW:**
+
+1. **ALWAYS import from global components first**:
+```typescript
+import { 
+  Navigation, 
+  Footer, 
+  Button, 
+  EditorialCard, 
+  PageLoader,
+  SectionDivider,
+  Timeline 
+} from '@/components/global'
+```
+
+2. **NEVER create duplicate components** - Check global library first
+3. **Use provided loading states** - PageLoader and Spinner
+4. **Implement animations** using FadeIn and SlideUp wrappers
+
+**NEW BUILD PATTERN:**
+```typescript
+// ❌ DON'T DO THIS
+<button className="px-10 py-4 bg-luxury-black...">
+
+// ✅ DO THIS
+<Button variant="primary" size="md">
+```
+
+## 🎨 FOR UX AI
+
+**UPDATE YOUR DESIGN APPROACH:**
+
+1. **Reference existing components** when designing:
+   - "Use the EditorialCard component here"
+   - "Add a SectionDivider between these sections"
+   - "Use the Timeline component for the user journey"
+
+2. **Available decorative elements**:
+   - Corner Accents (L-shaped corners)
+   - Section Dividers (with diamond option)
+   - Editorial Numbers (background)
+   - Progress Squares
+   - Background Patterns (dots/lines)
+
+3. **NO GRAYSCALE** - This has been removed per Sandra's preference
+
+**DESIGN LANGUAGE UPDATE:**
+```
+"Let's use a FeatureBox component with corner accents for this section"
+"Add a subtle BackgroundPattern with dots at 2% opacity"
+"Use the TabNavigation for switching between views"
+```
+
+## ✍️ FOR VOICE AI
+
+**UPDATE YOUR COPY GUIDELINES:**
+
+When writing UI copy, consider these components:
+
+1. **Button Copy**: Keep it short - buttons use uppercase tracking
+2. **Toast Messages**: Brief, friendly, no exclamations
+3. **Tooltip Content**: Super concise - 5-7 words max
+4. **Tab Labels**: Single word or very short phrase
+
+**COMPONENT-AWARE COPY:**
+```
+Button: "GET STARTED" not "Get Started Today!"
+Toast: "Changes saved" not "Your changes have been saved!"
+Tooltip: "Click to upload" not "Click here to upload your image"
+```
+
+## 🔄 FOR AUTOMATION AI (AVA)
+
+**UPDATE YOUR IMPLEMENTATIONS:**
+
+1. **Use Toast component** for user notifications:
+```typescript
+<Toast 
+  message="Welcome email sent" 
+  type="success" 
+  onClose={() => {}} 
+/>
+```
+
+2. **Use StatusDot** for system status:
+```typescript
+<StatusDot status="active" /> // active, pending, inactive
+```
+
+3. **Use AnimatedCounter** for metrics:
+```typescript
+<AnimatedCounter end={1234} prefix="+" suffix=" followers" />
+```
+
+## ✅ FOR QA AI (QUINN)
+
+**UPDATE YOUR TESTING CHECKLIST:**
+
+Test these specific components across all devices:
+
+1. **Hover States**: 
+   - EditorialCard content overlay
+   - Button transitions
+   - HoverImage scaling
+
+2. **Animations**:
+   - FadeIn timing
+   - SlideUp smoothness
+   - TextReveal performance
+   - AnimatedCounter accuracy
+
+3. **Interactive Elements**:
+   - SnapScrollSection smoothness
+   - TabNavigation accessibility
+   - Tooltip positioning
+   - ProgressSquares clickability
+
+4. **Loading States**:
+   - PageLoader visibility
+   - Spinner rotation
+   - ProgressBar accuracy
+
+## 📋 COMPLETE COMPONENT LIST
+
+**Layout Components:**
+- Navigation (with transparent option)
+- Footer
+- SectionDivider
+- BackgroundPattern
+
+**Content Components:**
+- EditorialCard
+- ContentCard
+- FeatureBox
+- ImageGallery
+- HoverImage
+
+**Interactive Components:**
+- Button (3 variants)
+- Input
+- TabNavigation
+- SnapScrollSection
+- Tooltip
+
+**Feedback Components:**
+- PageLoader
+- Spinner
+- ProgressBar
+- Toast
+- StatusDot
+
+**Decorative Elements:**
+- Diamond
+- ProgressSquares
+- Line
+- EditorialNumber
+- CornerAccent
+
+**Data Display:**
+- StatsWidget
+- QuoteWidget
+- Timeline
+- MilestoneBadge
+- AnimatedCounter
+
+**Animation Utilities:**
+- FadeIn
+- SlideUp
+- TextReveal
+
+## 🚨 IMPORTANT NOTES
+
+1. **NO CUSTOM VERSIONS** - Use global components as-is
+2. **NO GRAYSCALE** - This effect has been removed
+3. **MAINTAIN CONSISTENCY** - Every button, card, and loader should look identical across the platform
+4. **MOBILE FIRST** - All components are responsive
+
+## 💬 COMMUNICATION UPDATE
+
+When discussing UI elements, always reference the component name:
+
+**Instead of**: "Add a loading spinner"
+**Say**: "Use the Spinner component with size='md'"
+
+**Instead of**: "Create a card with an image"
+**Say**: "Use an EditorialCard component"
+
+**Instead of**: "Add some decoration"
+**Say**: "Add a SectionDivider with diamond"
+
+## 🎯 FINAL REMINDER
+
+The Global Components Library is the single source of truth for ALL UI elements. Before creating anything custom, check if it exists in the library. This ensures SSELFIE maintains its luxury, cohesive feel across every page and feature.
+
+---
+
+**All agents should re-read their individual instructions with this update in mind. The Global Components Library supersedes any previous UI implementation guidelines.**

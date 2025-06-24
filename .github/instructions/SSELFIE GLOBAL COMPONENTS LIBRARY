@@ -1,0 +1,877 @@
+// ============================================
+// SSELFIE GLOBAL COMPONENTS LIBRARY
+// ============================================
+
+// ============================================
+// 1. NAVIGATION COMPONENTS
+// ============================================
+
+// Primary Navigation Bar
+export function Navigation({ transparent = false, scrolled = false }) {
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      scrolled ? 'bg-luxury-black/95 backdrop-blur-md' : transparent ? 'bg-transparent' : 'bg-luxury-black'
+    }`}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-24">
+        <div className="flex justify-between items-center h-20">
+          <Link href="/" className="font-bodoni text-[28px] text-soft-white tracking-[-0.02em]">
+            SSELFIE
+          </Link>
+          
+          <div className="hidden md:flex items-center space-x-12">
+            <Link href="/about" className="font-inter text-[11px] uppercase tracking-[0.3em] text-soft-white/80 hover:text-soft-white transition-colors">
+              About
+            </Link>
+            <Link href="/tools" className="font-inter text-[11px] uppercase tracking-[0.3em] text-soft-white/80 hover:text-soft-white transition-colors">
+              Tools
+            </Link>
+            <Link href="/pricing" className="font-inter text-[11px] uppercase tracking-[0.3em] text-soft-white/80 hover:text-soft-white transition-colors">
+              Pricing
+            </Link>
+            <Link href="/login" className="font-inter text-[11px] uppercase tracking-[0.3em] text-soft-white/80 hover:text-soft-white transition-colors">
+              Login
+            </Link>
+          </div>
+          
+          <button className="md:hidden">
+            <span className="block w-6 h-0.5 bg-soft-white mb-1.5"></span>
+            <span className="block w-6 h-0.5 bg-soft-white mb-1.5"></span>
+            <span className="block w-6 h-0.5 bg-soft-white"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+// ============================================
+// 2. FOOTER COMPONENT
+// ============================================
+
+export function Footer() {
+  return (
+    <footer className="bg-luxury-black text-soft-white">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-24 py-20">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          {/* Brand Column */}
+          <div className="md:col-span-1">
+            <div className="font-bodoni text-3xl mb-6 tracking-[-0.02em]">SSELFIE</div>
+            <p className="font-playfair italic text-lg opacity-80">
+              Your selfie is your brand. Let's make it work for you.
+            </p>
+          </div>
+          
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-inter text-xs uppercase tracking-[0.3em] mb-6">Platform</h4>
+            <ul className="space-y-4">
+              <li><a href="/tools" className="text-warm-gray hover:text-soft-white transition-colors">Tools</a></li>
+              <li><a href="/pricing" className="text-warm-gray hover:text-soft-white transition-colors">Pricing</a></li>
+              <li><a href="/success-stories" className="text-warm-gray hover:text-soft-white transition-colors">Success Stories</a></li>
+            </ul>
+          </div>
+          
+          {/* Resources */}
+          <div>
+            <h4 className="font-inter text-xs uppercase tracking-[0.3em] mb-6">Resources</h4>
+            <ul className="space-y-4">
+              <li><a href="/blog" className="text-warm-gray hover:text-soft-white transition-colors">Blog</a></li>
+              <li><a href="/free-guide" className="text-warm-gray hover:text-soft-white transition-colors">Free Guide</a></li>
+              <li><a href="/support" className="text-warm-gray hover:text-soft-white transition-colors">Support</a></li>
+            </ul>
+          </div>
+          
+          {/* Contact */}
+          <div>
+            <h4 className="font-inter text-xs uppercase tracking-[0.3em] mb-6">Connect</h4>
+            <ul className="space-y-4">
+              <li><a href="/contact" className="text-warm-gray hover:text-soft-white transition-colors">Contact</a></li>
+              <li><a href="/about" className="text-warm-gray hover:text-soft-white transition-colors">About Sandra</a></li>
+              <li><a href="#" className="text-warm-gray hover:text-soft-white transition-colors">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-soft-white/10 flex flex-col md:flex-row justify-between items-center text-xs">
+          <div className="text-warm-gray mb-4 md:mb-0">© 2025 SSELFIE. All rights reserved.</div>
+          <div className="flex gap-8">
+            <a href="/privacy" className="text-warm-gray hover:text-soft-white transition-colors">Privacy</a>
+            <a href="/terms" className="text-warm-gray hover:text-soft-white transition-colors">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+// ============================================
+// 3. LOADING COMPONENTS
+// ============================================
+
+// Luxury Page Loader (Like Admin Login)
+export function PageLoader() {
+  return (
+    <div className="fixed inset-0 bg-soft-white z-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="font-lingerie text-8xl text-luxury-black animate-pulse mb-4">S</div>
+        <div className="font-inter text-sm text-warm-gray tracking-[0.3em] uppercase">Loading</div>
+      </div>
+    </div>
+  )
+}
+
+// Inline Spinner (Minimal)
+export function Spinner({ size = 'md', dark = false }) {
+  const sizeClasses = {
+    sm: 'w-4 h-4',
+    md: 'w-6 h-6',
+    lg: 'w-8 h-8'
+  }
+  
+  return (
+    <div className={`${sizeClasses[size]} animate-spin`}>
+      <div className={`w-full h-full border-2 ${
+        dark ? 'border-luxury-black border-t-transparent' : 'border-soft-white border-t-transparent'
+      } rounded-full`} />
+    </div>
+  )
+}
+
+// Progress Bar
+export function ProgressBar({ progress = 0, showLabel = false }) {
+  return (
+    <div className="relative">
+      <div className="h-px bg-warm-gray/20">
+        <div 
+          className="h-full bg-luxury-black transition-all duration-700 ease-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      {showLabel && (
+        <div className="mt-2 text-xs text-warm-gray tracking-wider">
+          {progress}% Complete
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ============================================
+// 4. CARD COMPONENTS
+// ============================================
+
+// Editorial Card with Image
+export function EditorialCard({ 
+  image, 
+  number, 
+  title, 
+  description, 
+  link,
+  hover = true 
+}) {
+  return (
+    <div className={`group relative overflow-hidden ${hover ? 'cursor-pointer' : ''}`}>
+      {/* Image Container */}
+      <div className="relative aspect-[3/4] overflow-hidden bg-warm-gray/10">
+        <Image 
+          src={image} 
+          alt={title}
+          fill
+          className={`object-cover ${
+            hover ? 'transition-all duration-700 group-hover:scale-105' : ''
+          }`}
+        />
+        
+        {/* Editorial Number Overlay */}
+        {number && (
+          <div className="absolute top-6 left-6 font-lingerie text-7xl text-soft-white/20">
+            {number}
+          </div>
+        )}
+      </div>
+      
+      {/* Content Overlay */}
+      <div className={`absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-luxury-black/90 to-transparent ${
+        hover ? 'transform translate-y-full group-hover:translate-y-0 transition-transform duration-500' : ''
+      }`}>
+        <h3 className="font-bodoni text-2xl text-soft-white mb-2">{title}</h3>
+        <p className="font-inter text-sm text-soft-white/80 leading-relaxed">{description}</p>
+        {link && (
+          <span className="inline-block mt-4 font-inter text-xs uppercase tracking-[0.3em] text-soft-white">
+            Learn More →
+          </span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// Minimal Content Card
+export function ContentCard({ title, description, meta, action, highlight = false }) {
+  return (
+    <div className={`p-10 ${highlight ? 'bg-luxury-black text-soft-white' : 'bg-white'} transition-all duration-300 hover:shadow-xl`}>
+      <h3 className="font-bodoni text-3xl mb-4">{title}</h3>
+      <p className={`font-inter text-base leading-relaxed mb-6 ${
+        highlight ? 'text-soft-white/80' : 'text-warm-gray'
+      }`}>
+        {description}
+      </p>
+      
+      {meta && (
+        <div className="flex gap-6 mb-6">
+          {meta.map((item, i) => (
+            <div key={i}>
+              <div className={`text-xs uppercase tracking-wider mb-1 ${
+                highlight ? 'text-soft-white/60' : 'text-warm-gray'
+              }`}>
+                {item.label}
+              </div>
+              <div className="font-medium">{item.value}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      {action && (
+        <button className={`font-inter text-sm uppercase tracking-[0.3em] ${
+          highlight 
+            ? 'text-soft-white border-b border-soft-white hover:border-transparent' 
+            : 'text-luxury-black border-b border-luxury-black hover:border-transparent'
+        } transition-all duration-300`}>
+          {action}
+        </button>
+      )}
+    </div>
+  )
+}
+
+// ============================================
+// 5. DECORATIVE ELEMENTS
+// ============================================
+
+// Animated Diamond
+export function Diamond({ size = 12, animate = true, color = 'luxury-black' }) {
+  return (
+    <div 
+      className={`transform rotate-45 bg-${color} ${
+        animate ? 'animate-pulse' : ''
+      }`}
+      style={{ width: size, height: size }}
+    />
+  )
+}
+
+// Progress Squares (Like Offer Ladder)
+export function ProgressSquares({ count = 4, active = 0, onSquareClick }) {
+  return (
+    <div className="flex gap-4">
+      {Array.from({ length: count }).map((_, i) => (
+        <button
+          key={i}
+          onClick={() => onSquareClick?.(i)}
+          className={`w-3 h-3 border transition-all duration-500 transform rotate-45 ${
+            i <= active 
+              ? 'bg-luxury-black border-luxury-black scale-110' 
+              : 'bg-transparent border-warm-gray hover:border-luxury-black'
+          }`}
+          aria-label={`Go to section ${i + 1}`}
+        />
+      ))}
+    </div>
+  )
+}
+
+// Decorative Line
+export function Line({ 
+  vertical = false, 
+  length = '100%', 
+  animate = false,
+  color = 'luxury-black' 
+}) {
+  return (
+    <div 
+      className={`bg-${color} ${animate ? 'animate-pulse' : ''}`}
+      style={{
+        width: vertical ? '1px' : length,
+        height: vertical ? length : '1px'
+      }}
+    />
+  )
+}
+
+// Editorial Number Background
+export function EditorialNumber({ number, className = '' }) {
+  return (
+    <div className={`absolute font-lingerie text-[200px] leading-none opacity-[0.03] select-none pointer-events-none ${className}`}>
+      {number}
+    </div>
+  )
+}
+
+// ============================================
+// 6. FORM ELEMENTS
+// ============================================
+
+// Luxury Input
+export function Input({ 
+  label, 
+  type = 'text', 
+  placeholder, 
+  value, 
+  onChange, 
+  error,
+  ...props 
+}) {
+  return (
+    <div className="space-y-2">
+      {label && (
+        <label className="font-inter text-xs uppercase tracking-[0.3em] text-luxury-black">
+          {label}
+        </label>
+      )}
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`w-full px-0 py-3 bg-transparent border-b ${
+          error ? 'border-red-500' : 'border-warm-gray focus:border-luxury-black'
+        } outline-none transition-colors duration-300 font-inter`}
+        {...props}
+      />
+      {error && (
+        <p className="text-xs text-red-500 mt-1">{error}</p>
+      )}
+    </div>
+  )
+}
+
+// Luxury Button
+export function Button({ 
+  children, 
+  variant = 'primary', 
+  size = 'md', 
+  fullWidth = false,
+  loading = false,
+  onClick,
+  ...props 
+}) {
+  const variants = {
+    primary: 'bg-luxury-black text-soft-white hover:bg-transparent hover:text-luxury-black border border-luxury-black',
+    secondary: 'bg-transparent text-luxury-black hover:bg-luxury-black hover:text-soft-white border border-luxury-black',
+    minimal: 'bg-transparent text-luxury-black hover:opacity-70 border-b border-luxury-black hover:border-transparent'
+  }
+  
+  const sizes = {
+    sm: 'px-6 py-2 text-xs',
+    md: 'px-10 py-4 text-sm',
+    lg: 'px-14 py-5 text-base'
+  }
+  
+  return (
+    <button
+      onClick={onClick}
+      disabled={loading}
+      className={`
+        font-inter uppercase tracking-[0.3em] transition-all duration-300
+        ${variants[variant]}
+        ${sizes[size]}
+        ${fullWidth ? 'w-full' : ''}
+        ${loading ? 'opacity-50 cursor-not-allowed' : ''}
+        flex items-center justify-center gap-3
+      `}
+      {...props}
+    >
+      {loading && <Spinner size="sm" dark={variant === 'secondary'} />}
+      {children}
+    </button>
+  )
+}
+
+// ============================================
+// 7. SNAP SCROLL SECTION
+// ============================================
+
+export function SnapScrollSection({ sections, showProgress = true }) {
+  const [activeSection, setActiveSection] = useState(0)
+  const scrollRef = useRef(null)
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollRef.current) return
+      
+      const scrollPosition = scrollRef.current.scrollTop
+      const sectionHeight = scrollRef.current.clientHeight
+      const currentSection = Math.round(scrollPosition / sectionHeight)
+      
+      setActiveSection(currentSection)
+    }
+    
+    const scrollElement = scrollRef.current
+    scrollElement?.addEventListener('scroll', handleScroll)
+    
+    return () => scrollElement?.removeEventListener('scroll', handleScroll)
+  }, [])
+  
+  return (
+    <div className="relative h-screen">
+      {/* Progress Indicator */}
+      {showProgress && (
+        <div className="fixed top-1/2 right-10 -translate-y-1/2 z-50">
+          <ProgressSquares 
+            count={sections.length} 
+            active={activeSection}
+            onSquareClick={(index) => {
+              scrollRef.current?.scrollTo({
+                top: index * scrollRef.current.clientHeight,
+                behavior: 'smooth'
+              })
+            }}
+          />
+        </div>
+      )}
+      
+      {/* Scrollable Content */}
+      <div 
+        ref={scrollRef}
+        className="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide"
+      >
+        {sections.map((section, index) => (
+          <div key={index} className="h-screen snap-start flex items-center justify-center">
+            {section}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// 8. IMAGE COMPONENTS
+// ============================================
+
+// Hover Image (No Grayscale)
+export function HoverImage({ src, alt, aspectRatio = '3/4' }) {
+  return (
+    <div className="relative overflow-hidden group" style={{ aspectRatio }}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover transition-all duration-700 group-hover:scale-105"
+      />
+    </div>
+  )
+}
+
+// Image Gallery Grid
+export function ImageGallery({ images, columns = 3 }) {
+  return (
+    <div className={`grid grid-cols-1 md:grid-cols-${columns} gap-6`}>
+      {images.map((image, index) => (
+        <HoverImage 
+          key={index}
+          src={image.src}
+          alt={image.alt}
+          aspectRatio={image.aspectRatio || '3/4'}
+        />
+      ))}
+    </div>
+  )
+}
+
+// ============================================
+// 9. WIDGET COMPONENTS
+// ============================================
+
+// Stats Widget
+export function StatsWidget({ label, value, change, dark = false }) {
+  return (
+    <div className={`p-8 ${dark ? 'bg-luxury-black text-soft-white' : 'bg-white'}`}>
+      <div className="flex justify-between items-start mb-4">
+        <div className={`text-xs uppercase tracking-[0.3em] ${
+          dark ? 'text-soft-white/60' : 'text-warm-gray'
+        }`}>
+          {label}
+        </div>
+        {change && (
+          <div className={`text-xs ${change > 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {change > 0 ? '+' : ''}{change}%
+          </div>
+        )}
+      </div>
+      <div className="font-lingerie text-5xl">{value}</div>
+    </div>
+  )
+}
+
+// Quote Widget
+export function QuoteWidget({ quote, author, dark = false }) {
+  return (
+    <div className={`p-10 ${dark ? 'bg-luxury-black text-soft-white' : 'bg-soft-white'}`}>
+      <div className="font-lingerie text-6xl opacity-20 mb-4">"</div>
+      <p className="font-playfair italic text-2xl leading-relaxed mb-6">{quote}</p>
+      <div className={`font-inter text-sm uppercase tracking-[0.3em] ${
+        dark ? 'text-soft-white/60' : 'text-warm-gray'
+      }`}>
+        — {author}
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// 11. ADDITIONAL LUXURY DECORATIVE ELEMENTS
+// ============================================
+
+// Subtle Section Divider with Diamond
+export function SectionDivider({ showDiamond = true }) {
+  return (
+    <div className="relative py-20">
+      <div className="absolute inset-0 flex items-center">
+        <div className="w-full h-px bg-warm-gray/20"></div>
+      </div>
+      {showDiamond && (
+        <div className="relative flex justify-center">
+          <div className="bg-soft-white px-8">
+            <div className="w-2 h-2 bg-luxury-black transform rotate-45"></div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Animated Text Reveal (for headlines)
+export function TextReveal({ children, delay = 0 }) {
+  return (
+    <div className="overflow-hidden">
+      <div 
+        className="animate-textReveal"
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Subtle Corner Accent (for cards/sections)
+export function CornerAccent({ position = 'top-left', size = 40 }) {
+  const positions = {
+    'top-left': 'top-0 left-0',
+    'top-right': 'top-0 right-0',
+    'bottom-left': 'bottom-0 left-0',
+    'bottom-right': 'bottom-0 right-0'
+  }
+  
+  return (
+    <div className={`absolute ${positions[position]} overflow-hidden`} style={{ width: size, height: size }}>
+      <div className="absolute top-0 left-0 w-full h-px bg-luxury-black"></div>
+      <div className="absolute top-0 left-0 h-full w-px bg-luxury-black"></div>
+    </div>
+  )
+}
+
+// Milestone Badge (for achievements)
+export function MilestoneBadge({ number, label, achieved = false }) {
+  return (
+    <div className={`text-center transition-all duration-500 ${achieved ? 'opacity-100' : 'opacity-40'}`}>
+      <div className="relative inline-block">
+        <div className="font-lingerie text-6xl mb-2">{number}</div>
+        {achieved && (
+          <div className="absolute -top-2 -right-2 w-3 h-3 bg-luxury-black transform rotate-45"></div>
+        )}
+      </div>
+      <div className="font-inter text-xs uppercase tracking-[0.3em] text-warm-gray">{label}</div>
+    </div>
+  )
+}
+
+// Elegant Tooltip
+export function Tooltip({ children, content, position = 'top' }) {
+  const [show, setShow] = useState(false)
+  
+  const positions = {
+    top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+    bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
+    left: 'right-full top-1/2 -translate-y-1/2 mr-2',
+    right: 'left-full top-1/2 -translate-y-1/2 ml-2'
+  }
+  
+  return (
+    <div className="relative inline-block" 
+         onMouseEnter={() => setShow(true)}
+         onMouseLeave={() => setShow(false)}>
+      {children}
+      {show && (
+        <div className={`absolute ${positions[position]} z-50 px-4 py-2 bg-luxury-black text-soft-white text-xs whitespace-nowrap`}>
+          {content}
+          <div className={`absolute w-2 h-2 bg-luxury-black transform rotate-45 ${
+            position === 'top' ? 'top-full left-1/2 -translate-x-1/2 -mt-1' :
+            position === 'bottom' ? 'bottom-full left-1/2 -translate-x-1/2 -mb-1' :
+            position === 'left' ? 'left-full top-1/2 -translate-y-1/2 -ml-1' :
+            'right-full top-1/2 -translate-y-1/2 -mr-1'
+          }`}></div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Animated Counter (for stats)
+export function AnimatedCounter({ end, duration = 2000, prefix = '', suffix = '' }) {
+  const [count, setCount] = useState(0)
+  
+  useEffect(() => {
+    let start = 0
+    const increment = end / (duration / 16)
+    
+    const timer = setInterval(() => {
+      start += increment
+      if (start > end) {
+        setCount(end)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 16)
+    
+    return () => clearInterval(timer)
+  }, [end, duration])
+  
+  return (
+    <span className="font-lingerie text-5xl">
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  )
+}
+
+// Elegant Tab Navigation
+export function TabNavigation({ tabs, activeTab, onChange }) {
+  return (
+    <div className="border-b border-warm-gray/20">
+      <div className="flex space-x-12">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => onChange(tab.id)}
+            className={`pb-4 font-inter text-sm uppercase tracking-[0.3em] transition-all duration-300 relative ${
+              activeTab === tab.id 
+                ? 'text-luxury-black' 
+                : 'text-warm-gray hover:text-luxury-black'
+            }`}
+          >
+            {tab.label}
+            {activeTab === tab.id && (
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-luxury-black"></div>
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Feature Highlight Box
+export function FeatureBox({ icon, title, description, comingSoon = false }) {
+  return (
+    <div className="relative p-8 bg-white hover:shadow-lg transition-all duration-300 group">
+      {comingSoon && (
+        <div className="absolute top-4 right-4 font-inter text-[10px] uppercase tracking-[0.3em] text-warm-gray">
+          Coming Soon
+        </div>
+      )}
+      
+      <div className="mb-6 text-luxury-black opacity-20 group-hover:opacity-30 transition-opacity">
+        {icon}
+      </div>
+      
+      <h4 className="font-bodoni text-2xl mb-3">{title}</h4>
+      <p className="font-inter text-sm text-warm-gray leading-relaxed">{description}</p>
+      
+      <CornerAccent position="bottom-right" size={30} />
+    </div>
+  )
+}
+
+// Elegant Notification Toast
+export function Toast({ message, type = 'info', onClose }) {
+  const types = {
+    info: 'bg-luxury-black text-soft-white',
+    success: 'bg-luxury-black text-soft-white',
+    error: 'bg-red-600 text-white'
+  }
+  
+  return (
+    <div className={`fixed bottom-8 right-8 px-6 py-4 ${types[type]} shadow-xl animate-slideUp z-50`}>
+      <div className="flex items-center gap-4">
+        <p className="font-inter text-sm">{message}</p>
+        <button onClick={onClose} className="hover:opacity-70 transition-opacity">
+          <X size={16} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// Status Indicator (minimal)
+export function StatusDot({ status = 'active' }) {
+  const colors = {
+    active: 'bg-green-500',
+    pending: 'bg-yellow-500',
+    inactive: 'bg-warm-gray'
+  }
+  
+  return (
+    <div className="flex items-center gap-2">
+      <div className={`w-2 h-2 ${colors[status]} animate-pulse`}></div>
+      <span className="font-inter text-xs uppercase tracking-[0.3em] text-warm-gray">
+        {status}
+      </span>
+    </div>
+  )
+}
+
+// Timeline Component (for journey/progress)
+export function Timeline({ steps, currentStep = 0 }) {
+  return (
+    <div className="relative">
+      {/* Vertical Line */}
+      <div className="absolute left-4 top-8 bottom-8 w-px bg-warm-gray/20"></div>
+      
+      {/* Steps */}
+      <div className="space-y-12">
+        {steps.map((step, index) => (
+          <div key={index} className="relative flex items-start gap-8">
+            {/* Step Number */}
+            <div className={`relative z-10 w-8 h-8 flex items-center justify-center transition-all duration-500 ${
+              index <= currentStep 
+                ? 'bg-luxury-black text-soft-white' 
+                : 'bg-soft-white border border-warm-gray text-warm-gray'
+            }`}>
+              <span className="font-inter text-xs">{index + 1}</span>
+            </div>
+            
+            {/* Content */}
+            <div className={`flex-1 transition-opacity duration-500 ${
+              index <= currentStep ? 'opacity-100' : 'opacity-40'
+            }`}>
+              <h4 className="font-bodoni text-xl mb-2">{step.title}</h4>
+              <p className="font-inter text-sm text-warm-gray">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Subtle Background Pattern
+export function BackgroundPattern({ type = 'dots' }) {
+  if (type === 'dots') {
+    return (
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle, #171719 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
+    )
+  }
+  
+  if (type === 'lines') {
+    return (
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `repeating-linear-gradient(90deg, #171719 0, #171719 1px, transparent 1px, transparent 80px)`,
+        }}></div>
+      </div>
+    )
+  }
+  
+  return null
+}
+
+// CSS for text reveal animation
+/*
+@keyframes textReveal {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-textReveal {
+  animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(100%);
+}
+*/
+
+// Fade In Animation Wrapper
+export function FadeIn({ children, delay = 0 }) {
+  return (
+    <div 
+      className="animate-fadeIn"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
+// Slide Up Animation Wrapper
+export function SlideUp({ children, delay = 0 }) {
+  return (
+    <div 
+      className="animate-slideUp"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
+// ============================================
+// REQUIRED CSS ANIMATIONS (Add to global CSS)
+// ============================================
+/*
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+*/

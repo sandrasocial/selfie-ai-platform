@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@/utils/supabase/route-handler'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { processAgentTask } from '@/lib/agent-brain'
 
 export const dynamic = 'force-dynamic'
 
 // This endpoint is for the client-side poller to check for pending tasks
 export async function GET() {
-  const supabase = createRouteHandlerClient()
+  const supabase = createRouteHandlerClient({ cookies })
   try {
     // Get all pending tasks
     const { data: tasks, error } = await supabase
@@ -14,13 +15,13 @@ export async function GET() {
       .select('*')
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
-    
+
     if (error) throw error
-    
+
     if (!tasks || tasks.length === 0) {
       return NextResponse.json({ success: true, message: 'No pending tasks found.' })
     }
-    
+
     // Process each task in the background
     for (const task of tasks) {
       try {
@@ -33,17 +34,20 @@ export async function GET() {
         console.error(`Error queueing task ${task.id}:`, e)
       }
     }
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       success: true,
       message: `Queued ${tasks.length} tasks for processing.`,
-      tasks: tasks.map(t => t.id)
+      tasks: tasks.map((t) => t.id),
     })
   } catch (error: any) {
     console.error('Agent auto-check error:', error)
-    return NextResponse.json({ 
-      success: false,
-      error: error.message 
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      { status: 500 }
+    )
   }
-} 
+}

@@ -2,7 +2,15 @@ import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend client with proper error handling
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    console.warn('RESEND_API_KEY not found in environment variables')
+    return null
+  }
+  return new Resend(apiKey)
+}
 
 interface EmailOptions {
   to: string
@@ -70,6 +78,16 @@ export async function sendEmail(
   options: EmailOptions
 ): Promise<{ id: string; success: boolean; error?: string }> {
   try {
+    const resend = getResendClient()
+    if (!resend) {
+      console.warn('Resend client not available - email not sent')
+      return {
+        id: `mock-${Date.now()}`,
+        success: false,
+        error: 'RESEND_API_KEY not configured'
+      }
+    }
+
     const template = await loadTemplate(options.template, options.variables)
 
     const result = await resend.emails.send({

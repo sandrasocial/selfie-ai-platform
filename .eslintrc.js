@@ -1,8 +1,10 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   extends: [
     'next/core-web-vitals',
-    '@next/eslint-config-next'
+    '@typescript-eslint/recommended'
   ],
+  plugins: ['@typescript-eslint'],
   rules: {
     '@next/next/no-img-element': 'off',
     'react/no-unescaped-entities': 'off',

@@ -77,22 +77,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabase])
 
   const signIn = async (email: string, password: string) => {
+    console.log('🔐 Starting sign in for:', email)
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       })
 
-      if (error) throw error
+      console.log('🔐 Sign in response:', { data: !!data, error: error?.message })
+
+      if (error) {
+        console.error('🔐 Sign in error:', error.message)
+        throw error
+      }
+      
+      console.log('✅ Sign in successful')
       return { success: true }
     } catch (error) {
+      console.error('🔐 Sign in catch error:', (error as Error).message)
       return { success: false, error: (error as Error).message }
     }
   }
 
   const signUp = async (email: string, password: string, fullName?: string) => {
+    console.log('📝 Starting sign up for:', email)
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -102,9 +112,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       })
 
-      if (error) throw error
+      console.log('📝 Sign up response:', { data: !!data, error: error?.message })
+
+      if (error) {
+        console.error('📝 Sign up error:', error.message)
+        throw error
+      }
+      
+      console.log('✅ Sign up successful')
       return { success: true }
     } catch (error) {
+      console.error('📝 Sign up catch error:', (error as Error).message)
       return { success: false, error: (error as Error).message }
     }
   }

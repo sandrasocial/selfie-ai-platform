@@ -38,16 +38,29 @@ function ResetPasswordContent() {
     setError('')
     setSuccess('')
 
+    console.log('🔄 Requesting password reset for:', email)
+
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/reset-password`
       })
 
-      if (error) throw error
+      console.log('🔄 Password reset response:', { error: error?.message })
 
+      if (error) {
+        console.error('🔄 Password reset error:', error.message)
+        throw error
+      }
+
+      console.log('✅ Password reset email sent')
       setSuccess('Password reset email sent! Check your inbox.')
     } catch (error) {
-      setError((error as Error).message)
+      console.error('🔄 Password reset catch error:', (error as Error).message)
+      setError(`Password reset failed: ${(error as Error).message}`)
+    } finally {
+      setIsLoading(false)
+    }
+  }
     } finally {
       setIsLoading(false)
     }

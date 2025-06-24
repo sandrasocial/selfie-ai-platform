@@ -15,7 +15,7 @@ import {
   Sparkles
 } from 'lucide-react'
 import AdminLayout from '@/app/components/admin/AdminLayout'
-import PreviewNotificationWidget from '@/components/dashboard/PreviewNotificationWidget'
+import PreviewNotificationWidget from '@/app/components/dashboard/PreviewNotificationWidget'
 
 export default function AdminDashboard() {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null)

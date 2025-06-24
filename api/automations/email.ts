@@ -2,19 +2,7 @@ import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
 
-// Lazy-load Resend client to avoid build-time errors
-let resend: Resend | null = null
-
-function getResendClient(): Resend {
-  if (!resend) {
-    const apiKey = process.env.RESEND_API_KEY
-    if (!apiKey) {
-      throw new Error('RESEND_API_KEY environment variable is required')
-    }
-    resend = new Resend(apiKey)
-  }
-  return resend
-}
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface EmailOptions {
   to: string
@@ -84,7 +72,7 @@ export async function sendEmail(
   try {
     const template = await loadTemplate(options.template, options.variables)
 
-    const result = await getResendClient().emails.send({
+    const result = await resend.emails.send({
       from: 'SSELFIE <hello@sselfie.ai>',
       to: options.to,
       subject: options.subject || template.subject,

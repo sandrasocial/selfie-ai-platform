@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from '@/utils/supabase/route-handler'
 import { processAgentTask } from '@/lib/agent-brain'
 
 export const dynamic = 'force-dynamic'
 
 // This endpoint is for the client-side poller to check for pending tasks
 export async function GET() {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = createRouteHandlerClient()
   try {
     // Get all pending tasks
     const { data: tasks, error } = await supabase

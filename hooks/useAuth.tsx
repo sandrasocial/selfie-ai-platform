@@ -30,8 +30,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Load user profile
   const loadUserProfile = async (userId: string) => {
-    const userProfile = await userProfileService.getUserProfile(userId)
-    setProfile(userProfile)
+    try {
+      console.log('🔍 Loading user profile for:', userId)
+      const userProfile = await userProfileService.getUserProfile(userId)
+      console.log('✅ User profile loaded:', !!userProfile)
+      setProfile(userProfile)
+    } catch (error) {
+      console.error('❌ Error loading user profile:', error)
+      setProfile(null)
+    }
   }
 
   // Refresh profile data
@@ -60,6 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('🔄 Auth state change:', event, !!session)
         setSession(session)
         setUser(session?.user ?? null)
         

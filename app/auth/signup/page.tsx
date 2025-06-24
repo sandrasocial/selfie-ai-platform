@@ -140,7 +140,9 @@ export default function AuthSignupPage() {
               </label>
               <input
                 id="fullName"
+                name="fullName"
                 type="text"
+                autoComplete="name"
                 placeholder="What should we call you?"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -162,7 +164,9 @@ export default function AuthSignupPage() {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -185,7 +189,9 @@ export default function AuthSignupPage() {
               <div className="relative">
                 <input
                   id="password"
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="new-password"
                   placeholder="Create a secure password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -219,7 +225,9 @@ export default function AuthSignupPage() {
               <div className="relative">
                 <input
                   id="confirmPassword"
+                  name="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
+                  autoComplete="new-password"
                   placeholder="Type it again to be sure"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

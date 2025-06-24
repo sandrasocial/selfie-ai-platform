@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - SSELFIE AI™</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital@1&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F1F1F1;
+            color: #171719;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            padding: 80px 60px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 32px;
+            color: #171719;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            font-weight: 300;
+            color: #B5B5B3;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        
+        .content {
+            margin-bottom: 60px;
+        }
+        
+        .headline {
+            font-size: 36px;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+        }
+        
+        .subheadline {
+            font-size: 18px;
+            font-weight: 300;
+            color: #B5B5B3;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .body-text {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 25px;
+            color: #171719;
+        }
+        
+        .order-details {
+            background-color: #F8F8F8;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 4px solid #171719;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        .item-name {
+            font-weight: 400;
+        }
+        
+        .item-price {
+            font-weight: 500;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #171719;
+            color: #FFFFFF;
+            padding: 20px 40px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 300ms ease;
+            margin: 20px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .cta-button:hover {
+            background-color: #B5B5B3;
+        }
+        
+        .signature {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #E5E5E5;
+            font-style: italic;
+            color: #B5B5B3;
+        }
+        
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #E5E5E5;
+            text-align: center;
+            font-size: 12px;
+            color: #B5B5B3;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .headline {
+                font-size: 28px;
+            }
+            
+            .order-details {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">SSELFIE AI™</div>
+            <div class="tagline">Your Personal Brand, Elevated</div>
+        </div>
+        
+        <div class="content">
+            <h1 class="headline">Your order is confirmed!</h1>
+            <p class="subheadline">Thanks {{name}}, you're about to transform how the world sees you.</p>
+            
+            <p class="body-text">
+                I'm genuinely excited for you! You've just taken a huge step toward building a personal brand that actually feels like <em>you</em>. No more generic templates or one-size-fits-all approaches.
+            </p>
+            
+            <p class="body-text">
+                Your purchase details are below, and you'll get a separate email with your login info in just a few minutes. Keep an eye on your inbox!
+            </p>
+            
+            <div class="order-details">
+                <div class="order-item">
+                    <span class="item-name">{{productName}}</span>
+                    <span class="item-price">${{productPrice}}</span>
+                </div>
+                <div class="order-item">
+                    <span class="item-name">Order #{{orderId}}</span>
+                    <span class="item-price">{{orderDate}}</span>
+                </div>
+                <div class="order-item">
+                    <span class="item-name"><strong>Total</strong></span>
+                    <span class="item-price"><strong>${{totalAmount}}</strong></span>
+                </div>
+            </div>
+            
+            <p class="body-text">
+                Here's what happens next: I'll be sending you a series of emails over the next few days with everything you need to get started. No overwhelm, just the essentials to help you hit the ground running.
+            </p>
+            
+            <p class="body-text">
+                And remember – this isn't about becoming someone else. It's about becoming more authentically, confidently you. That's the magic we're after.
+            </p>
+            
+            <a href="{{dashboardUrl}}" class="cta-button">Access Your Dashboard</a>
+            
+            <div class="signature">
+                <p>Here for your success,<br>Sandra</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Questions? Just reply to this email – I read every single one.</p>
+            <p>SSELFIE AI™ • Building Personal Brands That Feel Personal</p>
+            <p>If you need immediate help, visit our <a href="{{supportUrl}}" style="color: #171719;">support center</a></p>
+        </div>        
+    </div>
+</body>
+</html>

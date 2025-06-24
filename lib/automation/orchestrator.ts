@@ -3,6 +3,7 @@
 // app/api/automation/orchestrator/route.ts
 import { createClient } from '@supabase/supabase-js';
 import { logger } from '@/lib/utils/logger';
+import { sendEmail, sendPurchaseConfirmation, sendMilestoneCelebration } from '@/api/automations/email';
 // import commented for deployment
 
 // Initialize Supabase
@@ -88,11 +89,31 @@ async function handlePurchaseCompleted(payload: AutomationPayload) {
       });
   }
 
-  // Step 3: Email sequences
-  // TODO: Trigger Make.com webhook for email sequences
-  if (productType === 'branded') {
-    logger.info('TODO: Trigger Make.com branded welcome sequence');
-    // Will implement: triggerMakeWebhook('branded_welcome_sequence', {...})
+  // Step 3: Email sequences - IMPLEMENTED
+  try {
+    if (productType === 'branded') {
+      logger.info('🎯 Triggering branded welcome sequence');
+      await triggerBrandedWelcomeSequence(userId, email, name, productType);
+    } else {
+      logger.info('🎯 Triggering starter welcome sequence');
+      await triggerStarterWelcomeSequence(userId, email, name, productType);
+    }
+    
+    // Send immediate purchase confirmation
+    await sendPurchaseConfirmationEmail(email, name, {
+      productName: productType === 'branded' ? 'Branded Experience' : 'Selfie Starter Kit',
+      productPrice: productType === 'branded' ? '397' : '67',
+      orderId: purchaseId,
+      orderDate: new Date().toLocaleDateString(),
+      totalAmount: productType === 'branded' ? '397' : '67',
+      dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+      supportUrl: `${process.env.NEXT_PUBLIC_APP_URL}/support`
+    });
+    
+    logger.info('✅ Email automation triggered successfully');
+  } catch (emailError) {
+    logger.error('❌ Email automation failed:', emailError);
+    // Don't fail the entire process for email issues
   }
 
   // Step 4: Console notification (replacing Slack)
@@ -167,6 +188,113 @@ function getProductName(productType: string): string {
     vip: 'VIP Program'
   };
   return names[productType] || productType;
+}
+
+// Email sequence functions
+async function triggerBrandedWelcomeSequence(userId: string, email: string, name: string, productType: string) {
+  try {
+    // Immediate welcome email
+    await sendEmail({
+      to: email,
+      template: 'welcome',
+      variables: { 
+        name, 
+        purchaseType: 'branded',
+        dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+        supportUrl: `${process.env.NEXT_PUBLIC_APP_URL}/support`
+      }
+    });
+
+    // Schedule follow-up emails via Make.com webhook
+    await triggerMakeWebhook('branded_welcome_sequence', {
+      userId,
+      email,
+      name,
+      productType,
+      timestamp: new Date().toISOString()
+    });
+
+    logger.info(`✅ Branded welcome sequence triggered for ${email}`);
+  } catch (error) {
+    logger.error(`❌ Failed to trigger branded welcome sequence:`, error);
+    throw error;
+  }
+}
+
+async function triggerStarterWelcomeSequence(userId: string, email: string, name: string, productType: string) {
+  try {
+    // Immediate welcome email
+    await sendEmail({
+      to: email,
+      template: 'welcome',
+      variables: { 
+        name, 
+        purchaseType: 'starter',
+        dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+        supportUrl: `${process.env.NEXT_PUBLIC_APP_URL}/support`
+      }
+    });
+
+    // Schedule follow-up emails via Make.com webhook
+    await triggerMakeWebhook('starter_welcome_sequence', {
+      userId,
+      email,
+      name,
+      productType,
+      timestamp: new Date().toISOString()
+    });
+
+    logger.info(`✅ Starter welcome sequence triggered for ${email}`);
+  } catch (error) {
+    logger.error(`❌ Failed to trigger starter welcome sequence:`, error);
+    throw error;
+  }
+}
+
+async function sendPurchaseConfirmationEmail(email: string, name: string, orderDetails: Record<string, any>) {
+  try {
+    await sendPurchaseConfirmation(email, name, orderDetails);
+    logger.info(`✅ Purchase confirmation sent to ${email}`);
+  } catch (error) {
+    logger.error(`❌ Failed to send purchase confirmation:`, error);
+    throw error;
+  }
+}
+
+// Make.com webhook trigger
+async function triggerMakeWebhook(scenarioName: string, data: Record<string, any>) {
+  try {
+    const webhookUrls = {
+      'branded_welcome_sequence': process.env.MAKE_BRANDED_WEBHOOK_URL,
+      'starter_welcome_sequence': process.env.MAKE_STARTER_WEBHOOK_URL,
+      'vip_application': process.env.MAKE_VIP_WEBHOOK_URL,
+      'milestone_celebration': process.env.MAKE_MILESTONE_WEBHOOK_URL
+    };
+
+    const webhookUrl = webhookUrls[scenarioName as keyof typeof webhookUrls];
+    
+    if (!webhookUrl) {
+      logger.warn(`⚠️ No webhook URL configured for ${scenarioName}`);
+      return;
+    }
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Make.com webhook failed: ${response.status}`);
+    }
+
+    logger.info(`✅ Make.com webhook triggered: ${scenarioName}`);
+  } catch (error) {
+    logger.error(`❌ Make.com webhook failed for ${scenarioName}:`, error);
+    // Don't throw - webhook failures shouldn't break the main flow
+  }
 }
 
 // API endpoint handler for Next.js

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 SSELFIE AI™ Luxury QA Test Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .qa-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .qa-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .qa-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .qa-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .qa-content {
+            padding: 40px;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 30px;
+            background: #fafafa;
+        }
+
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-category {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .test-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+
+        .test-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .test-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .test-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #856404;
+        }
+
+        .status-pass {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-fail {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-warn {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .quick-link h3 {
+            margin-bottom: 10px;
+        }
+
+        .quick-link p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #f0f0f0;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .manual-test-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .manual-test-note h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .manual-test-note p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .checklist {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+        }
+
+        .notes-section textarea {
+            width: 100%;
+            height: 100px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .qa-header h1 {
+                font-size: 2rem;
+            }
+            
+            .qa-content {
+                padding: 20px;
+            }
+            
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="qa-container">
+        <div class="qa-header">
+            <h1>🏆 SSELFIE AI™ Luxury QA</h1>
+            <p>Authentication Flow Testing Dashboard</p>
+        </div>
+
+        <div class="qa-content">
+            <div class="manual-test-note">
+                <h3>📋 Manual Testing Guide</h3>
+                <p>This is a comprehensive manual testing checklist for the SSELFIE AI™ authentication system. Click through each test, mark as complete, and add notes for any issues found. We're testing to luxury brand standards - every detail matters!</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-tests">0</div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-tests">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pass-rate">0%</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="quality-score">0</div>
+                    <div class="stat-label">Quality Score</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div class="quick-links">
+                <a href="http://localhost:3000/auth/login" target="_blank" class="quick-link">
+                    <h3>🔐 Login Page</h3>
+                    <p>Test the main login functionality</p>
+                </a>
+                <a href="http://localhost:3000/auth/signup" target="_blank" class="quick-link">
+                    <h3>📝 Signup Page</h3>
+                    <p>Test user registration flow</p>
+                </a>
+                <a href="http://localhost:3000/auth/reset-password" target="_blank" class="quick-link">
+                    <h3>🔄 Reset Password</h3>
+                    <p>Test password recovery</p>
+                </a>
+                <a href="http://localhost:3000/dashboard" target="_blank" class="quick-link">
+                    <h3>📊 Dashboard</h3>
+                    <p>Test authenticated user experience</p>
+                </a>
+            </div>
+
+            <!-- TEST CATEGORY 1: DESIGN & UX -->
+            <div class="test-section">
+                <h2>🎨 Design & User Experience</h2>
+                
+                <div class="test-category">
+                    <h3>Visual Design Quality</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="typography" onchange="updateProgress()">
+                            <label for="typography">Typography uses luxury serif fonts (Playfair Display)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="colors" onchange="updateProgress()">
+                            <label for="colors">Color scheme matches brand guidelines (#F1F1F1 background)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="spacing" onchange="updateProgress()">
+                            <label for="spacing">Spacing and layout feels luxurious and editorial</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="consistency" onchange="updateProgress()">
+                            <label for="consistency">Design consistency across all auth pages</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-category">
+                    <h3>Sandra's Voice & Copy</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="voice-warm" onchange="updateProgress()">
+                            <label for="voice-warm">Copy feels warm and conversational (like Sandra from FRIENDS)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="voice-direct" onchange="updateProgress()">
+                            <label for="voice-direct">Messages are direct but supportive</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="voice-brand" onchange="updateProgress()">
+                            <label for="voice-brand">All text says "SSELFIE" not "SELFIE"</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST CATEGORY 2: FUNCTIONALITY -->
+            <div class="test-section">
+                <h2>🔐 Authentication Functionality</h2>
+                
+                <div class="test-category">
+                    <h3>User Registration</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="signup-form" onchange="updateProgress()">
+                            <label for="signup-form">Signup form accepts valid email, password, full name</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="signup-validation" onchange="updateProgress()">
+                            <label for="signup-validation">Form validation works (password match, email format)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="signup-success" onchange="updateProgress()">
+                            <label for="signup-success">Successful signup shows confirmation or redirects</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="terms-checkbox" onchange="updateProgress()">
+                            <label for="terms-checkbox">Terms & conditions checkbox is required</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-category">
+                    <h3>User Login</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="login-valid" onchange="updateProgress()">
+                            <label for="login-valid">Login works with valid credentials</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="login-invalid" onchange="updateProgress()">
+                            <label for="login-invalid">Login fails gracefully with invalid credentials</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="login-redirect" onchange="updateProgress()">
+                            <label for="login-redirect">Successful login redirects to dashboard</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="remember-me" onchange="updateProgress()">
+                            <label for="remember-me">Session persists across browser tabs</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-category">
+                    <h3>Password Reset</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="reset-request" onchange="updateProgress()">
+                            <label for="reset-request">Password reset request form works</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="reset-email" onchange="updateProgress()">
+                            <label for="reset-email">Reset email shows success message</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="reset-new-password" onchange="updateProgress()">
+                            <label for="reset-new-password">New password form works (with URL token)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST CATEGORY 3: MOBILE EXPERIENCE -->
+            <div class="test-section">
+                <h2>📱 Mobile Experience</h2>
+                
+                <div class="test-category">
+                    <h3>Mobile Design</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="mobile-responsive" onchange="updateProgress()">
+                            <label for="mobile-responsive">All auth pages are mobile responsive</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="mobile-touch" onchange="updateProgress()">
+                            <label for="mobile-touch">Touch targets are large enough (44px minimum)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="mobile-keyboard" onchange="updateProgress()">
+                            <label for="mobile-keyboard">Mobile keyboard types work (email, password)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="mobile-zoom" onchange="updateProgress()">
+                            <label for="mobile-zoom">No unexpected zooming on input focus</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST CATEGORY 4: ERROR HANDLING -->
+            <div class="test-section">
+                <h2>🚨 Error Handling</h2>
+                
+                <div class="test-category">
+                    <h3>Form Validation</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-invalid-email" onchange="updateProgress()">
+                            <label for="error-invalid-email">Invalid email formats show clear error messages</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-short-password" onchange="updateProgress()">
+                            <label for="error-short-password">Short passwords are rejected with helpful message</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-password-mismatch" onchange="updateProgress()">
+                            <label for="error-password-mismatch">Password mismatch shows clear error</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-empty-fields" onchange="updateProgress()">
+                            <label for="error-empty-fields">Empty required fields show validation errors</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-category">
+                    <h3>Network & Server Errors</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-network" onchange="updateProgress()">
+                            <label for="error-network">Network errors show user-friendly messages</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-server" onchange="updateProgress()">
+                            <label for="error-server">Server errors don't expose technical details</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="error-recovery" onchange="updateProgress()">
+                            <label for="error-recovery">Users can recover from errors without page refresh</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST CATEGORY 5: PERFORMANCE -->
+            <div class="test-section">
+                <h2>⚡ Performance</h2>
+                
+                <div class="test-category">
+                    <h3>Loading & Speed</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="perf-load-time" onchange="updateProgress()">
+                            <label for="perf-load-time">Auth pages load in under 2 seconds</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="perf-loading-states" onchange="updateProgress()">
+                            <label for="perf-loading-states">Loading states shown during form submission</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="perf-no-blocking" onchange="updateProgress()">
+                            <label for="perf-no-blocking">No blocking UI during authentication</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST CATEGORY 6: SECURITY -->
+            <div class="test-section">
+                <h2>🔒 Security</h2>
+                
+                <div class="test-category">
+                    <h3>Data Protection</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="security-password-hidden" onchange="updateProgress()">
+                            <label for="security-password-hidden">Password fields are properly masked</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="security-no-autocomplete" onchange="updateProgress()">
+                            <label for="security-no-autocomplete">Sensitive data not exposed in browser</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="security-https" onchange="updateProgress()">
+                            <label for="security-https">Production uses HTTPS (check in production)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h3>📝 Testing Notes & Issues</h3>
+                <textarea id="testing-notes" placeholder="Record any issues, bugs, or improvements found during testing..."></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn-primary" onclick="generateReport()">
+                    📊 Generate QA Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalTests = 0;
+        let completedTests = 0;
+
+        // Initialize test counters
+        function initializeTests() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            totalTests = checkboxes.length;
+            document.getElementById('total-tests').textContent = totalTests;
+            updateProgress();
+        }
+
+        // Update progress and stats
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            completedTests = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            const passRate = totalTests > 0 ? Math.round((completedTests / totalTests) * 100) : 0;
+            const qualityScore = calculateQualityScore();
+            
+            document.getElementById('completed-tests').textContent = completedTests;
+            document.getElementById('pass-rate').textContent = passRate + '%';
+            document.getElementById('quality-score').textContent = qualityScore;
+            
+            const progressFill = document.getElementById('progress-fill');
+            progressFill.style.width = passRate + '%';
+            
+            // Update progress bar color based on completion
+            if (passRate >= 90) {
+                progressFill.style.background = 'linear-gradient(90deg, #28a745, #20c997)';
+            } else if (passRate >= 70) {
+                progressFill.style.background = 'linear-gradient(90deg, #ffc107, #fd7e14)';
+            } else {
+                progressFill.style.background = 'linear-gradient(90deg, #dc3545, #e74c3c)';
+            }
+        }
+
+        // Calculate quality score based on test categories
+        function calculateQualityScore() {
+            if (completedTests === 0) return 0;
+            
+            // Weight different categories
+            const designTests = getCompletedInCategory(['typography', 'colors', 'spacing', 'consistency', 'voice-warm', 'voice-direct', 'voice-brand']);
+            const functionalTests = getCompletedInCategory(['signup-form', 'signup-validation', 'signup-success', 'login-valid', 'login-invalid', 'login-redirect', 'reset-request']);
+            const mobileTests = getCompletedInCategory(['mobile-responsive', 'mobile-touch', 'mobile-keyboard', 'mobile-zoom']);
+            const errorTests = getCompletedInCategory(['error-invalid-email', 'error-short-password', 'error-password-mismatch', 'error-network']);
+            const performanceTests = getCompletedInCategory(['perf-load-time', 'perf-loading-states', 'perf-no-blocking']);
+            const securityTests = getCompletedInCategory(['security-password-hidden', 'security-no-autocomplete', 'security-https']);
+            
+            // Weighted scoring (functionality and security are most important)
+            const score = (
+                (designTests.completed / designTests.total * 15) +
+                (functionalTests.completed / functionalTests.total * 30) +
+                (mobileTests.completed / mobileTests.total * 15) +
+                (errorTests.completed / errorTests.total * 20) +
+                (performanceTests.completed / performanceTests.total * 10) +
+                (securityTests.completed / securityTests.total * 10)
+            );
+            
+            return Math.round(score);
+        }
+
+        function getCompletedInCategory(ids) {
+            const total = ids.length;
+            const completed = ids.filter(id => document.getElementById(id)?.checked).length;
+            return { completed, total };
+        }
+
+        // Generate comprehensive QA report
+        function generateReport() {
+            const notes = document.getElementById('testing-notes').value;
+            const timestamp = new Date().toLocaleString();
+            
+            const report = {
+                title: 'SSELFIE AI™ Authentication QA Report',
+                timestamp: timestamp,
+                stats: {
+                    totalTests: totalTests,
+                    completedTests: completedTests,
+                    passRate: Math.round((completedTests / totalTests) * 100),
+                    qualityScore: calculateQualityScore()
+                },
+                categories: {
+                    design: getCompletedInCategory(['typography', 'colors', 'spacing', 'consistency', 'voice-warm', 'voice-direct', 'voice-brand']),
+                    functionality: getCompletedInCategory(['signup-form', 'signup-validation', 'signup-success', 'login-valid', 'login-invalid', 'login-redirect', 'reset-request']),
+                    mobile: getCompletedInCategory(['mobile-responsive', 'mobile-touch', 'mobile-keyboard', 'mobile-zoom']),
+                    errors: getCompletedInCategory(['error-invalid-email', 'error-short-password', 'error-password-mismatch', 'error-network']),
+                    performance: getCompletedInCategory(['perf-load-time', 'perf-loading-states', 'perf-no-blocking']),
+                    security: getCompletedInCategory(['security-password-hidden', 'security-no-autocomplete', 'security-https'])
+                },
+                notes: notes,
+                recommendations: generateRecommendations()
+            };
+            
+            // Create downloadable report
+            const reportText = `
+🏆 SSELFIE AI™ AUTHENTICATION QA REPORT
+=======================================
+
+📊 SUMMARY:
+• Total Tests: ${report.stats.totalTests}
+• Completed: ${report.stats.completedTests}
+• Pass Rate: ${report.stats.passRate}%
+• Quality Score: ${report.stats.qualityScore}/100
+
+📋 CATEGORY BREAKDOWN:
+• Design & UX: ${report.categories.design.completed}/${report.categories.design.total}
+• Functionality: ${report.categories.functionality.completed}/${report.categories.functionality.total}
+• Mobile: ${report.categories.mobile.completed}/${report.categories.mobile.total}
+• Error Handling: ${report.categories.errors.completed}/${report.categories.errors.total}
+• Performance: ${report.categories.performance.completed}/${report.categories.performance.total}
+• Security: ${report.categories.security.completed}/${report.categories.security.total}
+
+🎯 LUXURY STANDARD ASSESSMENT:
+${report.stats.qualityScore >= 90 ? '🏆 EXCELLENT - Meets luxury standards' :
+  report.stats.qualityScore >= 80 ? '🥈 GOOD - Minor improvements needed' :
+  report.stats.qualityScore >= 70 ? '🥉 ACCEPTABLE - Several issues to address' :
+  '🚨 NEEDS WORK - Critical issues detected'}
+
+📝 TESTING NOTES:
+${notes || 'No additional notes provided.'}
+
+📋 RECOMMENDATIONS:
+${report.recommendations.join('\n')}
+
+Generated: ${timestamp}
+Tester: Manual QA Review
+            `;
+            
+            // Download report
+            const blob = new Blob([reportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sselfie-auth-qa-report-${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Show success message
+            alert('📊 QA Report generated and downloaded! Quality Score: ' + report.stats.qualityScore + '/100');
+        }
+
+        function generateRecommendations() {
+            const recommendations = [];
+            const qualityScore = calculateQualityScore();
+            
+            if (qualityScore < 70) {
+                recommendations.push('🚨 CRITICAL: Quality score below 70% - extensive testing needed');
+            }
+            
+            if (completedTests < totalTests * 0.8) {
+                recommendations.push('📝 Complete more tests for comprehensive coverage');
+            }
+            
+            const functionalTests = getCompletedInCategory(['signup-form', 'signup-validation', 'login-valid', 'login-invalid']);
+            if (functionalTests.completed < functionalTests.total) {
+                recommendations.push('🔐 Priority: Complete all core authentication tests');
+            }
+            
+            const securityTests = getCompletedInCategory(['security-password-hidden', 'security-no-autocomplete', 'security-https']);
+            if (securityTests.completed < securityTests.total) {
+                recommendations.push('🔒 Security: Verify all security measures are implemented');
+            }
+            
+            const mobileTests = getCompletedInCategory(['mobile-responsive', 'mobile-touch']);
+            if (mobileTests.completed < mobileTests.total) {
+                recommendations.push('📱 Mobile: Ensure mobile-first design is fully responsive');
+            }
+            
+            if (qualityScore >= 90) {
+                recommendations.push('🏆 Excellent work! Ready for luxury brand deployment');
+            }
+            
+            return recommendations;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeTests);
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const progress = {};
+            checkboxes.forEach(cb => {
+                progress[cb.id] = cb.checked;
+            });
+            localStorage.setItem('sselfie-qa-progress', JSON.stringify(progress));
+        }
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('sselfie-qa-progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                Object.keys(progress).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = progress[id];
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Auto-save progress
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox') {
+                saveProgress();
+            }
+        });
+
+        // Load saved progress on page load
+        document.addEventListener('DOMContentLoaded', loadProgress);
+    </script>
+</body>
+</html>

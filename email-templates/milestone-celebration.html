@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milestone Achieved - SSELFIE AI™</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital@1&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F1F1F1;
+            color: #171719;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            padding: 80px 60px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 32px;
+            color: #171719;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+        }
+        
+        .celebration-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            margin-bottom: 60px;
+        }
+        
+        .headline {
+            font-size: 42px;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+        
+        .subheadline {
+            font-size: 20px;
+            font-weight: 300;
+            color: #B5B5B3;
+            text-align: center;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .body-text {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 25px;
+            color: #171719;
+        }
+        
+        .milestone-box {
+            background-color: #F8F8F8;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 4px solid #171719;
+        }
+        
+        .milestone-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #171719;
+        }
+        
+        .milestone-description {
+            font-size: 16px;
+            color: #B5B5B3;
+            font-style: italic;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding: 30px;
+            background-color: #F8F8F8;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 500;
+            color: #171719;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #B5B5B3;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #171719;
+            color: #FFFFFF;
+            padding: 20px 40px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 300ms ease;
+            margin: 20px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .cta-button:hover {
+            background-color: #B5B5B3;
+        }
+        
+        .signature {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #E5E5E5;
+            font-style: italic;
+            color: #B5B5B3;
+        }
+        
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #E5E5E5;
+            text-align: center;
+            font-size: 12px;
+            color: #B5B5B3;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .headline {
+                font-size: 32px;
+            }
+            
+            .stats-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="celebration-icon">🎉</div>
+            <div class="logo">SSELFIE AI™</div>
+        </div>
+        
+        <div class="content">
+            <h1 class="headline">Look at you go, {{name}}!</h1>
+            <p class="subheadline">You've just hit a major milestone – and I'm genuinely proud of you.</p>
+            
+            <div class="milestone-box">
+                <div class="milestone-title">{{milestone}}</div>
+                <div class="milestone-description">This is a big deal – really!</div>
+            </div>
+            
+            <p class="body-text">
+                Can we talk about this for a second? What you just accomplished isn't small. It's the kind of thing most people think about doing but never actually follow through on.
+            </p>
+            
+            <p class="body-text">
+                But you? You showed up. You did the work. You pushed through whatever resistance came up and you made it happen. That says everything about who you are and where you're headed.
+            </p>
+            
+            <div class="stats-row">
+                <div class="stat">
+                    <span class="stat-number">{{progressPercent}}%</span>
+                    <span class="stat-label">Complete</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">{{daysActive}}</span>
+                    <span class="stat-label">Days Active</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">{{nextMilestone}}</span>
+                    <span class="stat-label">Next Goal</span>
+                </div>
+            </div>
+            
+            <p class="body-text">
+                This momentum you're building? It's everything. Each step forward makes the next one easier. Each breakthrough builds confidence for the next challenge.
+            </p>
+            
+            <p class="body-text">
+                Keep going. You're doing something special here, and I can't wait to see what you accomplish next.
+            </p>
+            
+            <a href="{{dashboardUrl}}" class="cta-button">Continue Your Progress</a>
+            
+            <div class="signature">
+                <p>Cheering you on,<br>Sandra</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Your success story is unfolding – keep writing it!</p>
+            <p>SSELFIE AI™ • Building Personal Brands That Feel Personal</p>
+        </div>        
+    </div>
+</body>
+</html>

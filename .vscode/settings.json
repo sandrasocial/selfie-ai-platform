@@ -16,5 +16,6 @@
   ],
   "files.autoSave": "onWindowChange",
   "editor.accessibilityPageSize": 1500,
-  "editor.dropIntoEditor.preferences": []
+  "editor.dropIntoEditor.preferences": [],
+  "deno.enable": true
 }

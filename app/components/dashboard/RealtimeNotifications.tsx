@@ -61,52 +61,55 @@ export function RealtimeNotifications({ userId }: RealtimeNotificationsProps) {
       {/* Notification Bell */}
       <button
         onClick={() => setShowNotifications(!showNotifications)}
-        className="fixed top-6 right-20 bg-luxury-black text-soft-white w-12 h-12 flex items-center justify-center hover:bg-warm-gray hover:text-luxury-black transition-all z-40 relative"
+        className="fixed right-20 top-6 z-40 flex h-12 w-12 items-center justify-center bg-luxury-black text-soft-white transition-all hover:bg-warm-gray hover:text-luxury-black"
       >
         <span className="text-xl">🔔</span>
         {updates.length > 0 && (
-          <span className="absolute -top-2 -right-2 bg-soft-white text-luxury-black w-6 h-6 flex items-center justify-center text-xs font-bold">
+          <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center bg-soft-white text-xs font-bold text-luxury-black">
             {updates.length}
           </span>
         )}
-        
+
         {/* Connection Status */}
-        <div className={`absolute -bottom-1 -right-1 w-3 h-3 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
+        <div
+          className={`absolute -bottom-1 -right-1 h-3 w-3 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}
+        />
       </button>
 
       {/* Notifications Dropdown */}
       {showNotifications && (
-        <div className="fixed top-20 right-6 w-80 bg-soft-white border border-warm-gray z-50 max-h-96 overflow-y-auto">
-          <div className="p-4 border-b border-warm-gray/20">
+        <div className="fixed right-6 top-20 z-50 max-h-96 w-80 overflow-y-auto border border-warm-gray bg-soft-white">
+          <div className="border-b border-warm-gray/20 p-4">
             <h3 className="font-serif text-lg">Live Updates</h3>
             <div className="flex items-center gap-2 text-sm text-warm-gray">
-              <div className={`w-2 h-2 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
+              <div className={`h-2 w-2 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
               {isConnected ? 'Connected' : 'Disconnected'}
             </div>
           </div>
-          
+
           <div className="max-h-64 overflow-y-auto">
             {updates.map((update) => (
-              <div key={update.timestamp} className="p-4 border-b border-warm-gray/10 hover:bg-[#FAFAFA] group">
+              <div
+                key={update.timestamp}
+                className="group border-b border-warm-gray/10 p-4 hover:bg-[#FAFAFA]"
+              >
                 <div className="flex items-start gap-3">
                   <span className="text-xl">{getUpdateIcon(update.type)}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm mb-1">
-                      {getUpdateTitle(update.type)}
-                    </div>
-                    <div className="text-sm text-warm-gray leading-relaxed">
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 text-sm font-medium">{getUpdateTitle(update.type)}</div>
+                    <div className="text-sm leading-relaxed text-warm-gray">
                       {formatUpdateMessage(update)}
                     </div>
-                    <div className="text-xs text-warm-gray/70 mt-2">
-                      {new Date(update.timestamp).toLocaleTimeString('en-US', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+                    <div className="mt-2 text-xs text-warm-gray/70">
+                      {new Date(update.timestamp).toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })}
                     </div>
                   </div>
                   <button
                     onClick={() => dismissUpdate(update.timestamp)}
-                    className="opacity-0 group-hover:opacity-100 text-warm-gray hover:text-luxury-black transition-opacity"
+                    className="text-warm-gray opacity-0 transition-opacity hover:text-luxury-black group-hover:opacity-100"
                   >
                     ×
                   </button>
@@ -114,21 +117,19 @@ export function RealtimeNotifications({ userId }: RealtimeNotificationsProps) {
               </div>
             ))}
           </div>
-          
+
           {updates.length === 0 && (
-            <div className="p-8 text-center text-warm-gray">
-              No new updates
-            </div>
+            <div className="p-8 text-center text-warm-gray">No new updates</div>
           )}
         </div>
       )}
 
       {/* New Update Toast Notifications */}
-      <div className="fixed top-24 right-6 z-50 space-y-2">
+      <div className="fixed right-6 top-24 z-50 space-y-2">
         {updates.slice(0, 3).map((update, index) => (
           <div
             key={update.timestamp}
-            className={`bg-luxury-black text-soft-white p-4 w-80 transform transition-all duration-500 ${
+            className={`w-80 transform bg-luxury-black p-4 text-soft-white transition-all duration-500 ${
               index === 0 ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-80'
             }`}
             style={{ animationDelay: `${index * 100}ms` }}
@@ -136,9 +137,7 @@ export function RealtimeNotifications({ userId }: RealtimeNotificationsProps) {
             <div className="flex items-start gap-3">
               <span className="text-xl">{getUpdateIcon(update.type)}</span>
               <div className="flex-1">
-                <div className="font-medium text-sm mb-1">
-                  {getUpdateTitle(update.type)}
-                </div>
+                <div className="mb-1 text-sm font-medium">{getUpdateTitle(update.type)}</div>
                 <div className="text-xs text-warm-gray">
                   {formatUpdateMessage(update).slice(0, 60)}...
                 </div>

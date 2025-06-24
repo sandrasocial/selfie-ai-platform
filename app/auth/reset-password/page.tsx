@@ -61,10 +61,6 @@ function ResetPasswordContent() {
       setIsLoading(false)
     }
   }
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -12,7 +12,11 @@ interface AuthContextType {
   session: Session | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ success: boolean; error?: string }>
+  signUp: (
+    email: string,
+    password: string,
+    fullName?: string
+  ) => Promise<{ success: boolean; error?: string }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<UserProfile>) => Promise<{ success: boolean; error?: string }>
   refreshProfile: () => Promise<void>
@@ -25,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
-  
+
   const supabase = createClient()
 
   // Load user profile
@@ -51,35 +55,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
       setSession(session)
       setUser(session?.user ?? null)
-      
+
       if (session?.user) {
         await loadUserProfile(session.user.id)
       }
-      
+
       setLoading(false)
     }
 
     getSession()
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('🔄 Auth state change:', event, !!session)
-        setSession(session)
-        setUser(session?.user ?? null)
-        
-        if (session?.user) {
-          await loadUserProfile(session.user.id)
-        } else {
-          setProfile(null)
-        }
-        
-        setLoading(false)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('🔄 Auth state change:', event, !!session)
+      setSession(session)
+      setUser(session?.user ?? null)
+
+      if (session?.user) {
+        await loadUserProfile(session.user.id)
+      } else {
+        setProfile(null)
       }
-    )
+
+      setLoading(false)
+    })
 
     return () => subscription.unsubscribe()
   }, [supabase])
@@ -89,16 +95,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       })
 
       console.log('🔐 Sign in response:', { data: !!data, error: error?.message })
 
       if (error) {
         console.error('🔐 Sign in error:', error.message)
+
+        // Handle specific error cases with user-friendly messages
+        if (error.message.includes('Invalid login credentials')) {
+          return {
+            success: false,
+            error: 'Invalid email or password. Please check your credentials and try again.',
+          }
+        }
+
+        if (error.message.includes('Email not confirmed')) {
+          return {
+            success: false,
+            error: 'Please check your email and click the confirmation link.',
+          }
+        }
+
+        if (error.message.includes('Too many requests')) {
+          return {
+            success: false,
+            error: 'Too many login attempts. Please wait a moment and try again.',
+          }
+        }
+
         throw error
       }
-      
+
+      if (!data.user) {
+        return { success: false, error: 'Login failed. Please try again.' }
+      }
+
       console.log('✅ Sign in successful')
       return { success: true }
     } catch (error) {
@@ -115,18 +148,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password,
         options: {
           data: {
-            full_name: fullName
-          }
-        }
+            full_name: fullName || '',
+            marketing_consent: true,
+          },
+        },
       })
 
       console.log('📝 Sign up response:', { data: !!data, error: error?.message })
 
       if (error) {
         console.error('📝 Sign up error:', error.message)
+
+        // Handle specific error cases with user-friendly messages
+        if (error.message.includes('already registered')) {
+          return {
+            success: false,
+            error: 'This email is already registered. Try signing in instead.',
+          }
+        }
+
+        if (error.message.includes('email confirmation')) {
+          return {
+            success: false,
+            error: 'Email confirmation is required. Please check your inbox.',
+          }
+        }
+
+        if (error.message.includes('weak password')) {
+          return {
+            success: false,
+            error: 'Password is too weak. Please use at least 6 characters.',
+          }
+        }
+
         throw error
       }
-      
+
+      if (!data.user) {
+        return { success: false, error: 'Failed to create account. Please try again.' }
+      }
+
       console.log('✅ Sign up successful')
       return { success: true }
     } catch (error) {
@@ -141,14 +202,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateProfile = async (updates: Partial<UserProfile>) => {
     if (!user) return { success: false, error: 'No user logged in' }
-    
+
     const result = await userProfileService.updateUserProfile(user.id, updates)
-    
+
     if (result.success) {
       // Refresh profile data
       await refreshProfile()
     }
-    
+
     return result
   }
 
@@ -161,14 +222,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signUp,
     signOut,
     updateProfile,
-    refreshProfile
+    refreshProfile,
   }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
@@ -182,7 +239,7 @@ export function useAuth() {
 // Hook to require authentication
 export function useRequireAuth() {
   const { user, loading } = useAuth()
-  
+
   useEffect(() => {
     if (!loading && !user) {
       window.location.href = '/auth/login'
@@ -195,7 +252,7 @@ export function useRequireAuth() {
 // Hook to require admin access
 export function useRequireAdmin() {
   const { user, profile, loading } = useAuth()
-  
+
   useEffect(() => {
     if (!loading) {
       if (!user) {

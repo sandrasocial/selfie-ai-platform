@@ -24,19 +24,15 @@ export const createClient = () => {
 
   const cookieStore = cookies()
 
-  return createServerClient<Database>(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
-      cookies: {
-        get: (name: string) => cookieStore.get(name)?.value,
-        set: (name: string, value: string, options: any) => {
-          cookieStore.set({ name, value, ...options })
-        },
-        remove: (name: string, options: any) => {
-          cookieStore.set({ name, value: '', ...options })
-        },
+  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get: (name: string) => cookieStore.get(name)?.value,
+      set: (name: string, value: string, options: any) => {
+        cookieStore.set({ name, value, ...options })
       },
-    }
-  )
-} 
+      remove: (name: string, options: any) => {
+        cookieStore.set({ name, value: '', ...options })
+      },
+    },
+  })
+}

@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       email_input: email,
       magnet_type_input: magnetType,
       source_input: source || 'direct',
-      metadata_input: metadata || {}
+      metadata_input: metadata || {},
     })
 
     if (error) {

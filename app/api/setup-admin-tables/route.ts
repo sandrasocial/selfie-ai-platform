@@ -7,13 +7,16 @@ export async function POST() {
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
     if (!supabaseUrl || !supabaseServiceKey) {
-      return NextResponse.json({ 
-        error: 'Missing required environment variables' 
-      }, { status: 500 })
+      return NextResponse.json(
+        {
+          error: 'Missing required environment variables',
+        },
+        { status: 500 }
+      )
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
-    
+
     console.log('🚀 SELFIE AI™ Admin System Setup via API...')
 
     // Check if user_profiles table already exists

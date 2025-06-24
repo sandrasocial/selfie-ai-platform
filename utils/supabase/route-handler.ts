@@ -26,8 +26,5 @@ export const createRouteHandlerClient = () => {
     } as any
   }
 
-  return createClient<Database>(
-    supabaseUrl,
-    supabaseServiceKey
-  )
-} 
+  return createClient<Database>(supabaseUrl, supabaseServiceKey)
+}

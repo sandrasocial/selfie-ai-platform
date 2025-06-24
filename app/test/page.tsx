@@ -1,13 +1,12 @@
 'use client'
 
-import { 
-  Navigation, 
-  Button,
-  Diamond,
-  SectionDivider,
-  Footer
-} from '@/components/global'
-import { sampleUsers, sampleVisionBoard, sampleContentPosts, sampleUserStats } from '@/lib/sample-data'
+import { Navigation, Button, Diamond, SectionDivider, Footer } from '@/components/global'
+import {
+  sampleUsers,
+  sampleVisionBoard,
+  sampleContentPosts,
+  sampleUserStats,
+} from '@/lib/sample-data'
 
 export default function TestPage() {
   const handleButtonClick = () => {
@@ -20,16 +19,15 @@ export default function TestPage() {
   return (
     <>
       <Navigation />
-      
+
       <div className="min-h-screen bg-luxury-black pt-20">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-24 py-16">
-          
+        <div className="mx-auto max-w-[1400px] px-6 py-16 md:px-24">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="font-bodoni text-5xl md:text-7xl text-soft-white mb-6">
+          <div className="mb-16 text-center">
+            <h1 className="mb-6 font-bodoni text-5xl text-soft-white md:text-7xl">
               SSELFIE Component Test
             </h1>
-            <p className="font-inter text-lg text-soft-white/80 max-w-2xl mx-auto">
+            <p className="mx-auto max-w-2xl font-inter text-lg text-soft-white/80">
               Testing the luxury SSELFIE platform setup and components
             </p>
             <div className="mt-8">
@@ -39,20 +37,12 @@ export default function TestPage() {
 
           {/* Button Test */}
           <div className="mb-16 text-center">
-            <h2 className="font-bodoni text-3xl text-soft-white mb-8">Button Test</h2>
-            <div className="max-w-md mx-auto space-y-4">
-              <Button 
-                variant="primary" 
-                onClick={handleButtonClick}
-                fullWidth={true}
-              >
+            <h2 className="mb-8 font-bodoni text-3xl text-soft-white">Button Test</h2>
+            <div className="mx-auto max-w-md space-y-4">
+              <Button variant="primary" onClick={handleButtonClick} fullWidth={true}>
                 Test Primary Button
               </Button>
-              <Button 
-                variant="secondary" 
-                onClick={handleButtonClick}
-                fullWidth={true}
-              >
+              <Button variant="secondary" onClick={handleButtonClick} fullWidth={true}>
                 Test Secondary Button
               </Button>
             </div>
@@ -62,8 +52,8 @@ export default function TestPage() {
 
           {/* Sample Data Display */}
           <div className="mb-16">
-            <h2 className="font-bodoni text-3xl text-soft-white mb-8 text-center">Sample Data</h2>
-            <div className="max-w-2xl mx-auto bg-luxury-black/50 p-8 border border-soft-white/10 rounded-lg">
+            <h2 className="mb-8 text-center font-bodoni text-3xl text-soft-white">Sample Data</h2>
+            <div className="mx-auto max-w-2xl rounded-lg border border-soft-white/10 bg-luxury-black/50 p-8">
               <div className="space-y-4 font-inter text-soft-white/80">
                 <div className="flex justify-between">
                   <span>User Name:</span>
@@ -75,7 +65,9 @@ export default function TestPage() {
                 </div>
                 <div className="flex justify-between">
                   <span>Subscription:</span>
-                  <span className="text-soft-white capitalize">{sampleUser.subscription_status}</span>
+                  <span className="capitalize text-soft-white">
+                    {sampleUser.subscription_status}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Confidence Score:</span>
@@ -90,15 +82,15 @@ export default function TestPage() {
           </div>
 
           {/* Success Message */}
-          <div className="text-center py-16">
+          <div className="py-16 text-center">
             <Diamond size={24} animate={true} />
-            <h3 className="font-bodoni text-2xl text-soft-white mt-6 mb-4">
+            <h3 className="mb-4 mt-6 font-bodoni text-2xl text-soft-white">
               ✨ Setup Complete! ✨
             </h3>
-            <p className="font-inter text-soft-white/60 mb-6">
+            <p className="mb-6 font-inter text-soft-white/60">
               Your SSELFIE luxury platform is ready for development
             </p>
-            <div className="space-y-2 text-sm font-inter text-soft-white/50">
+            <div className="space-y-2 font-inter text-sm text-soft-white/50">
               <p>• Global components loaded</p>
               <p>• Sample data available</p>
               <p>• Luxury design system active</p>
@@ -107,7 +99,7 @@ export default function TestPage() {
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </>
   )

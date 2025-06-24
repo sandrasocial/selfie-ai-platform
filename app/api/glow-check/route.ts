@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       image_url_input: imageUrl,
       analysis_input: analysis,
       score_input: score,
-      recommendations_input: recommendations || []
+      recommendations_input: recommendations || [],
     })
 
     if (error) {
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       metadata_input: {
         score,
         has_image: !!imageUrl,
-      }
+      },
     })
 
     return NextResponse.json({

@@ -11,28 +11,25 @@ interface DashboardLayoutProps {
   userId?: string
 }
 
-export function DashboardLayout({ 
-  children, 
-  title = "Dashboard",
+export function DashboardLayout({
+  children,
+  title = 'Dashboard',
   subtitle,
-  className = "",
-  userId
+  className = '',
+  userId,
 }: DashboardLayoutProps) {
   return (
     <>
       <Navigation />
-      
+
       <div className={`min-h-screen bg-luxury-black pt-20 ${className}`}>
-        <div className="max-w-[1400px] mx-auto px-6 md:px-24 py-16">
-          
+        <div className="mx-auto max-w-[1400px] px-6 py-16 md:px-24">
           {/* Header */}
           {(title || subtitle) && (
-            <div className="text-center mb-16">
-              <h1 className="font-bodoni text-5xl md:text-7xl text-soft-white mb-6">
-                {title}
-              </h1>
+            <div className="mb-16 text-center">
+              <h1 className="mb-6 font-bodoni text-5xl text-soft-white md:text-7xl">{title}</h1>
               {subtitle && (
-                <p className="font-inter text-lg text-soft-white/80 max-w-2xl mx-auto">
+                <p className="mx-auto max-w-2xl font-inter text-lg text-soft-white/80">
                   {subtitle}
                 </p>
               )}
@@ -40,12 +37,10 @@ export function DashboardLayout({
           )}
 
           {/* Main Content */}
-          <div className="space-y-8">
-            {children}
-          </div>
+          <div className="space-y-8">{children}</div>
         </div>
       </div>
-      
+
       <Footer />
     </>
   )

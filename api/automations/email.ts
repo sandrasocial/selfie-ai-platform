@@ -84,7 +84,7 @@ export async function sendEmail(
       return {
         id: `mock-${Date.now()}`,
         success: false,
-        error: 'RESEND_API_KEY not configured'
+        error: 'RESEND_API_KEY not configured',
       }
     }
 

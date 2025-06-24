@@ -18,14 +18,12 @@ export const createClient = () => {
       auth: {
         getUser: () => Promise.resolve({ data: { user: null }, error: null }),
         getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-        signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: null }),
+        signInWithPassword: () =>
+          Promise.resolve({ data: { user: null, session: null }, error: null }),
         signOut: () => Promise.resolve({ error: null }),
       },
     } as any
   }
 
-  return createBrowserClient<Database>(
-    supabaseUrl,
-    supabaseAnonKey
-  )
+  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
 }

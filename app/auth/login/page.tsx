@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -11,15 +11,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loginLoading, setLoginLoading] = useState(false)
   
-  const { signIn } = useAuth()
+  const { signIn, user, profile, loading } = useAuth()
   const router = useRouter()
+
+  // Auto-redirect if user is already authenticated
+  useEffect(() => {
+    if (user && profile && !loading) {
+      console.log('✅ User already authenticated, redirecting to dashboard')
+      router.push('/dashboard')
+    }
+  }, [user, profile, loading, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    setLoading(true)
+    setLoginLoading(true)
 
     console.log('🔐 Login attempt for:', email)
 
@@ -29,17 +37,17 @@ export default function LoginPage() {
       console.log('🔐 Login result:', result)
       
       if (result.success) {
-        console.log('✅ Login successful, redirecting to dashboard')
-        router.push('/dashboard')
+        console.log('✅ Login successful, auth state will handle redirect')
+        // Don't redirect here - let the useEffect handle it when profile loads
       } else {
         console.error('❌ Login failed:', result.error)
         setError(result.error || 'Login failed. Please try again.')
+        setLoginLoading(false)
       }
     } catch (error) {
       console.error('❌ Login catch error:', (error as Error).message)
       setError('An unexpected error occurred. Please try again.')
-    } finally {
-      setLoading(false)
+      setLoginLoading(false)
     }
   }
 
@@ -96,7 +104,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading}
+                disabled={loginLoading}
                 className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300"
                 style={{ fontSize: '16px' }}
               />
@@ -120,7 +128,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  disabled={loading}
+                  disabled={loginLoading}
                   className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300 pr-12"
                   style={{ fontSize: '16px' }}
                 />
@@ -136,11 +144,11 @@ export default function LoginPage() {
             
             <button 
               type="submit" 
-              disabled={loading}
+              disabled={loginLoading}
               className="w-full bg-[#171719] text-white py-4 px-8 font-normal tracking-widest uppercase text-sm hover:bg-[#B5B5B3] transition-colors duration-300 disabled:opacity-50"
               style={{ letterSpacing: '0.1em' }}
             >
-              {loading ? 'Signing You In...' : 'Sign In'}
+              {loginLoading ? 'Signing You In...' : 'Sign In'}
             </button>
             
             <div className="pt-8 space-y-6 text-center">

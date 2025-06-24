@@ -4,10 +4,6 @@ import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
-import { Input } from '@/app/components/ui/input'
-import { Label } from '@/app/components/ui/label'
 import { AlertCircle, Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
@@ -48,43 +44,72 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            SELFIE AI™
+    <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center p-6">
+      <div className="w-full max-w-lg">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-light tracking-wider mb-4" style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#171719' }}>
+            SSELFIE
+          </h1>
+          <p className="text-sm font-light tracking-widest text-[#B5B5B3] uppercase">
+            Where Confidence Meets AI
+          </p>
+        </div>
+
+        {/* Main Card */}
+        <div className="bg-white p-12 shadow-sm">
+          <div className="mb-10">
+            <h2 className="text-3xl font-light mb-4 tracking-tight" style={{ color: '#171719', letterSpacing: '-0.02em' }}>
+              Hey, welcome back
+            </h2>
+            <p className="text-base font-light text-[#171719] leading-relaxed">
+              Ready to dive back in? Just pop in your details and let's get you back to building that confident, amazing life of yours.
+            </p>
           </div>
-          <CardTitle>Welcome Back</CardTitle>
-          <CardDescription>
-            Sign in to your account to continue creating amazing content
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+
+          <form onSubmit={handleSubmit} className="space-y-8">
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                <AlertCircle size={16} />
-                {error}
+              <div className="p-6 bg-[#F1F1F1] border-l-4 border-[#171719]">
+                <div className="flex items-start gap-3">
+                  <AlertCircle size={20} className="text-[#171719] mt-0.5 flex-shrink-0" />
+                  <p className="text-sm font-light text-[#171719]">
+                    {error}
+                  </p>
+                </div>
               </div>
             )}
             
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
+            <div className="space-y-3">
+              <label 
+                htmlFor="email" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Email Address
+              </label>
+              <input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
+                className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300"
+                style={{ fontSize: '16px' }}
               />
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-3">
+              <label 
+                htmlFor="password" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Password
+              </label>
               <div className="relative">
-                <Input
+                <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
@@ -92,46 +117,56 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={loading}
+                  className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300 pr-12"
+                  style={{ fontSize: '16px' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
                 >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
             
-            <Button 
+            <button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700"
               disabled={loading}
+              className="w-full bg-[#171719] text-white py-4 px-8 font-normal tracking-widest uppercase text-sm hover:bg-[#B5B5B3] transition-colors duration-300 disabled:opacity-50"
+              style={{ letterSpacing: '0.1em' }}
             >
-              {loading ? 'Signing In...' : 'Sign In'}
-            </Button>
+              {loading ? 'Signing You In...' : 'Sign In'}
+            </button>
             
-            <div className="text-center space-y-2">
+            <div className="pt-8 space-y-6 text-center">
               <Link 
                 href="/auth/reset-password" 
-                className="text-sm text-rose-600 hover:text-rose-700 hover:underline"
+                className="block text-sm font-light text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
               >
-                Forgot your password?
+                Forgot your password? No worries, happens to everyone.
               </Link>
               
-              <div className="text-sm text-gray-600">
-                Don't have an account?{' '}
+              <div className="text-sm font-light text-[#B5B5B3]">
+                New here?{' '}
                 <Link 
                   href="/auth/signup" 
-                  className="text-rose-600 hover:text-rose-700 hover:underline font-medium"
+                  className="text-[#171719] hover:text-[#B5B5B3] transition-colors duration-300 font-normal"
                 >
-                  Sign up
+                  Create your account
                 </Link>
               </div>
             </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-12">
+          <p className="text-xs font-light tracking-widest text-[#B5B5B3] uppercase">
+            Where every woman becomes the CEO of her own life
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

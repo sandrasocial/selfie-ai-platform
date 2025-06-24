@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { validateEmail } from '@/lib/email-validation'
 
@@ -88,202 +88,220 @@ export default function AuthSignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center p-6">
+      <div className="w-full max-w-lg">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="font-serif text-4xl text-luxury-black mb-2">
-            Create Your Account
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-light tracking-wider mb-4" style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#171719' }}>
+            SSELFIE
           </h1>
-          <p className="font-sans text-luxury-black/70">
-            Start your journey to confident selfies with SELFIE AI™
+          <p className="text-sm font-light tracking-widest text-[#B5B5B3] uppercase">
+            Where Confidence Meets AI
           </p>
         </div>
 
-        {/* Signup Form */}
-        <div className="bg-white p-8 border border-luxury-black/10">
-          <form onSubmit={handleSignup} className="space-y-6">
+        {/* Main Card */}
+        <div className="bg-white p-12 shadow-sm">
+          <div className="mb-10">
+            <h2 className="text-3xl font-light mb-4 tracking-tight" style={{ color: '#171719', letterSpacing: '-0.02em' }}>
+              Ready to get started?
+            </h2>
+            <p className="text-base font-light text-[#171719] leading-relaxed">
+              Let's create your account so you can start building that confident, amazing version of yourself. This is gonna be good.
+            </p>
+          </div>
+
+          <form onSubmit={handleSignup} className="space-y-8">
+            {/* Error/Success Messages */}
+            {error && (
+              <div className="p-6 bg-[#F1F1F1] border-l-4 border-[#171719]">
+                <p className="text-sm font-light text-[#171719]">
+                  {error}
+                </p>
+              </div>
+            )}
+            
+            {success && (
+              <div className="p-6 bg-[#F1F1F1] border-l-4 border-[#171719]">
+                <p className="text-sm font-light text-[#171719]">
+                  {success}
+                </p>
+              </div>
+            )}
+
             {/* Full Name */}
-            <div>
-              <label htmlFor="fullName" className="block font-sans text-sm font-medium text-luxury-black mb-2">
-                Full Name *
+            <div className="space-y-3">
+              <label 
+                htmlFor="fullName" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Your Name
               </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 w-5 h-5" />
-                <input
-                  id="fullName"
-                  type="text"
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 border border-luxury-black/20 text-luxury-black placeholder-luxury-black/50 focus:outline-none focus:border-luxury-black"
-                  placeholder="Enter your full name"
-                />
-              </div>
+              <input
+                id="fullName"
+                type="text"
+                placeholder="What should we call you?"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                disabled={isLoading}
+                className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300"
+                style={{ fontSize: '16px' }}
+              />
             </div>
-
+            
             {/* Email */}
-            <div>
-              <label htmlFor="email" className="block font-sans text-sm font-medium text-luxury-black mb-2">
-                Email Address *
+            <div className="space-y-3">
+              <label 
+                htmlFor="email" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 w-5 h-5" />
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 border border-luxury-black/20 text-luxury-black placeholder-luxury-black/50 focus:outline-none focus:border-luxury-black"
-                  placeholder="Enter your email"
-                />
-              </div>
+              <input
+                id="email"
+                type="email"
+                placeholder="your.email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isLoading}
+                className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300"
+                style={{ fontSize: '16px' }}
+              />
             </div>
-
+            
             {/* Password */}
-            <div>
-              <label htmlFor="password" className="block font-sans text-sm font-medium text-luxury-black mb-2">
-                Password *
+            <div className="space-y-3">
+              <label 
+                htmlFor="password" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 w-5 h-5" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  required
+                  placeholder="Create a secure password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-11 py-3 border border-luxury-black/20 text-luxury-black placeholder-luxury-black/50 focus:outline-none focus:border-luxury-black"
-                  placeholder="Create a password"
+                  required
+                  disabled={isLoading}
+                  className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300 pr-12"
+                  style={{ fontSize: '16px' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 hover:text-luxury-black"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs text-luxury-black/60 mt-1">
-                Must be at least 6 characters
+              <p className="text-xs font-light text-[#B5B5B3]">
+                At least 6 characters, please
               </p>
             </div>
 
             {/* Confirm Password */}
-            <div>
-              <label htmlFor="confirmPassword" className="block font-sans text-sm font-medium text-luxury-black mb-2">
-                Confirm Password *
+            <div className="space-y-3">
+              <label 
+                htmlFor="confirmPassword" 
+                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Confirm Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 w-5 h-5" />
                 <input
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
-                  required
+                  placeholder="Type it again to be sure"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full pl-11 pr-11 py-3 border border-luxury-black/20 text-luxury-black placeholder-luxury-black/50 focus:outline-none focus:border-luxury-black"
-                  placeholder="Confirm your password"
+                  required
+                  disabled={isLoading}
+                  className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300 pr-12"
+                  style={{ fontSize: '16px' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-luxury-black/50 hover:text-luxury-black"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
                 >
-                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
 
             {/* Email Marketing Consent */}
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-4 py-2">
               <input
                 id="emailMarketing"
                 type="checkbox"
                 checked={emailMarketing}
                 onChange={(e) => setEmailMarketing(e.target.checked)}
-                className="mt-1 w-4 h-4 text-luxury-black border-luxury-black/20 focus:ring-luxury-black"
+                className="mt-1 w-5 h-5 border-2 border-[#B5B5B3] focus:outline-none checked:bg-[#171719] checked:border-[#171719]"
               />
-              <label htmlFor="emailMarketing" className="font-sans text-sm text-luxury-black/80">
-                I want to receive weekly selfie tips and updates from SELFIE AI™
+              <label htmlFor="emailMarketing" className="text-sm font-light text-[#171719] leading-relaxed">
+                Send me weekly tips and updates (you can unsubscribe anytime)
               </label>
             </div>
 
             {/* Terms Agreement */}
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-4 py-2">
               <input
                 id="agreedToTerms"
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={(e) => setAgreedToTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 text-luxury-black border-luxury-black/20 focus:ring-luxury-black"
+                className="mt-1 w-5 h-5 border-2 border-[#B5B5B3] focus:outline-none checked:bg-[#171719] checked:border-[#171719]"
                 required
               />
-              <label htmlFor="agreedToTerms" className="font-sans text-sm text-luxury-black/80">
+              <label htmlFor="agreedToTerms" className="text-sm font-light text-[#171719] leading-relaxed">
                 I agree to the{' '}
-                <Link href="/terms" className="underline underline-offset-4 hover:text-luxury-black">
+                <Link href="/terms" className="underline hover:text-[#B5B5B3] transition-colors duration-300">
                   Terms of Service
                 </Link>{' '}
                 and{' '}
-                <Link href="/privacy" className="underline underline-offset-4 hover:text-luxury-black">
+                <Link href="/privacy" className="underline hover:text-[#B5B5B3] transition-colors duration-300">
                   Privacy Policy
                 </Link>
-                *
               </label>
             </div>
-
-            {/* Error/Success Messages */}
-            {error && (
-              <div className="text-red-600 text-sm font-sans">
-                {error}
-              </div>
-            )}
             
-            {success && (
-              <div className="text-green-600 text-sm font-sans">
-                {success}
-              </div>
-            )}
-
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-luxury-black text-soft-white font-sans font-medium py-3 px-4 hover:bg-luxury-black/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors group"
+              className="w-full bg-[#171719] text-white py-4 px-8 font-normal tracking-widest uppercase text-sm hover:bg-[#B5B5B3] transition-colors duration-300 disabled:opacity-50"
+              style={{ letterSpacing: '0.1em' }}
             >
-              <span className="flex items-center justify-center">
-                {isLoading ? (
-                  'Creating Account...'
-                ) : (
-                  <>
-                    Create Account
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </span>
+              {isLoading ? 'Creating Your Account...' : 'Create Account'}
             </button>
+            
+            <div className="pt-8 space-y-6 text-center">
+              <div className="text-sm font-light text-[#B5B5B3]">
+                Already have an account?{' '}
+                <Link 
+                  href="/auth/login" 
+                  className="text-[#171719] hover:text-[#B5B5B3] transition-colors duration-300 font-normal"
+                >
+                  Sign in here
+                </Link>
+              </div>
+            </div>
           </form>
-
-          {/* Sign In Link */}
-          <div className="mt-6 text-center">
-            <Link
-              href="/auth/login"
-              className="font-sans text-luxury-black/70 hover:text-luxury-black underline underline-offset-4"
-            >
-              Already have an account? Sign in
-            </Link>
-          </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="font-sans text-luxury-black/70 hover:text-luxury-black underline underline-offset-4"
-          >
-            Back to Home
-          </Link>
+        <div className="text-center mt-12">
+          <p className="text-xs font-light tracking-widest text-[#B5B5B3] uppercase">
+            Where every woman becomes the CEO of her own life
+          </p>
         </div>
       </div>
     </div>

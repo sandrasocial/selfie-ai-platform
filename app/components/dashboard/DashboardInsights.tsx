@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 
 interface DashboardAnalytics {
   dailyVisits: number
@@ -14,7 +14,7 @@ interface DashboardAnalytics {
 export function DashboardInsights({ userId }: { userId: string }) {
   const [analytics, setAnalytics] = useState<DashboardAnalytics | null>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   useEffect(() => {
     fetchAnalytics()

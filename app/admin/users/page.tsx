@@ -16,7 +16,7 @@ import {
   Settings
 } from 'lucide-react'
 import AdminLayout from '@/app/components/admin/AdminLayout'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 
 interface UserProfile {
   id: string
@@ -39,7 +39,7 @@ export default function AdminUsers() {
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
   
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   useEffect(() => {
     fetchUsers()

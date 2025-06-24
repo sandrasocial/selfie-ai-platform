@@ -16,6 +16,15 @@ const adminRoutes = [
   '/admin'
 ]
 
+// Public routes that don't require authentication (in addition to auth routes)
+const publicRoutes = [
+  '/diagnostic',
+  '/about',
+  '/contact',
+  '/pricing',
+  '/features'
+]
+
 // Redirect rules for old routes to new structure
 const redirectRules = [
   // Old module routes to new learn structure
@@ -75,12 +84,13 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // Skip auth checks for auth routes and static files
+  // Skip auth checks for auth routes, public routes, and static files
   if (pathname.startsWith('/auth') || 
       pathname.startsWith('/_next') || 
       pathname.startsWith('/api') || 
       pathname.startsWith('/static') ||
-      pathname.includes('.')) {
+      pathname.includes('.') ||
+      publicRoutes.some(route => pathname.startsWith(route))) {
     return NextResponse.next();
   }
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import {
   LayoutDashboard,
   Target,
@@ -82,7 +82,7 @@ interface AdminNavigationProps {
 export default function AdminNavigation({ className = '' }: AdminNavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [collapsedSections, setCollapsedSections] = useState<string[]>([])
   const [readyTaskCount, setReadyTaskCount] = useState(0)

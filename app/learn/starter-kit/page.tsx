@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { 
   Play, 
   CheckCircle, 
@@ -322,7 +322,7 @@ export default function SelfieStarterKit() {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   // Motivational messages in Sandra's voice
   const motivationalMessages = [

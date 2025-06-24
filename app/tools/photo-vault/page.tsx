@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/utils/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Button } from '@/app/components/ui/button';
 import { Badge } from "@/app/components/ui/badge";
@@ -72,7 +72,7 @@ export default function PhotoVault() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const categories = [
     'Selfie', 'Portrait', 'Lifestyle', 'Product', 'Behind-the-Scenes', 

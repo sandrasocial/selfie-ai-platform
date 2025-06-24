@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 
 interface QuickAction {
   id: string
@@ -17,7 +17,7 @@ interface QuickAction {
 export function QuickActions() {
   const [recentlyUsed, setRecentlyUsed] = useState<string[]>([])
   const [userId, setUserId] = useState<string | null>(null)
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   useEffect(() => {
     const getUserAndLoadPreferences = async () => {

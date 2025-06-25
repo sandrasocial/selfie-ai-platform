@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
-  
+
   const { signIn, user, profile, loading } = useAuth()
   const router = useRouter()
 
@@ -33,9 +33,9 @@ export default function LoginPage() {
 
     try {
       const result = await signIn(email, password)
-      
+
       console.log('🔐 Login result:', result)
-      
+
       if (result.success) {
         console.log('✅ Login successful, auth state will handle redirect')
         // Don't redirect here - let the useEffect handle it when profile loads
@@ -52,14 +52,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F1F1F1] flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-[#F1F1F1] p-6">
       <div className="w-full max-w-lg">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-light tracking-wider mb-4" style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#171719' }}>
+        <div className="mb-12 text-center">
+          <h1
+            className="mb-4 text-5xl font-light tracking-wider"
+            style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#171719' }}
+          >
             SSELFIE
           </h1>
-          <p className="text-sm font-light tracking-widest text-[#B5B5B3] uppercase">
+          <p className="text-sm font-light uppercase tracking-widest text-[#B5B5B3]">
             Where Confidence Meets AI
           </p>
         </div>
@@ -67,30 +70,32 @@ export default function LoginPage() {
         {/* Main Card */}
         <div className="bg-white p-12 shadow-sm">
           <div className="mb-10">
-            <h2 className="text-3xl font-light mb-4 tracking-tight" style={{ color: '#171719', letterSpacing: '-0.02em' }}>
+            <h2
+              className="mb-4 text-3xl font-light tracking-tight"
+              style={{ color: '#171719', letterSpacing: '-0.02em' }}
+            >
               Hey, welcome back
             </h2>
-            <p className="text-base font-light text-[#171719] leading-relaxed">
-              Ready to dive back in? Just pop in your details and let's get you back to building that confident, amazing life of yours.
+            <p className="text-base font-light leading-relaxed text-[#171719]">
+              Ready to dive back in? Just pop in your details and let's get you back to building
+              that confident, amazing life of yours.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {error && (
-              <div className="p-6 bg-[#F1F1F1] border-l-4 border-[#171719]">
+              <div className="border-l-4 border-[#171719] bg-[#F1F1F1] p-6">
                 <div className="flex items-start gap-3">
-                  <AlertCircle size={20} className="text-[#171719] mt-0.5 flex-shrink-0" />
-                  <p className="text-sm font-light text-[#171719]">
-                    {error}
-                  </p>
+                  <AlertCircle size={20} className="mt-0.5 flex-shrink-0 text-[#171719]" />
+                  <p className="text-sm font-light text-[#171719]">{error}</p>
                 </div>
               </div>
             )}
-            
+
             <div className="space-y-3">
-              <label 
-                htmlFor="email" 
-                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+              <label
+                htmlFor="email"
+                className="block text-sm font-normal uppercase tracking-wide text-[#171719]"
                 style={{ letterSpacing: '0.1em' }}
               >
                 Email Address
@@ -105,15 +110,15 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loginLoading}
-                className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300"
+                className="w-full border border-[#B5B5B3] bg-white p-4 font-light text-[#171719] placeholder-[#B5B5B3] transition-colors duration-300 focus:border-[#171719] focus:outline-none"
                 style={{ fontSize: '16px' }}
               />
             </div>
-            
+
             <div className="space-y-3">
-              <label 
-                htmlFor="password" 
-                className="block text-sm font-normal tracking-wide text-[#171719] uppercase"
+              <label
+                htmlFor="password"
+                className="block text-sm font-normal uppercase tracking-wide text-[#171719]"
                 style={{ letterSpacing: '0.1em' }}
               >
                 Password
@@ -129,41 +134,41 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={loginLoading}
-                  className="w-full p-4 bg-white border border-[#B5B5B3] text-[#171719] placeholder-[#B5B5B3] font-light focus:outline-none focus:border-[#171719] transition-colors duration-300 pr-12"
+                  className="w-full border border-[#B5B5B3] bg-white p-4 pr-12 font-light text-[#171719] placeholder-[#B5B5B3] transition-colors duration-300 focus:border-[#171719] focus:outline-none"
                   style={{ fontSize: '16px' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transform text-[#B5B5B3] transition-colors duration-300 hover:text-[#171719]"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               disabled={loginLoading}
-              className="w-full bg-[#171719] text-white py-4 px-8 font-normal tracking-widest uppercase text-sm hover:bg-[#B5B5B3] transition-colors duration-300 disabled:opacity-50"
+              className="w-full bg-[#171719] px-8 py-4 text-sm font-normal uppercase tracking-widest text-white transition-colors duration-300 hover:bg-[#B5B5B3] disabled:opacity-50"
               style={{ letterSpacing: '0.1em' }}
             >
               {loginLoading ? 'Signing You In...' : 'Sign In'}
             </button>
-            
-            <div className="pt-8 space-y-6 text-center">
-              <Link 
-                href="/auth/reset-password" 
-                className="block text-sm font-light text-[#B5B5B3] hover:text-[#171719] transition-colors duration-300"
+
+            <div className="space-y-6 pt-8 text-center">
+              <Link
+                href="/auth/reset-password"
+                className="block text-sm font-light text-[#B5B5B3] transition-colors duration-300 hover:text-[#171719]"
               >
                 Forgot your password? No worries, happens to everyone.
               </Link>
-              
+
               <div className="text-sm font-light text-[#B5B5B3]">
                 New here?{' '}
-                <Link 
-                  href="/auth/signup" 
-                  className="text-[#171719] hover:text-[#B5B5B3] transition-colors duration-300 font-normal"
+                <Link
+                  href="/auth/signup"
+                  className="font-normal text-[#171719] transition-colors duration-300 hover:text-[#B5B5B3]"
                 >
                   Create your account
                 </Link>
@@ -173,8 +178,8 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12">
-          <p className="text-xs font-light tracking-widest text-[#B5B5B3] uppercase">
+        <div className="mt-12 text-center">
+          <p className="text-xs font-light uppercase tracking-widest text-[#B5B5B3]">
             Where every woman becomes the CEO of her own life
           </p>
         </div>

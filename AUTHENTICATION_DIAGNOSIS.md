@@ -3,6 +3,7 @@
 Based on my analysis of your codebase, here are the potential issues:
 
 ### ✅ **GOOD NEWS:**
+
 - Your `.env.local` file has the correct Supabase credentials
 - The SQL migration was already applied to the right project (`usrustscragennskanfh.supabase.co`)
 - Dependencies and configuration files look correct
@@ -27,6 +28,7 @@ Based on my analysis of your codebase, here are the potential issues:
 
 **Option 1: Test the Production Deployment**
 Since your environment is correctly configured, test the auth directly on your live site:
+
 - Go to https://www.sselfie.ai/auth/signup
 - Try creating a new account
 - This bypasses local development issues
@@ -45,9 +47,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 }
 ```
 

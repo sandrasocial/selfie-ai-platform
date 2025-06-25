@@ -1,12 +1,15 @@
 # SELFIE AI™ Environment Configuration Fix
+
 # Replace the dummy values in .env.local with your actual Supabase credentials
 
 # 🚨 CRITICAL: Your .env.local currently has dummy values!
+
 # This is why authentication is failing even after the SQL migration.
 
 ## How to fix:
 
 ### Step 1: Get your Supabase credentials
+
 1. Go to https://supabase.com/dashboard
 2. Select your SELFIE AI project (the one where you ran the SQL migration)
 3. Go to Settings > API
@@ -16,6 +19,7 @@
    - Project API Keys > service_role (keep this secret!)
 
 ### Step 2: Update your .env.local file
+
 Replace the content of `/Users/MD760HA/Desktop/selfie-ai-platform/.env.local` with:
 
 ```bash
@@ -45,6 +49,7 @@ RESEND_API_KEY=your-resend-key-if-needed
 ```
 
 ### Step 3: Restart your development server
+
 ```bash
 # Stop the current server (Ctrl+C if running)
 # Then restart:
@@ -52,17 +57,20 @@ npm run dev
 ```
 
 ### Step 4: Test the fix
+
 1. Go to http://localhost:3000/diagnostic/auth
 2. Test database connection
 3. Try signing up with a new email
 4. Check if user profile is created
 
 ## Why this happened:
+
 - The SQL migration was applied to your actual Supabase project ✅
 - But your Next.js app was connecting to dummy URLs ❌
 - Now they'll be connected to the same project ✅
 
 ## Current status:
+
 - ❌ `.env.local` has dummy Supabase credentials
 - ✅ SQL migration applied to real Supabase project
 - ⏳ Need to connect them together

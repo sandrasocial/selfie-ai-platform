@@ -26,5 +26,15 @@ export const createRouteHandlerClient = () => {
     } as any
   }
 
-  return createClient<Database>(supabaseUrl, supabaseServiceKey)
+  return createClient<Database>(supabaseUrl, supabaseServiceKey, {
+    global: {
+      fetch: (url, options = {}) => {
+        return fetch(url, {
+          ...options,
+          // Add timeout to prevent hanging connections
+          signal: AbortSignal.timeout(30000), // 30 second timeout
+        })
+      },
+    },
+  })
 }

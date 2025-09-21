@@ -1,7 +1,6 @@
 // Simple test auth bypass for agent chat testing
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 import { getAgentSystemPrompt } from '@/lib/agents/personalities';
 import Anthropic from '@anthropic-ai/sdk';
 

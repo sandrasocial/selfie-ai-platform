@@ -3,8 +3,8 @@
  * Creates leads table and RLS policies for SELFIE AI™
  */
 
-const SUPABASE_URL = 'https://zlslzllzejdhyfczcumv.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_URL; // Note: variables are swapped in env
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zlslzllzejdhyfczcumv.supabase.co';
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY; // Fixed: use correct environment variable
 
 async function executeSQL(sql) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {

@@ -28,10 +28,29 @@ export const createClient = () => {
     cookies: {
       get: (name: string) => cookieStore.get(name)?.value,
       set: (name: string, value: string, options: any) => {
-        cookieStore.set({ name, value, ...options })
+        try {
+          cookieStore.set({ name, value, ...options })
+        } catch (error) {
+          // Fail silently in case of read-only cookies during static generation
+          console.warn('Failed to set cookie:', error)
+        }
       },
       remove: (name: string, options: any) => {
-        cookieStore.set({ name, value: '', ...options })
+        try {
+          cookieStore.set({ name, value: '', ...options })
+        } catch (error) {
+          // Fail silently in case of read-only cookies during static generation
+          console.warn('Failed to remove cookie:', error)
+        }
+      },
+    },
+    global: {
+      fetch: (url, options = {}) => {
+        return fetch(url, {
+          ...options,
+          // Add timeout to prevent hanging connections
+          signal: AbortSignal.timeout(30000), // 30 second timeout
+        })
       },
     },
   })

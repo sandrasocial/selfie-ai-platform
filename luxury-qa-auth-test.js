@@ -515,7 +515,7 @@ class LuxuryQATester {
       return {
         asyncAwait: typeof (async function(){})() !== 'undefined',
         arrowFunctions: typeof (() => {}) === 'function',
-        const: typeof const !== 'undefined',
+        constSupport: true, // const is always supported in modern browsers
         fetch: typeof fetch === 'function',
         localStorage: typeof localStorage !== 'undefined',
         sessionStorage: typeof sessionStorage !== 'undefined'

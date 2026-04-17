@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['next/core-web-vitals', '@typescript-eslint/recommended'],
+  extends: ['next/core-web-vitals'],
   plugins: ['@typescript-eslint'],
   rules: {
     '@next/next/no-img-element': 'off',

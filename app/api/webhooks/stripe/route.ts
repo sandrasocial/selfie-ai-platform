@@ -1,49 +1,75 @@
-// Agent: Automation AI provided this Stripe webhook handler
-// This handles payments and creates users automatically // app/api/webhooks/stripe/route.ts
+// app/api/webhooks/stripe/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { logger } from '@/lib/utils/logger';
 
-// Product mapping - UPDATE THESE WITH YOUR STRIPE PRICE IDS
-const PRODUCT_MAP = {
-  'price_1234567890': { // Replace with your Starter Kit price ID
-    type: 'starter_kit',
-    price: 67,
-    name: 'Selfie Starter Kit'
-  },
-  'price_0987654321': { // Replace with your Branded price ID
-    type: 'branded',
-    price: 397,
-    name: 'Branded Experience'
-  }
+// Real Stripe price IDs → product mapping
+// Last updated from Stripe Dashboard April 2026
+const PRODUCT_MAP: Record<string, { type: string; price: number; name: string }> = {
+  // Selfie Guide
+  'price_1T96EJEVJvME7vkwyI7B4aqH': { type: 'selfie_guide', price: 17, name: 'Selfie Guide' },
+  'price_1T8SsMEVJvME7vkwUrkiCtlA': { type: 'selfie_guide', price: 17, name: 'Selfie Guide' },
+  // Brand Strategy Pack
+  'price_1T8T2PEVJvME7vkwaCywCCnB': { type: 'brand_strategy', price: 19, name: 'Brand Strategy Pack' },
+  // Selfie Guide + Brand Strategy Bundle
+  'price_1T8TrrEVJvME7vkwIr5aC8z8': { type: 'bundle_guide_strategy', price: 27, name: 'Selfie Guide + Brand Strategy Bundle' },
+  // AI Photo Prompt Pack
+  'price_1T3aR3EVJvME7vkw6pzbZS9m': { type: 'photo_prompt_pack', price: 17, name: 'AI Photo Prompt Pack' },
+  // Academy mini-products
+  'price_1T2xljEVJvME7vkwFcaN1GEw': { type: 'academy_what_to_say', price: 17, name: 'Academy: What To Say' },
+  'price_1T2xllEVJvME7vkwHC3r6GAI': { type: 'academy_show_up', price: 27, name: 'Academy: Show Up' },
+  'price_1T2xlmEVJvME7vkwkbgotHoB': { type: 'academy_get_paid', price: 47, name: 'Academy: Get Paid' },
+  // SSELFIE Brand Blueprint
+  'price_1SnlJEEVJvME7vkw1thdr7WK': { type: 'brand_blueprint', price: 47, name: 'SSELFIE Brand Blueprint' },
+  // Brand Engine Cohort
+  'price_1T0RquEVJvME7vkwoSeyKs5s': { type: 'brand_engine_cohort', price: 2497, name: 'Brand Engine Cohort' },
+  // Brand Engine VIP
+  'price_1T0RqwEVJvME7vkwTqUP6n1z': { type: 'brand_engine_vip', price: 4997, name: 'Brand Engine VIP' },
+  // SSELFIE Agents Starter
+  'price_1TCfzgEVJvME7vkwU2HhzgEU': { type: 'agents_starter', price: 47, name: 'SSELFIE Agents Starter' },
+  // SSELFIE SUITE (subscription)
+  'price_1TCfzfEVJvME7vkwNlYft5yq': { type: 'suite_monthly', price: 97, name: 'SSELFIE SUITE Monthly' },
+  // SSELFIE Studio Annual
+  'price_1TA699EVJvME7vkwTyp3CUOl': { type: 'studio_annual', price: 970, name: 'SSELFIE Studio Annual' },
+  // Personal brand products
+  'price_1TJoluEVJvME7vkw7kM0ALUA': { type: 'personal_brand_large', price: 39, name: 'SSELFIE Personal Brand' },
+  'price_1TJoluEVJvME7vkwC9T3EbO5': { type: 'personal_brand_small', price: 19, name: 'SSELFIE Personal Brand' },
+  'price_1TJoltEVJvME7vkwTET2g6bH': { type: 'personal_brand_monthly', price: 97, name: 'SSELFIE Personal Brand Monthly' },
+  'price_1TJolsEVJvME7vkwTvqlyLpq': { type: 'personal_brand_bundle', price: 47, name: 'SSELFIE Personal Brand Bundle' },
 };
 
 export async function POST(req: NextRequest) {
-  // Initialize services inside the handler to avoid build-time errors
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2023-10-16',
-  });
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL! as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY! as string
-  ) as any;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!stripeKey || !webhookSecret || !supabaseUrl || !supabaseServiceKey) {
+    logger.error('❌ Missing required environment variables for Stripe webhook');
+    // Return 200 so Stripe doesn't keep retrying — this is a config issue, not a transient error
+    return NextResponse.json({ received: true });
+  }
+
+  const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
+  // Use service role key so admin operations (createUser, etc.) work
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   const body = await req.text();
-  const sig = req.headers.get('stripe-signature')!;
+  const sig = req.headers.get('stripe-signature');
+
+  if (!sig) {
+    logger.error('❌ Missing stripe-signature header');
+    return NextResponse.json({ error: 'Missing signature' }, { status: 400 });
+  }
 
   let event: Stripe.Event;
 
-  // Verify webhook signature
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err: any) {
     logger.error('❌ Webhook signature verification failed:', err.message);
-    return NextResponse.json(
-      { error: 'Invalid signature' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
   logger.info(`📨 Processing webhook: ${event.type} - ${event.id}`);
@@ -58,6 +84,17 @@ export async function POST(req: NextRequest) {
         logger.info('💰 Payment succeeded:', event.data.object.id);
         break;
 
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted':
+        logger.info(`📋 Subscription event: ${event.type}`, event.data.object.id);
+        break;
+
+      case 'invoice.payment_succeeded':
+      case 'invoice.payment_failed':
+        logger.info(`🧾 Invoice event: ${event.type}`, event.data.object.id);
+        break;
+
       default:
         logger.info(`ℹ️ Unhandled event type: ${event.type}`);
     }
@@ -66,41 +103,45 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     logger.error('❌ Webhook processing error:', error);
-    // Return success to prevent Stripe retries
+    // Return 200 to prevent Stripe from retrying — log the error for investigation
     return NextResponse.json({ received: true });
   }
 }
 
-async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: Stripe, supabase: ReturnType<typeof createClient>) {
+async function handleCheckoutComplete(
+  session: Stripe.Checkout.Session,
+  stripe: Stripe,
+  supabase: SupabaseClient<any, any, any>
+) {
   logger.info('🎉 Processing checkout completion:', session.id);
 
-  // Extract customer info
   const email = (session.customer_email || session.customer_details?.email) as string;
   const name = session.customer_details?.name as string;
-  
+
   if (!email) {
-    throw new Error('No email found in checkout session');
+    logger.error('❌ No email found in checkout session:', session.id);
+    return; // Don't throw — return gracefully so we still return 200
   }
 
   // Get line items to determine product
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
-  const priceId = lineItems.data[0]?.price?.id as string;
-  
+  const priceId = lineItems.data[0]?.price?.id;
+
   if (!priceId) {
-    throw new Error('No price ID found in checkout session');
+    logger.error('❌ No price ID found in checkout session:', session.id);
+    return;
   }
 
-  const product = PRODUCT_MAP[priceId as keyof typeof PRODUCT_MAP];
+  const product = PRODUCT_MAP[priceId];
   if (!product) {
-    logger.error(`❌ Unknown product for price ID: ${priceId}`);
-    // Log available price IDs for debugging
-    logger.info('Available price IDs:', Object.keys(PRODUCT_MAP));
-    throw new Error(`Unknown product for price ID: ${priceId}`);
+    // Unknown product — log it for investigation but don't fail the webhook
+    logger.error(`⚠️ Unknown price ID received: ${priceId} — add it to PRODUCT_MAP in route.ts`);
+    return;
   }
 
   logger.info(`📦 Product purchased: ${product.name} ($${product.price})`);
 
-  // Create or update user
+  // Check for existing user
   const { data: existingUser } = await supabase
     .from('users')
     .select('id')
@@ -110,7 +151,6 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
   let userId: string;
 
   if (existingUser) {
-    // Update existing user
     logger.info('👤 Updating existing user:', email);
     const { data: updatedUser, error: updateError } = await supabase
       .from('users')
@@ -119,7 +159,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
         stripe_customer_id: session.customer as string,
         updated_at: new Date().toISOString()
       })
-      .eq('id', (existingUser.id as string))
+      .eq('id', existingUser.id as string)
       .select()
       .single();
 
@@ -128,21 +168,17 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
     }
     userId = updatedUser.id as string;
   } else {
-    // Create new user via auth
     logger.info('👤 Creating new user:', email);
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email,
       email_confirm: true,
-      user_metadata: {
-        full_name: name
-      }
+      user_metadata: { full_name: name }
     });
 
     if (authError || !authData.user) {
       throw new Error(`Failed to create auth user: ${authError?.message}`);
     }
 
-    // Create user record
     const { data: newUser, error: userError } = await supabase
       .from('users')
       .insert({
@@ -160,9 +196,9 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
     userId = newUser.id as string;
   }
 
-  // Create purchase record
+  // Record purchase
   logger.info('💳 Recording purchase...');
-  const { data: purchase, error: purchaseError } = await supabase
+  const { error: purchaseError } = await supabase
     .from('purchases')
     .insert({
       user_id: userId,
@@ -174,81 +210,81 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, stripe: 
       stripe_session_id: session.id,
       status: 'completed',
       purchased_at: new Date().toISOString()
-    })
-    .select()
-    .single();
+    });
 
-  if (purchaseError || !purchase) {
-    throw new Error(`Failed to record purchase: ${purchaseError?.message}`);
+  if (purchaseError) {
+    throw new Error(`Failed to record purchase: ${purchaseError.message}`);
   }
 
-  // Grant access based on product
+  // Grant access
   logger.info('🔓 Granting product access...');
   await grantProductAccess(userId, product.type, supabase);
 
-  // Import and trigger automation
-  // const { triggerAutomation } = await import('path-to-automation');
-  // await triggerAutomation({
-  //   type: 'purchase_completed',
-  //   userId,
-  //   purchaseId: purchase.id,
-  //   productType: product.type,
-  //   email,
-  //   name: name || 'Friend'
-  // });
-
-  logger.info(`✅ Successfully processed purchase for ${email} - ${product.name}`);
-  
-  // Log notification (replace Slack)
-  logger.info('🎊 NEW PURCHASE NOTIFICATION:');
-  logger.info(`   Customer: ${name} (${email})`);
-  logger.info(`   Product: ${product.name}`);
-  logger.info(`   Amount: $${session.amount_total! / 100}`);
-  logger.info(`   Time: ${new Date().toISOString()}`);
+  logger.info(`✅ Processed purchase: ${email} — ${product.name} ($${product.price})`);
 }
 
-async function grantProductAccess(userId: string, productType: string, supabase: ReturnType<typeof createClient>) {
-  const accessData: any = {
+async function grantProductAccess(
+  userId: string,
+  productType: string,
+  supabase: SupabaseClient<any, any, any>
+) {
+  const accessData: Record<string, unknown> = {
     user_id: userId,
     granted_at: new Date().toISOString()
   };
 
   switch (productType) {
-    case 'starter_kit':
-      accessData.starter_kit_access = true;
-      accessData.course_modules = ['module_1', 'module_2', 'module_3'];
-      accessData.workbook_access = true;
+    case 'selfie_guide':
+      accessData.selfie_guide_access = true;
       break;
-
-    case 'branded':
-      accessData.starter_kit_access = true;
-      accessData.branded_access = true;
-      accessData.course_modules = 'all';
-      accessData.ai_credits = 1000;
-      accessData.pose_coach_access = true;
-      accessData.brand_tools_access = true;
-      accessData.workbook_access = true;
+    case 'brand_strategy':
+      accessData.brand_strategy_access = true;
       break;
+    case 'bundle_guide_strategy':
+      accessData.selfie_guide_access = true;
+      accessData.brand_strategy_access = true;
+      break;
+    case 'photo_prompt_pack':
+      accessData.photo_prompt_pack_access = true;
+      break;
+    case 'academy_what_to_say':
+    case 'academy_show_up':
+    case 'academy_get_paid':
+      accessData[`${productType}_access`] = true;
+      break;
+    case 'brand_blueprint':
+      accessData.brand_blueprint_access = true;
+      break;
+    case 'agents_starter':
+      accessData.ai_credits = 60;
+      break;
+    case 'suite_monthly':
+      accessData.ai_credits = 200;
+      accessData.suite_access = true;
+      break;
+    case 'studio_annual':
+      accessData.studio_access = true;
+      break;
+    case 'brand_engine_cohort':
+    case 'brand_engine_vip':
+      accessData.brand_engine_access = true;
+      break;
+    default:
+      accessData[`${productType}_access`] = true;
   }
 
   const { error } = await supabase
     .from('user_access')
-    .upsert(accessData, {
-      onConflict: 'user_id'
-    });
+    .upsert(accessData, { onConflict: 'user_id' });
 
   if (error) {
     throw new Error(`Failed to grant access: ${error.message}`);
   }
 
-  // Update user role
-  const role = productType === 'branded' ? 'premium' : 'basic';
+  const isPremium = ['brand_engine_vip', 'brand_engine_cohort', 'suite_monthly', 'studio_annual'].includes(productType);
   await supabase
     .from('users')
-    .update({
-      role,
-      updated_at: new Date().toISOString()
-    })
+    .update({ role: isPremium ? 'premium' : 'basic', updated_at: new Date().toISOString() })
     .eq('id', userId);
 
   logger.info(`✅ Access granted: ${productType} for user ${userId}`);
